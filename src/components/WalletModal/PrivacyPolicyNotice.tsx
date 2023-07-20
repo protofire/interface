@@ -17,12 +17,12 @@ export default function PrivacyPolicyNotice() {
   return (
     <ThemedText.Caption color="textSecondary">
       <Trans>By connecting a wallet, you agree to Protofire&apos;</Trans>{' '}
-      <StyledLink href="https://www.notion.so/Terms-of-Service-452ba9ee953e460983ed7e5558dc0397">
+      <StyledLink href="https://harmonyone.notion.site/Terms-of-Service-452ba9ee953e460983ed7e5558dc0397?pvs=4">
         <Trans>Terms of Service</Trans>{' '}
       </StyledLink>
-      <Trans>and consent to its</Trans>{' '}
-      <StyledLink href="https://harmonyone.notion.site/Privacy-Policy-3a2eef1087c14a5a84eec272ceb76f70?pvs=4">
-        <Trans>Privacy Policy.</Trans>
+      <Trans>and</Trans>{' '}
+      <StyledLink href="https://harmonyone.notion.site/Disclosure-Agreement-b06a1677c6b843a083d64544c419cf1b?pvs=4">
+        <Trans>Disclosure Agreement.</Trans>
       </StyledLink>
       <LastUpdatedText>
         {' ('}
