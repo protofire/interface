@@ -21,7 +21,7 @@ export default function PrivacyPolicyNotice() {
         <Trans>Terms of Service</Trans>{' '}
       </StyledLink>
       <Trans>and consent to its</Trans>{' '}
-      <StyledLink href="https://harmonyone.notion.site/Privacy-Policy-70fd833dc5f542a8b52ec73626ebb245?pvs=4">
+      <StyledLink href="https://doc.swap.country/privacy-policy-70fd833dc5f542a8b52ec73626ebb245">
         <Trans>Privacy Policy.</Trans>
       </StyledLink>
       <LastUpdatedText>

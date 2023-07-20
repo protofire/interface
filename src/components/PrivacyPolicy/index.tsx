@@ -137,7 +137,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            <ExternalLink href="https://harmonyone.notion.site/Privacy-Policy-70fd833dc5f542a8b52ec73626ebb245?pvs=4">
+            <ExternalLink href="https://doc.swap.country/privacy-policy-70fd833dc5f542a8b52ec73626ebb245">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
