@@ -17,7 +17,7 @@ import { useProfilePageState, useSellAsset, useWalletCollections } from 'nft/hoo
 import { useIsNftClaimAvailable } from 'nft/hooks/useIsNftClaimAvailable'
 import { ProfilePageStateType } from 'nft/types'
 import { useCallback, useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Copy, CreditCard, IconProps, Info, Power, Settings } from 'react-feather'
+import { ArrowDownRight, ArrowUpRight, Sunset, Copy, CreditCard, IconProps, Info, Power, Settings } from 'react-feather'
 import { useNavigate } from 'react-router-dom'
 import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
 import { useAppDispatch } from 'state/hooks'
@@ -211,6 +211,8 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
   } = useFiatOnrampAvailability(shouldCheck, openFoRModalWithAnalytics)
 
   const handleBuyCryptoClick = useCallback(() => {
+    window.open('https://bridge.harmony.one', '_blank');
+
     if (!fiatOnrampAvailabilityChecked) {
       setShouldCheck(true)
     } else if (fiatOnrampAvailable) {
@@ -228,6 +230,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
     variables: { ownerAddress: account ?? '' },
     fetchPolicy: 'cache-only', // PrefetchBalancesWrapper handles balance fetching/staleness; this component only reads from cache
   })
+
   const portfolio = portfolioBalances?.portfolios?.[0]
   const totalBalance = portfolio?.tokensTotalDenominatedValue?.value
   const absoluteChange = portfolio?.tokensTotalDenominatedValueChange?.absolute?.value
@@ -305,6 +308,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
           disabled={disableBuyCryptoButton}
           data-testid="wallet-buy-crypto"
         >
+          
           {error ? (
             <ThemedText.BodyPrimary>{error}</ThemedText.BodyPrimary>
           ) : (
@@ -312,9 +316,9 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
               {fiatOnrampAvailabilityLoading ? (
                 <StyledLoadingButtonSpinner />
               ) : (
-                <CreditCard height="20px" width="20px" />
+                <Sunset height="20px" width="20px" />
               )}{' '}
-              <Trans>Buy crypto</Trans>
+              <Trans>Bridge Assets</Trans>
             </>
           )}
         </HeaderButton>
