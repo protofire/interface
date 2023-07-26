@@ -25,7 +25,7 @@ const CLASSIC_SWAP_QUERY_PARAMS = {
 export const routingApiV2 = createApi({
   reducerPath: 'routingApiV2',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://25yyxm5tub.execute-api.us-east-1.amazonaws.com/prod/',
+    baseUrl: 'https://api.swap.country/',
   }),
   endpoints: (build) => ({
     getQuote: build.query<TradeResult, GetQuoteArgs>({
