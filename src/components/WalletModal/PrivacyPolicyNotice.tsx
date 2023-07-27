@@ -16,7 +16,7 @@ const LAST_UPDATED_DATE = '11.17.22'
 export default function PrivacyPolicyNotice() {
   return (
     <ThemedText.Caption color="textSecondary">
-      <Trans>By connecting a wallet, you agree to Protofire&apos;s</Trans>{' '}
+      <Trans>By connecting a wallet, you agree to </Trans>{' '}
       <StyledLink href="https://doc.swap.country/terms-of-service-e096ae912a54464084a176f98127bf35">
         <Trans>Terms of Service</Trans>{' '}
       </StyledLink>
@@ -29,7 +29,6 @@ export default function PrivacyPolicyNotice() {
         <Trans>Last Updated</Trans>
         {/* {` ${LAST_UPDATED_DATE})`} */}
         {` 7.19.23)`}
-
       </LastUpdatedText>
     </ThemedText.Caption>
   )
