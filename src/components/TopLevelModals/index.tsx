@@ -3,6 +3,7 @@ import UniwalletModal from 'components/AccountDrawer/UniwalletModal'
 // import UniswapWalletBanner from 'components/Banner/UniswapWalletBanner'
 import AddressClaimModal from 'components/claim/AddressClaimModal'
 import ConnectedAccountBlocked from 'components/ConnectedAccountBlocked'
+import SwapCountryToSModal from 'components/SwapCountryToSModal'
 // import FiatOnrampModal from 'components/FiatOnrampModal'
 // import useAccountRiskCheck from 'hooks/useAccountRiskCheck'
 import { lazy } from 'react'
@@ -28,6 +29,7 @@ export default function TopLevelModals() {
       <ConnectedAccountBlocked account={account} isOpen={accountBlocked} />
       <Bag />
       <UniwalletModal />
+      <SwapCountryToSModal />
       {/* <UniswapWalletBanner /> */}
       <TransactionCompleteModal />
       {/* <AirdropModal /> */}
