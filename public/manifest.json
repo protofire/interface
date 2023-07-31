@@ -23,7 +23,7 @@
   "orientation": "portrait",
   "name": "Swap",
   "description": "Swap or provide liquidity on Swap",
-  "iconPath": "./images/256x256_App_Icon_Pink.svg",
+  "iconPath": "./images/256x256_App_Icon.png",
   "short_name": "Swap",
   "start_url": ".",
   "theme_color": "#FC72FF"
