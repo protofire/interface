@@ -1,8 +1,10 @@
+import { ChainId } from '@uniswap/sdk-core'
 import bnbCircleLogoUrl from 'assets/images/bnbCircle.svg'
-import celoCircleLogoUrl from 'assets/images/celoCircle.png'
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import polygonCircleLogoUrl from 'assets/images/polygonCircle.png'
 import { default as arbitrumCircleLogoUrl, default as arbitrumLogoUrl } from 'assets/svg/arbitrum_logo.svg'
+import avaxLogo from 'assets/svg/avax_logo.svg'
+import avaxSquareLogo from 'assets/svg/avax_square_logo.svg'
 import bnbSquareLogoUrl from 'assets/svg/bnb_square_logo.svg'
 import bnbLogo from 'assets/svg/bnb-logo.svg'
 import celoLogo from 'assets/svg/celo_logo.svg'
@@ -15,8 +17,8 @@ import ms from 'ms.macro'
 import { darkTheme } from 'theme/colors'
 import harmonyLogo from 'assets/svg/harmony_logo.svg'
 
-import { SupportedChainId, SupportedL1ChainId, SupportedL2ChainId } from './chains'
-import { ARBITRUM_LIST, CELO_LIST, HARMONY_MAINNET_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST } from './lists'
+import { SupportedL1ChainId, SupportedL2ChainId } from './chains'
+import { ARBITRUM_LIST, AVALANCHE_LIST, CELO_LIST, HARMONY_MAINNET_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST } from './lists'
 
 export const AVERAGE_L1_BLOCK_TIME = ms`12s`
 
@@ -62,8 +64,7 @@ type ChainInfoMap = { readonly [chainId: number]: L1ChainInfo | L2ChainInfo } & 
 } & { readonly [chainId in SupportedL1ChainId]: L1ChainInfo }
 
 const CHAIN_INFO: ChainInfoMap = {
-  
-  [SupportedChainId.MAINNET]: {
+  [ChainId.MAINNET]: {
     networkType: NetworkType.L1,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://etherscan.io/',
@@ -73,7 +74,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     color: darkTheme.chain_1,
   },
-  [SupportedChainId.GOERLI]: {
+  [ChainId.GOERLI]: {
     networkType: NetworkType.L1,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://goerli.etherscan.io/',
@@ -83,7 +84,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Görli Ether', symbol: 'görETH', decimals: 18 },
     color: darkTheme.chain_5,
   },
-  [SupportedChainId.SEPOLIA]: {
+  [ChainId.SEPOLIA]: {
     networkType: NetworkType.L1,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://sepolia.etherscan.io/',
@@ -93,7 +94,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Sepolia Ether', symbol: 'SepoliaETH', decimals: 18 },
     color: darkTheme.chain_5,
   },
-  [SupportedChainId.OPTIMISM]: {
+  [ChainId.OPTIMISM]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms`25m`,
     bridge: 'https://app.optimism.io/bridge',
@@ -112,7 +113,7 @@ const CHAIN_INFO: ChainInfoMap = {
     color: darkTheme.chain_10,
     backgroundColor: darkTheme.chain_10_background,
   },
-  [SupportedChainId.OPTIMISM_GOERLI]: {
+  [ChainId.OPTIMISM_GOERLI]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms`25m`,
     bridge: 'https://app.optimism.io/bridge',
@@ -127,7 +128,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Optimism Goerli Ether', symbol: 'görOpETH', decimals: 18 },
     color: darkTheme.chain_420,
   },
-  [SupportedChainId.ARBITRUM_ONE]: {
+  [ChainId.ARBITRUM_ONE]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://bridge.arbitrum.io/',
@@ -143,7 +144,7 @@ const CHAIN_INFO: ChainInfoMap = {
     color: darkTheme.chain_42,
     backgroundColor: darkTheme.chain_42161_background,
   },
-  [SupportedChainId.ARBITRUM_GOERLI]: {
+  [ChainId.ARBITRUM_GOERLI]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://bridge.arbitrum.io/',
@@ -157,7 +158,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Goerli Arbitrum Ether', symbol: 'goerliArbETH', decimals: 18 },
     color: darkTheme.chain_421613,
   },
-  [SupportedChainId.POLYGON]: {
+  [ChainId.POLYGON]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://wallet.polygon.technology/polygon/bridge',
@@ -172,7 +173,7 @@ const CHAIN_INFO: ChainInfoMap = {
     color: darkTheme.chain_137,
     backgroundColor: darkTheme.chain_137_background,
   },
-  [SupportedChainId.POLYGON_MUMBAI]: {
+  [ChainId.POLYGON_MUMBAI]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://wallet.polygon.technology/bridge',
@@ -183,7 +184,7 @@ const CHAIN_INFO: ChainInfoMap = {
     logoUrl: polygonMaticLogo,
     nativeCurrency: { name: 'Polygon Mumbai Matic', symbol: 'mMATIC', decimals: 18 },
   },
-  [SupportedChainId.CELO]: {
+  [ChainId.CELO]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://www.portalbridge.com/#/transfer',
@@ -192,12 +193,12 @@ const CHAIN_INFO: ChainInfoMap = {
     infoLink: 'https://info.uniswap.org/#/celo/',
     label: 'Celo',
     logoUrl: celoLogo,
-    circleLogoUrl: celoCircleLogoUrl,
+    circleLogoUrl: celoLogo,
     squareLogoUrl: celoSquareLogoUrl,
     nativeCurrency: { name: 'Celo', symbol: 'CELO', decimals: 18 },
     defaultListUrl: CELO_LIST,
   },
-  [SupportedChainId.CELO_ALFAJORES]: {
+  [ChainId.CELO_ALFAJORES]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://www.portalbridge.com/#/transfer',
@@ -209,7 +210,7 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Celo', symbol: 'CELO', decimals: 18 },
     defaultListUrl: CELO_LIST,
   },
-  [SupportedChainId.BNB]: {
+  [ChainId.BNB]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://cbridge.celer.network/1/56',
@@ -226,7 +227,7 @@ const CHAIN_INFO: ChainInfoMap = {
     backgroundColor: darkTheme.chain_56_background,
   },
  
-  [SupportedChainId.HARMONY]: {
+  [ChainId.HARMONY]: {
     networkType: NetworkType.L1,
     blockWaitMsBeforeWarning: ms`10m`,
     bridge: 'https://bridge.harmony.one/one',
@@ -238,20 +239,36 @@ const CHAIN_INFO: ChainInfoMap = {
     logoUrl: harmonyLogo,
     defaultListUrl: HARMONY_MAINNET_LIST,
   },
-}
+  [ChainId.AVALANCHE]: {
+    networkType: NetworkType.L1,
+    blockWaitMsBeforeWarning: ms`10m`,
+    bridge: 'https://core.app/bridge/',
+    docs: 'https://docs.avax.network/',
+    explorer: 'https://snowtrace.io/',
+    infoLink: 'https://info.uniswap.org/#/avax/', // TODO(WEB-2336): Add avax support to info site
+    label: 'Avalanche',
+    logoUrl: avaxLogo,
+    circleLogoUrl: avaxLogo,
+    squareLogoUrl: avaxSquareLogo,
+    nativeCurrency: { name: 'AVAX', symbol: 'AVAX', decimals: 18 },
+    defaultListUrl: AVALANCHE_LIST,
+    color: darkTheme.chain_43114,
+    backgroundColor: darkTheme.chain_43114_background,
+  },
+} as const
 
 export function getChainInfo(chainId: SupportedL1ChainId): L1ChainInfo
 export function getChainInfo(chainId: SupportedL2ChainId): L2ChainInfo
-export function getChainInfo(chainId: SupportedChainId): L1ChainInfo | L2ChainInfo
+export function getChainInfo(chainId: ChainId): L1ChainInfo | L2ChainInfo
 export function getChainInfo(
-  chainId: SupportedChainId | SupportedL1ChainId | SupportedL2ChainId | number | undefined
+  chainId: ChainId | SupportedL1ChainId | SupportedL2ChainId | number | undefined
 ): L1ChainInfo | L2ChainInfo | undefined
 
 /**
  * Overloaded method for returning ChainInfo given a chainID
  * Return type varies depending on input type:
  * number | undefined -> returns chaininfo | undefined
- * SupportedChainId -> returns L1ChainInfo | L2ChainInfo
+ * ChainId -> returns L1ChainInfo | L2ChainInfo
  * SupportedL1ChainId -> returns L1ChainInfo
  * SupportedL2ChainId -> returns L2ChainInfo
  */
@@ -262,7 +279,7 @@ export function getChainInfo(chainId: any): any {
   return undefined
 }
 
-const MAINNET_INFO = CHAIN_INFO[SupportedChainId.HARMONY]
+const MAINNET_INFO = CHAIN_INFO[ChainId.HARMONY]
 export function getChainInfoOrDefault(chainId: number | undefined) {
   return getChainInfo(chainId) ?? MAINNET_INFO
 }

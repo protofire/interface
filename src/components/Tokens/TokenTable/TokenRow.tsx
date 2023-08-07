@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro'
-import { sendAnalyticsEvent } from '@uniswap/analytics'
 import { InterfaceEventName } from '@uniswap/analytics-events'
 import { formatNumber, formatUSDPrice, NumberType } from '@uniswap/conedison/format'
 import { ParentSize } from '@visx/responsive'
+import { sendAnalyticsEvent } from 'analytics'
 import SparklineChart from 'components/Charts/SparklineChart'
 import QueryTokenLogo from 'components/Logo/QueryTokenLogo'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { SparklineMap, TopToken } from 'graphql/data/TopTokens'
-import { CHAIN_NAME_TO_CHAIN_ID, getTokenDetailsURL, validateUrlChainParam } from 'graphql/data/util'
+import { getTokenDetailsURL, supportedChainIdFromGQLChain, validateUrlChainParam } from 'graphql/data/util'
 import { useAtomValue } from 'jotai/utils'
 import { ForwardedRef, forwardRef } from 'react'
 import { CSSProperties, ReactNode } from 'react'
@@ -41,7 +41,7 @@ const Cell = styled.div`
 const StyledTokenRow = styled.div<{
   first?: boolean
   last?: boolean
-  loading?: boolean
+  $loading?: boolean
 }>`
   background-color: transparent;
   display: grid;
@@ -66,8 +66,8 @@ const StyledTokenRow = styled.div<{
   transition-duration: ${({ theme }) => theme.transition.duration.fast};
 
   &:hover {
-    ${({ loading, theme }) =>
-      !loading &&
+    ${({ $loading, theme }) =>
+      !$loading &&
       css`
         background-color: ${theme.hoverDefault};
       `}
@@ -349,7 +349,7 @@ function TokenRow({
   first?: boolean
   header: boolean
   listNumber: ReactNode
-  loading?: boolean
+  $loading?: boolean
   tvl: ReactNode
   price: ReactNode
   percentChange: ReactNode
@@ -404,7 +404,7 @@ export function LoadingRow(props: { first?: boolean; last?: boolean }) {
     <TokenRow
       header={false}
       listNumber={<SmallLoadingBubble />}
-      loading
+      $loading
       tokenInfo={
         <>
           <IconLoadingBubble />
@@ -435,7 +435,7 @@ export const LoadedRow = forwardRef((props: LoadedRowProps, ref: ForwardedRef<HT
   const filterString = useAtomValue(filterStringAtom)
 
   const filterNetwork = validateUrlChainParam(useParams<{ chainName?: string }>().chainName?.toUpperCase())
-  const chainId = CHAIN_NAME_TO_CHAIN_ID[filterNetwork]
+  const chainId = supportedChainIdFromGQLChain(filterNetwork)
   const timePeriod = useAtomValue(filterTimeAtom)
   const delta = token.market?.pricePercentChange?.value
   const arrow = getDeltaArrow(delta)
@@ -453,9 +453,12 @@ export const LoadedRow = forwardRef((props: LoadedRowProps, ref: ForwardedRef<HT
     search_token_address_input: filterString,
   }
 
+  // A simple 0 price indicates the price is not currently available from the api
+  const price = token.market?.price?.value === 0 ? '-' : formatUSDPrice(token.market?.price?.value)
+
   // TODO: currency logo sizing mobile (32px) vs. desktop (24px)
   return (
-    <div ref={ref} data-testid={`token-table-row-${token.symbol}`}>
+    <div ref={ref} data-testid={`token-table-row-${token.address}`}>
       <StyledLink
         to={getTokenDetailsURL(token)}
         onClick={() =>
@@ -477,7 +480,7 @@ export const LoadedRow = forwardRef((props: LoadedRowProps, ref: ForwardedRef<HT
           price={
             <ClickableContent>
               <PriceInfoCell>
-                {formatUSDPrice(token.market?.price?.value)}
+                {price}
                 <PercentChangeInfoCell>
                   <ArrowCell>{smallArrow}</ArrowCell>
                   <DeltaText delta={delta}>{formattedDelta}</DeltaText>

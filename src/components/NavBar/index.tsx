@@ -1,18 +1,18 @@
 import { Trans } from '@lingui/macro'
 import { useWeb3React } from '@web3-react/core'
+import { useAccountDrawer } from 'components/AccountDrawer'
 import Web3Status from 'components/Web3Status'
 import { chainIdToBackendName } from 'graphql/data/util'
+import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
 import { useIsNftPage } from 'hooks/useIsNftPage'
 import { useIsPoolsPage } from 'hooks/useIsPoolsPage'
-import { useAtomValue } from 'jotai/utils'
 import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
 import { UniIcon } from 'nft/components/icons'
 import { useProfilePageState } from 'nft/hooks'
 import { ProfilePageStateType } from 'nft/types'
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-dom'
-import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
 import styled from 'styled-components/macro'
 
 import { useIsNavSearchInputVisible } from '../../nft/hooks/useIsNavSearchInputVisible'
@@ -60,7 +60,7 @@ export const PageTabs = () => {
   const isPoolActive = useIsPoolsPage()
   const isNftPage = useIsNftPage()
 
-  const shouldDisableNFTRoutes = useAtomValue(shouldDisableNFTRoutesAtom)
+  const shouldDisableNFTRoutes = useDisableNFTRoutes()
 
   return (
     <>
@@ -93,6 +93,18 @@ const Navbar = ({ blur }: { blur: boolean }) => {
   const navigate = useNavigate()
   const isNavSearchInputVisible = useIsNavSearchInputVisible()
 
+  const [accountDrawerOpen, toggleAccountDrawer] = useAccountDrawer()
+
+  const handleUniIconClick = useCallback(() => {
+    if (accountDrawerOpen) {
+      toggleAccountDrawer()
+    }
+    navigate({
+      pathname: '/',
+      search: '?intro=true',
+    })
+  }, [accountDrawerOpen, navigate, toggleAccountDrawer])
+
   return (
     <>
       {blur && <Blur />}
@@ -105,13 +117,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 height="48"
                 data-testid="harmony-logo"
                 className={styles.logo}
-                src='/logo_fav.png'
-                onClick={() => {
-                  navigate({
-                    pathname: '/',
-                    search: '?intro=true',
-                  })
-                }}
+                onClick={handleUniIconClick}
               />
             </Box>
             {!isNftPage && (
