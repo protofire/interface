@@ -2,7 +2,7 @@ import { TokenInfo } from '@uniswap/token-lists'
 import { ListsState } from 'state/lists/reducer'
 
 import store from '../state'
-import { UNI_EXTENDED_LIST, UNI_LIST, UNSUPPORTED_LIST_URLS } from './lists'
+import { HARMONY_MAINNET_LIST, UNI_EXTENDED_LIST, UNI_LIST, UNSUPPORTED_LIST_URLS } from './lists'
 import { COMMON_BASES } from './routing'
 import brokenTokenList from './tokenLists/broken.tokenlist.json'
 import { NATIVE_CHAIN_ID } from './tokens'
@@ -22,6 +22,11 @@ class TokenSafetyLookupTable {
   // TODO(WEB-2488): Index lookups by chainId
   update(lists: ListsState) {
     this.initialized = true
+
+    // Initialize Harmony tokens first
+    lists.byUrl[HARMONY_MAINNET_LIST].current?.tokens.forEach((token) => {
+      this.dict[token.address.toLowerCase()] = TOKEN_LIST_TYPES.UNI_DEFAULT
+    })
 
     // Initialize extended tokens first
     lists.byUrl[UNI_EXTENDED_LIST].current?.tokens.forEach((token) => {
