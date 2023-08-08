@@ -73,5 +73,5 @@ export const RPC_PROVIDERS: { [key in SupportedChainsType]: StaticJsonRpcProvide
   [ChainId.AVALANCHE]: new AppJsonRpcProvider(ChainId.AVALANCHE),
   [ChainId.BASE]: new AppJsonRpcProvider(ChainId.BASE),
   [ChainId.BASE_GOERLI]: new AppJsonRpcProvider(ChainId.BASE_GOERLI),
-  [ChainId.HARMONY]: new AppJsonRpcProvider(SupportedChainId.HARMONY),
+  [ChainId.HARMONY]: new AppJsonRpcProvider(ChainId.HARMONY),
 }

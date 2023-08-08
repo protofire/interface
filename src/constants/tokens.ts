@@ -431,8 +431,8 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     ChainId.HARMONY,
     '0xcf664087a5bb0237a0bad6742852ec6c8d69a27a',
     18,
-    'WBNB',
-    'Wrapped BNB'
+    'WONE',
+    'Wrapped ONE'
   ),
 }
 

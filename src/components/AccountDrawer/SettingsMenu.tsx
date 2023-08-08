@@ -66,8 +66,8 @@ export default function SettingsMenu({ onClose }: { onClose: () => void }) {
       </ThemeToggleContainer> */}
       <ToggleWrapper>
         <SmallBalanceToggle />
-        <AnalyticsToggle />
-        <TestnetsToggle />
+        {/* <AnalyticsToggle />
+        <TestnetsToggle /> */}
       </ToggleWrapper>
 
       <SectionTitle data-testid="wallet-header">

@@ -117,7 +117,13 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 height="48"
                 data-testid="harmony-logo"
                 className={styles.logo}
-                onClick={handleUniIconClick}
+                src='/logo_fav.png'
+                onClick={() => {
+                  navigate({
+                    pathname: '/',
+                    search: '?intro=true',
+                  })
+                }}
               />
             </Box>
             {!isNftPage && (

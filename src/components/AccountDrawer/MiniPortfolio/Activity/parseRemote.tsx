@@ -48,7 +48,7 @@ const COMMON_CONTRACTS: { [key: string]: Partial<Activity> | undefined } = {
     logos: [UNI_IMG],
   },
   // TODO(cartcrom): Add permit2-specific logo
-  '0x000000000022d473030f116ddee9f6b43ac78ba3': {
+  '0x00000000BD0047637ac6BA3af44b52005ceD9557': {
     title: t`Permit2`,
     descriptor: t`Uniswap Protocol`,
     logos: [UNI_IMG],

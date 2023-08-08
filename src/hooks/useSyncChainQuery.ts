@@ -1,4 +1,5 @@
 import { useWeb3React } from '@web3-react/core'
+import { ChainId } from '@uniswap/sdk-core'
 import { CHAIN_IDS_TO_NAMES, isSupportedChain } from 'constants/chains'
 import { ParsedQs } from 'qs'
 import { useEffect, useRef } from 'react'
@@ -34,7 +35,7 @@ export default function useSyncChainQuery() {
     }
   }, [account, chainId])
 
-  const urlChainId = SupportedChainId.HARMONY; // getParsedChainId(parsedQs)
+  const urlChainId = ChainId.HARMONY; // getParsedChainId(parsedQs)
 
   const selectChain = useSelectChain()
 
