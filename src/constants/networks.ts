@@ -101,7 +101,7 @@ export const FALLBACK_URLS = {
     'https://rpc.ankr.com/bsc',
   ],
   [ChainId.HARMONY]: [
-    'https://api.harmony.one'
+    'https://api.harmony.one',
     'https://api.s0.b.hmny.io',
   ],
   [ChainId.AVALANCHE]: [

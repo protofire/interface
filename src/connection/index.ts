@@ -11,7 +11,6 @@ import COINBASE_ICON from 'assets/wallets/coinbase-icon.svg'
 import UNIWALLET_ICON from 'assets/wallets/uniswap-wallet-icon.png'
 import WALLET_CONNECT_ICON from 'assets/wallets/walletconnect-icon.svg'
 import { isMobile, isNonIOSPhone } from 'utils/userAgent'
-import { UniwalletConnect as UniwalletWCV2Connect, WalletConnectV2 } from './WalletConnectV2'
 
 import { RPC_URLS } from '../constants/networks'
 import { RPC_PROVIDERS } from '../constants/providers'

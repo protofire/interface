@@ -64,7 +64,7 @@ export default function SettingsMenu({ onClose }: { onClose: () => void }) {
       {/* <ThemeToggleContainer>
         <ThemeToggle />
       </ThemeToggleContainer> */}
-      <BalanceToggleContainer>
+      <ToggleWrapper>
         <SmallBalanceToggle />
         <AnalyticsToggle />
         <TestnetsToggle />
