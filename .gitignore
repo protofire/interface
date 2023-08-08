@@ -19,6 +19,7 @@ schema.graphql
 # testing
 /coverage
 /cache
+/functions/coverage
 
 # builds
 /build
@@ -51,3 +52,5 @@ cypress/videos
 cypress/screenshots
 
 .vercel
+
+.wrangler

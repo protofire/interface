@@ -257,6 +257,12 @@ exports[`LoadedRow.tsx renders a row 1`] = `
   }
 }
 
+@media only screen and (max-width:396px) {
+  .c4 {
+    min-width: 200px;
+  }
+}
+
 @media only screen and (max-width:540px) {
   .c21 {
     display: none;
@@ -337,7 +343,7 @@ exports[`LoadedRow.tsx renders a row 1`] = `
   >
     <a
       class="c0"
-      href="#/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+      href="/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     >
       <div
         class="c1"
