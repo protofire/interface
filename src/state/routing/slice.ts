@@ -96,7 +96,7 @@ function getRoutingAPIConfig(args: GetQuoteArgs): RoutingConfig {
 export const routingApi = createApi({
   reducerPath: 'routingApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.swap.country/',
+    baseUrl: UNISWAP_API_URL,
   }),
   endpoints: (build) => ({
     getQuote: build.query<TradeResult, GetQuoteArgs>({
