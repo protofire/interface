@@ -108,10 +108,7 @@ export const FALLBACK_URLS = {
     'https://bsc-dataseed4.defibit.io',
     'https://rpc.ankr.com/bsc',
   ],
-  [ChainId.HARMONY]: [
-    'https://api.harmony.one',
-    'https://api.s0.b.hmny.io',
-  ],
+  [ChainId.HARMONY]: ['https://api.harmony.one', 'https://api.s0.b.hmny.io'],
   [ChainId.AVALANCHE]: [
     // "Safe" URLs
     'https://api.avax.network/ext/bc/C/rpc',
@@ -167,8 +164,5 @@ export const RPC_URLS = {
   [ChainId.AVALANCHE]: [`https://avalanche-mainnet.infura.io/v3/${INFURA_KEY}`, ...FALLBACK_URLS[ChainId.AVALANCHE]],
   [ChainId.BASE]: [`https://base-mainnet.infura.io/v3/${INFURA_KEY}`, ...FALLBACK_URLS[ChainId.BASE]],
   [ChainId.BASE_GOERLI]: [`https://base-goerli.infura.io/v3/${INFURA_KEY}`, ...FALLBACK_URLS[ChainId.BASE_GOERLI]],
-  [ChainId.HARMONY]: [
-    ...FALLBACK_URLS[ChainId.HARMONY],
-  ],
-
+  [ChainId.HARMONY]: [...FALLBACK_URLS[ChainId.HARMONY]],
 }

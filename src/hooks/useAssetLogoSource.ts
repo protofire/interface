@@ -1,6 +1,5 @@
 import tokenLogoLookup from 'constants/tokenLogoLookup'
 import { isCelo, nativeOnChain } from 'constants/tokens'
-import { checkWarning, WARNING_LEVEL } from 'constants/tokenSafety'
 import { chainIdToNetworkName, getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import uriToHttp from 'lib/utils/uriToHttp'
 import { useCallback, useEffect, useState } from 'react'
@@ -55,7 +54,7 @@ function getInitialUrl(
 
   if (checksummedAddress) {
     // return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${checksummedAddress}/logo.png`
-    const uris = tokenLogoLookup.getIcons(address, chainId) ?? [];
+    const uris = tokenLogoLookup.getIcons(address, chainId) ?? []
 
     return uris[0]
   } else {
@@ -69,8 +68,7 @@ export default function useAssetLogoSource(
   isNative?: boolean,
   backupImg?: string | null
 ): [string | undefined, () => void] {
-
-  const hideLogo = false; // Boolean(address && checkWarning(address, chainId)?.level === WARNING_LEVEL.BLOCKED)
+  const hideLogo = false // Boolean(address && checkWarning(address, chainId)?.level === WARNING_LEVEL.BLOCKED)
 
   const [current, setCurrent] = useState<string | undefined>(
     hideLogo ? undefined : getInitialUrl(address, chainId, isNative, backupImg)

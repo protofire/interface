@@ -1,10 +1,9 @@
-import { TransactionStatus, useActivityQuery } from 'graphql/data/__generated__/types-and-hooks'
-import { useEffect, useMemo } from 'react'
+import { TransactionStatus } from 'graphql/data/__generated__/types-and-hooks'
+import { useMemo } from 'react'
 import { usePendingOrders } from 'state/signatures/hooks'
-import { usePendingTransactions, useTransactionCanceller } from 'state/transactions/hooks'
+import { usePendingTransactions } from 'state/transactions/hooks'
 
 import { useLocalActivities } from './parseLocal'
-import { parseRemoteActivities } from './parseRemote'
 import { Activity, ActivityMap } from './types'
 
 /** Detects transactions from same account with the same nonce and different hash */
@@ -55,29 +54,39 @@ function combineActivities(localMap: ActivityMap = {}, remoteMap: ActivityMap = 
 }
 
 export function useAllActivities(account: string) {
-  const { data, loading, refetch } = useActivityQuery({
-    variables: { account },
-    errorPolicy: 'all',
-    fetchPolicy: 'cache-first',
-  })
+  // UPDATE: remove remote data fetching for activity unrelated to Harmony chain
+  // const { data, loading, refetch } = useActivityQuery({
+  //   variables: { account },
+  //   errorPolicy: 'all',
+  //   fetchPolicy: 'cache-first',
+  // })
+
+  const [loading, refetch] = [false, undefined]
 
   const localMap = useLocalActivities(account)
-  const remoteMap = useMemo(() => parseRemoteActivities(data?.portfolios?.[0].assetActivities), [data?.portfolios])
-  const updateCancelledTx = useTransactionCanceller()
 
-  /* Updates locally stored pendings tx's when remote data contains a conflicting cancellation tx */
-  useEffect(() => {
-    if (!remoteMap) return
+  // const remoteMap = useMemo(() => parseRemoteActivities(data?.portfolios?.[0].assetActivities), [data?.portfolios])
 
-    Object.values(localMap).forEach((localActivity) => {
-      if (!localActivity) return
+  // UPDATE: remote data is absent for Harmony chain, initalizing empty object.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const remoteMap: ActivityMap = {}
 
-      const cancelHash = findCancelTx(localActivity, remoteMap, account)
+  // const updateCancelledTx = useTransactionCanceller()
 
-      if (cancelHash) updateCancelledTx(localActivity.hash, localActivity.chainId, cancelHash)
-    })
-  }, [account, localMap, remoteMap, updateCancelledTx])
+  // /* Updates locally stored pendings tx's when remote data contains a conflicting cancellation tx */
+  // useEffect(() => {
+  //   if (!remoteMap) return
 
+  //   Object.values(localMap).forEach((localActivity) => {
+  //     if (!localActivity) return
+
+  //     const cancelHash = findCancelTx(localActivity, remoteMap, account)
+
+  //     if (cancelHash) updateCancelledTx(localActivity.hash, localActivity.chainId, cancelHash)
+  //   })
+  // }, [account, localMap, remoteMap, updateCancelledTx])
+
+  // UPDATE: remove remote activities and leave only local Harmony related transactions.
   const combinedActivities = useMemo(
     () => (remoteMap ? combineActivities(localMap, remoteMap) : undefined),
     [localMap, remoteMap]

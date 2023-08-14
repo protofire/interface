@@ -29,7 +29,7 @@ export function chainIdToNetworkName(networkId: ChainId): Network {
       return 'celo'
     case ChainId.AVALANCHE:
       return 'avalanchec'
-    case ChainId.HARMONY:  
+    case ChainId.HARMONY:
       return 'harmony'
     default:
       return 'ethereum'
@@ -49,7 +49,7 @@ export function getNativeLogoURI(chainId: ChainId = ChainId.MAINNET): string {
     case ChainId.AVALANCHE:
       return AvaxLogo
     case ChainId.HARMONY:
-      return "https://harmony.one/logo";
+      return HarmonyLogo
     default:
       return EthereumLogo
   }

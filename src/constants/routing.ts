@@ -4,6 +4,9 @@ import { ChainId, Currency, Token } from '@uniswap/sdk-core'
 import {
   AMPL,
   ARB,
+  ARB_DAI_HARMONY,
+  ARB_USDC_HARMONY,
+  ARB_USDT_HARMONY,
   BTC_BSC,
   BUSD_BSC,
   CAKE_BSC,
@@ -19,6 +22,7 @@ import {
   DAI_OPTIMISM,
   DAI_POLYGON,
   ETH_BSC,
+  ETH_HARMONY,
   ETH2X_FLI,
   FEI,
   FRAX,
@@ -39,6 +43,7 @@ import {
   USDC_AVALANCHE,
   USDC_BASE,
   USDC_BSC,
+  USDC_HARMONY,
   USDC_MAINNET,
   USDC_OPTIMISM,
   USDC_POLYGON,
@@ -46,23 +51,18 @@ import {
   USDT_ARBITRUM_ONE,
   USDT_AVALANCHE,
   USDT_BSC,
+  USDT_HARMONY,
   USDT_OPTIMISM,
   USDT_POLYGON,
   WBTC,
   WBTC_ARBITRUM_ONE,
+  WBTC_HARMONY,
   WBTC_OPTIMISM,
   WBTC_POLYGON,
   WETH_AVALANCHE,
   WETH_POLYGON,
   WETH_POLYGON_MUMBAI,
   WRAPPED_NATIVE_CURRENCY,
-  WBTC_HARMONY,
-  ETH_HARMONY,
-  USDT_HARMONY,
-  USDC_HARMONY,
-  ARB_USDC_HARMONY,
-  ARB_USDT_HARMONY,
-  ARB_DAI_HARMONY
 } from './tokens'
 
 type ChainTokenList = {
@@ -123,7 +123,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     USDC_HARMONY,
     ARB_USDC_HARMONY,
     ARB_USDT_HARMONY,
-    ARB_DAI_HARMONY
+    ARB_DAI_HARMONY,
   ],
 }
 export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: Token[] } } = {
@@ -165,14 +165,14 @@ export const COMMON_BASES: ChainCurrencyList = {
   [ChainId.SEPOLIA]: [nativeOnChain(ChainId.SEPOLIA), WRAPPED_NATIVE_CURRENCY[ChainId.SEPOLIA] as Token],
 
   [ChainId.HARMONY]: [
-    nativeOnChain(ChainId.HARMONY), 
+    nativeOnChain(ChainId.HARMONY),
     WBTC_HARMONY,
     ETH_HARMONY,
     USDT_HARMONY,
     USDC_HARMONY,
     ARB_USDC_HARMONY,
     ARB_USDT_HARMONY,
-    ARB_DAI_HARMONY
+    ARB_DAI_HARMONY,
   ],
 
   [ChainId.ARBITRUM_ONE]: [
@@ -241,9 +241,8 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDC_HARMONY,
     ARB_USDC_HARMONY,
     ARB_USDT_HARMONY,
-    ARB_DAI_HARMONY
+    ARB_DAI_HARMONY,
   ],
-  
 }
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [ChainId.MAINNET]: [

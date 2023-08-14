@@ -47,13 +47,7 @@ export const WBTC_HARMONY = new Token(
   'Wrapped BTC'
 )
 
-export const ETH_HARMONY = new Token(
-  ChainId.HARMONY,
-  '0x4cC435d7b9557d54d6EF02d69Bbf72634905Bf11',
-  18,
-  '1ETH',
-  'ETH'
-)
+export const ETH_HARMONY = new Token(ChainId.HARMONY, '0x4cC435d7b9557d54d6EF02d69Bbf72634905Bf11', 18, '1ETH', 'ETH')
 
 export const USDT_HARMONY = new Token(
   ChainId.HARMONY,
@@ -557,7 +551,7 @@ const cachedNativeCurrency: { [chainId: number]: NativeCurrency | Token } = {}
 export function nativeOnChain(chainId: number): NativeCurrency | Token {
   if (cachedNativeCurrency[chainId]) return cachedNativeCurrency[chainId]
 
-  chainId = chainId ||  ChainId.HARMONY;
+  chainId = chainId || ChainId.HARMONY
 
   let nativeCurrency: NativeCurrency | Token
   if (isMatic(chainId)) {

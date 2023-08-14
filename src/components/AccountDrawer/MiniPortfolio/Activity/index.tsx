@@ -4,10 +4,9 @@ import Column from 'components/Column'
 import { LoadingBubble } from 'components/Tokens/loading'
 import { getYear, isSameDay, isSameMonth, isSameWeek, isSameYear } from 'date-fns'
 import { TransactionStatus } from 'graphql/data/__generated__/types-and-hooks'
-import { PollingInterval } from 'graphql/data/util'
 import { atom, useAtom } from 'jotai'
 import { EmptyWalletModule } from 'nft/components/profile/view/EmptyWalletContent'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import styled from 'styled-components/macro'
 import { ThemedText } from 'theme'
 
@@ -89,16 +88,17 @@ export function ActivityTab({ account }: { account: string }) {
 
   const { activities, loading, refetch } = useAllActivities(account)
 
+  // UPDATE: removing refetch option from remote backend to avoid external data population.
   // We only refetch remote activity if the user renavigates to the activity tab by changing tabs or opening the drawer
-  useEffect(() => {
-    const currentTime = Date.now()
-    if (!lastFetched) {
-      setLastFetched(currentTime)
-    } else if (drawerOpen && lastFetched && currentTime - lastFetched > PollingInterval.Slow) {
-      refetch()
-      setLastFetched(currentTime)
-    }
-  }, [drawerOpen, lastFetched, refetch, setLastFetched])
+  // useEffect(() => {
+  //   const currentTime = Date.now()
+  //   if (!lastFetched) {
+  //     setLastFetched(currentTime)
+  //   } else if (drawerOpen && lastFetched && currentTime - lastFetched > PollingInterval.Slow) {
+  //     refetch()
+  //     setLastFetched(currentTime)
+  //   }
+  // }, [drawerOpen, lastFetched, refetch, setLastFetched])
 
   const activityGroups = useMemo(() => createGroups(activities), [activities])
 
