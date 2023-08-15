@@ -49,7 +49,7 @@ export function getNativeLogoURI(chainId: ChainId = ChainId.MAINNET): string {
     case ChainId.AVALANCHE:
       return AvaxLogo
     case ChainId.HARMONY:
-      return HarmonyLogo
+      return "https://harmony.one/logo"
     default:
       return EthereumLogo
   }
