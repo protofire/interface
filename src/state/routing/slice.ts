@@ -28,7 +28,7 @@ if (UNISWAP_API_URL === undefined) {
 export const INTERNAL_ROUTER_PREFERENCE_PRICE = 'price' as const
 
 const CLIENT_PARAMS = {
-  protocols: [Protocol.V2, Protocol.V3, Protocol.MIXED],
+  protocols: [/* Protocol.V2,  */Protocol.V3/* , Protocol.MIXED */],
 }
 
 export interface GetQuoteArgs {
@@ -52,7 +52,7 @@ export interface GetQuoteArgs {
   isRoutingAPIPrice?: boolean
 }
 
-const protocols: Protocol[] = [Protocol.V2, Protocol.V3, Protocol.MIXED]
+const protocols: Protocol[] = [/* Protocol.V2,  */Protocol.V3/* , Protocol.MIXED */]
 
 // routing API quote query params: https://github.com/Uniswap/routing-api/blob/main/lib/handlers/quote/schema/quote-schema.ts
 const DEFAULT_QUERY_PARAMS = {
