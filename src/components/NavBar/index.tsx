@@ -34,22 +34,40 @@ interface MenuItemProps {
   href: string
   id?: NavLinkProps['id']
   isActive?: boolean
+  external? : boolean
   children: ReactNode
   dataTestId?: string
 }
 
-const MenuItem = ({ href, dataTestId, id, isActive, children }: MenuItemProps) => {
+const MenuItem = ({ href, dataTestId, id, isActive, external, children }: MenuItemProps) => {
+  const linkProps = {
+    className: isActive ? styles.activeMenuItem : styles.menuItem,
+    id,
+    style: { textDecoration: 'none' },
+    'data-testid': dataTestId
+  };
+
+  if (external) {
+    return (
+      <a 
+        {...linkProps} 
+        href={href} 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <NavLink
+    <NavLink 
+      {...linkProps}
       to={href}
-      className={isActive ? styles.activeMenuItem : styles.menuItem}
-      id={id}
-      style={{ textDecoration: 'none' }}
-      data-testid={dataTestId}
     >
       {children}
     </NavLink>
-  )
+  );
 }
 
 export const PageTabs = () => {
@@ -77,9 +95,15 @@ export const PageTabs = () => {
       )}
       <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
         <MenuItem href="/pools" dataTestId="pool-nav-link" isActive={isPoolActive}>
-          <Trans>Pools</Trans>
+          <Trans>Positions</Trans>
         </MenuItem>
       </Box>
+      <MenuItem href="https://d3hsb05wu0um21.cloudfront.net/#/harmony/pools" external dataTestId="pool-nav-link">
+          <Trans>Pools</Trans>
+      </MenuItem>
+      <MenuItem href="https://d3hsb05wu0um21.cloudfront.net/#/harmony/tokens" external dataTestId="pool-nav-link">
+          <Trans>Tokens</Trans>
+      </MenuItem>
       <Box marginY={{ sm: '4', md: 'unset' }}>
         <MenuDropdown />
       </Box>
