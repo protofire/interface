@@ -63,8 +63,8 @@ export function BlockNumberProvider({ children }: { children: ReactNode }) {
   const windowVisible = useIsWindowVisible()
   useEffect(() => {
     let stale = false
-
-    if (provider && activeChainId && windowVisible) {
+    // UPDATE: fetch block number only if supported network is connected.
+    if (provider && activeChainId && activeChainId === ChainId.HARMONY && windowVisible) {
       // If chainId hasn't changed, don't clear the block. This prevents re-fetching still valid data.
       setChainBlock((chainBlock) =>
         chainBlock.chainId === activeChainId
