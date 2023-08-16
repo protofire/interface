@@ -19,10 +19,10 @@ export default function SwapCountryToSModal() {
 
   return (
     <Modal isOpen={isOpen} maxWidth={860}>
-      <Box display="flex" flexDirection="column" width="100%">
+      <Box display="flex" flexDirection="column" width="100%" style={{ padding: 15 }}>
         <iframe
           src="https://doc.swap.country/terms-of-service-e096ae912a54464084a176f98127bf35"
-          style={{ minHeight: '60vh' }}
+          style={{ minHeight: '60vh', marginBottom: 20 }}
           frameBorder={0}
           width="100%"
           allowFullScreen

@@ -713,7 +713,12 @@ function PositionPageContent() {
               </ResponsiveRow>
               <RowBetween></RowBetween>
             </AutoColumn>
-            <ResponsiveRow align="flex-start">
+            <ResponsiveRow
+              align="flex-start"
+              style={{
+                alignItems: 'stretch',
+              }}
+            >
               <HideSmall
                 style={{
                   marginRight: '12px',
