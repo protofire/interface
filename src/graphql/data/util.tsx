@@ -90,7 +90,7 @@ export const CHAIN_ID_TO_BACKEND_NAME: { [key: number]: InterfaceGqlChain } = {
 export function chainIdToBackendName(chainId: number | undefined) {
   return chainId && CHAIN_ID_TO_BACKEND_NAME[chainId]
     ? CHAIN_ID_TO_BACKEND_NAME[chainId]
-    : CHAIN_ID_TO_BACKEND_NAME[ChainId.MAINNET]
+    : CHAIN_ID_TO_BACKEND_NAME[ChainId.HARMONY]
 }
 
 const GQL_CHAINS = [ChainId.MAINNET, ChainId.OPTIMISM, ChainId.POLYGON, ChainId.ARBITRUM_ONE, ChainId.CELO] as const
@@ -184,7 +184,12 @@ export const BACKEND_SUPPORTED_CHAINS = [
   Chain.Optimism,
   Chain.Celo,
 ] as const
-export const BACKEND_NOT_YET_SUPPORTED_CHAIN_IDS = [ChainId.BNB, ChainId.AVALANCHE, ChainId.BASE, ChainId.HARMONY] as const
+export const BACKEND_NOT_YET_SUPPORTED_CHAIN_IDS = [
+  ChainId.BNB,
+  ChainId.AVALANCHE,
+  ChainId.BASE,
+  ChainId.HARMONY,
+] as const
 
 export function getTokenDetailsURL({
   address,

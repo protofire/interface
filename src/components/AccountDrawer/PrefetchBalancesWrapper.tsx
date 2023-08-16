@@ -1,6 +1,5 @@
 import { useWeb3React } from '@web3-react/core'
-import { usePortfolioBalancesLazyQuery, usePortfolioBalancesQuery } from 'graphql/data/__generated__/types-and-hooks'
-import { GQL_MAINNET_CHAINS } from 'graphql/data/util'
+import { PortfolioBalancesQuery, usePortfolioBalancesLazyQuery } from 'graphql/data/__generated__/types-and-hooks'
 import usePrevious from 'hooks/usePrevious'
 import { atom, useAtom } from 'jotai'
 import { PropsWithChildren, useCallback, useEffect, useMemo } from 'react'
@@ -34,14 +33,17 @@ function useHasUpdatedTx(account: string | undefined) {
     )
   }, [account, currentChainTxs, previousPendingTxs])
 }
-
+// UPDATE: until GQL data support - returning empty object
 export function useCachedPortfolioBalancesQuery({ account }: { account?: string }) {
-  return usePortfolioBalancesQuery({
-    skip: !account,
-    variables: { ownerAddress: account ?? '', chains: GQL_MAINNET_CHAINS },
-    fetchPolicy: 'cache-only', // PrefetchBalancesWrapper handles balance fetching/staleness; this component only reads from cache
-    errorPolicy: 'all',
-  })
+  const data: PortfolioBalancesQuery | undefined = {}
+  const loading = false
+  return { data, loading }
+  // return usePortfolioBalancesQuery({
+  //   skip: !account,
+  //   variables: { ownerAddress: account ?? '', chains: GQL_MAINNET_CHAINS },
+  //   fetchPolicy: 'cache-only', // PrefetchBalancesWrapper handles balance fetching/staleness; this component only reads from cache
+  //   errorPolicy: 'all',
+  // })
 }
 
 const hasUnfetchedBalancesAtom = atom<boolean>(true)
@@ -58,7 +60,8 @@ export default function PrefetchBalancesWrapper({
   const [hasUnfetchedBalances, setHasUnfetchedBalances] = useAtom(hasUnfetchedBalancesAtom)
   const fetchBalances = useCallback(() => {
     if (account) {
-      prefetchPortfolioBalances({ variables: { ownerAddress: account, chains: GQL_MAINNET_CHAINS } })
+      // UPDATE: removing prefecth option until GQL chain support
+      // prefetchPortfolioBalances({ variables: { ownerAddress: account, chains: GQL_MAINNET_CHAINS } })
       setHasUnfetchedBalances(false)
     }
   }, [account, prefetchPortfolioBalances, setHasUnfetchedBalances])

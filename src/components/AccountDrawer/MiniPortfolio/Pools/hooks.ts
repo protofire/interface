@@ -12,7 +12,7 @@ import { isSupportedChain } from 'constants/chains'
 import { RPC_PROVIDERS } from 'constants/providers'
 import { BaseContract } from 'ethers/lib/ethers'
 import { useBaseEnabledChains } from 'featureFlags/flags/baseEnabled'
-import { ContractInput, useUniswapPricesQuery } from 'graphql/data/__generated__/types-and-hooks'
+import { ContractInput, UniswapPricesQuery } from 'graphql/data/__generated__/types-and-hooks'
 import { toContractInput } from 'graphql/data/util'
 import useStablecoinPrice from 'hooks/useStablecoinPrice'
 import { useMemo } from 'react'
@@ -76,8 +76,10 @@ export function usePoolPriceMap(positions: PositionInfo[] | undefined) {
     return Object.values(contractMap)
   }, [positions])
 
-  const { data, loading } = useUniswapPricesQuery({ variables: { contracts }, skip: !contracts.length })
-
+  //Update, until GQL chain support returning empty data
+  // const { data, loading } = useUniswapPricesQuery({ variables: { contracts }, skip: !contracts.length })
+  const data: UniswapPricesQuery | undefined = {}
+  const loading = false
   const priceMap = useMemo(
     () =>
       data?.tokens?.reduce((acc: PriceMap, current) => {
