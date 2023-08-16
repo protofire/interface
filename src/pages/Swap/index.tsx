@@ -147,7 +147,7 @@ export default function SwapPage({ className }: { className?: string }) {
       <PageWrapper>
         <Swap
           className={className}
-          chainId={supportedChainId ?? ChainId.MAINNET}
+          chainId={supportedChainId ?? ChainId.HARMONY}
           prefilledState={{
             [Field.INPUT]: { currencyId: loadedUrlParams?.[Field.INPUT]?.currencyId },
             [Field.OUTPUT]: { currencyId: loadedUrlParams?.[Field.OUTPUT]?.currencyId },

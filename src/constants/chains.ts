@@ -1,4 +1,4 @@
-import { ChainId, SUPPORTED_CHAINS, SupportedChainsType } from '@uniswap/sdk-core'
+import { ChainId, SupportedChainsType } from '@uniswap/sdk-core'
 
 export const UniWalletSupportedChains = [ChainId.MAINNET, ChainId.ARBITRUM_ONE, ChainId.OPTIMISM, ChainId.POLYGON]
 
@@ -31,7 +31,10 @@ export function isSupportedChain(
   if (featureFlags && chainId && chainId in featureFlags) {
     return featureFlags[chainId]
   }
-  return !!chainId && SUPPORTED_CHAINS.indexOf(chainId) !== -1 && NOT_YET_UX_SUPPORTED_CHAIN_IDS.indexOf(chainId) === -1
+  // return !!chainId && SUPPORTED_CHAINS.indexOf(chainId) !== -1 && NOT_YET_UX_SUPPORTED_CHAIN_IDS.indexOf(chainId) === -1
+  // UPDATE: due to external fetch selecting currently supported network
+  // TODO: patch the supported netwok SDK library.
+  return chainId == ChainId.HARMONY
 }
 
 export function asSupportedChain(
