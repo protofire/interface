@@ -489,7 +489,7 @@ class BscNativeCurrency extends NativeCurrency {
   }
 }
 
-function isHarmony(chainId: number): chainId is ChainId.HARMONY {
+export function isHarmony(chainId: number): chainId is ChainId.HARMONY {
   return chainId === ChainId.HARMONY
 }
 
