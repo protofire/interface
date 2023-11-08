@@ -8,7 +8,6 @@ import { useIsNftPage } from 'hooks/useIsNftPage'
 import { useIsPoolsPage } from 'hooks/useIsPoolsPage'
 import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
-import { UniIcon } from 'nft/components/icons'
 import { useProfilePageState } from 'nft/hooks'
 import { ProfilePageStateType } from 'nft/types'
 import { ReactNode, useCallback } from 'react'
@@ -20,7 +19,6 @@ import { Bag } from './Bag'
 import Blur from './Blur'
 import { ChainSelector } from './ChainSelector'
 import { MenuDropdown } from './MenuDropdown'
-import { SearchBar } from './SearchBar'
 import * as styles from './style.css'
 
 const Nav = styled.nav`
@@ -34,7 +32,7 @@ interface MenuItemProps {
   href: string
   id?: NavLinkProps['id']
   isActive?: boolean
-  external? : boolean
+  external?: boolean
   children: ReactNode
   dataTestId?: string
 }
@@ -44,30 +42,22 @@ const MenuItem = ({ href, dataTestId, id, isActive, external, children }: MenuIt
     className: isActive ? styles.activeMenuItem : styles.menuItem,
     id,
     style: { textDecoration: 'none' },
-    'data-testid': dataTestId
-  };
+    'data-testid': dataTestId,
+  }
 
   if (external) {
     return (
-      <a 
-        {...linkProps} 
-        href={href} 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
+      <a {...linkProps} href={href} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
-    );
+    )
   }
 
   return (
-    <NavLink 
-      {...linkProps}
-      to={href}
-    >
+    <NavLink {...linkProps} to={href}>
       {children}
     </NavLink>
-  );
+  )
 }
 
 export const PageTabs = () => {
@@ -85,7 +75,7 @@ export const PageTabs = () => {
       <MenuItem href="/swap" isActive={pathname.startsWith('/swap')}>
         <Trans>Swap</Trans>
       </MenuItem>
-{/*       <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
+      {/*       <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
         <Trans>Tokens</Trans>
       </MenuItem> */}
       {!shouldDisableNFTRoutes && (
@@ -98,11 +88,11 @@ export const PageTabs = () => {
           <Trans>Positions</Trans>
         </MenuItem>
       </Box>
-      <MenuItem href="https://info.swap.country/#/harmony/pools" external dataTestId="pool-nav-link">
-          <Trans>Pools</Trans>
+      <MenuItem href="https://info.harmony.one/#/harmony/pools" external dataTestId="pool-nav-link">
+        <Trans>Pools</Trans>
       </MenuItem>
-      <MenuItem href="https://info.swap.country/#/harmony/tokens" external dataTestId="pool-nav-link">
-          <Trans>Tokens</Trans>
+      <MenuItem href="https://info.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
+        <Trans>Tokens</Trans>
       </MenuItem>
       <Box marginY={{ sm: '4', md: 'unset' }}>
         <MenuDropdown />
@@ -141,7 +131,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 height="48"
                 data-testid="harmony-logo"
                 className={styles.logo}
-                src='/logo_fav.png'
+                src="/logo_fav.png"
                 onClick={() => {
                   navigate({
                     pathname: '/',

@@ -20,11 +20,11 @@ export function isAppUniswapOrg({ hostname }: { hostname: string }): boolean {
 }
 
 export function isSwapCountry({ hostname }: { hostname: string }): boolean {
-  return hostname === 'swap.country'
+  return hostname === 'swap.harmony.one'
 }
 
 export function isStgSwapCountry({ hostname }: { hostname: string }): boolean {
-  return hostname === 'stg.swap.country'
+  return hostname === 'stg.swap.harmony.one'
 }
 
 export function isAppUniswapStagingOrg({ hostname }: { hostname: string }): boolean {
