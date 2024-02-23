@@ -79,7 +79,7 @@ export default function CTACards() {
           </ThemedText.DeprecatedBody>
         </ResponsiveColumn>
       </CTA>
-      <CTA href="https://info.swap.country">
+      <CTA href="https://info.swap.harmony.one">
         <ResponsiveColumn>
           <HeaderText style={{ alignSelf: 'flex-start' }}>
             <Trans>Top pools</Trans> ↗

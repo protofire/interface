@@ -1,10 +1,10 @@
 {
   "background_color": "#fff",
   "display": "standalone",
-  "homepage_url": "https://swap.country/",
+  "homepage_url": "https://swap.harmony.one/",
   "providedBy": {
     "name": "Swap",
-    "url": "https://swap.country/"
+    "url": "https://swap.harmony.one/"
   },
   "icons": [
     {
