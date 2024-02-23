@@ -124,7 +124,7 @@ function PrivacyPolicy() {
       <AutoColumn gap="16px">
         <AutoColumn gap="sm" style={{ width: '100%' }}>
           <StyledExternalCard>
-            <ExternalLink href="https://doc.swap.harmony.one/terms-of-service-e096ae912a54464084a176f98127bf35">
+            <ExternalLink href="https://doc.swap.country/terms-of-service-e096ae912a54464084a176f98127bf35">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
@@ -137,7 +137,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            <ExternalLink href="https://doc.swap.harmony.one/privacy-policy-70fd833dc5f542a8b52ec73626ebb245">
+            <ExternalLink href="https://doc.swap.country/privacy-policy-70fd833dc5f542a8b52ec73626ebb245">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />

@@ -441,6 +441,15 @@ export const TwitterIconMenu = (props: SVGProps) => (
   </svg>
 )
 
+export const TelegramIconMenu = (props: SVGProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24">
+    <path
+      d="m18.81621,6.98623l-2.22356,10.28839c-0.16789,0.726 -0.60523,0.90672 -1.22677,0.56489l-3.38823,-2.44959l-1.63464,1.54287c-0.18104,0.17763 -0.33209,0.32582 -0.68101,0.32582l0.24367,-3.38523l6.27911,-5.56683c0.27314,-0.23856 -0.05947,-0.37126 -0.42419,-0.13219l-7.76271,4.79591l-3.34191,-1.02652c-0.7268,-0.22255 -0.73996,-0.71309 0.15157,-1.05543l13.07135,-4.94101c0.60523,-0.22255 1.13467,0.13219 0.93731,1.03942l0,-0.00052z"
+      fill="currentColor"
+    />
+  </svg>
+)
+
 export const GithubIconMenu = (props: SVGProps) => (
   <svg fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
