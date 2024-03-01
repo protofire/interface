@@ -85,15 +85,21 @@ export const PageTabs = () => {
       )}
       <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
         <MenuItem href="/pools" dataTestId="pool-nav-link" isActive={isPoolActive}>
-          <Trans>Positions</Trans>
+          <Trans>Pools</Trans>
         </MenuItem>
       </Box>
-      <MenuItem href="https://info.harmony.one/#/harmony/pools" external dataTestId="pool-nav-link">
-        <Trans>Pools</Trans>
+      
+      <MenuItem href="https://info.swap.harmony.one/#/harmony/" external dataTestId="pool-nav-link">
+        <Trans>InfoSwap</Trans>
       </MenuItem>
-      <MenuItem href="https://info.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
+            
+      {/* Removed menu item
+      
+      <MenuItem href="https://info.swap.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
         <Trans>Tokens</Trans>
       </MenuItem>
+      */}
+
       <Box marginY={{ sm: '4', md: 'unset' }}>
         <MenuDropdown />
       </Box>
