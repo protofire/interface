@@ -494,6 +494,8 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.BASE_GOERLI]: [],
   [ChainId.OPTIMISM_SEPOLIA]: [USDC_SEPOLIA],
   [ChainId.ARBITRUM_SEPOLIA]: [],
+  [ChainId.ZORA]: [],
+  [ChainId.ZORA_SEPOLIA]: [],
 }
 
 export function isStablecoin(currency?: Currency): boolean {

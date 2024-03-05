@@ -123,6 +123,8 @@ export const FALLBACK_URLS = {
     'https://1rpc.io/base',
     'https://base.meowrpc.com',
   ],
+  [ChainId.ZORA]: [],
+  [ChainId.ZORA_SEPOLIA]: [],
 }
 
 /**
@@ -161,4 +163,6 @@ export const RPC_URLS = {
   [ChainId.BNB]: [QUICKNODE_BNB_RPC_URL, ...FALLBACK_URLS[ChainId.BNB]],
   [ChainId.AVALANCHE]: [`https://avalanche-mainnet.infura.io/v3/${INFURA_KEY}`, ...FALLBACK_URLS[ChainId.AVALANCHE]],
   [ChainId.BASE]: [`https://base-mainnet.infura.io/v3/${INFURA_KEY}`, ...FALLBACK_URLS[ChainId.BASE]],
+  [ChainId.ZORA]: [`https://rpc.zora.energy`, ...FALLBACK_URLS[ChainId.ZORA]],
+  [ChainId.ZORA_SEPOLIA]: [`https://sepolia.rpc.zora.energy`, ...FALLBACK_URLS[ChainId.ZORA_SEPOLIA]],
 }

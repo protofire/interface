@@ -212,6 +212,38 @@ const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     color: darkTheme.chain_84531,
   },
+  [ChainId.ZORA]: {
+    networkType: NetworkType.L2,
+    blockWaitMsBeforeWarning: ms(`25m`),
+    bridge: 'https://bridge.zora.energy',
+    //TODO: update with new token list
+    defaultListUrl: OPTIMISM_LIST,
+    docs: 'https://docs.zora.co',
+    explorer: 'https://explorer.zora.energy',
+    //TODO: update with https://<<host>>/#/zora/
+    infoLink: '',
+    label: 'Zora',
+    statusPage: 'https://status.zora.energy/',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    //TODO: update theme
+    color: darkTheme.chain_10,
+  },
+  [ChainId.ZORA_SEPOLIA]: {
+    networkType: NetworkType.L2,
+    blockWaitMsBeforeWarning: ms(`25m`),
+    bridge: 'https://bridge.zora.energy',
+    //TODO: update with new token list
+    defaultListUrl: OPTIMISM_LIST,
+    docs: 'https://docs.zora.co',
+    explorer: 'https://explorer.zora.energy',
+    //TODO: update with https://<<host>>/#/zora/
+    infoLink: '',
+    label: 'Zora Sepolia',
+    statusPage: 'https://status.zora.energy/',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    //TODO: update theme
+    color: darkTheme.chain_10,
+  },
 } as const
 
 export function getChainInfo(
