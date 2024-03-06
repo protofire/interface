@@ -340,6 +340,14 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WAVAX',
     'Wrapped AVAX'
   ),
+  [ChainId.ZORA]: new Token(ChainId.ZORA, '0x4200000000000000000000000000000000000006', 18, 'WETH', 'Wrapped Ether'),
+  [ChainId.ZORA_SEPOLIA]: new Token(
+    ChainId.ZORA_SEPOLIA,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
 }
 
 export function isCelo(chainId: number): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
