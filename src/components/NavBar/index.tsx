@@ -88,10 +88,10 @@ export const PageTabs = () => {
           <Trans>Positions</Trans>
         </MenuItem>
       </Box>
-      <MenuItem href="https://info.harmony.one/#/harmony/pools" external dataTestId="pool-nav-link">
+      <MenuItem href="https://info.swap.harmony.one/#/harmony/pools" external dataTestId="pool-nav-link">
         <Trans>Pools</Trans>
       </MenuItem>
-      <MenuItem href="https://info.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
+      <MenuItem href="https://info.swap.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
         <Trans>Tokens</Trans>
       </MenuItem>
       <Box marginY={{ sm: '4', md: 'unset' }}>
