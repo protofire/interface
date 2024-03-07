@@ -1,4 +1,4 @@
-import { ChainId, SUPPORTED_CHAINS, SupportedChainsType, V2_ROUTER_ADDRESSES } from '@uniswap/sdk-core'
+import { ChainId, /* SUPPORTED_CHAINS, */ SupportedChainsType, V2_ROUTER_ADDRESSES } from '@uniswap/sdk-core'
 
 export const CHAIN_IDS_TO_NAMES = {
   [ChainId.MAINNET]: 'mainnet',
@@ -20,11 +20,11 @@ export const CHAIN_IDS_TO_NAMES = {
 } as const
 
 // Include ChainIds in this array if they are not supported by the UX yet, but are already in the SDK.
-const NOT_YET_UX_SUPPORTED_CHAIN_IDS: number[] = [
-  ChainId.BASE_GOERLI,
-  ChainId.ARBITRUM_SEPOLIA,
-  ChainId.OPTIMISM_SEPOLIA,
-]
+// const NOT_YET_UX_SUPPORTED_CHAIN_IDS: number[] = [
+//   ChainId.BASE_GOERLI,
+//   ChainId.ARBITRUM_SEPOLIA,
+//   ChainId.OPTIMISM_SEPOLIA,
+// ]
 
 // TODO: include BASE_GOERLI, OPTIMISM_SEPOLIA, or ARBITRUM_SEPOLIA when routing is implemented
 export type SupportedInterfaceChain = Exclude<
@@ -39,7 +39,9 @@ export function isSupportedChain(
   if (featureFlags && chainId && chainId in featureFlags) {
     return featureFlags[chainId]
   }
-  return !!chainId && SUPPORTED_CHAINS.indexOf(chainId) !== -1 && NOT_YET_UX_SUPPORTED_CHAIN_IDS.indexOf(chainId) === -1
+  // TODO: once every dependency is patched with SUPPORTED_CHAINS - uncomment
+  // return !!chainId && SUPPORTED_CHAINS.indexOf(chainId) !== -1 && NOT_YET_UX_SUPPORTED_CHAIN_IDS.indexOf(chainId) === -1
+  return !!chainId && [ChainId.ZORA, ChainId.ZORA_SEPOLIA].includes(chainId)
 }
 
 export function asSupportedChain(
@@ -77,8 +79,7 @@ export const TESTNET_CHAIN_IDS = [
   ChainId.ARBITRUM_GOERLI,
   ChainId.OPTIMISM_GOERLI,
   ChainId.CELO_ALFAJORES,
-  // TODO: enable upon confirmation
-  // ChainId.ZORA_SEPOLIA,
+  ChainId.ZORA_SEPOLIA,
 ] as const
 
 /**
