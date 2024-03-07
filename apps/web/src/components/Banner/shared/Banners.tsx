@@ -1,6 +1,6 @@
 import { InterfacePageName } from '@uniswap/analytics-events'
 import { ChainId } from '@uniswap/sdk-core'
-import WalletAppPromoBanner from 'components/Banner/MobileAppAnnouncementBanner'
+// import WalletAppPromoBanner from 'components/Banner/MobileAppAnnouncementBanner'
 import { OutageBanner, getOutageBannerSessionStorageKey } from 'components/Banner/Outage/OutageBanner'
 import { useOutageBanners } from 'featureFlags/flags/outageBanner'
 import { useUniTagsEnabled } from 'featureFlags/flags/uniTags'
@@ -57,5 +57,6 @@ export function Banners() {
     return <LargeUniTagBanner />
   }
 
-  return <WalletAppPromoBanner />
+  // return <WalletAppPromoBanner />
+  return <></>
 }

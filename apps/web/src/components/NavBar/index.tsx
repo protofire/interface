@@ -13,7 +13,7 @@ import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
 import { useProfilePageState } from 'nft/hooks'
 import { ProfilePageStateType } from 'nft/types'
-import { GetTheAppButton } from 'pages/Landing/components/DownloadApp/GetTheAppButton'
+// import { GetTheAppButton } from 'pages/Landing/components/DownloadApp/GetTheAppButton'
 import { ReactNode, useCallback } from 'react'
 import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -27,7 +27,7 @@ import Blur from './Blur'
 import { ChainSelector } from './ChainSelector'
 import { MenuDropdown } from './MenuDropdown'
 import { More } from './More'
-import { SearchBar } from './SearchBar'
+// import { SearchBar } from './SearchBar'
 import * as styles from './style.css'
 
 const Nav = styled.nav`
@@ -164,12 +164,12 @@ const Navbar = ({ blur }: { blur: boolean }) => {
               display: 'flex',
             })}
           >
-            <SearchBar />
+            {/* <SearchBar /> */}
           </Box>
           <Box className={styles.rightSideContainer}>
             <Row gap="12">
               <Box position="relative" display={isNavSearchInputVisible ? 'none' : { sm: 'flex' }}>
-                <SearchBar />
+                {/* <SearchBar /> */}
               </Box>
               {isNftPage && sellPageState !== ProfilePageStateType.LISTING && <Bag />}
               {!isNftPage && (
@@ -177,7 +177,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                   <ChainSelector />
                 </Box>
               )}
-              {isLandingPage && isNewLandingPageEnabled && <GetTheAppButton />}
+              {isLandingPage && isNewLandingPageEnabled /* && <GetTheAppButton /> */}
               <Web3Status />
             </Row>
           </Box>
