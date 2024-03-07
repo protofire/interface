@@ -19,7 +19,7 @@ import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-do
 import styled from 'styled-components'
 
 import { useAccountDrawer } from 'components/AccountDrawer/MiniPortfolio/hooks'
-import { Chain } from 'graphql/data/__generated__/types-and-hooks'
+// import { Chain } from 'graphql/data/__generated__/types-and-hooks'
 import { Z_INDEX } from 'theme/zIndex'
 import { useIsNavSearchInputVisible } from '../../nft/hooks/useIsNavSearchInputVisible'
 import { Bag } from './Bag'
@@ -78,8 +78,9 @@ export const PageTabs = () => {
       </MenuItem>
       {infoExplorePageEnabled ? (
         <MenuItem
-          href={'/explore' + (chainName !== Chain.Ethereum ? `/${chainName.toLowerCase()}` : '')}
-          isActive={pathname.startsWith('/explore')}
+          // href={'/explore' + (chainName !== Chain.Ethereum ? `/${chainName.toLowerCase()}` : '')}
+          href="https://info.zora-uniswap-stg.protofire.io/"
+          // isActive={pathname.startsWith('/explore')}
         >
           <Trans>Explore</Trans>
         </MenuItem>

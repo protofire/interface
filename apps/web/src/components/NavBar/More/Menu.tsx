@@ -1,18 +1,18 @@
-import { Trans } from '@lingui/macro'
+// import { Trans } from '@lingui/macro'
 import Column from 'components/Column'
 import { ScrollBarStyles } from 'components/Common'
-import Row from 'components/Row'
+// import Row from 'components/Row'
 import { Socials } from 'pages/Landing/sections/Footer'
 import { Link } from 'react-router-dom'
-import { Text } from 'rebass'
-import { useOpenModal } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/reducer'
+// import { Text } from 'rebass'
+// import { useOpenModal } from 'state/application/hooks'
+// import { ApplicationModal } from 'state/application/reducer'
 import styled, { css } from 'styled-components'
 import { BREAKPOINTS } from 'theme'
 import { ExternalLink, ThemedText } from 'theme/components'
 
 import { menuContent, MenuItem, MenuSection } from './menuContent'
-import { MobileAppLogo } from './MobileAppLogo'
+// import { MobileAppLogo } from './MobileAppLogo'
 
 const Container = styled.div`
   width: 295px;
@@ -62,12 +62,12 @@ const Separator = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.surface3};
 `
-const StyledRow = styled(Row)`
-  cursor: pointer;
-  :hover {
-    color: ${({ theme }) => theme.accent1};
-  }
-`
+// const StyledRow = styled(Row)`
+//   cursor: pointer;
+//   :hover {
+//     color: ${({ theme }) => theme.accent1};
+//   }
+// `
 const StyledSocials = styled(Socials)`
   height: 20px;
 `
@@ -98,7 +98,7 @@ function Section({ title, items, closeMenu }: MenuSection) {
   )
 }
 export function Menu({ close }: { close: () => void }) {
-  const openGetTheAppModal = useOpenModal(ApplicationModal.GET_THE_APP)
+  // const openGetTheAppModal = useOpenModal(ApplicationModal.GET_THE_APP)
 
   return (
     <Container data-testid="nav-more-menu">
@@ -112,7 +112,7 @@ export function Menu({ close }: { close: () => void }) {
           />
         ))}
         <Separator />
-        <StyledRow
+        {/* <StyledRow
           height="45px"
           gap="md"
           onClick={() => {
@@ -129,7 +129,7 @@ export function Menu({ close }: { close: () => void }) {
               <Trans>Available on iOS and Android</Trans>
             </ThemedText.LabelSmall>
           </Column>
-        </StyledRow>
+        </StyledRow> */}
         <StyledSocials iconSize="25px" />
       </Column>
     </Container>

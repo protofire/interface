@@ -231,7 +231,7 @@ const CHAIN_INFO: ChainInfoMap = {
   [ChainId.ZORA_SEPOLIA]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms(`25m`),
-    bridge: 'https://bridge.zora.energy',
+    bridge: 'https://testnet.bridge.zora.energy/',
     //TODO: update with new token list
     defaultListUrl: OPTIMISM_LIST,
     docs: 'https://docs.zora.co',
