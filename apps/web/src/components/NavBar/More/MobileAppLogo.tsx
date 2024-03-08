@@ -10,6 +10,7 @@ const AppIcon = styled.div`
   border: 0.5px solid ${(props) => props.theme.surface3};
   border-radius: 8px;
 `
+// eslint-disable-next-line
 export function MobileAppLogo() {
   return (
     <AppIcon>
