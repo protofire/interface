@@ -3,7 +3,7 @@ import ms from 'ms'
 import { darkTheme } from 'theme/colors'
 
 import { SupportedL1ChainId, SupportedL2ChainId } from './chains'
-import { ARBITRUM_LIST, AVALANCHE_LIST, BASE_LIST, CELO_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST, ZORA_LIST } from './lists'
+import { ARBITRUM_LIST, AVALANCHE_LIST, BASE_LIST, CELO_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST } from './lists'
 
 export const AVERAGE_L1_BLOCK_TIME = ms(`12s`)
 
@@ -216,7 +216,8 @@ const CHAIN_INFO: ChainInfoMap = {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms(`25m`),
     bridge: 'https://bridge.zora.energy',
-    defaultListUrl: ZORA_LIST,
+    //TODO: update with new token list
+    defaultListUrl: OPTIMISM_LIST,
     docs: 'https://docs.zora.co',
     explorer: 'https://explorer.zora.energy',
     //TODO: update with https://<<host>>/#/zora/
@@ -232,7 +233,7 @@ const CHAIN_INFO: ChainInfoMap = {
     blockWaitMsBeforeWarning: ms(`25m`),
     bridge: 'https://testnet.bridge.zora.energy/',
     //TODO: update with new token list
-    defaultListUrl: ZORA_LIST,
+    defaultListUrl: OPTIMISM_LIST,
     docs: 'https://docs.zora.co',
     explorer: 'https://explorer.zora.energy',
     //TODO: update with https://<<host>>/#/zora/
@@ -283,7 +284,7 @@ export function getChainInfo(
   return undefined
 }
 
-const MAINNET_INFO = CHAIN_INFO[ChainId.ZORA]
+const MAINNET_INFO = CHAIN_INFO[ChainId.MAINNET]
 export function getChainInfoOrDefault(chainId: number | undefined, featureFlags?: Record<number, boolean>) {
   return getChainInfo(chainId, featureFlags) ?? MAINNET_INFO
 }

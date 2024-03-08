@@ -4,7 +4,7 @@ import { atomWithStorage } from 'jotai/utils'
 
 import { SettingsToggle } from './SettingsToggle'
 
-export const showTestnetsAtom = atomWithStorage<boolean>('showTestnets', true)
+export const showTestnetsAtom = atomWithStorage<boolean>('showTestnets', false)
 
 export function TestnetsToggle() {
   const [showTestnets, updateShowTestnets] = useAtom(showTestnetsAtom)
