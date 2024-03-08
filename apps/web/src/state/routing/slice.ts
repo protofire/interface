@@ -141,7 +141,7 @@ export const routingApi = createApi({
             url: `${baseURL}/quote`,
             body: JSON.stringify(requestBody),
             headers: {
-              'x-request-source': 'uniswap-web',
+              // 'x-request-source': 'uniswap-web',
             },
           })
 
