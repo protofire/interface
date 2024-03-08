@@ -10,7 +10,7 @@ import { ThemedText } from 'theme/components'
 import { BREAKPOINTS } from 'theme'
 import { heightBreakpoints } from 'ui/src/theme'
 import { Box, H1, Subheading } from '../components/Generics'
-// import { TokenCloud } from '../components/TokenCloud/index'
+import { TokenCloud } from '../components/TokenCloud/index'
 import { Hover, RiseIn, RiseInText } from '../components/animations'
 
 const Container = styled(Box)`
@@ -120,7 +120,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       justify="center"
       style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
     >
-      {/* <TokenCloud transition={transition} /> */}
+      <TokenCloud transition={transition} />
       <Center
         direction="column"
         align="center"
@@ -152,7 +152,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
         <RiseIn delay={0.3}>
           <Subheading>
-            <Trans>The largest onchain marketplace. Buy and sell crypto on Zora.</Trans>
+            <Trans>The largest onchain marketplace. Buy and sell crypto on Ethereum and 7+ other chains.</Trans>
           </Subheading>
         </RiseIn>
       </Center>

@@ -5,7 +5,5 @@ export function useSendEnabledFlag(): BaseVariant {
 }
 
 export function useSendEnabled(): boolean {
-  // return useSendEnabledFlag() === BaseVariant.Enabled
-  // TODO: re-enable once supported
-  return false
+  return useSendEnabledFlag() === BaseVariant.Enabled
 }
