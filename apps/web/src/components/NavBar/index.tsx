@@ -6,14 +6,14 @@ import { useInfoExplorePageEnabled } from 'featureFlags/flags/infoExplore'
 import { useNewLandingPage } from 'featureFlags/flags/landingPageV2'
 import { chainIdToBackendName } from 'graphql/data/util'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
-import { useIsLandingPage } from 'hooks/useIsLandingPage'
+// import { useIsLandingPage } from 'hooks/useIsLandingPage'
 import { useIsNftPage } from 'hooks/useIsNftPage'
 import { useIsPoolsPage } from 'hooks/useIsPoolsPage'
 import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
 import { useProfilePageState } from 'nft/hooks'
 import { ProfilePageStateType } from 'nft/types'
-import { GetTheAppButton } from 'pages/Landing/components/DownloadApp/GetTheAppButton'
+// import { GetTheAppButton } from 'pages/Landing/components/DownloadApp/GetTheAppButton'
 import { ReactNode, useCallback } from 'react'
 import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -112,8 +112,8 @@ export const PageTabs = () => {
 
 const Navbar = ({ blur }: { blur: boolean }) => {
   const isNftPage = useIsNftPage()
-  const isLandingPage = useIsLandingPage()
-  const isNewLandingPageEnabled = useNewLandingPage()
+  // const isLandingPage = useIsLandingPage()
+  // const isNewLandingPageEnabled = useNewLandingPage()
   const sellPageState = useProfilePageState((state) => state.state)
   const navigate = useNavigate()
   const isNavSearchInputVisible = useIsNavSearchInputVisible()
@@ -158,14 +158,14 @@ const Navbar = ({ blur }: { blur: boolean }) => {
               <PageTabs />
             </Row>
           </Box>
-          <Box
+          {/* <Box
             className={styles.searchContainer}
             {...(isNavSearchInputVisible && {
               display: 'flex',
             })}
           >
             <SearchBar />
-          </Box>
+          </Box> */}
           <Box className={styles.rightSideContainer}>
             <Row gap="12">
               <Box position="relative" display={isNavSearchInputVisible ? 'none' : { sm: 'flex' }}>
@@ -177,7 +177,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                   <ChainSelector />
                 </Box>
               )}
-              {isLandingPage && isNewLandingPageEnabled && <GetTheAppButton />}
+              {/* {isLandingPage && isNewLandingPageEnabled && <GetTheAppButton />} */}
               <Web3Status />
             </Row>
           </Box>
