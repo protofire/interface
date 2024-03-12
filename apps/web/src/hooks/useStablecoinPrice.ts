@@ -13,6 +13,7 @@ import {
   USDC_BASE,
   USDC_MAINNET,
   USDC_POLYGON,
+  USDC_ZORA,
   USDT_BSC,
 } from '../constants/tokens'
 
@@ -27,6 +28,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [ChainId.BNB]: CurrencyAmount.fromRawAmount(USDT_BSC, 100e18),
   [ChainId.AVALANCHE]: CurrencyAmount.fromRawAmount(USDC_AVALANCHE, 10_000e6),
   [ChainId.BASE]: CurrencyAmount.fromRawAmount(USDC_BASE, 10_000e6),
+  [ChainId.ZORA]: CurrencyAmount.fromRawAmount(USDC_ZORA, 10_000e6),
 }
 
 /**

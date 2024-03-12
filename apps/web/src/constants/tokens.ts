@@ -266,6 +266,22 @@ export const MNW = new Token(
   'Morpheus.Network'
 )
 
+export const USDC_ZORA = new Token(
+  ChainId.ZORA,
+  '0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4',
+  6,
+  'USDzC',
+  'USDC Bridged'
+)
+
+export const USDC_ZORA_SEPOLIA = new Token(
+  ChainId.ZORA_SEPOLIA,
+  '0xccCcCc4532d20C06726866e328F7478Edabf907B',
+  6,
+  'USDzC',
+  'USDC Bridged'
+)
+
 export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } = {
   ...(WETH9 as Record<ChainId, Token>),
   [ChainId.OPTIMISM]: new Token(
@@ -479,6 +495,8 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in ChainId]?: s
     [ChainId.GOERLI]: USDC_GOERLI.address,
     [ChainId.SEPOLIA]: USDC_SEPOLIA.address,
     [ChainId.AVALANCHE]: USDC_AVALANCHE.address,
+    [ChainId.ZORA]: USDC_ZORA.address,
+    [ChainId.ZORA_SEPOLIA]: USDC_ZORA_SEPOLIA.address,
   },
 }
 
@@ -502,8 +520,8 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.BASE_GOERLI]: [],
   [ChainId.OPTIMISM_SEPOLIA]: [USDC_SEPOLIA],
   [ChainId.ARBITRUM_SEPOLIA]: [],
-  [ChainId.ZORA]: [],
-  [ChainId.ZORA_SEPOLIA]: [],
+  [ChainId.ZORA]: [USDC_ZORA],
+  [ChainId.ZORA_SEPOLIA]: [USDC_ZORA_SEPOLIA],
 }
 
 export function isStablecoin(currency?: Currency): boolean {
