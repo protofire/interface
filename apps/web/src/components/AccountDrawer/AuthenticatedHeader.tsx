@@ -26,7 +26,6 @@ import { useAppDispatch } from 'state/hooks'
 import { setRecentConnectionDisconnected } from 'state/user/reducer'
 import styled from 'styled-components'
 import { ThemedText } from 'theme/components'
-import { isPathBlocked } from 'utils/blockedPaths'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { useUnitagByAddress } from 'wallet/src/features/unitags/hooks'
 import { useCloseModal, useFiatOnrampAvailability, useOpenModal, useToggleModal } from '../../state/application/hooks'
@@ -107,7 +106,10 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
   const resetSellAssets = useSellAsset((state) => state.reset)
   const clearCollectionFilters = useWalletCollections((state) => state.clearCollectionFilters)
   const isClaimAvailable = useIsNftClaimAvailable((state) => state.isClaimAvailable)
-  const shouldShowBuyFiatButton = !isPathBlocked('/buy')
+  // TODO: enable once supported
+  // const shouldShowBuyFiatButton = !isPathBlocked('/buy')
+  const shouldShowBuyFiatButton = false
+
   const { formatNumber, formatDelta } = useFormatter()
 
   const shouldDisableNFTRoutes = useDisableNFTRoutes()

@@ -77,8 +77,7 @@ export const TESTNET_CHAIN_IDS = [
   ChainId.ARBITRUM_GOERLI,
   ChainId.OPTIMISM_GOERLI,
   ChainId.CELO_ALFAJORES,
-  // TODO: enable upon confirmation
-  // ChainId.ZORA_SEPOLIA,
+  ChainId.ZORA_SEPOLIA,
 ] as const
 
 /**

@@ -146,7 +146,8 @@ export const {
   clearRecentConnectionMeta,
   addSerializedPair,
   addSerializedToken,
-  setOriginCountry,
+  // TODO: check unused variables
+  // setOriginCountry,
   updateHideClosedPositions,
   updateUserRouterPreference,
   updateUserDeadline,

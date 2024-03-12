@@ -6,6 +6,8 @@ import {
 import { atomWithStorage, useAtomValue } from 'jotai/utils'
 import { memo } from 'react'
 
+// TODO: manage unused declarations
+// eslint-disable-next-line
 export {
   OriginApplication,
   getDeviceId,

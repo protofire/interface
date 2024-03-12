@@ -89,7 +89,8 @@ export function Socials({ iconSize }: { iconSize?: string }) {
     </Box>
   )
 }
-
+// TODO: customize footer
+// eslint-disable-next-line
 export function Footer() {
   const screenIsLarge = useScreenSize()['lg']
   const togglePrivacyPolicy = useTogglePrivacyPolicy()

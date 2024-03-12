@@ -41,6 +41,7 @@ export type TokenPoint = InteractiveToken & {
   tickerPosition: TickerPosition
 }
 
+//eslint-disable-next-line
 export function TokenCloud({ transition }: { transition?: boolean }) {
   const pts = useMemo(() => {
     const tokenList: InteractiveToken[] = mixArrays(approvedERC20, approvedERC721, 0.33)

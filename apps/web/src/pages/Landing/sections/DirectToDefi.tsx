@@ -34,6 +34,7 @@ const SectionCol = styled(Box)`
     gap: 24px;
   }
 `
+//eslint-disable-next-line
 export function DirectToDefi() {
   return (
     <SectionLayout>

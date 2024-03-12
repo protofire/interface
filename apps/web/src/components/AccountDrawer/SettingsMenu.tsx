@@ -69,6 +69,9 @@ const SettingsButton = ({
   </SettingsButtonWrapper>
 )
 
+// TODO: enable once confirmed
+const TRANSLATION_ENABLED = false
+
 export default function SettingsMenu({
   onClose,
   openLanguageSettings,
@@ -96,7 +99,7 @@ export default function SettingsMenu({
             <AnalyticsToggle />
             <TestnetsToggle />
           </ToggleWrapper>
-          {!currencyConversionEnabled && (
+          {!currencyConversionEnabled && TRANSLATION_ENABLED && (
             <>
               <SectionTitle data-testid="wallet-header">
                 <Trans>Language</Trans>
@@ -105,7 +108,7 @@ export default function SettingsMenu({
             </>
           )}
 
-          {currencyConversionEnabled && (
+          {currencyConversionEnabled && TRANSLATION_ENABLED && (
             <Column>
               <SettingsButton
                 title={<Trans>Language</Trans>}

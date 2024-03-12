@@ -216,7 +216,6 @@ const CHAIN_INFO: ChainInfoMap = {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms(`25m`),
     bridge: 'https://bridge.zora.energy',
-    //TODO: update with new token list
     defaultListUrl: ZORA_LIST,
     docs: 'https://docs.zora.co',
     explorer: 'https://explorer.zora.energy',
@@ -232,7 +231,6 @@ const CHAIN_INFO: ChainInfoMap = {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms(`25m`),
     bridge: 'https://testnet.bridge.zora.energy/',
-    //TODO: update with new token list
     defaultListUrl: ZORA_LIST,
     docs: 'https://docs.zora.co',
     explorer: 'https://explorer.zora.energy',

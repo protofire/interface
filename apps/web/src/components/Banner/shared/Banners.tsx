@@ -12,6 +12,7 @@ import { SwapSmarterBanner } from '../SwapSmarterBanner/SwapSmarterBanner'
 import { useSwapSmarterBanner } from '../SwapSmarterBanner/useSwapSmarterBanner'
 import { LargeUniTagBanner } from '../UniTag/LargeUniTagBanner'
 
+//eslint-disable-next-line
 export function Banners() {
   const { pathname } = useLocation()
   const currentPage = getCurrentPageFromLocation(pathname)

@@ -154,6 +154,8 @@ function LearnMore() {
     </LearnMoreButton>
   )
 }
+
+//eslint-disable-next-line
 export function Stats() {
   const { ref, inView } = useInView()
 

@@ -113,6 +113,7 @@ const RectCard = motion(styled(Card)`
 const helpPrimary = '#FF4D00'
 const blogPrimary = '#8E8767'
 
+//eslint-disable-next-line
 export function NewsletterEtc() {
   const theme = useTheme()
   const isDarkMode = useIsDarkMode()
