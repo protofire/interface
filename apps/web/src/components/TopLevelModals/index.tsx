@@ -6,7 +6,7 @@ import AirdropModal from 'components/AirdropModal'
 import AddressClaimModal from 'components/claim/AddressClaimModal'
 import ConnectedAccountBlocked from 'components/ConnectedAccountBlocked'
 import FeatureFlagModal from 'components/FeatureFlagModal/FeatureFlagModal'
-import FiatOnrampModal from 'components/FiatOnrampModal'
+// import FiatOnrampModal from 'components/FiatOnrampModal'
 import { UkDisclaimerModal } from 'components/NavBar/UkDisclaimerModal'
 import { PrivacyPolicyModal } from 'components/PrivacyPolicy'
 import DevFlagsBox from 'dev/DevFlagsBox'
@@ -39,7 +39,7 @@ export default function TopLevelModals() {
       <OffchainActivityModal />
       <TransactionCompleteModal />
       <AirdropModal />
-      <FiatOnrampModal />
+      {/* <FiatOnrampModal /> */}
       <UkDisclaimerModal />
       <GetTheAppModal />
       <PrivacyPolicyModal />

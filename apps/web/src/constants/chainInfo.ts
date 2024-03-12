@@ -233,7 +233,7 @@ const CHAIN_INFO: ChainInfoMap = {
     bridge: 'https://testnet.bridge.zora.energy/',
     defaultListUrl: ZORA_LIST,
     docs: 'https://docs.zora.co',
-    explorer: 'https://explorer.zora.energy',
+    explorer: 'https://sepolia.explorer.zora.energy',
     //TODO: update with https://<<host>>/#/zora/
     infoLink: '',
     label: 'Zora Sepolia',

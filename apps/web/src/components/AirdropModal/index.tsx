@@ -180,6 +180,9 @@ enum RewardAmounts {
   combinedAmount = 1300,
 }
 
+// TODO: remove once confirmed
+const AIRDROP_ENABLED = false
+
 const AirdropModal = () => {
   const { account, provider } = useWeb3React()
   const [claim, setClaim] = useState<Rewards>()
@@ -202,7 +205,7 @@ const AirdropModal = () => {
   }
 
   useEffect(() => {
-    if (account && provider && contract) {
+    if (account && provider && contract && AIRDROP_ENABLED) {
       ;(async () => {
         try {
           const { data } = await CollectionRewardsFetcher(account)
