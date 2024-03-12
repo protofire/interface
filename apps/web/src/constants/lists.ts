@@ -30,7 +30,7 @@ export const BASE_LIST =
 // TODO: change once token-list repo is published.
 // Also ignoring next line (for eslint) since it is actually exported and used.
 /* eslint-disable-next-line */
-export const ZORA_LIST = 'https://cloudflare-ipfs.com/ipfs/QmeqwWy2Y42w4puRuv1n8waw3HyV462m1KTTxVriKmLYX7'
+export const ZORA_LIST = 'https://cloudflare-ipfs.com/ipfs/QmWaMceNbPkhQeSrqdadFURWsGapCJdoLFjaYcq1sTKn33'
 
 export const UNSUPPORTED_LIST_URLS: string[] = [BA_LIST, UNI_UNSUPPORTED_LIST]
 
