@@ -225,10 +225,10 @@ const coinbaseWalletConnection: Connection = {
 
 export const connections = [
   gnosisSafeConnection,
-  uniwalletWCV2ConnectConnection,
+  // uniwalletWCV2ConnectConnection,
   deprecatedInjectedConnection,
   walletConnectV2Connection,
-  coinbaseWalletConnection,
+  // coinbaseWalletConnection,
   eip6963Connection,
   // network connector should be last in the list, as it should be the fallback if no other connector is active
   networkConnection,
