@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { DEFAULT_NFT_QUERY_AMOUNT } from '../constants'
 import { useAccountDrawer } from '../hooks'
 import { NFT } from './NFTItem'
-
+//eslint-disable-next-line
 export default function NFTs({ account }: { account: string }) {
   const [walletDrawerOpen, toggleWalletDrawer] = useAccountDrawer()
   const { walletAssets, loading, hasNext, loadMore } = useNftBalance(

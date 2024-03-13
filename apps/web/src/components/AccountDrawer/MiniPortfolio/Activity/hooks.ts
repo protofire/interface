@@ -1,36 +1,37 @@
 import { useLocalActivities } from 'components/AccountDrawer/MiniPortfolio/Activity/parseLocal'
-import { TransactionStatus, useActivityQuery } from 'graphql/data/__generated__/types-and-hooks'
-import { useEffect, useMemo } from 'react'
+import { ActivityQuery, TransactionStatus /*, useActivityQuery */ } from 'graphql/data/__generated__/types-and-hooks'
+import { /* useEffect, */ useMemo } from 'react'
 import { usePendingOrders } from 'state/signatures/hooks'
 import { SignatureType } from 'state/signatures/types'
-import { usePendingTransactions, useTransactionCanceller } from 'state/transactions/hooks'
-import { useFormatter } from 'utils/formatNumbers'
+import { usePendingTransactions /*, useTransactionCanceller */ } from 'state/transactions/hooks'
+// import { useFormatter } from 'utils/formatNumbers'
 
-import { GQL_MAINNET_CHAINS } from 'graphql/data/util'
-import { parseRemoteActivities } from './parseRemote'
+// import { GQL_MAINNET_CHAINS } from 'graphql/data/util'
+// import { parseRemoteActivities } from './parseRemote'
+import { ApolloQueryResult } from '@apollo/client'
 import { Activity, ActivityMap } from './types'
 
 /** Detects transactions from same account with the same nonce and different hash */
-function findCancelTx(localActivity: Activity, remoteMap: ActivityMap, account: string): string | undefined {
-  // handles locally cached tx's that were stored before we started tracking nonces
-  if (!localActivity.nonce || localActivity.status !== TransactionStatus.Pending) return undefined
+// function findCancelTx(localActivity: Activity, remoteMap: ActivityMap, account: string): string | undefined {
+//   // handles locally cached tx's that were stored before we started tracking nonces
+//   if (!localActivity.nonce || localActivity.status !== TransactionStatus.Pending) return undefined
 
-  for (const remoteTx of Object.values(remoteMap)) {
-    if (!remoteTx) continue
+//   for (const remoteTx of Object.values(remoteMap)) {
+//     if (!remoteTx) continue
 
-    // A pending tx is 'cancelled' when another tx with the same account & nonce but different hash makes it on chain
-    if (
-      remoteTx.nonce === localActivity.nonce &&
-      remoteTx.from.toLowerCase() === account.toLowerCase() &&
-      remoteTx.hash.toLowerCase() !== localActivity.hash.toLowerCase() &&
-      remoteTx.chainId === localActivity.chainId
-    ) {
-      return remoteTx.hash
-    }
-  }
+//     // A pending tx is 'cancelled' when another tx with the same account & nonce but different hash makes it on chain
+//     if (
+//       remoteTx.nonce === localActivity.nonce &&
+//       remoteTx.from.toLowerCase() === account.toLowerCase() &&
+//       remoteTx.hash.toLowerCase() !== localActivity.hash.toLowerCase() &&
+//       remoteTx.chainId === localActivity.chainId
+//     ) {
+//       return remoteTx.hash
+//     }
+//   }
 
-  return undefined
-}
+//   return undefined
+// }
 
 /** Deduplicates local and remote activities */
 function combineActivities(localMap: ActivityMap = {}, remoteMap: ActivityMap = {}): Array<Activity> {
@@ -56,36 +57,39 @@ function combineActivities(localMap: ActivityMap = {}, remoteMap: ActivityMap = 
     return acc
   }, [])
 }
-
+// TODO: remove placeholders once GQL is supported
 export function useAllActivities(account: string) {
-  const { formatNumberOrString } = useFormatter()
-  const { data, loading, refetch } = useActivityQuery({
-    variables: { account, chains: GQL_MAINNET_CHAINS },
-    errorPolicy: 'all',
-    fetchPolicy: 'cache-first',
-  })
+  // const { formatNumberOrString } = useFormatter()
+  // const { data, loading, refetch } = useActivityQuery({
+  //   variables: { account, chains: GQL_MAINNET_CHAINS },
+  //   errorPolicy: 'all',
+  //   fetchPolicy: 'cache-first',
+  // })
+
+  const [loading, refetch] = [false, refetchPlaceholder]
+  // const remoteMap: ActivityMap = {}
 
   const localMap = useLocalActivities(account)
-  const remoteMap = useMemo(
-    () => parseRemoteActivities(data?.portfolios?.[0].assetActivities, account, formatNumberOrString),
-    [account, data?.portfolios, formatNumberOrString]
-  )
-  const updateCancelledTx = useTransactionCanceller()
+  // const remoteMap = useMemo(
+  //   () => parseRemoteActivities(data?.portfolios?.[0].assetActivities, account, formatNumberOrString),
+  //   [account, data?.portfolios, formatNumberOrString]
+  // )
+  // const updateCancelledTx = useTransactionCanceller()
 
   /* Updates locally stored pendings tx's when remote data contains a conflicting cancellation tx */
-  useEffect(() => {
-    if (!remoteMap) return
+  // useEffect(() => {
+  //   if (!remoteMap) return
 
-    Object.values(localMap).forEach((localActivity) => {
-      if (!localActivity) return
+  //   Object.values(localMap).forEach((localActivity) => {
+  //     if (!localActivity) return
 
-      const cancelHash = findCancelTx(localActivity, remoteMap, account)
+  //     const cancelHash = findCancelTx(localActivity, remoteMap, account)
 
-      if (cancelHash) updateCancelledTx(localActivity.hash, localActivity.chainId, cancelHash)
-    })
-  }, [account, localMap, remoteMap, updateCancelledTx])
+  //     if (cancelHash) updateCancelledTx(localActivity.hash, localActivity.chainId, cancelHash)
+  //   })
+  // }, [account, localMap, remoteMap, updateCancelledTx])
 
-  const combinedActivities = useMemo(() => combineActivities(localMap, remoteMap ?? {}), [localMap, remoteMap])
+  const combinedActivities = useMemo(() => combineActivities(localMap /* remoteMap ?? {}*/), [localMap /*, remoteMap*/])
 
   return { loading, activities: combinedActivities, refetch }
 }
@@ -115,4 +119,8 @@ export function usePendingActivity() {
   const pendingActivityCount = pendingTransactions.length + pendingOrdersWithoutLimits.length
 
   return { hasPendingActivity, pendingActivityCount }
+}
+
+async function refetchPlaceholder(): Promise<ApolloQueryResult<ActivityQuery>> {
+  return {} as ApolloQueryResult<ActivityQuery>
 }

@@ -2,11 +2,11 @@ import { MenuState, miniPortfolioMenuStateAtom } from 'components/AccountDrawer/
 import { hideSpamAtom } from 'components/AccountDrawer/SpamToggle'
 import Column from 'components/Column'
 import { LoadingBubble } from 'components/Tokens/loading'
-import { PollingInterval } from 'graphql/data/util'
-import { atom, useAtom } from 'jotai'
+// import { PollingInterval } from 'graphql/data/util'
+import { useAtom } from 'jotai'
 import { useAtomValue } from 'jotai/utils'
 import { EmptyWalletModule } from 'nft/components/profile/view/EmptyWalletContent'
-import { useEffect, useMemo } from 'react'
+import { /*useEffect,*/ useMemo } from 'react'
 import styled from 'styled-components'
 import { ThemedText } from 'theme/components'
 
@@ -22,7 +22,7 @@ const ActivityGroupWrapper = styled(Column)`
   gap: 8px;
 `
 
-const lastFetchedAtom = atom<number | undefined>(0)
+// const lastFetchedAtom = atom<number | undefined>(0)
 
 const OpenLimitOrdersActivityButton = styled(OpenLimitOrdersButton)`
   width: calc(100% - 32px);
@@ -30,22 +30,23 @@ const OpenLimitOrdersActivityButton = styled(OpenLimitOrdersButton)`
 `
 
 export function ActivityTab({ account }: { account: string }) {
-  const [drawerOpen, toggleWalletDrawer] = useAccountDrawer()
+  const [, /*drawerOpen*/ toggleWalletDrawer] = useAccountDrawer()
   const [, setMenu] = useAtom(miniPortfolioMenuStateAtom)
 
-  const [lastFetched, setLastFetched] = useAtom(lastFetchedAtom)
-  const { activities, loading, refetch } = useAllActivities(account)
+  // const [lastFetched, setLastFetched] = useAtom(lastFetchedAtom)
+  const { activities, loading /*, refetch */ } = useAllActivities(account)
 
+  // TODO reenable once gql is supported
   // We only refetch remote activity if the user renavigates to the activity tab by changing tabs or opening the drawer
-  useEffect(() => {
-    const currentTime = Date.now()
-    if (!lastFetched) {
-      setLastFetched(currentTime)
-    } else if (drawerOpen && lastFetched && currentTime - lastFetched > PollingInterval.Slow) {
-      refetch()
-      setLastFetched(currentTime)
-    }
-  }, [drawerOpen, lastFetched, refetch, setLastFetched])
+  // useEffect(() => {
+  //   const currentTime = Date.now()
+  //   if (!lastFetched) {
+  //     setLastFetched(currentTime)
+  //   } else if (drawerOpen && lastFetched && currentTime - lastFetched > PollingInterval.Slow) {
+  //     refetch()
+  //     setLastFetched(currentTime)
+  //   }
+  // }, [drawerOpen, lastFetched, refetch, setLastFetched])
 
   const hideSpam = useAtomValue(hideSpamAtom)
   const activityGroups = useMemo(() => createGroups(activities, hideSpam), [activities, hideSpam])

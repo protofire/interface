@@ -66,7 +66,7 @@ const MoonpayTextWrapper = styled.div`
   width: 100%;
   text-align: center;
 `
-
+//eslint-disable-next-line
 export default function FiatOnrampModal() {
   const { account } = useWeb3React()
   const theme = useTheme()
