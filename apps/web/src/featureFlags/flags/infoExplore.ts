@@ -5,5 +5,6 @@ export function useInfoExploreFlag(): BaseVariant {
 }
 
 export function useInfoExplorePageEnabled(): boolean {
-  return useInfoExploreFlag() === BaseVariant.Enabled
+  //TODO - Important: reenable once deployed
+  return useInfoExploreFlag() === BaseVariant.Control
 }

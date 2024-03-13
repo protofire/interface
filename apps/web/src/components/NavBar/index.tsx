@@ -4,7 +4,7 @@ import { UniIcon } from 'components/Logo/UniIcon'
 import Web3Status from 'components/Web3Status'
 import { useInfoExplorePageEnabled } from 'featureFlags/flags/infoExplore'
 import { useNewLandingPage } from 'featureFlags/flags/landingPageV2'
-import { chainIdToBackendName } from 'graphql/data/util'
+// import { chainIdToBackendName } from 'graphql/data/util'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
 // import { useIsLandingPage } from 'hooks/useIsLandingPage'
 import { useIsNftPage } from 'hooks/useIsNftPage'
@@ -61,8 +61,8 @@ const MenuItem = ({ href, dataTestId, id, isActive, children }: MenuItemProps) =
 
 export const PageTabs = () => {
   const { pathname } = useLocation()
-  const { chainId: connectedChainId } = useWeb3React()
-  const chainName = chainIdToBackendName(connectedChainId)
+  // const { chainId: connectedChainId } = useWeb3React()
+  // const chainName = chainIdToBackendName(connectedChainId)
 
   const isPoolActive = useIsPoolsPage()
   const isNftPage = useIsNftPage()
@@ -85,9 +85,10 @@ export const PageTabs = () => {
           <Trans>Explore</Trans>
         </MenuItem>
       ) : (
-        <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
-          <Trans>Tokens</Trans>
-        </MenuItem>
+        <></>
+        // <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
+        //   <Trans>Tokens</Trans>
+        // </MenuItem>
       )}
       {!shouldDisableNFTRoutes && (
         <MenuItem dataTestId="nft-nav" href="/nfts" isActive={isNftPage}>
@@ -97,6 +98,11 @@ export const PageTabs = () => {
       <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
         <MenuItem href="/pool" dataTestId="pool-nav-link" isActive={isPoolActive}>
           <Trans>Pool</Trans>
+        </MenuItem>
+      </Box>
+      <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
+        <MenuItem href="https://bridge.zora.energy" isActive={false}>
+          <Trans>Bridge</Trans>
         </MenuItem>
       </Box>
       {isNewLandingPageEnabled ? (
