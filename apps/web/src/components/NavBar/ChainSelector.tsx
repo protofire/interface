@@ -8,8 +8,8 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { getConnection } from 'connection'
 import { ConnectionType } from 'connection/types'
 import { WalletConnectV2 } from 'connection/WalletConnectV2'
-import { getChainInfo } from 'constants/chainInfo'
-import { getChainPriority, L1_CHAIN_IDS, L2_CHAIN_IDS, TESTNET_CHAIN_IDS } from 'constants/chains'
+// import { getChainInfo } from 'constants/chainInfo'
+import { getChainPriority, isSupportedChain, L1_CHAIN_IDS, L2_CHAIN_IDS, TESTNET_CHAIN_IDS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useSelectChain from 'hooks/useSelectChain'
 import useSyncChainQuery from 'hooks/useSyncChainQuery'
@@ -93,7 +93,7 @@ export const ChainSelector = ({ leftAlign }: { leftAlign?: boolean }) => {
   const modalRef = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, () => setIsOpen(false), [modalRef])
 
-  const info = getChainInfo(chainId)
+  // const info = getChainInfo(chainId)
 
   const selectChain = useSelectChain()
   useSyncChainQuery()
@@ -114,7 +114,8 @@ export const ChainSelector = ({ leftAlign }: { leftAlign?: boolean }) => {
     return null
   }
 
-  const isSupported = !!info
+  // const isSupported = !!info
+  const isSupported = isSupportedChain(chainId)
 
   const dropdown = (
     <NavDropdown top="56" left={leftAlign ? '0' : 'auto'} right={leftAlign ? 'auto' : '0'} ref={modalRef}>
