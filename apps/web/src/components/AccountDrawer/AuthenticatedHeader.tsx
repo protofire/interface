@@ -10,9 +10,9 @@ import { CreditCardIcon } from 'components/Icons/CreditCard'
 import { ImagesIcon } from 'components/Icons/Images'
 import { Power } from 'components/Icons/Power'
 import { Settings } from 'components/Icons/Settings'
-import Row, { AutoRow } from 'components/Row'
-import { LoadingBubble } from 'components/Tokens/loading'
-import { DeltaArrow } from 'components/Tokens/TokenDetails/Delta'
+import Row /* , { AutoRow } */ from 'components/Row'
+// import { LoadingBubble } from 'components/Tokens/loading'
+// import { DeltaArrow } from 'components/Tokens/TokenDetails/Delta'
 import { getConnection } from 'connection'
 import { useUniTagsEnabled } from 'featureFlags/flags/uniTags'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
@@ -25,18 +25,18 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from 'state/hooks'
 import { setRecentConnectionDisconnected } from 'state/user/reducer'
 import styled from 'styled-components'
-import { ThemedText } from 'theme/components'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+// import { ThemedText } from 'theme/components'
+// import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { useUnitagByAddress } from 'wallet/src/features/unitags/hooks'
 import { useCloseModal, useFiatOnrampAvailability, useOpenModal, useToggleModal } from '../../state/application/hooks'
 import { ApplicationModal } from '../../state/application/reducer'
 import { useUserHasAvailableClaim, useUserUnclaimedAmount } from '../../state/claim/hooks'
-import { useCachedPortfolioBalancesQuery } from '../PrefetchBalancesWrapper/PrefetchBalancesWrapper'
+// import { useCachedPortfolioBalancesQuery } from '../PrefetchBalancesWrapper/PrefetchBalancesWrapper'
 import { ActionTile } from './ActionTile'
 import IconButton, { IconHoverText, IconWithConfirmTextButton } from './IconButton'
 import MiniPortfolio from './MiniPortfolio'
 import { useToggleAccountDrawer } from './MiniPortfolio/hooks'
-import { portfolioFadeInAnimation } from './MiniPortfolio/PortfolioRow'
+// import { portfolioFadeInAnimation } from './MiniPortfolio/PortfolioRow'
 import { Status } from './Status'
 
 const AuthenticatedHeaderWrapper = styled.div`
@@ -88,9 +88,9 @@ const HeaderWrapper = styled.div`
   align-items: flex-start;
 `
 
-const FadeInColumn = styled(Column)`
-  ${portfolioFadeInAnimation}
-`
+// const FadeInColumn = styled(Column)`
+//   ${portfolioFadeInAnimation}
+// `
 
 const PortfolioDrawerContainer = styled(Column)`
   flex: 1;
@@ -110,7 +110,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
   // const shouldShowBuyFiatButton = !isPathBlocked('/buy')
   const shouldShowBuyFiatButton = false
 
-  const { formatNumber, formatDelta } = useFormatter()
+  // const { formatNumber, formatDelta } = useFormatter()
 
   const shouldDisableNFTRoutes = useDisableNFTRoutes()
 
@@ -162,11 +162,11 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
     error || (!fiatOnrampAvailable && fiatOnrampAvailabilityChecked) || fiatOnrampAvailabilityLoading
   )
 
-  const { data: portfolioBalances } = useCachedPortfolioBalancesQuery({ account })
-  const portfolio = portfolioBalances?.portfolios?.[0]
-  const totalBalance = portfolio?.tokensTotalDenominatedValue?.value
-  const absoluteChange = portfolio?.tokensTotalDenominatedValueChange?.absolute?.value
-  const percentChange = portfolio?.tokensTotalDenominatedValueChange?.percentage?.value
+  // const { data: portfolioBalances } = useCachedPortfolioBalancesQuery({ account })
+  // const portfolio = portfolioBalances?.portfolios?.[0]
+  // const totalBalance = portfolio?.tokensTotalDenominatedValue?.value
+  // const absoluteChange = portfolio?.tokensTotalDenominatedValueChange?.absolute?.value
+  // const percentChange = portfolio?.tokensTotalDenominatedValueChange?.percentage?.value
   const [showDisconnectConfirm, setShowDisconnectConfirm] = useState(false)
 
   const isUniTagsEnabled = useUniTagsEnabled()
@@ -200,7 +200,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
         </IconContainer>
       </HeaderWrapper>
       <PortfolioDrawerContainer>
-        {totalBalance !== undefined ? (
+        {/* {totalBalance !== undefined ? (
           <FadeInColumn gap="xs">
             <ThemedText.HeadlineLarge fontWeight={535} data-testid="portfolio-total-balance">
               {formatNumber({
@@ -227,7 +227,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
             <LoadingBubble height="44px" width="170px" />
             <LoadingBubble height="16px" width="100px" margin="4px 0 20px 0" />
           </Column>
-        )}
+        )} */}
         <Row gap="8px" marginBottom={!fiatOnrampAvailable && fiatOnrampAvailabilityChecked ? '20px' : '0px'}>
           {shouldShowBuyFiatButton && (
             <ActionTile

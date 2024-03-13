@@ -125,7 +125,7 @@ function PrivacyPolicy() {
       <AutoColumn gap="16px">
         <AutoColumn gap="sm" style={{ width: '100%' }}>
           <StyledExternalCard>
-            <ExternalLink href="https://uniswap.org/terms-of-service">
+            <ExternalLink href="https://support.zora.co/en/articles/6383293-terms-of-service">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
@@ -138,7 +138,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            <ExternalLink href="https://uniswap.org/privacy-policy/">
+            <ExternalLink href="https://support.zora.co/en/articles/6383373-zora-privacy-policy/">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />

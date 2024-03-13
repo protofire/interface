@@ -17,11 +17,11 @@ export default function PrivacyPolicyNotice() {
   return (
     <ThemedText.BodySmall color="neutral2">
       <Trans>By connecting a wallet, you agree to Uniswap Labs&apos;</Trans>{' '}
-      <StyledLink href="https://uniswap.org/terms-of-service/">
+      <StyledLink href="https://support.zora.co/en/articles/6383293-terms-of-service/">
         <Trans>Terms of Service</Trans>{' '}
       </StyledLink>
       <Trans>and consent to its</Trans>{' '}
-      <StyledLink href="https://uniswap.org/privacy-policy">
+      <StyledLink href="https://support.zora.co/en/articles/6383373-zora-privacy-policy">
         <Trans>Privacy Policy.</Trans>
       </StyledLink>
       <LastUpdatedText>
