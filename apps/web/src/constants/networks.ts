@@ -1,20 +1,25 @@
 import { ChainId } from '@uniswap/sdk-core'
 
-const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
+//TODO: reogranize unused variables
+let INFURA_KEY = process.env.REACT_APP_INFURA_KEY
 if (typeof INFURA_KEY === 'undefined') {
-  throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
+  // throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
+  INFURA_KEY = ''
 }
-const QUICKNODE_MAINNET_RPC_URL = process.env.REACT_APP_QUICKNODE_MAINNET_RPC_URL
+let QUICKNODE_MAINNET_RPC_URL = process.env.REACT_APP_QUICKNODE_MAINNET_RPC_URL
 if (typeof QUICKNODE_MAINNET_RPC_URL === 'undefined') {
-  throw new Error(`REACT_APP_QUICKNODE_MAINNET_RPC_URL must be a defined environment variable`)
+  // throw new Error(`REACT_APP_QUICKNODE_MAINNET_RPC_URL must be a defined environment variable`)
+  QUICKNODE_MAINNET_RPC_URL = ''
 }
-const QUICKNODE_ARBITRUM_RPC_URL = process.env.REACT_APP_QUICKNODE_ARBITRUM_RPC_URL
+let QUICKNODE_ARBITRUM_RPC_URL = process.env.REACT_APP_QUICKNODE_ARBITRUM_RPC_URL
 if (typeof QUICKNODE_ARBITRUM_RPC_URL === 'undefined') {
-  throw new Error(`REACT_APP_QUICKNODE_ARBITRUM_RPC_URL must be a defined environment variable`)
+  // throw new Error(`REACT_APP_QUICKNODE_ARBITRUM_RPC_URL must be a defined environment variable`)
+  QUICKNODE_ARBITRUM_RPC_URL = ''
 }
-const QUICKNODE_BNB_RPC_URL = process.env.REACT_APP_BNB_RPC_URL
+let QUICKNODE_BNB_RPC_URL = process.env.REACT_APP_BNB_RPC_URL
 if (typeof QUICKNODE_BNB_RPC_URL === 'undefined') {
-  throw new Error(`REACT_APP_BNB_RPC_URL must be a defined environment variable`)
+  // throw new Error(`REACT_APP_BNB_RPC_URL must be a defined environment variable`)
+  QUICKNODE_BNB_RPC_URL = ''
 }
 
 /**

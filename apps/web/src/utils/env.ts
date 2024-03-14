@@ -23,12 +23,22 @@ export function isAppUniswapStagingOrg({ hostname }: { hostname: string }): bool
   return hostname === 'app.corn-staging.com'
 }
 
+function isAppZora({ hostname }: { hostname: string }): boolean {
+  return hostname === 'zora-uniswap.protofire.io'
+}
+
+function isAppZoraStg({ hostname }: { hostname: string }): boolean {
+  return hostname === 'zora-uniswap-stg.protofire.io'
+}
+
 export function isBrowserRouterEnabled(): boolean {
   if (isProductionEnv()) {
     if (
       isAppUniswapOrg(window.location) ||
       isAppUniswapStagingOrg(window.location) ||
-      isLocalhost(window.location) // cypress tests
+      isLocalhost(window.location) || // cypress tests
+      isAppZora(window.location) ||
+      isAppZoraStg(window.location)
     ) {
       return true
     }
@@ -43,11 +53,11 @@ function isLocalhost({ hostname }: { hostname: string }): boolean {
 
 export function isSentryEnabled(): boolean {
   // Disable in e2e test environments
-  if (isStagingEnv() && !isAppUniswapStagingOrg(window.location)) return false
-  if (isProductionEnv() && !isAppUniswapOrg(window.location)) return false
+  if (isStagingEnv() && !isAppZoraStg(window.location)) return false
+  if (isProductionEnv() && !isAppZora(window.location)) return false
   return process.env.REACT_APP_SENTRY_ENABLED === 'true'
 }
-
+//eslint-disable-next-line
 export function getEnvName(): 'production' | 'staging' | 'development' {
   if (isStagingEnv()) {
     return 'staging'

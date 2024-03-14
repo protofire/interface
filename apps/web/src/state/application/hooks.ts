@@ -30,14 +30,17 @@ interface MoonpayIPAddressesResponse {
   isSellAllowed?: boolean
 }
 
+//TODO: update once allowed
 async function getMoonpayAvailability(): Promise<boolean> {
   const moonpayPublishableKey = process.env.REACT_APP_MOONPAY_PUBLISHABLE_KEY
   if (!moonpayPublishableKey) {
-    throw new Error('Must provide a publishable key for moonpay.')
+    // throw new Error('Must provide a publishable key for moonpay.')
+    return false
   }
   const moonpayApiURI = process.env.REACT_APP_MOONPAY_API
   if (!moonpayApiURI) {
-    throw new Error('Must provide an api endpoint for moonpay.')
+    // throw new Error('Must provide an api endpoint for moonpay.')
+    return false
   }
   const res = await fetch(`${moonpayApiURI}/v4/ip_address?apiKey=${moonpayPublishableKey}`)
   const data = await (res.json() as Promise<MoonpayIPAddressesResponse>)
