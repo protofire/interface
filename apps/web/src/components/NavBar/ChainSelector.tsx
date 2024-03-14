@@ -3,12 +3,13 @@ import { ChainId } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import { showTestnetsAtom } from 'components/AccountDrawer/TestnetsToggle'
 import { BaseButton } from 'components/Button'
-import { ChainLogo } from 'components/Logo/ChainLogo'
+// import { ChainLogo } from 'components/Logo/ChainLogo'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { getConnection } from 'connection'
 import { ConnectionType } from 'connection/types'
 import { WalletConnectV2 } from 'connection/WalletConnectV2'
 // import { getChainInfo } from 'constants/chainInfo'
+import ZORA_ICON from 'assets/images/zora.png'
 import { getChainPriority, isSupportedChain, L1_CHAIN_IDS, L2_CHAIN_IDS, TESTNET_CHAIN_IDS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useSelectChain from 'hooks/useSelectChain'
@@ -21,7 +22,6 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import { AlertTriangle, ChevronDown, ChevronUp } from 'react-feather'
 import styled, { useTheme } from 'styled-components'
 import { getSupportedChainIdsFromWalletConnectSession } from 'utils/getSupportedChainIdsFromWalletConnectSession'
-
 import ChainSelectorRow from './ChainSelectorRow'
 import { NavDropdown } from './NavDropdown'
 
@@ -155,7 +155,7 @@ export const ChainSelector = ({ leftAlign }: { leftAlign?: boolean }) => {
           {!isSupported ? (
             <AlertTriangle size={20} color={theme.neutral2} />
           ) : (
-            <ChainLogo chainId={chainId} size={20} testId="chain-selector-logo" />
+            <img src={ZORA_ICON} width={20} height={20} />
           )}
           {isOpen ? <ChevronUp {...chevronProps} /> : <ChevronDown {...chevronProps} />}
         </ChainSelectorButton>

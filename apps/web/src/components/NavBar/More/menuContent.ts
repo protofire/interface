@@ -16,7 +16,7 @@ export interface MenuItem {
 
 export const menuContent: MenuSection[] = [
   {
-    title: t`App`,
+    title: t`Uniswap`,
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
       // { label: t`Vote`, href: '/vote', internal: true },
@@ -24,10 +24,11 @@ export const menuContent: MenuSection[] = [
     ],
   },
   {
-    title: t`Zora Labs`,
+    title: t`Protocol`,
     items: [
       // { label: t`Careers`, href: 'https://boards.greenhouse.io/uniswaplabs' },
-      { label: t`About`, href: 'https://zora.co/about' },
+      // { label: t`About`, href: 'https://zora.co/about' },
+      { label: t`Uniswap Docs`, href: 'https://docs.uniswap.org/' },
     ],
   },
   // {
