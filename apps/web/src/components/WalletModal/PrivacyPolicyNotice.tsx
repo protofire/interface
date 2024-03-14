@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
-import { ExternalLink, ThemedText } from 'theme/components'
+import { /* ExternalLink, */ ThemedText } from 'theme/components'
 
-const StyledLink = styled(ExternalLink)`
-  font-weight: 535;
-  color: ${({ theme }) => theme.neutral2};
-`
+// const StyledLink = styled(ExternalLink)`
+//   font-weight: 535;
+//   color: ${({ theme }) => theme.neutral2};
+// `
 
 const LastUpdatedText = styled.span`
   color: ${({ theme }) => theme.neutral3};
@@ -16,14 +16,14 @@ const LAST_UPDATED_DATE = '2.16.24'
 export default function PrivacyPolicyNotice() {
   return (
     <ThemedText.BodySmall color="neutral2">
-      <Trans>By connecting a wallet, you agree to Zora Labs&apos;</Trans>{' '}
+      {/* <Trans>By connecting a wallet, you agree to Labs&apos;</Trans>{' '}
       <StyledLink href="https://support.zora.co/en/articles/6383293-terms-of-service/">
         <Trans>Terms of Service</Trans>{' '}
       </StyledLink>
       <Trans>and consent to its</Trans>{' '}
       <StyledLink href="https://support.zora.co/en/articles/6383373-zora-privacy-policy">
         <Trans>Privacy Policy.</Trans>
-      </StyledLink>
+      </StyledLink> */}
       <LastUpdatedText>
         {' ('}
         <Trans>Last updated</Trans>

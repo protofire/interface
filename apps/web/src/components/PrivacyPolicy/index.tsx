@@ -125,12 +125,12 @@ function PrivacyPolicy() {
       <AutoColumn gap="16px">
         <AutoColumn gap="sm" style={{ width: '100%' }}>
           <StyledExternalCard>
-            <ExternalLink href="https://support.zora.co/en/articles/6383293-terms-of-service">
+            <ExternalLink href="">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
                   <ThemedText.DeprecatedMain fontSize={14} color="accent1">
-                    <Trans>Zora Labs&apos; Terms of Service</Trans>
+                    <Trans>Labs&apos; Terms of Service</Trans>
                   </ThemedText.DeprecatedMain>
                 </AutoRow>
                 <StyledLinkOut size={20} />
@@ -138,7 +138,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            <ExternalLink href="https://support.zora.co/en/articles/6383373-zora-privacy-policy/">
+            <ExternalLink href="">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />

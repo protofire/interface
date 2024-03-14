@@ -121,6 +121,9 @@ const Icon = ({ href, children }: { href?: string; children: ReactNode }) => {
   )
 }
 
+//TODO: unhide once confirmed
+const SHOW_CONTACTS = false
+
 export const MenuDropdown = () => {
   const theme = useTheme()
   const [isOpen, toggleOpen] = useReducer((s) => !s, false)
@@ -226,17 +229,29 @@ export const MenuDropdown = () => {
                   </SecondaryLinkedText>
                 )}
               </Box>
-              <IconRow>
-                <Icon href="https://discord.com/invite/gTWqjKY">
-                  <DiscordIconMenu className={styles.hover} width={24} height={24} color={themeVars.colors.neutral2} />
-                </Icon>
-                <Icon href="https://twitter.com/ourZORA">
-                  <TwitterIconMenu className={styles.hover} width={24} height={24} color={themeVars.colors.neutral2} />
-                </Icon>
-                <Icon href="https://github.com/ourzora">
-                  <GithubIconMenu className={styles.hover} width={24} height={24} color={themeVars.colors.neutral2} />
-                </Icon>
-              </IconRow>
+              {SHOW_CONTACTS && (
+                <IconRow>
+                  <Icon href="https://discord.com/invite/gTWqjKY">
+                    <DiscordIconMenu
+                      className={styles.hover}
+                      width={24}
+                      height={24}
+                      color={themeVars.colors.neutral2}
+                    />
+                  </Icon>
+                  <Icon href="https://twitter.com/ourZORA">
+                    <TwitterIconMenu
+                      className={styles.hover}
+                      width={24}
+                      height={24}
+                      color={themeVars.colors.neutral2}
+                    />
+                  </Icon>
+                  <Icon href="https://github.com/ourzora">
+                    <GithubIconMenu className={styles.hover} width={24} height={24} color={themeVars.colors.neutral2} />
+                  </Icon>
+                </IconRow>
+              )}
             </Column>
           </NavDropdown>
         )}

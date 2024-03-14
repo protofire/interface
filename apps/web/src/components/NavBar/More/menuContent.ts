@@ -19,18 +19,19 @@ export const menuContent: MenuSection[] = [
     title: t`Uniswap`,
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
+      { label: t`Documentation`, href: 'https://docs.uniswap.org/' },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.zora-uniswap-stg.protofire.io/' },
     ],
   },
-  {
-    title: t`Protocol`,
-    items: [
-      // { label: t`Careers`, href: 'https://boards.greenhouse.io/uniswaplabs' },
-      // { label: t`About`, href: 'https://zora.co/about' },
-      { label: t`Uniswap Docs`, href: 'https://docs.uniswap.org/' },
-    ],
-  },
+  // {
+  //   title: t`Company`,
+  //   items: [
+  //     { label: t`Careers`, href: 'https://boards.greenhouse.io/uniswaplabs' },
+  //     { label: t`About`, href: 'https://zora.co/about' },
+  //     { label: t`Uniswap Docs`, href: 'https://docs.uniswap.org/' },
+  //   ],
+  // },
   // {
   //   title: t`Protocol`,
   //   items: [

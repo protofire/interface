@@ -69,7 +69,9 @@ const ModalItem = styled.div`
   user-select: none;
 `
 export function Socials({ iconSize }: { iconSize?: string }) {
-  return (
+  // TODO: renable once confirmed
+  const SHOW_CONTACTS = false
+  return SHOW_CONTACTS ? (
     <Box gap="24px">
       <SocialIcon $hoverColor="#00C32B">
         <StyledExternalLink href="https://github.com/ourzora">
@@ -87,6 +89,8 @@ export function Socials({ iconSize }: { iconSize?: string }) {
         </StyledExternalLink>
       </SocialIcon>
     </Box>
+  ) : (
+    <></>
   )
 }
 // TODO: customize footer
