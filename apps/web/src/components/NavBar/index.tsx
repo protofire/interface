@@ -43,9 +43,10 @@ interface MenuItemProps {
   isActive?: boolean
   children: ReactNode
   dataTestId?: string
+  target?: boolean
 }
 
-const MenuItem = ({ href, dataTestId, id, isActive, children }: MenuItemProps) => {
+const MenuItem = ({ href, dataTestId, id, isActive, children, target }: MenuItemProps) => {
   return (
     <NavLink
       to={href}
@@ -53,6 +54,7 @@ const MenuItem = ({ href, dataTestId, id, isActive, children }: MenuItemProps) =
       id={id}
       style={{ textDecoration: 'none' }}
       data-testid={dataTestId}
+      target={target ? '_blank' : undefined}
     >
       {children}
     </NavLink>
@@ -77,15 +79,13 @@ export const PageTabs = () => {
         <Trans>Swap</Trans>
       </MenuItem>
       {infoExplorePageEnabled ? (
-        <MenuItem
-          // href={'/explore' + (chainName !== Chain.Ethereum ? `/${chainName.toLowerCase()}` : '')}
-          href="https://info.zora-uniswap-stg.protofire.io/"
-          // isActive={pathname.startsWith('/explore')}
-        >
+        <MenuItem href="/explore" isActive={pathname.startsWith('/explore')}>
           <Trans>Explore</Trans>
         </MenuItem>
       ) : (
-        <></>
+        <MenuItem href="https://info.zora-uniswap.protofire.io/" target>
+          <Trans>Explore</Trans>
+        </MenuItem>
         // <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
         //   <Trans>Tokens</Trans>
         // </MenuItem>
@@ -98,11 +98,6 @@ export const PageTabs = () => {
       <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
         <MenuItem href="/pool" dataTestId="pool-nav-link" isActive={isPoolActive}>
           <Trans>Pool</Trans>
-        </MenuItem>
-      </Box>
-      <Box display={{ sm: 'flex', lg: 'none', xxl: 'flex' }} width="full">
-        <MenuItem href="https://bridge.zora.energy" isActive={false}>
-          <Trans>Bridge</Trans>
         </MenuItem>
       </Box>
       {isNewLandingPageEnabled ? (
