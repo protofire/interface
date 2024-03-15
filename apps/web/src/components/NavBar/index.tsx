@@ -83,7 +83,7 @@ export const PageTabs = () => {
           <Trans>Explore</Trans>
         </MenuItem>
       ) : (
-        <MenuItem href="https://info.zora-uniswap.protofire.io/" target>
+        <MenuItem href="https://info.uniswap-zora.protofire.io/" target>
           <Trans>Explore</Trans>
         </MenuItem>
         // <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
