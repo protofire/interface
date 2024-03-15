@@ -10,7 +10,7 @@ import FeatureFlagModal from 'components/FeatureFlagModal/FeatureFlagModal'
 import { UkDisclaimerModal } from 'components/NavBar/UkDisclaimerModal'
 // import { PrivacyPolicyModal } from 'components/PrivacyPolicy'
 import DevFlagsBox from 'dev/DevFlagsBox'
-import useAccountRiskCheck from 'hooks/useAccountRiskCheck'
+// import useAccountRiskCheck from 'hooks/useAccountRiskCheck'
 import Bag from 'nft/components/bag/Bag'
 import TransactionCompleteModal from 'nft/components/collection/TransactionCompleteModal'
 import { GetTheAppModal } from 'pages/Landing/components/DownloadApp/GetTheAppModal'
@@ -23,7 +23,8 @@ export default function TopLevelModals() {
   const addressClaimToggle = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
   const blockedAccountModalOpen = useModalIsOpen(ApplicationModal.BLOCKED_ACCOUNT)
   const { account } = useWeb3React()
-  useAccountRiskCheck(account)
+  // TODO: reenable once screening endpoint is available
+  // useAccountRiskCheck(account)
   const accountBlocked = Boolean(blockedAccountModalOpen && account)
   const shouldShowDevFlags = isDevelopmentEnv() || isStagingEnv()
 

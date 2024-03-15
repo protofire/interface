@@ -21,7 +21,7 @@ export const menuContent: MenuSection[] = [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
       { label: t`Documentation`, href: 'https://docs.uniswap.org/' },
       // { label: t`Vote`, href: '/vote', internal: true },
-      // { label: t`Analytics`, href: 'https://info.zora-uniswap-stg.protofire.io/' },
+      // { label: t`Analytics`, href: 'https://info.uniswap-zora.protofire.io/' },
     ],
   },
   // {
