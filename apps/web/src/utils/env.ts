@@ -24,7 +24,7 @@ export function isAppUniswapStagingOrg({ hostname }: { hostname: string }): bool
 }
 
 function isAppZora({ hostname }: { hostname: string }): boolean {
-  return hostname === 'zora-uniswap.protofire.io'
+  return hostname === 'uniswap-zora.protofire.io'
 }
 
 function isAppZoraStg({ hostname }: { hostname: string }): boolean {
