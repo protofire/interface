@@ -35,6 +35,8 @@ export default function PrefetchBalancesWrapper({
   shouldFetchOnHover = true,
   className,
 }: PropsWithChildren<{ shouldFetchOnAccountUpdate: boolean; shouldFetchOnHover?: boolean; className?: string }>) {
+  const ENABLE_PREFETCH = false
+
   const { account } = useWeb3React()
   const [prefetchPortfolioBalances] = usePortfolioBalancesLazyQuery()
 
@@ -42,7 +44,7 @@ export default function PrefetchBalancesWrapper({
   const [hasUnfetchedBalances, setHasUnfetchedBalances] = useAtom(hasUnfetchedBalancesAtom)
   const fetchBalances = useCallback(
     (withDelay: boolean) => {
-      if (account) {
+      if (account && ENABLE_PREFETCH) {
         // Backend takes <2sec to get the updated portfolio value after a transaction
         // This timeout is an interim solution while we're working on a websocket that'll ping the client when connected account gets changes
         // TODO(WEB-3131): remove this timeout after websocket is implemented
@@ -55,7 +57,7 @@ export default function PrefetchBalancesWrapper({
         )
       }
     },
-    [account, prefetchPortfolioBalances, setHasUnfetchedBalances]
+    [account, prefetchPortfolioBalances, setHasUnfetchedBalances, ENABLE_PREFETCH]
   )
 
   const prevAccount = usePrevious(account)
@@ -64,7 +66,7 @@ export default function PrefetchBalancesWrapper({
   // Listens for account changes & recently updated transactions to keep portfolio balances fresh in apollo cache
   useEffect(() => {
     const accountChanged = prevAccount !== undefined && prevAccount !== account
-    if (hasUpdatedTx || accountChanged) {
+    if ((hasUpdatedTx || accountChanged) && ENABLE_PREFETCH) {
       // The parent configures whether these conditions should trigger an immediate fetch,
       // if not, we set a flag to fetch on next hover.
       if (shouldFetchOnAccountUpdate) {
@@ -73,7 +75,15 @@ export default function PrefetchBalancesWrapper({
         setHasUnfetchedBalances(true)
       }
     }
-  }, [account, prevAccount, shouldFetchOnAccountUpdate, fetchBalances, hasUpdatedTx, setHasUnfetchedBalances])
+  }, [
+    account,
+    prevAccount,
+    shouldFetchOnAccountUpdate,
+    fetchBalances,
+    hasUpdatedTx,
+    setHasUnfetchedBalances,
+    ENABLE_PREFETCH,
+  ])
 
   // Temporary workaround to fix balances on TDP - this fetches balances if shouldFetchOnAccountUpdate becomes true while hasUnfetchedBalances is true
   // TODO(WEB-3071) remove this logic once balance provider refactor is done

@@ -1,14 +1,14 @@
-import { NetworkStatus } from '@apollo/client'
+// import { NetworkStatus } from '@apollo/client'
 import { ChainId, Currency, CurrencyAmount, Price, TradeType } from '@uniswap/sdk-core'
 import { nativeOnChain } from 'constants/tokens'
-import { Chain, useTokenSpotPriceQuery } from 'graphql/data/__generated__/types-and-hooks'
-import { PollingInterval, chainIdToBackendName, isGqlSupportedChain } from 'graphql/data/util'
+// import { Chain, useTokenSpotPriceQuery } from 'graphql/data/__generated__/types-and-hooks'
+import { /* PollingInterval, chainIdToBackendName, */ isGqlSupportedChain } from 'graphql/data/util'
 import { useMemo } from 'react'
 import { ClassicTrade, INTERNAL_ROUTER_PREFERENCE_PRICE, TradeState } from 'state/routing/types'
 import { useRoutingAPITrade } from 'state/routing/useRoutingAPITrade'
-import { getNativeTokenDBAddress } from 'utils/nativeTokens'
+// import { getNativeTokenDBAddress } from 'utils/nativeTokens'
 
-import useIsWindowVisible from './useIsWindowVisible'
+// import useIsWindowVisible from './useIsWindowVisible'
 import useStablecoinPrice from './useStablecoinPrice'
 
 // ETH amounts used when calculating spot price for a given currency.
@@ -72,22 +72,22 @@ export function useUSDPrice(
   isLoading: boolean
 } {
   const currency = currencyAmount?.currency ?? prefetchCurrency
-  const chainId = currency?.chainId
-  const chain = chainId ? chainIdToBackendName(chainId) : undefined
+  // const chainId = currency?.chainId
+  // const chain = chainId ? chainIdToBackendName(chainId) : undefined
 
   // skip all pricing requests if the window is not focused
-  const isWindowVisible = useIsWindowVisible()
+  // const isWindowVisible = useIsWindowVisible()
 
   // Use ETH-based pricing if available.
   const { data: tokenEthPrice, isLoading: isTokenEthPriceLoading } = useETHPrice(currency)
   const isTokenEthPriced = Boolean(tokenEthPrice || isTokenEthPriceLoading)
-  const { data, networkStatus } = useTokenSpotPriceQuery({
-    variables: { chain: chain ?? Chain.Ethereum, address: getNativeTokenDBAddress(chain ?? Chain.Ethereum) },
-    skip: !isTokenEthPriced || !isWindowVisible,
-    pollInterval: PollingInterval.Normal,
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: 'cache-first',
-  })
+  // const { data, networkStatus } = useTokenSpotPriceQuery({
+  //   variables: { chain: chain ?? Chain.Ethereum, address: getNativeTokenDBAddress(chain ?? Chain.Ethereum) },
+  //   skip: !isTokenEthPriced || !isWindowVisible,
+  //   pollInterval: PollingInterval.Normal,
+  //   notifyOnNetworkStatusChange: true,
+  //   fetchPolicy: 'cache-first',
+  // })
 
   // Use USDC-based pricing for chains not yet supported by backend (for ETH-based pricing).
   const stablecoinPrice = useStablecoinPrice(isTokenEthPriced ? undefined : currency)
@@ -99,19 +99,19 @@ export function useUSDPrice(
       return { data: parseFloat(stablecoinPrice.quote(currencyAmount).toSignificant()), isLoading: false }
     } else {
       // Otherwise, get the price of the token in ETH, and then multiply by the price of ETH.
-      const ethUSDPrice = data?.token?.project?.markets?.[0]?.price?.value
-      if (ethUSDPrice && tokenEthPrice) {
-        return { data: parseFloat(tokenEthPrice.quote(currencyAmount).toExact()) * ethUSDPrice, isLoading: false }
-      } else {
-        return { data: undefined, isLoading: isTokenEthPriceLoading || networkStatus === NetworkStatus.loading }
-      }
+      // const ethUSDPrice = data?.token?.project?.markets?.[0]?.price?.value
+      // if (ethUSDPrice && tokenEthPrice) {
+      //   return { data: parseFloat(tokenEthPrice.quote(currencyAmount).toExact()) * ethUSDPrice, isLoading: false }
+      // } else {
+      return { data: undefined, isLoading: isTokenEthPriceLoading /* || networkStatus === NetworkStatus.loading */ }
+      // }
     }
   }, [
     currencyAmount,
-    data?.token?.project?.markets,
-    tokenEthPrice,
+    // data?.token?.project?.markets,
+    // tokenEthPrice,
     isTokenEthPriceLoading,
-    networkStatus,
+    // networkStatus,
     stablecoinPrice,
   ])
 }

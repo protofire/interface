@@ -12,7 +12,7 @@ import { isSupportedChain } from 'constants/chains'
 import { DEPRECATED_RPC_PROVIDERS, RPC_PROVIDERS } from 'constants/providers'
 import { BaseContract } from 'ethers/lib/ethers'
 import { useFallbackProviderEnabled } from 'featureFlags/flags/fallbackProvider'
-import { ContractInput, useUniswapPricesQuery } from 'graphql/data/__generated__/types-and-hooks'
+import { ContractInput, UniswapPricesQuery } from 'graphql/data/__generated__/types-and-hooks'
 import { toContractInput } from 'graphql/data/util'
 import useStablecoinPrice from 'hooks/useStablecoinPrice'
 import { useMemo } from 'react'
@@ -65,7 +65,9 @@ export function useInterfaceMulticallContracts(chainIds: ChainId[]): ContractMap
 }
 
 type PriceMap = { [key: CurrencyKey]: number | undefined }
+
 export function usePoolPriceMap(positions: PositionInfo[] | undefined) {
+  //eslint-disable-next-line
   const contracts = useMemo(() => {
     if (!positions || !positions.length) return []
     // Avoids fetching duplicate tokens by placing in map
@@ -77,7 +79,10 @@ export function usePoolPriceMap(positions: PositionInfo[] | undefined) {
     return Object.values(contractMap)
   }, [positions])
 
-  const { data, loading } = useUniswapPricesQuery({ variables: { contracts }, skip: !contracts.length })
+  // TODO: use once GQL is enabled
+  // const { data, loading } = useUniswapPricesQuery({ variables: { contracts }, skip: !contracts.length })
+  const data: UniswapPricesQuery | undefined = {}
+  const loading = false
 
   const priceMap = useMemo(
     () =>

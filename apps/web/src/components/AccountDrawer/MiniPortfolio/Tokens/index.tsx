@@ -23,7 +23,8 @@ import { useToggleAccountDrawer } from '../hooks'
 import { PortfolioLogo } from '../PortfolioLogo'
 import PortfolioRow, { PortfolioSkeleton, PortfolioTabWrapper } from '../PortfolioRow'
 
-//eslint-disable-next-line
+// TODO: use once GQL is enabled
+// eslint-disable-next-line
 export default function Tokens({ account }: { account: string }) {
   const toggleWalletDrawer = useToggleAccountDrawer()
   const hideSmallBalances = useAtomValue(hideSmallBalancesAtom)
