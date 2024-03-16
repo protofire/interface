@@ -5,7 +5,6 @@ import { BrowserTracing } from '@sentry/tracing'
 // import store from 'state'
 // import { setOriginCountry } from 'state/user/reducer'
 import {
-  getEnvName,
   // isDevelopmentEnv,
   // isProductionEnv,
   isSentryEnabled,
@@ -27,7 +26,9 @@ const SENTRY_USER_ID_KEY = ''
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
   release: process.env.REACT_APP_GIT_COMMIT_HASH,
-  environment: getEnvName(),
+  // environment: getEnvName(),
+  // TODO: remove analytics
+  environment: 'development',
   enabled: isSentryEnabled(),
   tracesSampleRate: Number(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE ?? 0),
   integrations: [

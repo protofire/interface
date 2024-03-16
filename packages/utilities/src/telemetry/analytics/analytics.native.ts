@@ -25,7 +25,8 @@ let allowAnalytics: Maybe<boolean>
 export const analytics: Analytics = {
   async init(transportProvider: ApplicationTransport, allowed: boolean): Promise<void> {
     try {
-      allowAnalytics = allowed
+      // allowAnalytics = allowed
+      allowAnalytics = false
       init(
         DUMMY_KEY, // Amplitude custom reverse proxy takes care of API key
         undefined, // User ID should be undefined to let Amplitude default to Device ID

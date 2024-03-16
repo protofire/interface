@@ -18,10 +18,14 @@ export {
 } from '@uniswap/analytics'
 
 const allowAnalyticsAtomKey = 'allow_analytics'
-export const allowAnalyticsAtom = atomWithStorage<boolean>(allowAnalyticsAtomKey, true)
+
+//False positive error
+//eslint-disable-next-line
+export const allowAnalyticsAtom = atomWithStorage<boolean>(allowAnalyticsAtomKey, false)
 
 export const Trace = memo((props: React.ComponentProps<typeof AnalyticsTrace>) => {
-  const allowAnalytics = useAtomValue(allowAnalyticsAtom)
+  // const allowAnalytics = useAtomValue(allowAnalyticsAtom)
+  const allowAnalytics = false
   const shouldLogImpression = allowAnalytics ? props.shouldLogImpression : false
 
   return <AnalyticsTrace {...props} shouldLogImpression={shouldLogImpression} />
@@ -39,13 +43,15 @@ export const TraceEvent = memo((props: React.ComponentProps<typeof AnalyticsEven
 TraceEvent.displayName = 'TraceEvent'
 
 export const sendAnalyticsEvent: typeof sendAnalyticsTraceEvent = (event, properties) => {
-  let allowAnalytics = true
+  let allowAnalytics = false
 
   try {
     const value = localStorage.getItem(allowAnalyticsAtomKey)
 
     if (typeof value === 'string') {
-      allowAnalytics = JSON.parse(value)
+      // TODO: remove all analytics
+      // allowAnalytics = JSON.parse(value)
+      allowAnalytics = false
     }
     // eslint-disable-next-line no-empty
   } catch {}
@@ -56,6 +62,8 @@ export const sendAnalyticsEvent: typeof sendAnalyticsTraceEvent = (event, proper
 }
 
 // This is only used for initial page load so we can get the user's country
+//eslint-disable-next-line
 export const sendInitializationEvent: typeof sendAnalyticsTraceEvent = (event, properties) => {
-  sendAnalyticsTraceEvent(event, properties)
+  // TODO: disable all analytics
+  // sendAnalyticsTraceEvent(event, properties)
 }

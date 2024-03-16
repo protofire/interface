@@ -170,7 +170,7 @@ export default function App() {
             disableErrorLogging: true,
           }}
         > */}
-        <UserPropertyUpdater />
+        {/* <UserPropertyUpdater /> */}
         {renderUkBanner && <UkBanner />}
         <Header />
         <ResetPageScrollEffect />
@@ -260,7 +260,7 @@ const Header = memo(function Header() {
     </HeaderWrapper>
   )
 })
-
+//eslint-disable-next-line
 function UserPropertyUpdater() {
   const isDarkMode = useIsDarkMode()
 

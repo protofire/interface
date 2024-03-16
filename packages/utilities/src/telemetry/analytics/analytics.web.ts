@@ -10,8 +10,9 @@ const loggers = generateAnalyticsLoggers('telemetry/analytics.web')
 let allowAnalytics: Maybe<boolean>
 
 export const analytics: Analytics = {
-  async init(transportProvider: ApplicationTransport, allowed: boolean): Promise<void> {
-    allowAnalytics = allowed
+  async init(transportProvider: ApplicationTransport /*, allowed: boolean*/): Promise<void> {
+    // allowAnalytics = allowed
+    allowAnalytics = false
     try {
       init(
         DUMMY_KEY, // Amplitude custom reverse proxy takes care of API key
@@ -27,8 +28,9 @@ export const analytics: Analytics = {
     }
   },
   async setAllowAnalytics(allowed: boolean): Promise<void> {
-    allowAnalytics = allowed
-    if (allowed) {
+    // allowAnalytics = allowed
+    allowAnalytics = false
+    if (/*allowed*/ allowAnalytics) {
       // TODO: handle setting device id to a new or existing old id here
     } else {
       loggers.setAllowAnalytics(allowed)
