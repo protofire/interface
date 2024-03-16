@@ -140,7 +140,8 @@ export const SearchBarDropdown = (props: SearchBarDropdownProps) => {
       <Box opacity={isLoading ? '0.3' : '1'} transition="125">
         <SuspenseWithPreviousRenderAsFallback>
           <SuspendConditionally if={isLoading}>
-            <SearchBarDropdownContents {...props} />
+            <></>
+            {/* <SearchBarDropdownContents {...props} /> */}
           </SuspendConditionally>
         </SuspenseWithPreviousRenderAsFallback>
         {showChainComingSoonBadge && (
@@ -155,7 +156,7 @@ export const SearchBarDropdown = (props: SearchBarDropdownProps) => {
     </Column>
   )
 }
-
+//eslint-disable-next-line
 function SearchBarDropdownContents({
   toggleOpen,
   tokens,

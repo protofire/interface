@@ -4,11 +4,11 @@ import { BrowserTracing } from '@sentry/tracing'
 // import { initializeAnalytics, OriginApplication } from 'analytics'
 // import store from 'state'
 // import { setOriginCountry } from 'state/user/reducer'
-import {
-  // isDevelopmentEnv,
-  // isProductionEnv,
-  isSentryEnabled,
-} from 'utils/env'
+// import {
+// isDevelopmentEnv,
+// isProductionEnv,
+// isSentryEnabled,
+// } from 'utils/env'
 import { v4 as uuidv4 } from 'uuid'
 
 import { beforeSend } from './errors'
@@ -24,17 +24,17 @@ const SENTRY_USER_ID_KEY = ''
 // export const STATSIG_DUMMY_KEY = 'client-0000000000000000000000000000000000000000000'
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
-  release: process.env.REACT_APP_GIT_COMMIT_HASH,
+  dsn: '',
+  release: '',
   // environment: getEnvName(),
   // TODO: remove analytics
   environment: 'development',
-  enabled: isSentryEnabled(),
+  enabled: false,
   tracesSampleRate: Number(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE ?? 0),
   integrations: [
     new BrowserTracing({
       startTransactionOnLocationChange: false,
-      startTransactionOnPageLoad: true,
+      startTransactionOnPageLoad: false,
     }),
   ],
   beforeSend,

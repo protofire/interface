@@ -1,7 +1,7 @@
 import tokenLogoLookup from 'constants/tokenLogoLookup'
 import { isCelo, nativeOnChain } from 'constants/tokens'
 import { checkWarning, WARNING_LEVEL } from 'constants/tokenSafety'
-import { chainIdToNetworkName, getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
+import { /* chainIdToNetworkName, */ getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import uriToHttp from 'lib/utils/uriToHttp'
 import { useCallback, useMemo, useReducer } from 'react'
 import { isAddress } from 'utilities/src/addresses'
@@ -46,7 +46,7 @@ export function getInitialUrl(
 ) {
   if (chainId && isNative) return getNativeLogoURI(chainId)
 
-  const networkName = chainId ? chainIdToNetworkName(chainId) : 'ethereum'
+  // const networkName = chainId ? chainIdToNetworkName(chainId) : 'ethereum'
   const checksummedAddress = isAddress(address)
 
   if (chainId && isCelo(chainId) && address === nativeOnChain(chainId).wrapped.address) {
@@ -54,7 +54,9 @@ export function getInitialUrl(
   }
 
   if (checksummedAddress) {
-    return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${checksummedAddress}/logo.png`
+    // TODO: use temp until token-lists data is confirmed
+    // return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${checksummedAddress}/logo.png`
+    return `https://cloudflare-ipfs.com/ipfs/QmRjDG7QSCEF9JZ8THn7YGN9JU7W96h5wEZpNAHiiECW6a/${chainId}/${checksummedAddress}.png`
   } else {
     return backupImg ?? undefined
   }
