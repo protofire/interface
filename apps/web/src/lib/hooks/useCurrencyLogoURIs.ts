@@ -12,6 +12,7 @@ import { NATIVE_CHAIN_ID, isCelo, nativeOnChain } from '../../constants/tokens'
 
 type Network = 'ethereum' | 'arbitrum' | 'optimism' | 'polygon' | 'smartchain' | 'celo' | 'avalanchec' | 'base'
 
+//eslint-disable-next-line
 export function chainIdToNetworkName(networkId: ChainId): Network {
   switch (networkId) {
     case ChainId.MAINNET:

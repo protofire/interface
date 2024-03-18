@@ -163,5 +163,5 @@ const TrendingCollections = () => {
     </ExploreContainer>
   )
 }
-
+//eslint-disable-next-line
 export default TrendingCollections

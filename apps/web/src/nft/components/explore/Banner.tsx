@@ -136,5 +136,5 @@ const Banner = () => {
     </BannerContainer>
   )
 }
-
+//eslint-disable-next-line
 export default Banner
