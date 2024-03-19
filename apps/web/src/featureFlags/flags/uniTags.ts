@@ -5,5 +5,6 @@ export function useUniTagsFlag(): BaseVariant {
 }
 
 export function useUniTagsEnabled(): boolean {
-  return useUniTagsFlag() === BaseVariant.Enabled
+  // return useUniTagsFlag() === BaseVariant.Enabled
+  return false
 }

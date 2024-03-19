@@ -152,7 +152,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
         <RiseIn delay={0.3}>
           <Subheading>
-            <Trans>The largest onchain marketplace. Buy and sell crypto on Zora Network.</Trans>
+            <Trans>The Interface of Uniswap V3 fork in Zora Network.</Trans>
           </Subheading>
         </RiseIn>
       </Center>

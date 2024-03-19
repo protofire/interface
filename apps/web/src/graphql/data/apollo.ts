@@ -1,16 +1,17 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
+// TODO: reenable GQL once supported
 const GRAPHQL_URL = process.env.REACT_APP_AWS_API_ENDPOINT
 if (!GRAPHQL_URL) {
-  throw new Error('AWS URL MISSING FROM ENVIRONMENT')
+  // throw new Error('AWS URL MISSING FROM ENVIRONMENT')
 }
 
 export const apolloClient = new ApolloClient({
   connectToDevTools: true,
-  uri: GRAPHQL_URL,
+  uri: '',
   headers: {
     'Content-Type': 'application/json',
-    Origin: 'https://app.uniswap.org',
+    Origin: '',
   },
   cache: new InMemoryCache(),
   // cache: new InMemoryCache({

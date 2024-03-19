@@ -5,5 +5,6 @@ export function useUniswapXSyntheticQuoteFlag(): BaseVariant {
 }
 
 export function useUniswapXSyntheticQuoteEnabled(): boolean {
-  return useUniswapXSyntheticQuoteFlag() === BaseVariant.Enabled
+  // return useUniswapXSyntheticQuoteFlag() === BaseVariant.Enabled
+  return false
 }

@@ -44,11 +44,11 @@ fs.readFile('./public/tokens-sitemap.xml', 'utf8', async (err, data) => {
     }
 
     for (const chainName of chains) {
-      const tokensResponse = await fetch('https://api.uniswap.org/v1/graphql', {
+      const tokensResponse = await fetch('https://localhost:3001/v1/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Origin: 'https://app.uniswap.org',
+          Origin: 'https://localhost:3001',
         },
         body: JSON.stringify({ query: getTopTokensQuery(chainName) }),
       })
@@ -56,7 +56,7 @@ fs.readFile('./public/tokens-sitemap.xml', 'utf8', async (err, data) => {
       const tokenAddresses = tokensJSON.data.topTokens.map((token) => token.address.toLowerCase())
 
       tokenAddresses.forEach((address) => {
-        const tokenURL = `https://app.uniswap.org/tokens/${chainName.toLowerCase()}/${address}`
+        const tokenURL = `https://localhost:3001/tokens/${chainName.toLowerCase()}/${address}`
         if (!(tokenURL in tokenURLs)) {
           sitemap.urlset.url.push({
             loc: [tokenURL],
