@@ -3,7 +3,7 @@ import {
   Trace as AnalyticsTrace,
   sendAnalyticsEvent as sendAnalyticsTraceEvent,
 } from '@uniswap/analytics'
-import { atomWithStorage, useAtomValue } from 'jotai/utils'
+import { atomWithStorage /*, useAtomValue */ } from 'jotai/utils'
 import { memo } from 'react'
 
 // TODO: manage unused declarations
@@ -34,7 +34,8 @@ export const Trace = memo((props: React.ComponentProps<typeof AnalyticsTrace>) =
 Trace.displayName = 'Trace'
 
 export const TraceEvent = memo((props: React.ComponentProps<typeof AnalyticsEvent>) => {
-  const allowAnalytics = useAtomValue(allowAnalyticsAtom)
+  // const allowAnalytics = useAtomValue(allowAnalyticsAtom)
+  const allowAnalytics = false
   const shouldLogImpression = allowAnalytics ? props.shouldLogImpression : false
 
   return <AnalyticsEvent {...props} shouldLogImpression={shouldLogImpression} />
@@ -43,18 +44,17 @@ export const TraceEvent = memo((props: React.ComponentProps<typeof AnalyticsEven
 TraceEvent.displayName = 'TraceEvent'
 
 export const sendAnalyticsEvent: typeof sendAnalyticsTraceEvent = (event, properties) => {
-  let allowAnalytics = false
+  const allowAnalytics = false
 
-  try {
-    const value = localStorage.getItem(allowAnalyticsAtomKey)
+  // try {
+  //   const value = localStorage.getItem(allowAnalyticsAtomKey)
 
-    if (typeof value === 'string') {
-      // TODO: remove all analytics
-      // allowAnalytics = JSON.parse(value)
-      allowAnalytics = false
-    }
-    // eslint-disable-next-line no-empty
-  } catch {}
+  //   if (typeof value === 'string') {
+  //     allowAnalytics = JSON.parse(value)
+  //     allowAnalytics = false
+  //   }
+  //   // eslint-disable-next-line no-empty
+  // } catch {}
 
   if (allowAnalytics) {
     sendAnalyticsTraceEvent(event, properties)
