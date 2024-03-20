@@ -16,20 +16,20 @@ export interface MenuItem {
 
 export const menuContent: MenuSection[] = [
   {
-    title: t`Uniswap`,
+    title: t`Zora Swap`,
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
-      { label: t`Documentation`, href: 'https://docs.uniswap.org/' },
+      { label: t`Forked Protocol Documentation`, href: 'https://docs.uniswap.org/' },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.uniswap-zora.protofire.io/' },
     ],
   },
   // {
-  //   title: t`Company`,
+  //   title: t`Forked Protocol`,
   //   items: [
-  //     { label: t`Careers`, href: 'https://boards.greenhouse.io/uniswaplabs' },
-  //     { label: t`About`, href: 'https://zora.co/about' },
-  //     { label: t`Uniswap Docs`, href: 'https://docs.uniswap.org/' },
+  //     { label: t`Documentation`, href: 'https://docs.uniswap.org/' },
+  //     // { label: t`About`, href: 'https://zora.co/about' },
+  //     // { label: t`Uniswap Docs`, href: 'https://docs.uniswap.org/' },
   //   ],
   // },
   // {

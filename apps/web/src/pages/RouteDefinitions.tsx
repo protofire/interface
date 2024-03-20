@@ -5,7 +5,7 @@ import { useAtom } from 'jotai'
 import { lazy, ReactNode, Suspense, useMemo } from 'react'
 import { matchPath, Navigate, useLocation } from 'react-router-dom'
 import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
-import { SpinnerSVG } from 'theme/components'
+// import { SpinnerSVG } from 'theme/components'
 import { isBrowserRouterEnabled } from 'utils/env'
 
 import { getDefaultTokensTitle } from './getDefaultTokensTitle'
@@ -33,21 +33,21 @@ const PoolFinder = lazy(() => import('pages/PoolFinder'))
 const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
 const TokenDetails = lazy(() => import('pages/TokenDetails'))
-const Vote = lazy(() => import('pages/Vote'))
+// const Vote = lazy(() => import('pages/Vote'))
 
 // this is the same svg defined in assets/images/blue-loader.svg
 // it is defined here because the remote asset may not have had time to load when this file is executing
-const LazyLoadSpinner = () => (
-  <SpinnerSVG width="94" height="94" viewBox="0 0 94 94" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M92 47C92 22.1472 71.8528 2 47 2C22.1472 2 2 22.1472 2 47C2 71.8528 22.1472 92 47 92"
-      stroke="#2172E5"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </SpinnerSVG>
-)
+// const LazyLoadSpinner = () => (
+//   <SpinnerSVG width="94" height="94" viewBox="0 0 94 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+//     <path
+//       d="M92 47C92 22.1472 71.8528 2 47 2C22.1472 2 2 22.1472 2 47C2 71.8528 22.1472 92 47 92"
+//       stroke="#2172E5"
+//       strokeWidth="3"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     />
+//   </SpinnerSVG>
+// )
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -90,7 +90,7 @@ export interface RouteDefinition {
 function createRouteDefinition(route: Partial<RouteDefinition>): RouteDefinition {
   return {
     getElement: () => null,
-    getTitle: () => 'Uniswap Interface',
+    getTitle: () => 'Zora Swap Interface',
     enabled: () => true,
     path: '/',
     nestedPaths: [],
@@ -99,12 +99,12 @@ function createRouteDefinition(route: Partial<RouteDefinition>): RouteDefinition
   }
 }
 
-const SwapTitle = t`Buy, sell & trade Ethereum and other top tokens on Uniswap`
+const SwapTitle = t`Buy, sell & trade Ethereum and other top tokens on Zora Swap`
 
 export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/',
-    getTitle: () => t`Uniswap | Trade crypto & NFTs safely on the top DeFi exchange`,
+    getTitle: () => t`Zora Swap | Trade crypto & NFTs safely on the top DeFi exchange`,
     getElement: (args) => {
       return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Landing />
     },
@@ -118,7 +118,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/explore/tokens/:chainName/:tokenAddress',
-    getTitle: () => t`Buy & sell on Uniswap`,
+    getTitle: () => t`Buy & sell on Zora Swap`,
     getElement: () => <TokenDetails />,
     enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
@@ -145,7 +145,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/explore/pools/:chainName/:poolAddress',
-    getTitle: () => t`Explore pools on Uniswap`,
+    getTitle: () => t`Explore pools on Zora Swap`,
     getElement: () => (
       <Suspense fallback={null}>
         <PoolDetails />
@@ -153,24 +153,24 @@ export const routes: RouteDefinition[] = [
     ),
     enabled: (args) => Boolean(args.infoExplorePageEnabled && args.infoPoolPageEnabled),
   }),
-  createRouteDefinition({
-    path: '/vote/*',
-    getTitle: () => t`Vote on governance proposals on Uniswap`,
-    getElement: () => (
-      <Suspense fallback={<LazyLoadSpinner />}>
-        <Vote />
-      </Suspense>
-    ),
-  }),
-  createRouteDefinition({
-    path: '/create-proposal',
-    getTitle: () => t`Create a new governance proposal on Uniswap`,
-    getElement: () => <Navigate to="/vote/create-proposal" replace />,
-  }),
+  // createRouteDefinition({
+  //   path: '/vote/*',
+  //   getTitle: () => t`Vote on governance proposals on Zora Swap`,
+  //   getElement: () => (
+  //     <Suspense fallback={<LazyLoadSpinner />}>
+  //       <Vote />
+  //     </Suspense>
+  //   ),
+  // }),
+  // createRouteDefinition({
+  //   path: '/create-proposal',
+  //   getTitle: () => t`Create a new governance proposal on Zora Swap`,
+  //   getElement: () => <Navigate to="/vote/create-proposal" replace />,
+  // }),
   createRouteDefinition({
     path: '/send',
     getElement: () => <Swap />,
-    getTitle: () => t`Send tokens on Uniswap`,
+    getTitle: () => t`Send tokens on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/limits',
@@ -189,48 +189,48 @@ export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/pool/v2/find',
     getElement: () => <PoolFinder />,
-    getTitle: () => t`Explore top liquidity pools (v2) on Uniswap`,
+    getTitle: () => t`Explore top liquidity pools (v2) on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pool/v2',
     getElement: () => <PoolV2 />,
-    getTitle: () => t`Provide liquidity to pools (v2) on Uniswap`,
+    getTitle: () => t`Provide liquidity to pools (v2) on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pool',
     getElement: () => <Pool />,
-    getTitle: () => t`Manage & provide pool liquidity on Uniswap`,
+    getTitle: () => t`Manage & provide pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pool/:tokenId',
     getElement: () => <PositionPage />,
-    getTitle: () => t`Manage pool liquidity on Uniswap`,
+    getTitle: () => t`Manage pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pools/v2/find',
     getElement: () => <PoolFinder />,
-    getTitle: () => t`Explore top liquidity pools (v2) on Uniswap`,
+    getTitle: () => t`Explore top liquidity pools (v2) on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pools/v2',
     getElement: () => <PoolV2 />,
-    getTitle: () => t`Manage & provide v2 pool liquidity on Uniswap`,
+    getTitle: () => t`Manage & provide v2 pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pools',
     getElement: () => <Pool />,
-    getTitle: () => t`Manage & provide pool liquidity on Uniswap`,
+    getTitle: () => t`Manage & provide pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/pools/:tokenId',
     getElement: () => <PositionPage />,
-    getTitle: () => t`Manage pool liquidity on Uniswap`,
+    getTitle: () => t`Manage pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/add/v2',
     nestedPaths: [':currencyIdA', ':currencyIdA/:currencyIdB'],
     getElement: () => <AddLiquidityV2WithTokenRedirects />,
-    getTitle: () => t`Provide liquidity to pools (v2) on Uniswap`,
+    getTitle: () => t`Provide liquidity to pools (v2) on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/add',
@@ -241,27 +241,27 @@ export const routes: RouteDefinition[] = [
       ':currencyIdA/:currencyIdB/:feeAmount/:tokenId',
     ],
     getElement: () => <AddLiquidityWithTokenRedirects />,
-    getTitle: () => t`Provide liquidity to pools on Uniswap`,
+    getTitle: () => t`Provide liquidity to pools on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/remove/v2/:currencyIdA/:currencyIdB',
     getElement: () => <RemoveLiquidity />,
-    getTitle: () => t`Manage v2 pool liquidity on Uniswap`,
+    getTitle: () => t`Manage v2 pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/remove/:tokenId',
     getElement: () => <RemoveLiquidityV3 />,
-    getTitle: () => t`Manage pool liquidity on Uniswap`,
+    getTitle: () => t`Manage pool liquidity on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/migrate/v2',
     getElement: () => <MigrateV2 />,
-    getTitle: () => t`Migrate v2 pool liquidity to Uniswap v3`,
+    getTitle: () => t`Migrate v2 pool liquidity to Zora Swap v3`,
   }),
   createRouteDefinition({
     path: '/migrate/v2/:address',
     getElement: () => <MigrateV2Pair />,
-    getTitle: () => t`Migrate v2 pool liquidity to Uniswap v3`,
+    getTitle: () => t`Migrate v2 pool liquidity to Zora Swap v3`,
   }),
   createRouteDefinition({
     path: '/nfts',
@@ -271,7 +271,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Trade NFTs across OpenSea & other top marketplaces on Uniswap`,
+    getTitle: () => t`Trade NFTs across OpenSea & other top marketplaces on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/nfts/asset/:contractAddress/:tokenId',
@@ -281,7 +281,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Uniswap`,
+    getTitle: () => t`Explore NFTs on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/nfts/profile',
@@ -291,7 +291,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Uniswap`,
+    getTitle: () => t`Explore NFTs on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/nfts/collection/:contractAddress',
@@ -301,7 +301,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Uniswap`,
+    getTitle: () => t`Explore NFTs on Zora Swap`,
   }),
   createRouteDefinition({
     path: '/nfts/collection/:contractAddress/activity',
@@ -311,7 +311,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Uniswap`,
+    getTitle: () => t`Explore NFTs on Zora Swap`,
   }),
   createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
   createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),

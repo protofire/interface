@@ -152,7 +152,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
         <RiseIn delay={0.3}>
           <Subheading>
-            <Trans>The Interface of Uniswap V3 fork in Zora Network.</Trans>
+            <Trans>The Interface of Zora Swap Based on Uniswap Protocol.</Trans>
           </Subheading>
         </RiseIn>
       </Center>

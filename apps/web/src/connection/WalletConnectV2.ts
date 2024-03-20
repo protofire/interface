@@ -32,9 +32,10 @@ export class WalletConnectV2 extends WalletConnect {
         chains: [defaultChainId],
         metadata: {
           name: 'Uniswap',
-          description: 'Uniswap Interface',
-          url: 'https://app.uniswap.org',
-          icons: ['https://app.uniswap.org/favicon.png'],
+          //TODO: update with final host
+          description: 'Zora Swap Interface',
+          url: '',
+          icons: [''],
         },
         optionalChains: [...L1_CHAIN_IDS, ...L2_CHAIN_IDS],
         showQrModal: qrcode,
