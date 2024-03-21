@@ -11,12 +11,12 @@ import styled from 'styled-components'
 import { ClickableStyle, ThemedText } from 'theme/components'
 import ThemeToggle from 'theme/components/ThemeToggle'
 
-import { AnalyticsToggle } from './AnalyticsToggle'
+// import { AnalyticsToggle } from './AnalyticsToggle'
 import { GitVersionRow } from './GitVersionRow'
 import { LanguageMenuItems } from './LanguageMenu'
 import { SlideOutMenu } from './SlideOutMenu'
-import { SmallBalanceToggle } from './SmallBalanceToggle'
-import { SpamToggle } from './SpamToggle'
+// import { SmallBalanceToggle } from './SmallBalanceToggle'
+// import { SpamToggle } from './SpamToggle'
 import { TestnetsToggle } from './TestnetsToggle'
 
 const Container = styled(Column)`
@@ -94,9 +94,9 @@ export default function SettingsMenu({
           </SectionTitle>
           <ToggleWrapper currencyConversionEnabled={currencyConversionEnabled}>
             <ThemeToggle />
-            <SmallBalanceToggle />
+            {/* <SmallBalanceToggle />
             <SpamToggle />
-            <AnalyticsToggle />
+            <AnalyticsToggle /> */}
             <TestnetsToggle />
           </ToggleWrapper>
           {!currencyConversionEnabled && TRANSLATION_ENABLED && (

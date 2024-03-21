@@ -24,11 +24,11 @@ export function isAppUniswapStagingOrg({ hostname }: { hostname: string }): bool
 }
 
 function isAppZora({ hostname }: { hostname: string }): boolean {
-  return hostname === 'uniswap-zora.protofire.io'
+  return hostname === 'swap-zora.protofire.io'
 }
 
 function isAppZoraStg({ hostname }: { hostname: string }): boolean {
-  return hostname === 'zora-uniswap-stg.protofire.io'
+  return hostname === 'swap-zora-stg.protofire.io'
 }
 
 export function isBrowserRouterEnabled(): boolean {
