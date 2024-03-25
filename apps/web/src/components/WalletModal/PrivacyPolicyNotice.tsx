@@ -24,7 +24,7 @@ export default function PrivacyPolicyNotice() {
       <StyledLink href="https://support.zora.co/en/articles/6383373-zora-privacy-policy">
         <Trans>Privacy Policy.</Trans>
       </StyledLink> */}
-      <LastUpdatedText>Zora Swap is a fork based on Uniswap Protocol.</LastUpdatedText>
+      <LastUpdatedText>Swap is a fork on Zora Network based on Uniswap Protocol.</LastUpdatedText>
       <LastUpdatedText>
         {' ('}
         <Trans>Last updated</Trans>

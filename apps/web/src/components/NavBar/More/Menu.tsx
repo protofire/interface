@@ -112,7 +112,7 @@ export function Menu({ close }: { close: () => void }) {
           />
         ))}
         <Separator />
-        Zora Swap is a fork based on Uniswap Protocol.
+        Swap is a fork on Zora Network based on Uniswap Protocol.
         {/* <StyledRow
           height="45px"
           gap="md"

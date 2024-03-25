@@ -19,7 +19,7 @@ export function GitVersionRow() {
     >
       <Tooltip text="Copied" show={isCopied}>
         <ThemedText.BodySmall color="neutral3">
-          <div>Zora Swap is a fork based on Uniswap Protocol.</div>
+          <div>Swap is a fork on Zora Network based on Uniswap Protocol.</div>
           <Trans>Version: </Trans>
           {' ' + process.env.REACT_APP_GIT_COMMIT_HASH.substring(0, 6)}
         </ThemedText.BodySmall>

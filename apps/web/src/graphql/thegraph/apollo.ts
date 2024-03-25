@@ -13,10 +13,12 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.AVALANCHE]: 'https://api.thegraph.com/subgraphs/name/lynnshaoyu/uniswap-v3-avax?source=uniswap',
   [ChainId.BASE]: 'https://api.studio.thegraph.com/query/48211/uniswap-v3-base/version/latest?source=uniswap',
   [ChainId.ZORA]:
-    'https://api.goldsky.com/api/public/project_cltg8htcp35aw01xn43dqhxmv/subgraphs/uniswap-v3-zora/1.0.0/gn',
+    'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v3-zora-network/1.0.0/gn',
+  [ChainId.ZORA_SEPOLIA]:
+    'https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/uniswap-v3-zora-sepolia/1.0.0/gn',
 }
 
-const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[ChainId.MAINNET] })
+const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[ChainId.ZORA] })
 
 // This middleware will allow us to dynamically update the uri for the requests based off chainId
 // For more information: https://www.apollographql.com/docs/react/networking/advanced-http-networking/
@@ -68,5 +70,9 @@ export const chainToApolloClient: Record<number, ApolloClient<NormalizedCacheObj
   [ChainId.ZORA]: new ApolloClient({
     cache: new InMemoryCache(),
     uri: CHAIN_SUBGRAPH_URL[ChainId.ZORA],
+  }),
+  [ChainId.ZORA_SEPOLIA]: new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: CHAIN_SUBGRAPH_URL[ChainId.ZORA_SEPOLIA],
   }),
 }

@@ -16,7 +16,7 @@ export interface MenuItem {
 
 export const menuContent: MenuSection[] = [
   {
-    title: t`Zora Swap`,
+    title: t`Swap on Zora`,
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
       { label: t`Forked Protocol Docs`, href: 'https://docs.uniswap.org/' },

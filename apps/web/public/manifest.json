@@ -1,8 +1,8 @@
 {
   "background_color": "#fff",
   "display": "standalone",
-  "short_name": "Zora Swap",
-  "name": "Zora Swap",
+  "short_name": "Swap on Zora",
+  "name": "Swap on Zora",
   "icons": [
     {
       "src": "./images/192x192_App_Icon.png",

@@ -31,9 +31,9 @@ export class WalletConnectV2 extends WalletConnect {
         projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
         chains: [defaultChainId],
         metadata: {
-          name: 'Uniswap',
+          name: 'Swap',
           //TODO: update with final host
-          description: 'Zora Swap Interface',
+          description: 'Swap Interface',
           url: '',
           icons: [''],
         },
