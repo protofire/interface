@@ -20,6 +20,7 @@ export const menuContent: MenuSection[] = [
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
       { label: t`Forked Protocol Docs`, href: 'https://docs.uniswap.org/' },
+      { label: t`V2 (External)`, href: 'https://univ2.zora.energy/' },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.swap-zora.protofire.io/' },
     ],

@@ -19,7 +19,10 @@ export function V2Unsupported() {
       <AutoColumn gap="md" style={{ width: '100%' }}>
         <TextWrapper>
           <ThemedText.BodySecondary color="neutral2" textAlign="center">
-            <Trans>Swap V2 is not available on this network.</Trans>
+            <Trans>Swap V2 is not available on this page currently.</Trans>{' '}
+            <a href="https://univ2.zora.energy" target="_blank" rel="noopener noreferrer">
+              External V2 website
+            </a>
           </ThemedText.BodySecondary>
         </TextWrapper>
       </AutoColumn>
