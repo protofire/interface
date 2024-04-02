@@ -99,6 +99,9 @@ export const PageTabs = () => {
         <MenuItem href="/pool" dataTestId="pool-nav-link" isActive={isPoolActive}>
           <Trans>Pool</Trans>
         </MenuItem>
+        <MenuItem href="https://univ2.zora.energy/" target>
+          <Trans>V2</Trans>
+        </MenuItem>
       </Box>
       {isNewLandingPageEnabled ? (
         <More />
