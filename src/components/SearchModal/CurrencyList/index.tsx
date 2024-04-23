@@ -107,7 +107,7 @@ function TokenTags({ currency }: { currency: Currency }) {
     </TagContainer>
   )
 }
-
+const SHOW_PORTFOLIO_BALANCES = false
 export function CurrencyRow({
   currency,
   onSelect,
@@ -175,7 +175,7 @@ export function CurrencyRow({
             <TokenTags currency={currency} />
           </RowFixed>
         </Column>
-        {showCurrencyAmount ? (
+        {showCurrencyAmount && SHOW_PORTFOLIO_BALANCES ? (
           <RowFixed style={{ justifySelf: 'flex-end' }}>
             {account ? balance ? <Balance balance={balance} /> : <Loader /> : null}
             {isSelected && <CheckIcon />}
