@@ -1,18 +1,19 @@
 // import { Trans } from '@lingui/macro'
-import Column from 'components/Column'
-import { ScrollBarStyles } from 'components/Common'
+import Column from "components/Column";
+import { ScrollBarStyles } from "components/Common";
 // import Row from 'components/Row'
-import { Socials } from 'pages/Landing/sections/Footer'
-import { Link } from 'react-router-dom'
+import { Socials } from "pages/Landing/sections/Footer";
+import { Link } from "react-router-dom";
 // import { Text } from 'rebass'
 // import { useOpenModal } from 'state/application/hooks'
 // import { ApplicationModal } from 'state/application/reducer'
-import styled, { css } from 'styled-components'
-import { BREAKPOINTS } from 'theme'
-import { ExternalLink, ThemedText } from 'theme/components'
+import styled, { css } from "styled-components";
+import { BREAKPOINTS } from "theme";
+import { ExternalLink, ThemedText } from "theme/components";
 
-import { menuContent, MenuItem, MenuSection } from './menuContent'
+import { menuContent, MenuItem, MenuSection } from "./menuContent";
 // import { MobileAppLogo } from './MobileAppLogo'
+import { TermsOfServiceButton } from "../../TermsOfService/TermsOfServiceButton";
 
 const Container = styled.div`
   width: 295px;
@@ -38,7 +39,7 @@ const Container = styled.div`
     top: unset;
     bottom: 50px;
   }
-`
+`;
 const LinkStyles = css`
   font-size: 16px;
   text-decoration: none;
@@ -47,21 +48,21 @@ const LinkStyles = css`
     color: ${({ theme }) => theme.accent1};
     opacity: 1;
   }
-`
+`;
 const StyledInternalLink = styled(Link)<{ canHide?: boolean }>`
   ${LinkStyles}
   @media screen and (max-width: ${BREAKPOINTS.md}px), (min-width: ${BREAKPOINTS.xl}px) {
-    display: ${({ canHide }) => (canHide ? 'none' : 'block')};
+    display: ${({ canHide }) => (canHide ? "none" : "block")};
   }
-`
+`;
 const StyledExternalLink = styled(ExternalLink)`
   ${LinkStyles}
-`
+`;
 const Separator = styled.div`
   width: 100%;
   height: 1px;
   background: ${({ theme }) => theme.surface3};
-`
+`;
 // const StyledRow = styled(Row)`
 //   cursor: pointer;
 //   :hover {
@@ -70,15 +71,17 @@ const Separator = styled.div`
 // `
 const StyledSocials = styled(Socials)`
   height: 20px;
-`
+`;
 function Item({ label, href, internal, overflow, closeMenu }: MenuItem) {
-  return internal ? (
+  return internal && href ? (
     <StyledInternalLink to={href} canHide={overflow} onClick={closeMenu}>
       {label}
     </StyledInternalLink>
-  ) : (
+  ) : href ? (
     <StyledExternalLink href={href}>{label}</StyledExternalLink>
-  )
+  ) : (
+    <TermsOfServiceButton label={label} />
+  );
 }
 function Section({ title, items, closeMenu }: MenuSection) {
   return (
@@ -95,7 +98,7 @@ function Section({ title, items, closeMenu }: MenuSection) {
         />
       ))}
     </Column>
-  )
+  );
 }
 export function Menu({ close }: { close: () => void }) {
   // const openGetTheAppModal = useOpenModal(ApplicationModal.GET_THE_APP)
@@ -134,5 +137,5 @@ export function Menu({ close }: { close: () => void }) {
         <StyledSocials iconSize="25px" />
       </Column>
     </Container>
-  )
+  );
 }
