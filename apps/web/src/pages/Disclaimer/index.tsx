@@ -1,50 +1,51 @@
-import { Trace } from "analytics";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Trace } from 'analytics'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 const StyledContainer = styled.div`
   display: block;
   max-width: 768px;
   margin: 0 auto;
-`;
+`
 
 const StyledPageTitle = styled.h1`
   margin-bottom: 20px;
   font-size: 2em;
-`;
+`
 
 const StyledSectionTitle = styled.h2`
   margin-top: 30px;
   font-size: 1.1em;
   font-weight: 700;
-`;
+`
 
 const StyledParagraph = styled.p`
   font-size: 1.1em;
-`;
+`
 
 const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.accent1};
-`;
+`
 
 const StyledOrderedList = styled.ol`
   & ol {
     list-style: lower-alpha;
   }
-`;
+`
 
 const StyledListItem = styled.li`
   margin-bottom: 15px;
-`;
+`
 
-export default function TermsOfService() {
+export default function Disclaimer() {
   return (
-    <Trace page={"terms-of-service-page"} shouldLogImpression>
+    /* eslint-disable */
+    <Trace page={'disclaimer-page'} shouldLogImpression>
       <StyledContainer>
-        <StyledPageTitle>Terms Of Service</StyledPageTitle>
+        <StyledPageTitle>Disclaimer</StyledPageTitle>
 
         <StyledParagraph>
-          By accessing or using this open-source Uniswap interface &#40;the{" "}
+          By accessing or using this open-source Uniswap interface &#40;the{' '}
           <b>&#34;Interface&#34;</b>&#41;, you agree that you have read,
           understand and accept all of the terms, conditions and disclaimers set
           forth herein. If you do not agree to all of these terms, conditions
@@ -55,17 +56,16 @@ export default function TermsOfService() {
         <StyledSectionTitle>General</StyledSectionTitle>
         <StyledParagraph>
           The Interface provides a means of access to the Uniswap V3 Protocol
-          &#40;the <b>&#34;Protocol&#34;&#41;</b> on Zora Network &#40;the
-          &nbsp;
+          &#40;the <b>&#34;Protocol&#34;&#41;</b> on Zora Network &#40;the&nbsp;
           <b>&#34;Network&#34;&#41;</b>. The Protocol is a set of open-source or
           source-available self-executing smart contracts initially deployed by
           Universal Navigation Inc. &#40;<b>&#34;Uniswap Labs&#34;&#41;</b>. The
           Interface is distinct from the Protocol and functions as merely one
           means of accessing the Protocol. For more information about the
-          distinction between the Protocol and Uniswap Interfaces, please see
-          &nbsp;
+          distinction between the Protocol and Uniswap Interfaces, please
+          see&nbsp;
           <StyledLink
-            to={"https://uniswap.org/terms-of-service"}
+            to={'https://uniswap.org/terms-of-service'}
             target="_blank"
           >
             Uniswap&#39;s Terms of Service.
@@ -73,9 +73,9 @@ export default function TermsOfService() {
         </StyledParagraph>
         <StyledParagraph>
           This Interface is completely open source, with the full repository
-          available at{" "}
+          available at{' '}
           <StyledLink
-            to={"https://github.com/Uniswap/interface"}
+            to={'https://github.com/Uniswap/interface'}
             target="_blank"
           >
             https://github.com/Uniswap/interface
@@ -137,10 +137,10 @@ export default function TermsOfService() {
             OPEN SOURCE AND THIRD PARTY SOFTWARE - The Interface is fully open
             source, and such software is made available to you under the terms
             of the applicable licenses. Please review the applicable licenses
-            for the Interface{" "}
+            for the Interface{' '}
             <StyledLink
               to={
-                "https://github.com/Uniswap/interface/blob/main/apps/web/LICENSE"
+                'https://github.com/Uniswap/interface/blob/main/apps/web/LICENSE'
               }
               target="_blank"
             >
@@ -261,11 +261,11 @@ export default function TermsOfService() {
                 Protocol may be subject to such events and that the developers
                 or contributors to the Interface, including Zora Labs, are not
                 responsible for the operation of Ethereum and makes no
-                guarantees regarding the blockchain’s security, functionality or
-                availability.
+                guarantees regarding the blockchain&#39;s security,
+                functionality or availability.
               </StyledListItem>
               <StyledListItem>
-                In summary, you acknowledge that the developers or contributors
+                Inn summary, you acknowledge that the developers or contributors
                 to the Interface, including Zora Labs, are not responsible for
                 any of these variables or risks, do not own or control the
                 Interface or Protocol, and cannot be held liable for any
@@ -279,5 +279,6 @@ export default function TermsOfService() {
         </StyledOrderedList>
       </StyledContainer>
     </Trace>
-  );
+    /* eslint-enable */
+  )
 }

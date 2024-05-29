@@ -37,7 +37,7 @@ const PoolFinder = lazy(() => import("pages/PoolFinder"));
 const RemoveLiquidity = lazy(() => import("pages/RemoveLiquidity"));
 const RemoveLiquidityV3 = lazy(() => import("pages/RemoveLiquidity/V3"));
 const TokenDetails = lazy(() => import("pages/TokenDetails"));
-const TermsOfService = lazy(() => import("pages/TermsOfService"));
+const Disclaimer = lazy(() => import("pages/Disclaimer"));
 // const Vote = lazy(() => import('pages/Vote'))
 
 // this is the same svg defined in assets/images/blue-loader.svg
@@ -342,9 +342,9 @@ export const routes: RouteDefinition[] = [
     getTitle: () => t`Explore NFTs on Swap`,
   }),
   createRouteDefinition({
-    path: "/terms-of-service",
-    getElement: () => <TermsOfService />,
-    getTitle: () => t`Terms Of Service`,
+    path: "/disclaimer",
+    getElement: () => <Disclaimer />,
+    getTitle: () => t`Disclaimer`,
   }),
   createRouteDefinition({
     path: "*",

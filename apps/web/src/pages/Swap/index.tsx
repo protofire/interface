@@ -26,7 +26,7 @@ import {
 import { useIsDarkMode } from "../../theme/components/ThemeToggle";
 import { LimitFormWrapper } from "./Limit/LimitForm";
 import { SwapForm } from "./SwapForm";
-import { TermsOfServiceModal } from "components/TermsOfService/TermsOfServiceModal";
+import { DisclaimerModal } from "components/Disclaimer/DisclaimerModal";
 import { useModalIsOpen } from "state/application/hooks";
 import { ApplicationModal } from "state/application/reducer";
 
@@ -62,7 +62,7 @@ export default function SwapPage({ className }: { className?: string }) {
     parsedCurrencyState.outputCurrencyId,
     chainId
   );
-  const termsOfServiceOpen = useModalIsOpen(ApplicationModal.TERMS_OF_SERVICE);
+  const disclaimerOpen = useModalIsOpen(ApplicationModal.DISCLAIMER);
 
   return (
     <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
@@ -78,7 +78,7 @@ export default function SwapPage({ className }: { className?: string }) {
         <NetworkAlert />
       </PageWrapper>
       {location.pathname === "/swap" && <SwitchLocaleLink />}
-      {termsOfServiceOpen && <TermsOfServiceModal />}
+      {disclaimerOpen && <DisclaimerModal />}
     </Trace>
   );
 }

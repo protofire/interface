@@ -45,7 +45,7 @@ export enum ApplicationModal {
   UK_DISCLAIMER,
   UNISWAP_NFT_AIRDROP_CLAIM,
   GET_THE_APP,
-  TERMS_OF_SERVICE,
+  DISCLAIMER,
 }
 
 export type PopupList = Array<{

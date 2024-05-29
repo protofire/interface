@@ -160,16 +160,14 @@ const useRenderUkBanner = () => {
   return Boolean(originCountry) && originCountry === "GB";
 };
 
-const displayTermsOfServiceModal = () => {
-  const accepted = localStorage.getItem("accepted_terms");
+const displayDisclaimerModal = () => {
+  const accepted = localStorage.getItem("accepted_disclaimer");
   return accepted !== "true";
 };
 
 export default function App() {
   const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
-  const openTermsOfServiceModal = useOpenModal(
-    ApplicationModal.TERMS_OF_SERVICE
-  );
+  const openDisclaimerModal = useOpenModal(ApplicationModal.DISCLAIMER);
 
   const location = useLocation();
   const { pathname } = location;
@@ -184,14 +182,14 @@ export default function App() {
       setShouldDisableNFTRoutes(false);
     }
 
-    if (displayTermsOfServiceModal()) {
-      openTermsOfServiceModal();
+    if (displayDisclaimerModal()) {
+      openDisclaimerModal();
     }
   }, [
     searchParams,
     setShouldDisableNFTRoutes,
-    displayTermsOfServiceModal,
-    openTermsOfServiceModal,
+    displayDisclaimerModal,
+    openDisclaimerModal,
   ]);
 
   useFeatureFlagURLOverrides();

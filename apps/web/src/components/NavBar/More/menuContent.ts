@@ -1,27 +1,27 @@
-import { t } from "@lingui/macro";
+import { t } from '@lingui/macro'
 
 export interface MenuSection {
-  title: string;
-  items: MenuItem[];
-  closeMenu?: () => void;
+  title: string
+  items: MenuItem[]
+  closeMenu?: () => void
 }
 
 export interface MenuItem {
-  label: string;
-  href: string;
-  internal?: boolean;
-  overflow?: boolean;
-  closeMenu?: () => void;
+  label: string
+  href: string
+  internal?: boolean
+  overflow?: boolean
+  closeMenu?: () => void
 }
 
 export const menuContent: MenuSection[] = [
   {
     title: t`Swap on Zora Network`,
     items: [
-      { label: t`Pool`, href: "/pool", internal: true, overflow: true },
-      { label: t`Forked Protocol Docs`, href: "https://docs.uniswap.org/" },
-      { label: t`V2 (External)`, href: "https://univ2.zora.energy/" },
-      { label: t`Terms Of Service`, href: "/terms-of-service", internal: true },
+      { label: t`Pool`, href: '/pool', internal: true, overflow: true },
+      { label: t`Forked Protocol Docs`, href: 'https://docs.uniswap.org/' },
+      { label: t`V2 (External)`, href: 'https://univ2.zora.energy/' },
+      { label: t`Disclaimer`, href: '/disclaimer', internal: true },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.swap-zora.protofire.io/' },
     ],
@@ -48,4 +48,4 @@ export const menuContent: MenuSection[] = [
   //     { label: t`Help Center`, href: 'https://support.uniswap.org/hc/en-us' },
   //   ],
   // },
-];
+]
