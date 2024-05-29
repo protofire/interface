@@ -13,7 +13,6 @@ import { ExternalLink, ThemedText } from "theme/components";
 
 import { menuContent, MenuItem, MenuSection } from "./menuContent";
 // import { MobileAppLogo } from './MobileAppLogo'
-import { TermsOfServiceButton } from "../../TermsOfService/TermsOfServiceButton";
 
 const Container = styled.div`
   width: 295px;
@@ -73,14 +72,12 @@ const StyledSocials = styled(Socials)`
   height: 20px;
 `;
 function Item({ label, href, internal, overflow, closeMenu }: MenuItem) {
-  return internal && href ? (
+  return internal ? (
     <StyledInternalLink to={href} canHide={overflow} onClick={closeMenu}>
       {label}
     </StyledInternalLink>
-  ) : href ? (
-    <StyledExternalLink href={href}>{label}</StyledExternalLink>
   ) : (
-    <TermsOfServiceButton label={label} />
+    <StyledExternalLink href={href}>{label}</StyledExternalLink>
   );
 }
 function Section({ title, items, closeMenu }: MenuSection) {

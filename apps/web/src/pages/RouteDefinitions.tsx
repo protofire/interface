@@ -1,38 +1,43 @@
-import { t } from '@lingui/macro'
-import { useInfoExplorePageEnabled } from 'featureFlags/flags/infoExplore'
-import { useInfoPoolPageEnabled } from 'featureFlags/flags/infoPoolPage'
-import { useAtom } from 'jotai'
-import { lazy, ReactNode, Suspense, useMemo } from 'react'
-import { matchPath, Navigate, useLocation } from 'react-router-dom'
-import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
+import { t } from "@lingui/macro";
+import { useInfoExplorePageEnabled } from "featureFlags/flags/infoExplore";
+import { useInfoPoolPageEnabled } from "featureFlags/flags/infoPoolPage";
+import { useAtom } from "jotai";
+import { lazy, ReactNode, Suspense, useMemo } from "react";
+import { matchPath, Navigate, useLocation } from "react-router-dom";
+import { shouldDisableNFTRoutesAtom } from "state/application/atoms";
 // import { SpinnerSVG } from 'theme/components'
-import { isBrowserRouterEnabled } from 'utils/env'
+import { isBrowserRouterEnabled } from "utils/env";
 
-import { getDefaultTokensTitle } from './getDefaultTokensTitle'
-import { getExploreTitle } from './getExploreTitle'
+import { getDefaultTokensTitle } from "./getDefaultTokensTitle";
+import { getExploreTitle } from "./getExploreTitle";
 // High-traffic pages (index and /swap) should not be lazy-loaded.
-import Landing from './Landing'
-import Swap from './Swap'
+import Landing from "./Landing";
+import Swap from "./Swap";
 
-const NftExplore = lazy(() => import('nft/pages/explore'))
-const Collection = lazy(() => import('nft/pages/collection'))
-const Profile = lazy(() => import('nft/pages/profile'))
-const Asset = lazy(() => import('nft/pages/asset/Asset'))
-const Explore = lazy(() => import('pages/Explore'))
-const AddLiquidityWithTokenRedirects = lazy(() => import('pages/AddLiquidity/redirects'))
-const AddLiquidityV2WithTokenRedirects = lazy(() => import('pages/AddLiquidityV2/redirects'))
-const RedirectExplore = lazy(() => import('pages/Explore/redirects'))
-const MigrateV2 = lazy(() => import('pages/MigrateV2'))
-const MigrateV2Pair = lazy(() => import('pages/MigrateV2/MigrateV2Pair'))
-const NotFound = lazy(() => import('pages/NotFound'))
-const Pool = lazy(() => import('pages/Pool'))
-const PositionPage = lazy(() => import('pages/Pool/PositionPage'))
-const PoolV2 = lazy(() => import('pages/Pool/v2'))
-const PoolDetails = lazy(() => import('pages/PoolDetails'))
-const PoolFinder = lazy(() => import('pages/PoolFinder'))
-const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
-const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
-const TokenDetails = lazy(() => import('pages/TokenDetails'))
+const NftExplore = lazy(() => import("nft/pages/explore"));
+const Collection = lazy(() => import("nft/pages/collection"));
+const Profile = lazy(() => import("nft/pages/profile"));
+const Asset = lazy(() => import("nft/pages/asset/Asset"));
+const Explore = lazy(() => import("pages/Explore"));
+const AddLiquidityWithTokenRedirects = lazy(
+  () => import("pages/AddLiquidity/redirects")
+);
+const AddLiquidityV2WithTokenRedirects = lazy(
+  () => import("pages/AddLiquidityV2/redirects")
+);
+const RedirectExplore = lazy(() => import("pages/Explore/redirects"));
+const MigrateV2 = lazy(() => import("pages/MigrateV2"));
+const MigrateV2Pair = lazy(() => import("pages/MigrateV2/MigrateV2Pair"));
+const NotFound = lazy(() => import("pages/NotFound"));
+const Pool = lazy(() => import("pages/Pool"));
+const PositionPage = lazy(() => import("pages/Pool/PositionPage"));
+const PoolV2 = lazy(() => import("pages/Pool/v2"));
+const PoolDetails = lazy(() => import("pages/PoolDetails"));
+const PoolFinder = lazy(() => import("pages/PoolFinder"));
+const RemoveLiquidity = lazy(() => import("pages/RemoveLiquidity"));
+const RemoveLiquidityV3 = lazy(() => import("pages/RemoveLiquidity/V3"));
+const TokenDetails = lazy(() => import("pages/TokenDetails"));
+const TermsOfService = lazy(() => import("pages/TermsOfService"));
 // const Vote = lazy(() => import('pages/Vote'))
 
 // this is the same svg defined in assets/images/blue-loader.svg
@@ -50,22 +55,22 @@ const TokenDetails = lazy(() => import('pages/TokenDetails'))
 // )
 
 interface RouterConfig {
-  browserRouterEnabled?: boolean
-  hash?: string
-  infoExplorePageEnabled?: boolean
-  infoPoolPageEnabled?: boolean
-  shouldDisableNFTRoutes?: boolean
+  browserRouterEnabled?: boolean;
+  hash?: string;
+  infoExplorePageEnabled?: boolean;
+  infoPoolPageEnabled?: boolean;
+  shouldDisableNFTRoutes?: boolean;
 }
 
 /**
  * Convenience hook which organizes the router configuration into a single object.
  */
 export function useRouterConfig(): RouterConfig {
-  const browserRouterEnabled = isBrowserRouterEnabled()
-  const { hash } = useLocation()
-  const infoPoolPageEnabled = useInfoPoolPageEnabled()
-  const infoExplorePageEnabled = useInfoExplorePageEnabled()
-  const [shouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom)
+  const browserRouterEnabled = isBrowserRouterEnabled();
+  const { hash } = useLocation();
+  const infoPoolPageEnabled = useInfoPoolPageEnabled();
+  const infoExplorePageEnabled = useInfoExplorePageEnabled();
+  const [shouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
   return useMemo(
     () => ({
       browserRouterEnabled,
@@ -74,84 +79,106 @@ export function useRouterConfig(): RouterConfig {
       infoPoolPageEnabled,
       shouldDisableNFTRoutes: Boolean(shouldDisableNFTRoutes),
     }),
-    [browserRouterEnabled, hash, infoExplorePageEnabled, infoPoolPageEnabled, shouldDisableNFTRoutes]
-  )
+    [
+      browserRouterEnabled,
+      hash,
+      infoExplorePageEnabled,
+      infoPoolPageEnabled,
+      shouldDisableNFTRoutes,
+    ]
+  );
 }
 
 export interface RouteDefinition {
-  path: string
-  nestedPaths: string[]
-  getTitle: (path?: string) => string
-  enabled: (args: RouterConfig) => boolean
-  getElement: (args: RouterConfig) => ReactNode
+  path: string;
+  nestedPaths: string[];
+  getTitle: (path?: string) => string;
+  enabled: (args: RouterConfig) => boolean;
+  getElement: (args: RouterConfig) => ReactNode;
 }
 
 // Assigns the defaults to the route definition.
-function createRouteDefinition(route: Partial<RouteDefinition>): RouteDefinition {
+function createRouteDefinition(
+  route: Partial<RouteDefinition>
+): RouteDefinition {
   return {
     getElement: () => null,
-    getTitle: () => 'Swap Interface',
+    getTitle: () => "Swap Interface",
     enabled: () => true,
-    path: '/',
+    path: "/",
     nestedPaths: [],
     // overwrite the defaults
     ...route,
-  }
+  };
 }
 
-const SwapTitle = t`Buy, sell & trade Ethereum and other top tokens on Zora Network`
+const SwapTitle = t`Buy, sell & trade Ethereum and other top tokens on Zora Network`;
 
 export const routes: RouteDefinition[] = [
   createRouteDefinition({
-    path: '/',
-    getTitle: () => t`Swap | Trade crypto & NFTs safely on the top DeFi exchange`,
+    path: "/",
+    getTitle: () =>
+      t`Swap | Trade crypto & NFTs safely on the top DeFi exchange`,
     getElement: (args) => {
-      return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Landing />
+      return args.browserRouterEnabled && args.hash ? (
+        <Navigate to={args.hash.replace("#", "")} replace />
+      ) : (
+        <Landing />
+      );
     },
   }),
   createRouteDefinition({
-    path: '/explore',
+    path: "/explore",
     getTitle: getExploreTitle,
-    nestedPaths: [':tab', ':chainName', ':tab/:chainName'],
+    nestedPaths: [":tab", ":chainName", ":tab/:chainName"],
     getElement: () => <RedirectExplore />,
     enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
   createRouteDefinition({
-    path: '/explore/tokens/:chainName/:tokenAddress',
+    path: "/explore/tokens/:chainName/:tokenAddress",
     getTitle: () => t`Buy & sell on Swap`,
     getElement: () => <TokenDetails />,
     enabled: (args) => Boolean(args.infoExplorePageEnabled),
   }),
   createRouteDefinition({
-    path: '/tokens',
+    path: "/tokens",
     getTitle: getDefaultTokensTitle,
     getElement: (args) => {
-      return args.infoExplorePageEnabled ? <Navigate to="/explore/tokens" replace /> : <Explore />
+      return args.infoExplorePageEnabled ? (
+        <Navigate to="/explore/tokens" replace />
+      ) : (
+        <Explore />
+      );
     },
   }),
   createRouteDefinition({
-    path: '/tokens/:chainName',
+    path: "/tokens/:chainName",
     getTitle: getDefaultTokensTitle,
     getElement: (args) => {
-      return args.infoExplorePageEnabled ? <RedirectExplore /> : <Explore />
+      return args.infoExplorePageEnabled ? <RedirectExplore /> : <Explore />;
     },
   }),
   createRouteDefinition({
-    path: '/tokens/:chainName/:tokenAddress',
+    path: "/tokens/:chainName/:tokenAddress",
     getTitle: getDefaultTokensTitle,
     getElement: (args) => {
-      return args.infoExplorePageEnabled ? <RedirectExplore /> : <TokenDetails />
+      return args.infoExplorePageEnabled ? (
+        <RedirectExplore />
+      ) : (
+        <TokenDetails />
+      );
     },
   }),
   createRouteDefinition({
-    path: '/explore/pools/:chainName/:poolAddress',
+    path: "/explore/pools/:chainName/:poolAddress",
     getTitle: () => t`Explore pools on Swap`,
     getElement: () => (
       <Suspense fallback={null}>
         <PoolDetails />
       </Suspense>
     ),
-    enabled: (args) => Boolean(args.infoExplorePageEnabled && args.infoPoolPageEnabled),
+    enabled: (args) =>
+      Boolean(args.infoExplorePageEnabled && args.infoPoolPageEnabled),
   }),
   // createRouteDefinition({
   //   path: '/vote/*',
@@ -168,113 +195,114 @@ export const routes: RouteDefinition[] = [
   //   getElement: () => <Navigate to="/vote/create-proposal" replace />,
   // }),
   createRouteDefinition({
-    path: '/send',
+    path: "/send",
     getElement: () => <Swap />,
     getTitle: () => t`Send tokens on Swap`,
   }),
   createRouteDefinition({
-    path: '/limits',
+    path: "/limits",
     getElement: () => <Navigate to="/limit" replace />,
   }),
   createRouteDefinition({
-    path: '/limit',
+    path: "/limit",
     getElement: () => <Swap />,
     getTitle: () => SwapTitle,
   }),
   createRouteDefinition({
-    path: '/swap',
+    path: "/swap",
     getElement: () => <Swap />,
     getTitle: () => SwapTitle,
   }),
   createRouteDefinition({
-    path: '/pool/v2/find',
+    path: "/pool/v2/find",
     getElement: () => <PoolFinder />,
     getTitle: () => t`Explore top liquidity pools (v2) on Swap`,
   }),
   createRouteDefinition({
-    path: '/pool/v2',
+    path: "/pool/v2",
     getElement: () => <PoolV2 />,
     getTitle: () => t`Provide liquidity to pools (v2) on Swap`,
   }),
   createRouteDefinition({
-    path: '/pool',
+    path: "/pool",
     getElement: () => <Pool />,
     getTitle: () => t`Manage & provide pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/pool/:tokenId',
+    path: "/pool/:tokenId",
     getElement: () => <PositionPage />,
     getTitle: () => t`Manage pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/pools/v2/find',
+    path: "/pools/v2/find",
     getElement: () => <PoolFinder />,
     getTitle: () => t`Explore top liquidity pools (v2) on Swap`,
   }),
   createRouteDefinition({
-    path: '/pools/v2',
+    path: "/pools/v2",
     getElement: () => <PoolV2 />,
     getTitle: () => t`Manage & provide v2 pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/pools',
+    path: "/pools",
     getElement: () => <Pool />,
     getTitle: () => t`Manage & provide pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/pools/:tokenId',
+    path: "/pools/:tokenId",
     getElement: () => <PositionPage />,
     getTitle: () => t`Manage pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/add/v2',
-    nestedPaths: [':currencyIdA', ':currencyIdA/:currencyIdB'],
+    path: "/add/v2",
+    nestedPaths: [":currencyIdA", ":currencyIdA/:currencyIdB"],
     getElement: () => <AddLiquidityV2WithTokenRedirects />,
     getTitle: () => t`Provide liquidity to pools (v2) on Swap`,
   }),
   createRouteDefinition({
-    path: '/add',
+    path: "/add",
     nestedPaths: [
-      ':currencyIdA',
-      ':currencyIdA/:currencyIdB',
-      ':currencyIdA/:currencyIdB/:feeAmount',
-      ':currencyIdA/:currencyIdB/:feeAmount/:tokenId',
+      ":currencyIdA",
+      ":currencyIdA/:currencyIdB",
+      ":currencyIdA/:currencyIdB/:feeAmount",
+      ":currencyIdA/:currencyIdB/:feeAmount/:tokenId",
     ],
     getElement: () => <AddLiquidityWithTokenRedirects />,
     getTitle: () => t`Provide liquidity to pools on Swap`,
   }),
   createRouteDefinition({
-    path: '/remove/v2/:currencyIdA/:currencyIdB',
+    path: "/remove/v2/:currencyIdA/:currencyIdB",
     getElement: () => <RemoveLiquidity />,
     getTitle: () => t`Manage v2 pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/remove/:tokenId',
+    path: "/remove/:tokenId",
     getElement: () => <RemoveLiquidityV3 />,
     getTitle: () => t`Manage pool liquidity on Swap`,
   }),
   createRouteDefinition({
-    path: '/migrate/v2',
+    path: "/migrate/v2",
     getElement: () => <MigrateV2 />,
     getTitle: () => t`Migrate v2 pool liquidity to Swap v3`,
   }),
   createRouteDefinition({
-    path: '/migrate/v2/:address',
+    path: "/migrate/v2/:address",
     getElement: () => <MigrateV2Pair />,
     getTitle: () => t`Migrate v2 pool liquidity to Swap v3`,
   }),
   createRouteDefinition({
-    path: '/nfts',
+    path: "/nfts",
     getElement: () => (
       <Suspense fallback={null}>
         <NftExplore />
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Trade NFTs across OpenSea & other top marketplaces on Swap`,
+    getTitle: () =>
+      t`Trade NFTs across OpenSea & other top marketplaces on Swap`,
   }),
   createRouteDefinition({
-    path: '/nfts/asset/:contractAddress/:tokenId',
+    path: "/nfts/asset/:contractAddress/:tokenId",
     getElement: () => (
       <Suspense fallback={null}>
         <Asset />
@@ -284,7 +312,7 @@ export const routes: RouteDefinition[] = [
     getTitle: () => t`Explore NFTs on Swap`,
   }),
   createRouteDefinition({
-    path: '/nfts/profile',
+    path: "/nfts/profile",
     getElement: () => (
       <Suspense fallback={null}>
         <Profile />
@@ -294,7 +322,7 @@ export const routes: RouteDefinition[] = [
     getTitle: () => t`Explore NFTs on Swap`,
   }),
   createRouteDefinition({
-    path: '/nfts/collection/:contractAddress',
+    path: "/nfts/collection/:contractAddress",
     getElement: () => (
       <Suspense fallback={null}>
         <Collection />
@@ -304,7 +332,7 @@ export const routes: RouteDefinition[] = [
     getTitle: () => t`Explore NFTs on Swap`,
   }),
   createRouteDefinition({
-    path: '/nfts/collection/:contractAddress/activity',
+    path: "/nfts/collection/:contractAddress/activity",
     getElement: () => (
       <Suspense fallback={null}>
         <Collection />
@@ -313,23 +341,33 @@ export const routes: RouteDefinition[] = [
     enabled: (args) => !args.shouldDisableNFTRoutes,
     getTitle: () => t`Explore NFTs on Swap`,
   }),
-  createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
-  createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),
-]
+  createRouteDefinition({
+    path: "/terms-of-service",
+    getElement: () => <TermsOfService />,
+    getTitle: () => t`Terms Of Service`,
+  }),
+  createRouteDefinition({
+    path: "*",
+    getElement: () => <Navigate to="/not-found" replace />,
+  }),
+  createRouteDefinition({ path: "/not-found", getElement: () => <NotFound /> }),
+];
 
 export const findRouteByPath = (pathname: string) => {
   for (const route of routes) {
-    const match = matchPath(route.path, pathname)
+    const match = matchPath(route.path, pathname);
     if (match) {
-      return route
+      return route;
     }
-    const subPaths = route.nestedPaths.map((nestedPath) => `${route.path}/${nestedPath}`)
+    const subPaths = route.nestedPaths.map(
+      (nestedPath) => `${route.path}/${nestedPath}`
+    );
     for (const subPath of subPaths) {
-      const match = matchPath(subPath, pathname)
+      const match = matchPath(subPath, pathname);
       if (match) {
-        return route
+        return route;
       }
     }
   }
-  return undefined
-}
+  return undefined;
+};

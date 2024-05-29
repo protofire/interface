@@ -8,7 +8,7 @@ export interface MenuSection {
 
 export interface MenuItem {
   label: string;
-  href?: string;
+  href: string;
   internal?: boolean;
   overflow?: boolean;
   closeMenu?: () => void;
@@ -21,7 +21,7 @@ export const menuContent: MenuSection[] = [
       { label: t`Pool`, href: "/pool", internal: true, overflow: true },
       { label: t`Forked Protocol Docs`, href: "https://docs.uniswap.org/" },
       { label: t`V2 (External)`, href: "https://univ2.zora.energy/" },
-      { label: t`Terms Of Service` },
+      { label: t`Terms Of Service`, href: "/terms-of-service", internal: true },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.swap-zora.protofire.io/' },
     ],
