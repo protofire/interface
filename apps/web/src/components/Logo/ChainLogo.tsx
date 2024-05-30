@@ -17,10 +17,21 @@ import { ReactComponent as polygon } from './ChainSymbols/polygon.svg'
 import { ReactComponent as zora } from './ChainSymbols/zora.svg'
 
 type SVG = FunctionComponent<React.SVGProps<SVGSVGElement>>
-type ChainUI = { Symbol: SVG; bgColor: string; textColor: string }
+type ChainUI = {
+  Symbol: SVG
+  bgColor: string
+  textColor: string
+  bridgeLinkColor?: string
+}
 
-export function getChainUI(chainId: SupportedInterfaceChain, darkMode: boolean): ChainUI
-export function getChainUI(chainId: ChainId, darkMode: boolean): ChainUI | undefined {
+export function getChainUI(
+  chainId: SupportedInterfaceChain,
+  darkMode: boolean
+): ChainUI
+export function getChainUI(
+  chainId: ChainId,
+  darkMode: boolean
+): ChainUI | undefined {
   switch (chainId) {
     case ChainId.MAINNET:
     case ChainId.GOERLI:
@@ -86,8 +97,9 @@ export function getChainUI(chainId: ChainId, darkMode: boolean): ChainUI | undef
     case ChainId.ZORA_SEPOLIA:
       return {
         Symbol: zora,
-        bgColor: '#0052FF33',
+        bgColor: 'transparent',
         textColor: '#0052FF',
+        bridgeLinkColor: '#0052FF33',
       }
     default:
       return undefined
@@ -133,8 +145,18 @@ export function ChainLogo({
       data-testid={testId}
     >
       <title id="titleID">{`${label} logo`}</title>
-      <rect rx={borderRadius} fill={surface2} width={iconSize} height={iconSize} />
-      <rect rx={borderRadius} fill={bgColor} width={iconSize} height={iconSize} />
+      <rect
+        rx={borderRadius}
+        fill={surface2}
+        width={iconSize}
+        height={iconSize}
+      />
+      <rect
+        rx={borderRadius}
+        fill={bgColor}
+        width={iconSize}
+        height={iconSize}
+      />
       <Symbol width={iconSize} height={iconSize} />
     </svg>
   )
