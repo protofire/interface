@@ -19,15 +19,11 @@ const BridgeLink = styled(ExternalLink)<{ bgColor: string }>`
   color: white;
   display: flex;
   font-size: 16px;
-  justify-content: space-between;
   padding: 12px 18px 12px 12px;
   text-decoration: none !important;
   width: 100%;
 
   border-radius: 20px;
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -51,12 +47,22 @@ export function NetworkAlert() {
 
   if (!chainId || !isSupportedChain(chainId)) return null
 
-  const { Symbol: ChainSymbol, bgColor, textColor } = getChainUI(chainId, darkMode)
+  const {
+    Symbol: ChainSymbol,
+    bgColor,
+    textColor,
+    bridgeLinkColor,
+  } = getChainUI(chainId, darkMode)
   const { label, bridge } = getChainInfo(chainId)
 
   return bridge ? (
-    <BridgeLink href={bridge} bgColor={bgColor}>
-      <ChainSymbol width={40} height={40} stroke="none" />
+    <BridgeLink href={bridge} bgColor={bridgeLinkColor ?? bgColor}>
+      <ChainSymbol
+        width={40}
+        height={40}
+        stroke="none"
+        style={{ marginRight: 15 }}
+      />
       <RowBetween>
         <Column>
           <TitleText $color={textColor}>
@@ -64,7 +70,7 @@ export function NetworkAlert() {
           </TitleText>
           <HideSmall>
             <SubtitleText $color={textColor}>
-              <Trans>Deposit tokens to the {label} network.</Trans>
+              <Trans>Deposit tokens to {label}.</Trans>
             </SubtitleText>
           </HideSmall>
         </Column>

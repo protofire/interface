@@ -16,11 +16,12 @@ export interface MenuItem {
 
 export const menuContent: MenuSection[] = [
   {
-    title: t`Swap on Zora`,
+    title: t`Swap on Zora Network`,
     items: [
       { label: t`Pool`, href: '/pool', internal: true, overflow: true },
       { label: t`Forked Protocol Docs`, href: 'https://docs.uniswap.org/' },
       { label: t`V2 (External)`, href: 'https://univ2.zora.energy/' },
+      { label: t`Disclaimer`, href: '/disclaimer', internal: true },
       // { label: t`Vote`, href: '/vote', internal: true },
       // { label: t`Analytics`, href: 'https://info.swap-zora.protofire.io/' },
     ],
