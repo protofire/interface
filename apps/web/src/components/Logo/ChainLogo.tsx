@@ -24,14 +24,8 @@ type ChainUI = {
   bridgeLinkColor?: string
 }
 
-export function getChainUI(
-  chainId: SupportedInterfaceChain,
-  darkMode: boolean
-): ChainUI
-export function getChainUI(
-  chainId: ChainId,
-  darkMode: boolean
-): ChainUI | undefined {
+export function getChainUI(chainId: SupportedInterfaceChain, darkMode: boolean): ChainUI
+export function getChainUI(chainId: ChainId, darkMode: boolean): ChainUI | undefined {
   switch (chainId) {
     case ChainId.MAINNET:
     case ChainId.GOERLI:
@@ -145,18 +139,8 @@ export function ChainLogo({
       data-testid={testId}
     >
       <title id="titleID">{`${label} logo`}</title>
-      <rect
-        rx={borderRadius}
-        fill={surface2}
-        width={iconSize}
-        height={iconSize}
-      />
-      <rect
-        rx={borderRadius}
-        fill={bgColor}
-        width={iconSize}
-        height={iconSize}
-      />
+      <rect rx={borderRadius} fill={surface2} width={iconSize} height={iconSize} />
+      <rect rx={borderRadius} fill={bgColor} width={iconSize} height={iconSize} />
       <Symbol width={iconSize} height={iconSize} />
     </svg>
   )

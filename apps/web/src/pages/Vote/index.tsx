@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Landing from './Landing'
 import VotePage from './VotePage'
 
+// eslint-disable-next-line
 export default function Vote() {
   return (
     <Routes>
