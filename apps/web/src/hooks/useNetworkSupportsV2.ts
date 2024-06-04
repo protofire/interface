@@ -3,13 +3,9 @@ import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_V2POOL_CHAIN_IDS, SUPPORTED_V2POOL_CHAIN_IDS_DEPRECATED } from 'constants/chains'
 import { useV2EverywhereEnabled } from 'featureFlags/flags/v2Everywhere'
 
-const SUPPORTV2FORCHAIN = {
-  [ChainId.ZORA]: true,
-}
-
 export function useNetworkSupportsV2() {
   const { chainId } = useWeb3React()
-  const isV2EverywhereEnabled = useV2EverywhereEnabled() || SUPPORTV2FORCHAIN[ChainId.ZORA]
+  const isV2EverywhereEnabled = useV2EverywhereEnabled() || chainId === ChainId.ZORA
 
   return (
     chainId &&
