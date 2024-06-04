@@ -1,22 +1,22 @@
-import { Trans } from "@lingui/macro";
-import { ColumnCenter } from "components/Column";
-import { useCurrency } from "hooks/Tokens";
-import { Swap } from "pages/Swap";
-import { useEffect, useState } from "react";
-import { ChevronDown } from "react-feather";
-import styled, { css, keyframes } from "styled-components";
-import { ThemedText } from "theme/components";
+import { Trans } from '@lingui/macro'
+import { ColumnCenter } from 'components/Column'
+import { useCurrency } from 'hooks/Tokens'
+import { Swap } from 'pages/Swap'
+import { useEffect, useState } from 'react'
+import { ChevronDown } from 'react-feather'
+import styled, { css, keyframes } from 'styled-components'
+import { ThemedText } from 'theme/components'
 
-import { BREAKPOINTS } from "theme";
-import { heightBreakpoints } from "ui/src/theme";
-import { Box, H1, Subheading } from "../components/Generics";
+import { BREAKPOINTS } from 'theme'
+import { heightBreakpoints } from 'ui/src/theme'
+import { Box, H1, Subheading } from '../components/Generics'
 // import { TokenCloud } from '../components/TokenCloud/index'
-import { Hover, RiseIn, RiseInText } from "../components/animations";
+import { Hover, RiseIn, RiseInText } from '../components/animations'
 
 const Container = styled(Box)`
   min-width: 100%;
   padding-top: 72px;
-`;
+`
 const LandingSwapContainer = styled(Box)`
   width: 480px;
   padding: 8px;
@@ -25,7 +25,7 @@ const LandingSwapContainer = styled(Box)`
   @media (max-width: 768px) {
     width: 100%;
   }
-`;
+`
 const LandingSwap = styled(Swap)`
   position: relative;
   width: 100%;
@@ -36,7 +36,7 @@ const LandingSwap = styled(Swap)`
   & > div:first-child > div:first-child {
     display: none;
   }
-`;
+`
 const StyledH1 = styled(H1)`
   @media (max-width: 768px) {
     font-size: 52px;
@@ -47,7 +47,7 @@ const StyledH1 = styled(H1)`
   @media (max-height: 668px) {
     font-size: 28px;
   }
-`;
+`
 const shrinkAndFade = keyframes`
   0% {
     transform: scale(1);
@@ -57,7 +57,7 @@ const shrinkAndFade = keyframes`
     transform: scale(0.8);
     opacity: 0;
   }
-`;
+`
 const Center = styled(Box)<{ transition?: boolean }>`
   width: unset;
   pointer-events: none;
@@ -77,7 +77,7 @@ const Center = styled(Box)<{ transition?: boolean }>`
     css`
       animation: ${shrinkAndFade} 1s ease-in-out forwards;
     `};
-`;
+`
 const LearnMoreContainer = styled(Box)`
   bottom: 48px;
   @media (max-width: ${BREAKPOINTS.md}px) {
@@ -87,31 +87,31 @@ const LearnMoreContainer = styled(Box)`
   @media (max-height: ${heightBreakpoints.short}px) {
     display: none;
   }
-`;
+`
 
 interface HeroProps {
-  scrollToRef: () => void;
-  transition?: boolean;
+  scrollToRef: () => void
+  transition?: boolean
 }
 
 export function Hero({ scrollToRef, transition }: HeroProps) {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0)
   const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
-  const initialInputCurrency = useCurrency("ETH");
+    const position = window.scrollY
+    setScrollPosition(position)
+  }
+  const initialInputCurrency = useCurrency('ETH')
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
-  const translateY = -scrollPosition / 7;
-  const opacityY = 1 - scrollPosition / 1000;
+  const translateY = -scrollPosition / 7
+  const opacityY = 1 - scrollPosition / 1000
 
   return (
     <Container
@@ -138,7 +138,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
           <StyledH1>
             <RiseInText delay={0.0}>
               <Trans>Swap</Trans>
-            </RiseInText>{" "}
+            </RiseInText>{' '}
             <RiseInText delay={0.1}>
               <Trans>anytime,</Trans>
             </RiseInText>
@@ -152,19 +152,15 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
         <RiseIn delay={0.4}>
           <LandingSwapContainer>
-            <LandingSwap
-              syncTabToUrl={false}
-              initialInputCurrency={initialInputCurrency}
-            />
+            <LandingSwap syncTabToUrl={false} initialInputCurrency={initialInputCurrency} />
           </LandingSwapContainer>
         </RiseIn>
 
         <RiseIn delay={0.3}>
           <Subheading>
             <Trans>
-              This version of the open-source Uniswap V3 Front End Interface
-              developed by Universal Navigation Inc. has been modified for
-              compatibility with Zora Network.
+              This version of the open-source Uniswap V3 Front End Interface developed by Universal Navigation Inc. has
+              been modified for compatibility with Zora Network.
             </Trans>
           </Subheading>
         </RiseIn>
@@ -186,7 +182,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             align="center"
             justify="flex-start"
             onClick={() => scrollToRef()}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             width="500px"
           >
             <Hover>
@@ -201,5 +197,5 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
         </RiseIn>
       </LearnMoreContainer>
     </Container>
-  );
+  )
 }

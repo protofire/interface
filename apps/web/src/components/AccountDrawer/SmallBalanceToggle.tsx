@@ -6,6 +6,7 @@ import { SettingsToggle } from './SettingsToggle'
 
 export const hideSmallBalancesAtom = atomWithStorage<boolean>('hideSmallBalances', true)
 
+// eslint-disable-next-line
 export function SmallBalanceToggle() {
   const [hideSmallBalances, updateHideSmallBalances] = useAtom(hideSmallBalancesAtom)
 

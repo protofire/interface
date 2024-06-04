@@ -94,6 +94,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
     })
 }
 
+// eslint-disable-next-line
 export function register(config?: Config) {
   if ((isProductionEnv() || isStagingEnv()) && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -128,6 +129,7 @@ export function register(config?: Config) {
   }
 }
 
+// eslint-disable-next-line
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready

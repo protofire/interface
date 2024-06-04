@@ -6,6 +6,7 @@ import { SettingsToggle } from './SettingsToggle'
 
 export const hideSpamAtom = atomWithStorage<boolean>('hideSmallBalances', true)
 
+// eslint-disable-next-line
 export function SpamToggle() {
   const [hideSpam, updateHideSpam] = useAtom(hideSpamAtom)
 

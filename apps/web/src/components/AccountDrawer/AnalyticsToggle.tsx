@@ -4,6 +4,7 @@ import { useAtom } from 'jotai'
 
 import { SettingsToggle } from './SettingsToggle'
 
+// eslint-disable-next-line
 export function AnalyticsToggle() {
   const [allowAnalytics, updateAllowAnalytics] = useAtom(allowAnalyticsAtom)
 

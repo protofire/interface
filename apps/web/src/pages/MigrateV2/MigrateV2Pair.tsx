@@ -133,7 +133,7 @@ function V2PairMigration({
   const trace = useTrace()
 
   const pairFactory = useSingleCallResult(pair, 'factory')
-  const isNotUniswap = pairFactory.result?.[0] && pairFactory.result[0] !== v2FactoryAddress
+  const isNotUniswap = pairFactory.result?.[0] && pairFactory.result[0].toLowerCase() !== v2FactoryAddress
 
   const deadline = useTransactionDeadline() // custom from users settings
   const blockTimestamp = useCurrentBlockTimestamp()
@@ -401,7 +401,7 @@ function V2PairMigration({
         {chainId && migrator && (
           <ExternalLink href={getExplorerLink(chainId, migrator.address, ExplorerDataType.ADDRESS)}>
             <ThemedText.DeprecatedBlue display="inline">
-              <Trans>Uniswap migration contract</Trans> ↗
+              <Trans>V3 Migrator contract</Trans> ↗
             </ThemedText.DeprecatedBlue>
           </ExternalLink>
         )}

@@ -99,8 +99,8 @@ export const PageTabs = () => {
         <MenuItem href="/pool" dataTestId="pool-nav-link" isActive={isPoolActive}>
           <Trans>Pool</Trans>
         </MenuItem>
-        <MenuItem href="https://univ2.zora.energy/" target>
-          <Trans>V2</Trans>
+        <MenuItem href="/migrate/v2">
+          <Trans>Migrate</Trans>
         </MenuItem>
       </Box>
       {isNewLandingPageEnabled ? (
@@ -113,6 +113,7 @@ export const PageTabs = () => {
     </>
   )
 }
+const ICON_ENABLED = false
 
 const Navbar = ({ blur }: { blur: boolean }) => {
   const isNftPage = useIsNftPage()
@@ -144,14 +145,16 @@ const Navbar = ({ blur }: { blur: boolean }) => {
         <Box display="flex" height="full" flexWrap="nowrap">
           <Box className={styles.leftSideContainer}>
             <Box className={styles.logoContainer}>
-              <UniIcon
-                width="48"
-                height="48"
-                data-testid="uniswap-logo"
-                className={styles.logo}
-                clickable={!account}
-                onClick={handleUniIconClick}
-              />
+              {ICON_ENABLED && (
+                <UniIcon
+                  width="48"
+                  height="48"
+                  data-testid="uniswap-logo"
+                  className={styles.logo}
+                  clickable={!account}
+                  onClick={handleUniIconClick}
+                />
+              )}
             </Box>
             {!isNftPage && (
               <Box display={{ sm: 'flex', lg: 'none' }}>

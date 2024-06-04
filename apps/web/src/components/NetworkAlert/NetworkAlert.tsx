@@ -47,22 +47,12 @@ export function NetworkAlert() {
 
   if (!chainId || !isSupportedChain(chainId)) return null
 
-  const {
-    Symbol: ChainSymbol,
-    bgColor,
-    textColor,
-    bridgeLinkColor,
-  } = getChainUI(chainId, darkMode)
+  const { Symbol: ChainSymbol, bgColor, textColor, bridgeLinkColor } = getChainUI(chainId, darkMode)
   const { label, bridge } = getChainInfo(chainId)
 
   return bridge ? (
     <BridgeLink href={bridge} bgColor={bridgeLinkColor ?? bgColor}>
-      <ChainSymbol
-        width={40}
-        height={40}
-        stroke="none"
-        style={{ marginRight: 15 }}
-      />
+      <ChainSymbol width={40} height={40} stroke="none" style={{ marginRight: 15 }} />
       <RowBetween>
         <Column>
           <TitleText $color={textColor}>
