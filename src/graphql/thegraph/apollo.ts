@@ -3,6 +3,8 @@ import { ChainId } from '@uniswap/sdk-core'
 
 import store from '../../state/index'
 
+const API_KEY = process.env.REACT_APP_GRAPH_API_KEY ?? '2f4a91bec2a65276da7373494a68652e'
+
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.MAINNET]: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3',
   [ChainId.ARBITRUM_ONE]: 'https://thegraph.com/hosted-service/subgraph/ianlapham/uniswap-arbitrum-one',
@@ -11,7 +13,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.CELO]: 'https://api.thegraph.com/subgraphs/name/jesse-sawa/uniswap-celo',
   [ChainId.BNB]: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-bsc',
 
-  [ChainId.HARMONY]: 'https://api.thegraph.com/subgraphs/name/nick8319/uniswap-v3-harmony',
+  [ChainId.HARMONY]: `https://gateway-arbitrum.network.thegraph.com/api/${API_KEY}/subgraphs/id/GVkp9F6TzzC5hY4g18Ukzb6gGcYDfQrpMpcj867jsenJ`,
   [ChainId.AVALANCHE]: 'https://api.thegraph.com/subgraphs/name/lynnshaoyu/uniswap-v3-avax',
 }
 

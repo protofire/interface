@@ -266,6 +266,7 @@ function parseUnknown(_changes: TransactionChanges, assetActivity: TransactionAc
 }
 
 type ActivityTypeParser = (changes: TransactionChanges, assetActivity: TransactionActivity) => Partial<Activity>
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ActivityParserByType: { [key: string]: ActivityTypeParser | undefined } = {
   [ActivityType.Swap]: parseSwap,
   [ActivityType.SwapOrder]: parseSwapOrder,
@@ -276,6 +277,7 @@ const ActivityParserByType: { [key: string]: ActivityTypeParser | undefined } = 
   [ActivityType.Unknown]: parseUnknown,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getLogoSrcs(changes: TransactionChanges): string[] {
   // Uses set to avoid duplicate logos (e.g. nft's w/ same image url)
   const logoSet = new Set<string | undefined>()
@@ -334,6 +336,7 @@ function parseRemoteActivity(assetActivity: AssetActivityPartsFragment): Activit
       return parseUniswapXOrder(assetActivity as OrderActivity)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const changes = assetActivity.assetChanges.reduce(
       (acc: TransactionChanges, assetChange) => {
         if (assetChange.__typename === 'NftApproval') acc.NftApproval.push(assetChange)
@@ -354,26 +357,28 @@ function parseRemoteActivity(assetActivity: AssetActivityPartsFragment): Activit
       })
       return undefined
     }
-    const defaultFields = {
-      hash: assetActivity.details.hash,
-      chainId: supportedChain,
-      status: assetActivity.details.status,
-      timestamp: assetActivity.timestamp,
-      logos: getLogoSrcs(changes),
-      title: assetActivity.type,
-      descriptor: assetActivity.details.to,
-      from: assetActivity.details.from,
-      nonce: assetActivity.details.nonce,
-    }
+    // const defaultFields = {
+    //   hash: assetActivity.details.hash,
+    //   chainId: supportedChain,
+    //   status: assetActivity.details.status,
+    //   timestamp: assetActivity.timestamp,
+    //   logos: getLogoSrcs(changes),
+    //   title: assetActivity.type,
+    //   descriptor: assetActivity.details.to,
+    //   from: assetActivity.details.from,
+    //   nonce: assetActivity.details.nonce,
+    // }
 
-    const parsedFields = ActivityParserByType[assetActivity.type]?.(changes, assetActivity as TransactionActivity)
-    return { ...defaultFields, ...parsedFields }
+    // const parsedFields = ActivityParserByType[assetActivity.type]?.(changes, assetActivity as TransactionActivity)
+    // return { /...defaultFields, ...parsedFields }
+    return undefined
   } catch (e) {
     console.error('Failed to parse activity', e, assetActivity)
     return undefined
   }
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export function parseRemoteActivities(assetActivities?: readonly AssetActivityPartsFragment[]) {
   return assetActivities?.reduce((acc: { [hash: string]: Activity }, assetActivity) => {
     const activity = parseRemoteActivity(assetActivity)
