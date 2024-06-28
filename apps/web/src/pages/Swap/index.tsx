@@ -29,6 +29,7 @@ import { ApplicationModal } from 'state/application/reducer'
 import { useIsDarkMode } from '../../theme/components/ThemeToggle'
 import { LimitFormWrapper } from './Limit/LimitForm'
 import { SwapForm } from './SwapForm'
+import UniswapBanner from './UniswapBanner'
 
 export function getIsReviewableQuote(
   trade: InterfaceTrade | undefined,
@@ -54,8 +55,14 @@ export default function SwapPage({ className }: { className?: string }) {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const initialInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, chainId)
-  const initialOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, chainId)
+  const initialInputCurrency = useCurrency(
+    parsedCurrencyState.inputCurrencyId,
+    chainId
+  )
+  const initialOutputCurrency = useCurrency(
+    parsedCurrencyState.outputCurrencyId,
+    chainId
+  )
   const disclaimerOpen = useModalIsOpen(ApplicationModal.DISCLAIMER)
 
   return (
@@ -117,12 +124,21 @@ export function Swap({
           <SwapContextProvider>
             <SwapWrapper isDark={isDark} className={className} id="swap-page">
               <SwapHeader compact={compact} syncTabToUrl={syncTabToUrl} />
+              <UniswapBanner />
               {currentTab === SwapTab.Swap && (
-                <SwapForm onCurrencyChange={onCurrencyChange} disableTokenInputs={disableTokenInputs} />
+                <SwapForm
+                  onCurrencyChange={onCurrencyChange}
+                  disableTokenInputs={disableTokenInputs}
+                />
               )}
-              {currentTab === SwapTab.Limit && <LimitFormWrapper onCurrencyChange={onCurrencyChange} />}
+              {currentTab === SwapTab.Limit && (
+                <LimitFormWrapper onCurrencyChange={onCurrencyChange} />
+              )}
               {currentTab === SwapTab.Send && (
-                <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />
+                <SendForm
+                  disableTokenInputs={disableTokenInputs}
+                  onCurrencyChange={onCurrencyChange}
+                />
               )}
             </SwapWrapper>
           </SwapContextProvider>
