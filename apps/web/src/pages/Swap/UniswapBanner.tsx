@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from 'components/About/Icons'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -6,18 +7,17 @@ const StyledParagraph = styled.p`
   border-radius: 16px;
   background-color: ${({ theme }) => theme.accent2};
   color: ${({ theme }) => theme.white};
-  font-size: 1.2em;
+  font-size: 1.1em;
 `
 
 export default function UniswapBanner() {
   return (
     <StyledParagraph>
-      Zora Network is now available on the official Uniswap app! Please follow
-      this{' '}
+      Zora Network is now available on the official Uniswap app! Directly swap
+      on Uniswap at the following link:{' '}
       <Link to="https://app.uniswap.org/swap?chain=zora" target="_self">
-        link
-      </Link>{' '}
-      to swap directly on Uniswap.
+        https://app.uniswap.org/swap?chain=zora <ExternalLinkIcon size={16} />
+      </Link>
     </StyledParagraph>
   )
 }
