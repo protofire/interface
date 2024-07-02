@@ -18,6 +18,7 @@ import ConnectionErrorView from './ConnectionErrorView'
 import { DeprecatedInjectorMessage } from './Option'
 import PrivacyPolicyNotice from './PrivacyPolicyNotice'
 import { useOrderedConnections } from './useOrderedConnections'
+import UniswapBanner from 'pages/Swap/UniswapBanner'
 
 const Wrapper = styled.div`
   ${flexColumnNoWrap};
@@ -47,7 +48,11 @@ const Line = styled.hr`
   border-color: ${({ theme }) => theme.surface3};
 `
 
-export default function WalletModal({ openSettings }: { openSettings: () => void }) {
+export default function WalletModal({
+  openSettings,
+}: {
+  openSettings: () => void
+}) {
   const { connector, chainId } = useWeb3React()
   const showMoonpayText = useShowMoonpayText()
 
@@ -55,7 +60,11 @@ export default function WalletModal({ openSettings }: { openSettings: () => void
   const fallbackProviderEnabled = useFallbackProviderEnabled()
   // Keep the network connector in sync with any active user connector to prevent chain-switching on wallet disconnection.
   useEffect(() => {
-    if (chainId && isSupportedChain(chainId) && connector !== networkConnection.connector) {
+    if (
+      chainId &&
+      isSupportedChain(chainId) &&
+      connector !== networkConnection.connector
+    ) {
       if (fallbackProviderEnabled) {
         networkConnection.connector.activate(chainId)
       } else {
@@ -68,39 +77,48 @@ export default function WalletModal({ openSettings }: { openSettings: () => void
 
   return (
     <Wrapper data-testid="wallet-modal">
-      <AutoRow justify="space-between" width="100%" marginBottom="16px">
-        <ThemedText.SubHeader>Connect a wallet</ThemedText.SubHeader>
-        <IconButton Icon={Settings} onClick={openSettings} data-testid="wallet-settings" />
-      </AutoRow>
-      {activationState.status === ActivationStatus.ERROR ? (
-        <ConnectionErrorView />
-      ) : (
-        <Column gap="md" flex="1">
-          <Row flex="1" align="flex-start">
-            <OptionGrid data-testid="option-grid">{orderedConnections}</OptionGrid>
-          </Row>
-          {showDeprecatedMessage && (
-            <TextSectionWrapper>
-              <DeprecatedInjectorMessage />
-            </TextSectionWrapper>
-          )}
-          <Column gap="md">
-            <TextSectionWrapper>
-              <PrivacyPolicyNotice />
-            </TextSectionWrapper>
-            {showMoonpayText && (
-              <>
-                <Line />
-                <TextSectionWrapper>
-                  <ThemedText.Caption color="neutral3">
-                    <Trans>Fiat onramp powered by MoonPay USA LLC</Trans>
-                  </ThemedText.Caption>
-                </TextSectionWrapper>
-              </>
+      <UniswapBanner />
+      <div style={{ display: 'none' }}>
+        <AutoRow justify="space-between" width="100%" marginBottom="16px">
+          <ThemedText.SubHeader>Connect a wallet</ThemedText.SubHeader>
+          <IconButton
+            Icon={Settings}
+            onClick={openSettings}
+            data-testid="wallet-settings"
+          />
+        </AutoRow>
+        {activationState.status === ActivationStatus.ERROR ? (
+          <ConnectionErrorView />
+        ) : (
+          <Column gap="md" flex="1">
+            <Row flex="1" align="flex-start">
+              <OptionGrid data-testid="option-grid">
+                {orderedConnections}
+              </OptionGrid>
+            </Row>
+            {showDeprecatedMessage && (
+              <TextSectionWrapper>
+                <DeprecatedInjectorMessage />
+              </TextSectionWrapper>
             )}
+            <Column gap="md">
+              <TextSectionWrapper>
+                <PrivacyPolicyNotice />
+              </TextSectionWrapper>
+              {showMoonpayText && (
+                <>
+                  <Line />
+                  <TextSectionWrapper>
+                    <ThemedText.Caption color="neutral3">
+                      <Trans>Fiat onramp powered by MoonPay USA LLC</Trans>
+                    </ThemedText.Caption>
+                  </TextSectionWrapper>
+                </>
+              )}
+            </Column>
           </Column>
-        </Column>
-      )}
+        )}
+      </div>
     </Wrapper>
   )
 }
