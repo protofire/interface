@@ -16,7 +16,7 @@ export default function UniswapBanner() {
       Zora Network is now available on the official Uniswap app! Directly swap
       on Uniswap at the following link:{' '}
       <Link to="https://app.uniswap.org/swap?chain=zora" target="_self">
-        https://app.uniswap.org/swap?chain=zora <ExternalLinkIcon size={16} />
+        https://app.uniswap.org/swap?chain=zora <ExternalLinkIcon size={15} />
       </Link>
     </StyledParagraph>
   )

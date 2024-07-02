@@ -33,4 +33,7 @@ export const ExternalLinkIcon = styled(ExternalLinkI)<{
   width: ${({ size }) => (size ? size + 'px' : '32px')};
   fill: ${({ theme }) => theme.accent1};
   opacity: 1;
+  position: relative;
+  top: 2.5px;
+  left: 5px;
 `
