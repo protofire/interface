@@ -6,7 +6,6 @@ const StyledParagraph = styled.p`
   padding: 16px;
   border-radius: 16px;
   background-color: ${({ theme }) => theme.accent2};
-  color: ${({ theme }) => theme.white};
   font-size: 1.1em;
 `
 
