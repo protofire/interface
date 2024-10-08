@@ -95,7 +95,9 @@ export const PageTabs = () => {
         <Trans>Tokens</Trans>
       </MenuItem>
       <MenuItem href="/getone" isActive={pathname.startsWith('/getone')}>
-        <Trans>Get ONE</Trans>
+        <span style={{ whiteSpace: 'nowrap' }}>
+          <Trans>Get ONE</Trans>
+        </span>
       </MenuItem>
       <Box marginY={{ sm: '4', md: 'unset' }}>
         <MenuDropdown />
