@@ -30,20 +30,13 @@ import Popups from '../components/Popups'
 import DarkModeQueryParamReader from '../theme/components/DarkModeQueryParamReader'
 import AddLiquidity from './AddLiquidity'
 import { RedirectDuplicateTokenIds } from './AddLiquidity/redirects'
-import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
-import Landing from './Landing'
-import MigrateV2 from './MigrateV2'
-import MigrateV2Pair from './MigrateV2/MigrateV2Pair'
+import GetOne from './GetOne'
 import NotFound from './NotFound'
 import Pool from './Pool'
 import PositionPage from './Pool/PositionPage'
-import PoolV2 from './Pool/v2'
-import PoolFinder from './PoolFinder'
-import RemoveLiquidity from './RemoveLiquidity'
 import RemoveLiquidityV3 from './RemoveLiquidity/V3'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly } from './Swap/redirects'
-import Tokens from './Tokens'
 
 const TokenDetails = lazy(() => import('./TokenDetails'))
 const Vote = lazy(() => import('./Vote'))
@@ -228,6 +221,8 @@ export default function App() {
                     }
                   /> */}
                 <Route path="/" element={<Swap />} />
+
+                <Route path="/getone" element={<GetOne />} />
 
                 {/* <Route path="tokens" element={<Tokens />} >
                     <Route path=":chainName" />
