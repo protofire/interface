@@ -94,6 +94,9 @@ export const PageTabs = () => {
       <MenuItem href="https://info.swap.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
         <Trans>Tokens</Trans>
       </MenuItem>
+      <MenuItem href="/getone" isActive={pathname.startsWith('/getone')}>
+        <Trans>Get ONE</Trans>
+      </MenuItem>
       <Box marginY={{ sm: '4', md: 'unset' }}>
         <MenuDropdown />
       </Box>
