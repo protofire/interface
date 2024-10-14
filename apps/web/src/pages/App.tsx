@@ -133,7 +133,7 @@ export default function App() {
     if (displayDisclaimerModal()) {
       openDisclaimerModal()
     }
-  }, [searchParams, setShouldDisableNFTRoutes, displayDisclaimerModal, openDisclaimerModal])
+  }, [searchParams, setShouldDisableNFTRoutes, openDisclaimerModal])
 
   useFeatureFlagURLOverrides()
 

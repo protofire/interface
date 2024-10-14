@@ -40,6 +40,7 @@ const NOT_YET_UX_SUPPORTED_CHAIN_IDS: number[] = [
   ChainId.AVALANCHE,
   ChainId.BASE_GOERLI,
   ChainId.BASE,
+  ChainId.ZORA,
 ]
 
 // TODO: include BASE_GOERLI, OPTIMISM_SEPOLIA, or ARBITRUM_SEPOLIA when routing is implemented
@@ -123,7 +124,7 @@ export const L2_CHAIN_IDS = [
   // ChainId.OPTIMISM,
   // ChainId.OPTIMISM_GOERLI,
   // ChainId.BASE,
-  ChainId.ZORA,
+  // ChainId.ZORA,
   ChainId.ZORA_SEPOLIA,
 ] as const
 
