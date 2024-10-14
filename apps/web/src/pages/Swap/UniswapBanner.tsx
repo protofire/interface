@@ -12,8 +12,7 @@ const StyledParagraph = styled.p`
 export default function UniswapBanner() {
   return (
     <StyledParagraph>
-      Zora Network is now available on the official Uniswap app! Directly swap
-      on Uniswap at the following link:{' '}
+      Zora Network is now available on the official Uniswap app! Directly swap on Uniswap at the following link:{' '}
       <Link to="https://app.uniswap.org/swap?chain=zora" target="_self">
         https://app.uniswap.org/swap?chain=zora <ExternalLinkIcon size={15} />
       </Link>

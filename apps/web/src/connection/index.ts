@@ -59,7 +59,7 @@ export const eip6963Connection: InjectedConnection = {
 }
 
 const [web3Network, web3NetworkHooks] = initializeConnector<Network>(
-  (actions) => new Network({ actions, urlMap: RPC_PROVIDERS, defaultChainId: 7777777 })
+  (actions) => new Network({ actions, urlMap: RPC_PROVIDERS, defaultChainId: 999999999 })
 )
 export const networkConnection: Connection = {
   getProviderInfo: () => ({ name: 'Network' }),
@@ -74,7 +74,7 @@ const [deprecatedWeb3Network, deprecatedWeb3NetworkHooks] = initializeConnector<
     new Network({
       actions,
       urlMap: DEPRECATED_RPC_PROVIDERS,
-      defaultChainId: 7777777,
+      defaultChainId: 999999999,
     })
 )
 export const deprecatedNetworkConnection: Connection = {
@@ -120,7 +120,7 @@ export const gnosisSafeConnection: Connection = {
 }
 
 export const walletConnectV2Connection: Connection = new (class implements Connection {
-  private initializer = (actions: Actions, defaultChainId = ChainId.MAINNET) =>
+  private initializer = (actions: Actions, defaultChainId = ChainId.ZORA_SEPOLIA) =>
     new WalletConnectV2({ actions, defaultChainId, onError })
 
   type = ConnectionType.WALLET_CONNECT_V2
@@ -198,7 +198,7 @@ const [web3CoinbaseWallet, web3CoinbaseWalletHooks] = initializeConnector<Coinba
     new CoinbaseWallet({
       actions,
       options: {
-        url: RPC_URLS[ChainId.ZORA][0],
+        url: RPC_URLS[ChainId.ZORA_SEPOLIA][0],
         appName: 'Uniswap',
         appLogoUrl: UNISWAP_LOGO,
         reloadOnDisconnect: false,

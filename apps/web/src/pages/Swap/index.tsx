@@ -48,21 +48,15 @@ export default function SwapPage({ className }: { className?: string }) {
 
   const { chainId: connectedChainId } = useWeb3React()
   const supportedChainId = asSupportedChain(connectedChainId)
-  const chainId = supportedChainId || ChainId.ZORA
+  const chainId = supportedChainId || ChainId.ZORA_SEPOLIA
 
   const parsedQs = useParsedQueryString()
   const parsedCurrencyState = useMemo(() => {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const initialInputCurrency = useCurrency(
-    parsedCurrencyState.inputCurrencyId,
-    chainId
-  )
-  const initialOutputCurrency = useCurrency(
-    parsedCurrencyState.outputCurrencyId,
-    chainId
-  )
+  const initialInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, chainId)
+  const initialOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, chainId)
   const disclaimerOpen = useModalIsOpen(ApplicationModal.DISCLAIMER)
 
   return (
@@ -126,19 +120,11 @@ export function Swap({
               <SwapHeader compact={compact} syncTabToUrl={syncTabToUrl} />
               <UniswapBanner />
               {currentTab === SwapTab.Swap && (
-                <SwapForm
-                  onCurrencyChange={onCurrencyChange}
-                  disableTokenInputs={disableTokenInputs}
-                />
+                <SwapForm onCurrencyChange={onCurrencyChange} disableTokenInputs={disableTokenInputs} />
               )}
-              {currentTab === SwapTab.Limit && (
-                <LimitFormWrapper onCurrencyChange={onCurrencyChange} />
-              )}
+              {currentTab === SwapTab.Limit && <LimitFormWrapper onCurrencyChange={onCurrencyChange} />}
               {currentTab === SwapTab.Send && (
-                <SendForm
-                  disableTokenInputs={disableTokenInputs}
-                  onCurrencyChange={onCurrencyChange}
-                />
+                <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />
               )}
             </SwapWrapper>
           </SwapContextProvider>
