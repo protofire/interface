@@ -27,6 +27,7 @@ import { DisclaimerModal } from 'components/Disclaimer/DisclaimerModal'
 import { useModalIsOpen } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/reducer'
 import { useIsDarkMode } from '../../theme/components/ThemeToggle'
+import DeprecationWarningBanner from './DeprecationWarningBanner'
 import { LimitFormWrapper } from './Limit/LimitForm'
 import { SwapForm } from './SwapForm'
 import UniswapBanner from './UniswapBanner'
@@ -118,6 +119,7 @@ export function Swap({
           <SwapContextProvider>
             <SwapWrapper isDark={isDark} className={className} id="swap-page">
               <SwapHeader compact={compact} syncTabToUrl={syncTabToUrl} />
+              <DeprecationWarningBanner />
               <UniswapBanner />
               {currentTab === SwapTab.Swap && (
                 <SwapForm onCurrencyChange={onCurrencyChange} disableTokenInputs={disableTokenInputs} />
