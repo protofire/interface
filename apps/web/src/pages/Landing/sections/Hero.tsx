@@ -1,17 +1,13 @@
 import { Trans } from '@lingui/macro'
-import { ColumnCenter } from 'components/Column'
 import { useCurrency } from 'hooks/Tokens'
 import { Swap } from 'pages/Swap'
 import { useEffect, useState } from 'react'
-import { ChevronDown } from 'react-feather'
 import styled, { css, keyframes } from 'styled-components'
-import { ThemedText } from 'theme/components'
 
 import { BREAKPOINTS } from 'theme'
 import { heightBreakpoints } from 'ui/src/theme'
 import { Box, H1, Subheading } from '../components/Generics'
-// import { TokenCloud } from '../components/TokenCloud/index'
-import { Hover, RiseIn, RiseInText } from '../components/animations'
+import { RiseIn, RiseInText } from '../components/animations'
 
 const Container = styled(Box)`
   min-width: 100%;
@@ -184,16 +180,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             onClick={() => scrollToRef()}
             style={{ cursor: 'pointer' }}
             width="500px"
-          >
-            <Hover>
-              <ColumnCenter>
-                <ThemedText.BodySecondary>
-                  <Trans>Scroll to learn more</Trans>
-                </ThemedText.BodySecondary>
-                <ChevronDown />
-              </ColumnCenter>
-            </Hover>
-          </Box>
+          ></Box>
         </RiseIn>
       </LearnMoreContainer>
     </Container>

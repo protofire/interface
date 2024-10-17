@@ -29,6 +29,7 @@ import { ApplicationModal } from 'state/application/reducer'
 import { useIsDarkMode } from '../../theme/components/ThemeToggle'
 import { LimitFormWrapper } from './Limit/LimitForm'
 import { SwapForm } from './SwapForm'
+import TokenWarningBanner from './TokenWarningBanner'
 import UniswapBanner from './UniswapBanner'
 
 export function getIsReviewableQuote(
@@ -119,6 +120,7 @@ export function Swap({
             <SwapWrapper isDark={isDark} className={className} id="swap-page">
               <SwapHeader compact={compact} syncTabToUrl={syncTabToUrl} />
               <UniswapBanner />
+              <TokenWarningBanner />
               {currentTab === SwapTab.Swap && (
                 <SwapForm onCurrencyChange={onCurrencyChange} disableTokenInputs={disableTokenInputs} />
               )}
