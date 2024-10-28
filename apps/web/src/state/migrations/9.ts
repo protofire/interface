@@ -1,4 +1,4 @@
-import { DEFAULT_INACTIVE_LIST_URLS } from 'constants/lists'
+import { DEFAULT_LIST_OF_LISTS } from 'constants/lists'
 import { PersistState } from 'redux-persist'
 import { ListsState } from 'state/lists/types'
 
@@ -18,7 +18,7 @@ export const migration9 = (state: PersistAppStateV9 | undefined) => {
   if (state.lists?.byUrl) {
     updatedListsByUrl = Object.fromEntries(
       Object.entries(state.lists.byUrl).filter(([url]) => {
-        return DEFAULT_INACTIVE_LIST_URLS.includes(url)
+        return DEFAULT_LIST_OF_LISTS.includes(url)
       }),
     )
   }

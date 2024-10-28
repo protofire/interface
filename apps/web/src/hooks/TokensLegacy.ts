@@ -1,5 +1,6 @@
 import { NEVER_RELOAD } from '@uniswap/redux-multicall'
 import { Currency, Token } from '@uniswap/sdk-core'
+import { DEFAULT_LIST_OF_LISTS } from 'constants/lists'
 import { UNKNOWN_TOKEN_NAME, UNKNOWN_TOKEN_SYMBOL } from 'constants/tokens'
 import { arrayify, parseBytes32String } from 'ethers/lib/utils'
 import { useDefaultActiveTokens } from 'hooks/Tokens'
@@ -9,6 +10,7 @@ import { useSingleCallResult } from 'lib/hooks/multicall'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import { useMemo } from 'react'
 import { useAppSelector } from 'state/hooks'
+import { useCombinedTokenMapFromUrls } from 'state/lists/hooks'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { deserializeToken } from 'uniswap/src/utils/currency'
 import { isAddress } from 'utilities/src/addresses'
@@ -126,8 +128,7 @@ export type ChainTokenMap = { [chainId in number]?: { [address in string]?: Toke
 
 /** Returns tokens from all token lists on all chains, combined with user added tokens */
 export function useAllTokensMultichain(): ChainTokenMap {
-  //TODO: add token list support
-  // const allTokensFromLists : any[] = []
+  const allTokensFromLists = useCombinedTokenMapFromUrls(DEFAULT_LIST_OF_LISTS)
   const userAddedTokensMap = useAppSelector(({ user: { tokens } }) => tokens)
 
   return useMemo(() => {
@@ -144,15 +145,24 @@ export function useAllTokensMultichain(): ChainTokenMap {
       })
     }
 
-    // Object.keys(allTokensFromLists).forEach((key) => {
-    //   const chainId = Number(key)
-    //   const tokenMap = chainTokenMap[chainId] ?? {}
-    //   Object.values(allTokensFromLists[chainId]).forEach(({ token }) => {
-    //     tokenMap[token.address] = token
-    //   })
-    //   chainTokenMap[chainId] = tokenMap
-    // })
+    Object.keys(allTokensFromLists).forEach((key) => {
+      const chainId = Number(key)
+      const tokenMap = chainTokenMap[chainId] ?? {}
+      Object.values(allTokensFromLists[chainId]).forEach(({ token }) => {
+        tokenMap[token.address] = token
+      })
+      chainTokenMap[chainId] = tokenMap
+    })
 
     return chainTokenMap
-  }, [userAddedTokensMap])
+  }, [userAddedTokensMap, allTokensFromLists])
+}
+
+// undefined if invalid or does not exist
+// null if loading or null was passed
+// otherwise returns the token
+export function useTokenListToken(tokenAddress?: string | null): Token | undefined {
+  const { chainId } = useAccount()
+  const tokens = useDefaultActiveTokens(chainId)
+  return useTokenFromMapOrNetwork(tokens, tokenAddress)
 }

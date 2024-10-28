@@ -1,13 +1,14 @@
 import { Currency, Token } from '@uniswap/sdk-core'
 import { SupportedInterfaceChainId, useSupportedChainId } from 'constants/chains'
+import { DEFAULT_ACTIVE_LIST_URLS } from 'constants/lists'
 import { COMMON_BASES } from 'constants/routing'
 import { NATIVE_CHAIN_ID } from 'constants/tokens'
 import forkConfig from 'forkConfig'
-import { useTokenListCurrency } from 'hooks/TokensLegacy'
+import { useTokenListCurrency, useTokenListToken } from 'hooks/TokensLegacy'
 import { useAccount } from 'hooks/useAccount'
 import { TokenAddressMap } from 'lib/hooks/useTokenList/utils'
 import { useMemo } from 'react'
-import { useCombinedInactiveLists } from 'state/lists/hooks'
+import { useCombinedInactiveLists, useCombinedTokenMapFromUrls } from 'state/lists/hooks'
 import { TokenFromList } from 'state/lists/tokenFromList'
 import { useUserAddedTokens } from 'state/user/userAddedTokens'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
@@ -163,22 +164,33 @@ const getAddress = (
 }
 
 export function useToken(tokenAddress?: string, chainId?: SupportedInterfaceChainId): Maybe<Token> {
+  const gqlTokenListsEnabled = forkConfig.uniSpecificFeaturesEnabled
   const formattedAddress = isAddress(tokenAddress)
+  const tokenListToken = useTokenListToken(tokenAddress)
   const { chainId: connectedChainId } = useAccount()
+
   const currency = useCurrency(formattedAddress ? formattedAddress : undefined, chainId ?? connectedChainId)
 
   return useMemo(() => {
+    if (!gqlTokenListsEnabled) {
+      return tokenListToken
+    }
     if (currency && currency.isToken) {
       return currency
     }
     return undefined
-  }, [currency])
+  }, [currency, gqlTokenListsEnabled, tokenListToken])
+}
+
+// get all the tokens from active lists, combine with local default tokens
+function useCombinedActiveList(): TokenAddressMap {
+  const activeTokens = useCombinedTokenMapFromUrls(DEFAULT_ACTIVE_LIST_URLS)
+  return activeTokens
 }
 
 /** Returns all tokens from the default list + user added tokens */
 export function useDefaultActiveTokens(chainId: Maybe<UniverseChainId>): { [address: string]: Token } {
-  //FIXME: add token list
-  const defaultListTokens = {}
+  const defaultListTokens = useCombinedActiveList()
   const tokensFromMap = useTokensFromMap(defaultListTokens, chainId)
   const userAddedTokens = useUserAddedTokens()
   return useMemo(() => {

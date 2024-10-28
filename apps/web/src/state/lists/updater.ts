@@ -1,6 +1,6 @@
 import { getVersionUpgrade, VersionUpgrade } from '@uniswap/token-lists'
 import { useWeb3React } from '@web3-react/core'
-import { DEFAULT_INACTIVE_LIST_URLS } from 'constants/lists'
+import { DEFAULT_LIST_OF_LISTS } from 'constants/lists'
 import { useFetchListCallback } from 'hooks/useFetchListCallback'
 import useIsWindowVisible from 'hooks/useIsWindowVisible'
 import { useStateRehydrated } from 'hooks/useStateRehydrated'
@@ -27,7 +27,7 @@ export default function Updater(): null {
     if (!isWindowVisible) {
       return
     }
-    DEFAULT_INACTIVE_LIST_URLS.forEach((url) => {
+    DEFAULT_LIST_OF_LISTS.forEach((url) => {
       fetchList(url, false).catch((error) =>
         logger.debug('lists/updater', 'Updater', 'interval list fetching error', error),
       )
@@ -51,7 +51,7 @@ export default function Updater(): null {
         )
       }
     })
-    DEFAULT_INACTIVE_LIST_URLS.forEach((listUrl) => {
+    DEFAULT_LIST_OF_LISTS.forEach((listUrl) => {
       const list = lists[listUrl]
       if (!list || (!list.current && !list.loadingRequestId && !list.error)) {
         fetchList(listUrl, /* isUnsupportedList= */ true).catch((error) =>
