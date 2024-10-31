@@ -1,15 +1,6 @@
 {
   "name": "wallet",
   "version": "0.0.0",
-  "scripts": {
-    "check:deps:usage": "depcheck",
-    "format": "../../scripts/prettier.sh",
-    "lint": "eslint . --ext ts,tsx --max-warnings=0",
-    "lint:fix": "eslint . --ext ts,tsx --fix",
-    "test": "jest",
-    "snapshots": "jest -u",
-    "typecheck": "tsc -b"
-  },
   "dependencies": {
     "@apollo/client": "3.10.4",
     "@ethersproject/constants": "5.7.0",
@@ -88,6 +79,15 @@
   },
   "main": "src/index.ts",
   "private": true,
+  "scripts": {
+    "check:deps:usage": "depcheck",
+    "format": "../../scripts/prettier.sh",
+    "lint": "eslint . --ext ts,tsx --max-warnings=0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "snapshots": "jest -u",
+    "test": "jest",
+    "typecheck": "tsc -b"
+  },
   "sideEffects": [
     "*.css"
   ]

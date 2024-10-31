@@ -16,7 +16,7 @@ import {
   ZORA_LOGO,
 } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
-import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstract'
+import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
 import {
   CUSD_CELO,
   CUSD_CELO_ALFAJORES,
@@ -40,6 +40,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_MUMBAI,
   USDC_SEPOLIA,
+  USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT,
@@ -76,6 +77,7 @@ import {
   zkSync,
   zora,
 } from 'wagmi/chains'
+import { zero } from './chainDefinitions/zero'
 
 /** Address that represents native currencies on ETH, Arbitrum, etc. */
 export const DEFAULT_NATIVE_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -1090,6 +1092,61 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_TESTNET, 10_000e6),
     stablecoins: [USDC_ABSTRACT_TESTNET],
+    supportsClientSideRouting: true,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x9EDCde0257F2386Ce177C3a7FCdd97787F0D841d',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniverseChainId.Zero]: {
+    ...zero,
+    id: UniverseChainId.Zero,
+    sdkId: UniswapSDKChainId.ZERO,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: 'https://bridge.zero.network',
+    chainPriority: 0,
+    docs: 'https://docs.zero.network',
+    elementName: ElementName.ChainZero,
+    explorer: {
+      name: 'ZERO Network Explorer',
+      url: 'https://explorer.zero.network',
+      apiURL: 'https://explorer.zero.network/api',
+    },
+    helpCenterUrl: undefined,
+    //FIXME: update with correct URL
+    infoLink: 'https://info.staging.abstract.w3us.site/#',
+    infuraPrefix: undefined,
+    interfaceName: 'zero',
+    label: 'Zero',
+    logo: ABSTRACT_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://rpc.zerion.io/v1/zero'] },
+      default: { http: ['https://rpc.zerion.io/v1/zero'] },
+      appOnly: { http: ['https://rpc.zerion.io/v1/zero'] },
+    },
+    urlParam: 'zero',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ZERO, 10_000e6),
+    stablecoins: [USDC_ZERO],
     supportsClientSideRouting: true,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {

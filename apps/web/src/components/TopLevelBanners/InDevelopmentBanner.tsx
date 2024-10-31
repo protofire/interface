@@ -68,7 +68,7 @@ export function InDevelopmentBanner() {
         <BannerTextWrapper lineHeight="24px">{bannerText}</BannerTextWrapper>
         <ReadMoreWrapper>
           <ThemedText.BodySecondary lineHeight="24px" color="accent1">
-            The project has been modified to be compatible with Abstract Network
+            The project has been modified to be compatible with additional networks.
           </ThemedText.BodySecondary>
         </ReadMoreWrapper>
       </BannerContents>

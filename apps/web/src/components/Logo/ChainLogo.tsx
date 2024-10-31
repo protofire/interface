@@ -12,6 +12,7 @@ import {
   ETHEREUM_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
+  ZERO_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
 } from 'ui/src/assets'
@@ -129,6 +130,18 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             symbol: ABSTRACT_LOGO,
             bgColor: 'rgba(0, 222, 115, 0.12)',
             textColor: '#00DE73',
+          }
+    case UniverseChainId.Zero:
+      return darkMode
+        ? {
+            symbol: ZERO_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: ZERO_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
           }
     default:
       return undefined

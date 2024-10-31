@@ -310,6 +310,7 @@ export const colorsLight = {
   chain_43114: networkColors.avalanche.light,
   chain_324: networkColors.zksync.light,
   chain_11124: networkColors.abstract.light,
+  chain_543210: networkColors.zksync.light,
 
   // Testnets
   chain_3: colors.yellowVibrant,
@@ -390,6 +391,7 @@ export const colorsDark = {
   chain_43114: networkColors.avalanche.dark,
   chain_324: networkColors.zksync.dark,
   chain_11124: networkColors.abstract.dark,
+  chain_543210: networkColors.zksync.dark,
 
   // Testnets
   chain_3: colors.yellowVibrant,

@@ -42,6 +42,7 @@
     "https://api.testnets.relay.link",
     "https://static.optimism.io",
     "https://assets.relay.link",
+    "https://rpc.zerion.io/v1/zero",
     "wss://relay.walletconnect.com",
     "wss://relay.walletconnect.org"
   ],

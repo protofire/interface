@@ -192,6 +192,14 @@ export const USDC_ABSTRACT_TESTNET = new Token(
   'USDC',
 )
 
+export const USDC_ZERO = new Token(
+  UniverseChainId.Zero,
+  '0x6a6394F47DD0BAF794808F2749C09bd4Ee874E70',
+  6,
+  'USDC',
+  'USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

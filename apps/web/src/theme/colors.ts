@@ -152,6 +152,7 @@ const commonTheme = {
   chain_56: colors.networkBsc,
   chain_420: colors.networkOptimism,
   chain_11124: colors.networkAbstract,
+  chain_543210: colors.networkAbstract,
   chain_42161: colors.networkArbitrum,
   chain_421613: colors.networkArbitrum,
   chain_421614: colors.networkArbitrum,

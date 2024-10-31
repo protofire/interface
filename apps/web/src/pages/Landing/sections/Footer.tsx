@@ -34,17 +34,17 @@ export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
       <SocialIcon $hoverColor="#00C32B">
-        <Anchor href="https://github.com/abstractswap" target="_blank">
+        <Anchor href="https://github.com/temp" target="_blank">
           <Github size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
       <SocialIcon $hoverColor="#20BAFF">
-        <Anchor href="https://x.com/abstractswap" target="_blank">
+        <Anchor href="https://x.com/temp" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
       <SocialIcon $hoverColor="#5F51FF">
-        <Anchor href="https://discord.com/invite/abstractswap" target="_blank">
+        <Anchor href="https://discord.com/invite/temp" target="_blank">
           <Discord size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
