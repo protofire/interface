@@ -173,8 +173,8 @@ const sporeLight = {
   surface4: 'rgba(255,255,255,0.64)',
   surface5: 'rgba(0,0,0,0.04)',
 
-  accent1: '#00DE73',
-  accent1Hovered: '#0D9359',
+  accent1: '#6E56CF',
+  accent1Hovered: '#5A52F2',
   accent2: '#F4FFF5',
   accent2Hovered: '#E6FFE6',
   accent3: '#222222',
@@ -218,14 +218,14 @@ const sporeDark = {
   surface4: 'rgba(255,255,255,0.20)',
   surface5: 'rgba(0,0,0,0.04)',
 
-  accent1: '#00DE73',
-  accent1Hovered: '#0D9359',
+  accent1: '#6E56CF',
+  accent1Hovered: '#5A52F2',
   accent2: '#0D5132',
   accent2Hovered: '#0D512C',
   accent3: colors.white,
   accent3Hovered: '#F5F5F5',
 
-  DEP_accentSoft: '#00DE7333', //33 = 20%
+  DEP_accentSoft: '#6E56CF33', //33 = 20%
 
   statusSuccess: '#21C95E',
   statusSuccessHovered: '#15863C',

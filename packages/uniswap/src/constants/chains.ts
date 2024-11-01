@@ -17,6 +17,7 @@ import {
 } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
+import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
   CUSD_CELO,
   CUSD_CELO_ALFAJORES,
@@ -77,7 +78,6 @@ import {
   zkSync,
   zora,
 } from 'wagmi/chains'
-import { zero } from './chainDefinitions/zero'
 
 /** Address that represents native currencies on ETH, Arbitrum, etc. */
 export const DEFAULT_NATIVE_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -1124,11 +1124,10 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://explorer.zero.network/api',
     },
     helpCenterUrl: undefined,
-    //FIXME: update with correct URL
-    infoLink: 'https://info.staging.abstract.w3us.site/#',
+    infoLink: 'https://info.staging.abstract.w3us.site/#/zero',
     infuraPrefix: undefined,
     interfaceName: 'zero',
-    label: 'Zero',
+    label: 'Zero Mainnet',
     logo: ABSTRACT_LOGO,
     nativeCurrency: {
       name: 'ETH',

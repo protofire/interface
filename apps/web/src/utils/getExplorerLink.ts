@@ -19,6 +19,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Zora]: 'https://zora.superscan.network',
   [UniverseChainId.Zksync]: 'https://explorer.zksync.io',
   [UniverseChainId.AbstractTestnet]: 'https://explorer.testnet.abs.xyz',
+  [UniverseChainId.Zero]: 'https://zero-network.calderaexplorer.xyz',
 }
 
 export enum ExplorerDataType {

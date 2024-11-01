@@ -122,7 +122,7 @@ export function Footer() {
         justifyContent="space-between"
       >
         <Text variant="body3">© 2024</Text>
-        <Text variant="body3">Swap Interface is a fork of open source Uniswap Protocol on Abstract Network</Text>
+        <Text variant="body3">Swap Interface is a fork of open source Uniswap Protocol</Text>
         <Flex row alignItems="center" gap="$spacing16">
           {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>

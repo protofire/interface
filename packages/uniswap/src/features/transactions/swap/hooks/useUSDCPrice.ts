@@ -12,6 +12,7 @@ import {
   USDC_GOERLI,
   USDC_OPTIMISM,
   USDC_POLYGON,
+  USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT_BNB,
@@ -37,6 +38,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.Zora]: CurrencyAmount.fromRawAmount(USDC_ZORA, 10_000e6),
   [UniverseChainId.Zksync]: CurrencyAmount.fromRawAmount(USDC_ZKSYNC, 10_000e6),
   [UniverseChainId.AbstractTestnet]: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_TESTNET, 10_000e6),
+  [UniverseChainId.Zero]: CurrencyAmount.fromRawAmount(USDC_ZERO, 10_000e6),
 }
 
 /**
