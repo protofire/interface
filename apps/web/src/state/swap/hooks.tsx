@@ -216,8 +216,12 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
   const allowedSlippage = uniswapXAutoSlippage ?? classicAllowedSlippage
 
   // totalGasUseEstimateUSD is greater than native token balance
+  // Temporary disable Zero gas checks due to timestamp mismatch
   const insufficientGas =
-    isClassicTrade(trade.trade) && (nativeCurrencyBalanceUSD ?? 0) < (trade.trade.totalGasUseEstimateUSDWithBuffer ?? 0)
+    UniverseChainId.Zero === chainId
+      ? false
+      : isClassicTrade(trade.trade) &&
+        (nativeCurrencyBalanceUSD ?? 0) < (trade.trade.totalGasUseEstimateUSDWithBuffer ?? 0)
 
   const { isDisconnected } = useAccount()
   const inputError = useMemo(() => {
