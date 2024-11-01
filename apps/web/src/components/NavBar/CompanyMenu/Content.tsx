@@ -21,7 +21,7 @@ export const useMenuContent = (): MenuSection[] => {
     // TODO: add translations once content is confirmed
     {
       title: 'Network',
-      items: [{ label: 'Docs', href: 'https://docs.abs.xyz/' }],
+      items: [{ label: 'Docs', href: 'https://temp.xyz/' }],
     },
     // {
     //   title: t('common.company'),
