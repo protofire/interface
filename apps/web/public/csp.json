@@ -45,6 +45,7 @@
     "https://static.optimism.io",
     "https://assets.relay.link",
     "https://rpc.zerion.io/v1/zero",
+    "https://*.infura.io/v3/",
     "wss://relay.walletconnect.com",
     "wss://relay.walletconnect.org"
   ],
