@@ -40,7 +40,7 @@ const LogoContainer = styled.div`
  */
 export default function AssetLogo({
   currency,
-  chainId = UniverseChainId.AbstractTestnet,
+  chainId = UniverseChainId.Zero,
   size = 24,
   style,
   loading,
