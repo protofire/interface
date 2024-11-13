@@ -1070,7 +1070,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     helpCenterUrl: undefined,
     //FIXME: update with correct URL
-    infoLink: 'https://info.staging.reservoir.w3us.site/#',
+    infoLink: 'https://testnets.info.reservoir.app',
     infuraPrefix: undefined,
     interfaceName: 'abstract_testnet',
     label: 'Abstract Testnet',
@@ -1124,7 +1124,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://explorer.zero.network/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://info.staging.reservoir.w3us.site/#/zero',
+    infoLink: 'https://info.reservoir.app/#/zero',
     infuraPrefix: undefined,
     interfaceName: 'zero',
     label: 'Zero Mainnet',
