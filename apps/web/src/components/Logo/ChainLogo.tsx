@@ -143,6 +143,18 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
           }
+    case UniverseChainId.BOB:
+      return darkMode
+        ? {
+            symbol: ZERO_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: ZERO_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
+          }
     default:
       return undefined
   }
