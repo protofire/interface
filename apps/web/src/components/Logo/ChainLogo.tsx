@@ -8,6 +8,7 @@ import {
   BASE_LOGO,
   BLAST_LOGO,
   BNB_LOGO,
+  BOB_LOGO,
   CELO_LOGO,
   ETHEREUM_LOGO,
   OPTIMISM_LOGO,
@@ -146,12 +147,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
     case UniverseChainId.BOB:
       return darkMode
         ? {
-            symbol: ZERO_LOGO,
+            symbol: BOB_LOGO,
             bgColor: 'rgba(97, 137, 255, 0.12)',
             textColor: '#6189FF',
           }
         : {
-            symbol: ZERO_LOGO,
+            symbol: BOB_LOGO,
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
           }
