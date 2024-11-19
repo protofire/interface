@@ -17,6 +17,7 @@ import {
 } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
+import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
   CUSD_CELO,
@@ -34,6 +35,7 @@ import {
   USDC_AVALANCHE,
   USDC_BASE,
   USDC_BNB,
+  USDC_BOB,
   USDC_CELO,
   USDC_GOERLI,
   USDC_OPTIMISM,
@@ -1153,6 +1155,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x9EDCde0257F2386Ce177C3a7FCdd97787F0D841d',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.BOB]: {
+    ...bob,
+    id: UniverseChainId.BOB,
+    sdkId: UniswapSDKChainId.BOB,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: 'https://app.gobob.xyz',
+    chainPriority: 0,
+    docs: 'https://docs.gobob.xyz',
+    elementName: ElementName.ChainZero,
+    explorer: {
+      name: 'BOB Explorer',
+      url: 'https://explorer.gobob.xyz',
+      apiURL: 'https://explorer.gobob.xyz/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://www.gobob.xyz',
+    infuraPrefix: undefined,
+    interfaceName: 'bob',
+    label: 'BOB',
+    logo: ABSTRACT_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://rpc.gobob.xyz'] },
+      default: { http: ['https://rpc.gobob.xyz'] },
+      appOnly: { http: ['https://rpc.gobob.xyz'] },
+    },
+    urlParam: 'bob',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_BOB, 10_000e6),
+    stablecoins: [USDC_BOB],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x4200000000000000000000000000000000000006',
     },
   } as const satisfies UniverseChainInfo,
 }

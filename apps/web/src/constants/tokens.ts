@@ -473,6 +473,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WETH',
     'Wrapped Ether',
   ),
+  [UniverseChainId.BOB]: new Token(
+    UniverseChainId.BOB,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether',
+  ),
 }
 
 export function isCelo(chainId: number): chainId is UniverseChainId.Celo | UniverseChainId.CeloAlfajores {

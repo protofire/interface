@@ -29,6 +29,7 @@ export const UNITAGS_BANNER_VERTICAL_LIGHT = require('./graphics/unitags-banner-
 export const UNITAGS_BANNER_VERTICAL_DARK = require('./graphics/unitags-banner-v-dark.png')
 export const UNITAGS_INTRO_BANNER_LIGHT = require('./graphics/unitags-intro-banner-light.png')
 export const UNITAGS_INTRO_BANNER_DARK = require('./graphics/unitags-intro-banner-dark.png')
+export const BOB_LOGO = require('./logos/png/bob-logo.png')
 
 export const DAI_LOGO = require('./logos/png/dai-logo.png')
 export const USDC_LOGO = require('./logos/png/usdc-logo.png')

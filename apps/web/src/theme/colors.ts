@@ -100,6 +100,7 @@ export const colors = {
   networkBase: '#0052FF',
   networkBlast: '#fcfc03',
   networkAbstract: '#00DE73',
+  networkBob: '#f25d00',
   //NEW COLORS FOR SPORE - need to define light/dark here cause they are root colors now (different system)
   neutral1_dark: '#FFFFFF',
   neutral2_dark: '#9B9B9B',
@@ -153,6 +154,7 @@ const commonTheme = {
   chain_420: colors.networkOptimism,
   chain_11124: colors.networkAbstract,
   chain_543210: colors.networkAbstract,
+  chain_60808: colors.networkBob,
   chain_42161: colors.networkArbitrum,
   chain_421613: colors.networkArbitrum,
   chain_421614: colors.networkArbitrum,

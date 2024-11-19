@@ -8,6 +8,7 @@ import {
   USDC_ARBITRUM,
   USDC_AVALANCHE,
   USDC_BASE,
+  USDC_BOB,
   USDC_CELO,
   USDC_GOERLI,
   USDC_OPTIMISM,
@@ -39,6 +40,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.Zksync]: CurrencyAmount.fromRawAmount(USDC_ZKSYNC, 10_000e6),
   [UniverseChainId.AbstractTestnet]: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_TESTNET, 10_000e6),
   [UniverseChainId.Zero]: CurrencyAmount.fromRawAmount(USDC_ZERO, 10_000e6),
+  [UniverseChainId.BOB]: CurrencyAmount.fromRawAmount(USDC_BOB, 10_000e6),
 }
 
 /**
