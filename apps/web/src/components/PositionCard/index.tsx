@@ -294,7 +294,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             <ButtonSecondary padding="8px" $borderRadius="8px">
               <ExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href={`https://v2.info.reservoir.app/account/${account}`}
+                href={`https://v2.info.reservoir.app/account/${account?.address}`}
               >
                 <Trans i18nKey="pool.accruedFees" />
                 <span style={{ fontSize: '11px' }}>↗</span>
