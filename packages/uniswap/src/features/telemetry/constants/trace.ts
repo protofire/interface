@@ -123,6 +123,8 @@ export const ElementName = {
   ChainZkSync: 'chain-zksync',
   ChainAbstractTestnet: 'chain-abstract-testnet',
   ChainZero: 'chain-zero',
+  ChainBob: 'chain-bob',
+  ChainCyber: 'chain-cyber',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',
