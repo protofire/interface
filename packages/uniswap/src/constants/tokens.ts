@@ -201,6 +201,13 @@ export const USDC_ZERO = new Token(
 )
 
 export const USDC_BOB = new Token(UniverseChainId.BOB, '0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0', 6, 'USDC', 'USDC')
+export const USDC_CYBER = new Token(
+  UniverseChainId.CYBER,
+  '0x81759adbf5520ad94da10991dfa29ff147d3337b',
+  6,
+  'USDC',
+  'USDC',
+)
 
 export const WBTC = new Token(
   UniverseChainId.Mainnet,

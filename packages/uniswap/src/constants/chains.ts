@@ -7,7 +7,9 @@ import {
   BASE_LOGO,
   BLAST_LOGO,
   BNB_LOGO,
+  BOB_LOGO,
   CELO_LOGO,
+  CYBER_LOGO,
   ETHEREUM_LOGO,
   MUMBAI_LOGO,
   OPTIMISM_LOGO,
@@ -18,6 +20,7 @@ import {
 import { config } from 'uniswap/src/config'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
+import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
   CUSD_CELO,
@@ -37,6 +40,7 @@ import {
   USDC_BNB,
   USDC_BOB,
   USDC_CELO,
+  USDC_CYBER,
   USDC_GOERLI,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -1173,7 +1177,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     bridge: 'https://app.gobob.xyz',
     chainPriority: 0,
     docs: 'https://docs.gobob.xyz',
-    elementName: ElementName.ChainZero,
+    elementName: ElementName.ChainBob,
     explorer: {
       name: 'BOB Explorer',
       url: 'https://explorer.gobob.xyz',
@@ -1184,7 +1188,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     infuraPrefix: undefined,
     interfaceName: 'bob',
     label: 'BOB',
-    logo: ABSTRACT_LOGO,
+    logo: BOB_LOGO,
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -1202,6 +1206,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_BOB, 10_000e6),
     stablecoins: [USDC_BOB],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.CYBER]: {
+    ...cyber,
+    id: UniverseChainId.CYBER,
+    sdkId: UniswapSDKChainId.CYBER,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: 'https://cyber.co/bridge',
+    chainPriority: 0,
+    docs: 'https://docs.cyber.co',
+    elementName: ElementName.ChainCyber,
+    explorer: {
+      name: 'Cyber Scan',
+      url: 'https://cyberscan.co',
+      apiURL: 'https://cyberscan.co/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://cyber.co',
+    infuraPrefix: undefined,
+    interfaceName: 'cyeth',
+    label: 'Cyber',
+    logo: CYBER_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://cyber.alt.technology'] },
+      default: { http: ['https://cyber.alt.technology'] },
+      appOnly: { http: ['https://cyber.alt.technology'] },
+    },
+    urlParam: 'bob',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_CYBER, 10_000e6),
+    stablecoins: [USDC_CYBER],
     supportsClientSideRouting: false,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {
