@@ -50,7 +50,7 @@ export type WalletChainId =
   | UniverseChainId.BOB
   | UniverseChainId.CYBER
 
-  
+
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
 export const WALLET_SUPPORTED_CHAIN_IDS: WalletChainId[] = [
@@ -90,7 +90,7 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
   UniverseChainId.Zero,
-  UniverseChainId.BOB,
+  // UniverseChainId.BOB,
   UniverseChainId.CYBER
 ]
 
