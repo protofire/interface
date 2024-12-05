@@ -10,6 +10,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.AbstractTestnet]:
     'https://graph-node.internal.reservoir.tools/subgraphs/name/absctract-testnet/v3-subgraph',
   [UniverseChainId.Zero]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/zero/v3-subgraph',
+  [UniverseChainId.BOB]: 'https://graph-node.internal.reservoir.tools/subgraphs/bob/zero/v3-subgraph',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.Zero] })

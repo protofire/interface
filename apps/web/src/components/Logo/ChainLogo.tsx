@@ -8,7 +8,9 @@ import {
   BASE_LOGO,
   BLAST_LOGO,
   BNB_LOGO,
+  BOB_LOGO,
   CELO_LOGO,
+  CYBER_LOGO,
   ETHEREUM_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
@@ -140,6 +142,30 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
           }
         : {
             symbol: ZERO_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
+          }
+    case UniverseChainId.BOB:
+      return darkMode
+        ? {
+            symbol: BOB_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: BOB_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
+          }
+    case UniverseChainId.CYBER:
+      return darkMode
+        ? {
+            symbol: CYBER_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: CYBER_LOGO,
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
           }
