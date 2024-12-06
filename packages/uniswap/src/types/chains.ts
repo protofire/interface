@@ -90,7 +90,7 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
   UniverseChainId.Zero,
-  // UniverseChainId.BOB,
+  UniverseChainId.BOB,
   UniverseChainId.CYBER
 ]
 
