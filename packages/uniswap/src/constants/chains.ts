@@ -1075,7 +1075,6 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://block-explorer-api.testnet.abs.xyz/api',
     },
     helpCenterUrl: undefined,
-    //FIXME: update with correct URL
     infoLink: 'https://testnets.info.reservoir.app',
     infuraPrefix: undefined,
     interfaceName: 'abstract_testnet',
