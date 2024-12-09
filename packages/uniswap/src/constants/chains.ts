@@ -1239,7 +1239,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     helpCenterUrl: undefined,
     infoLink: 'https://info.reservoir.app/#/cyber',
     infuraPrefix: undefined,
-    interfaceName: 'cyeth',
+    interfaceName: 'cyber',
     label: 'Cyber',
     logo: CYBER_LOGO,
     nativeCurrency: {
