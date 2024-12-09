@@ -7,7 +7,7 @@ export const cyber = /*#__PURE__*/ defineChain({
   ...chainConfig,
   id: 7560,
   name: 'Cyber',
-  network: 'cyeth',
+  network: 'cyber',
   nativeCurrency: {
     decimals: 18,
     name: 'ETH',
