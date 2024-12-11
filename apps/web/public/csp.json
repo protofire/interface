@@ -50,8 +50,7 @@
     "https://cyber.alt.technology/",
     "https://*.infura.io/v3/",
     "wss://relay.walletconnect.com",
-    "wss://relay.walletconnect.org",
-    "https://interface.gateway.uniswap.org/v1/graphql"
+    "wss://relay.walletconnect.org"
   ],
   "workerSrc": [
     "'self'",
