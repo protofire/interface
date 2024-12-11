@@ -158,6 +158,10 @@ export const networkColors = {
     light: '#222222',
     dark: '#FFFFFF',
   },
+  shape: {
+    light: '#222222',
+    dark: '#FFFFFF',
+  },
 }
 
 const sporeLight = {
@@ -321,6 +325,7 @@ export const colorsLight = {
   chain_543210: networkColors.zksync.light,
   chain_60808: networkColors.bob.light,
   chain_7560: networkColors.cyber.light,
+  chain_360: networkColors.shape.light,
 
   // Testnets
   chain_3: colors.yellowVibrant,
@@ -404,6 +409,7 @@ export const colorsDark = {
   chain_543210: networkColors.zksync.dark,
   chain_60808: networkColors.bob.dark,
   chain_7560: networkColors.cyber.dark,
+  chain_360: networkColors.shape.dark,
 
   // Testnets
   chain_3: colors.yellowVibrant,

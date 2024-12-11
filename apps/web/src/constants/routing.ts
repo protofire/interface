@@ -50,6 +50,7 @@ import {
   USDC_ABSTRACT_TESTNET,
   USDC_BOB,
   USDC_CYBER,
+  USDC_SHAPE,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
@@ -223,6 +224,11 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.CYBER),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.CYBER] as Token,
     USDC_CYBER,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.SHAPE]: [
+    nativeOnChain(UniverseChainId.SHAPE),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.SHAPE] as Token,
+    USDC_SHAPE,
   ].map(buildCurrencyInfo),
 }
 

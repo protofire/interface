@@ -14,6 +14,7 @@ import {
   MUMBAI_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
+  SHAPE_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
 } from 'ui/src/assets'
@@ -21,6 +22,7 @@ import { config } from 'uniswap/src/config'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
+import { shape } from 'uniswap/src/constants/chainDefinitions/shape'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
   CUSD_CELO,
@@ -47,6 +49,7 @@ import {
   USDC_POLYGON,
   USDC_POLYGON_MUMBAI,
   USDC_SEPOLIA,
+  USDC_SHAPE,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
@@ -1256,10 +1259,64 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       default: { http: ['https://cyber.alt.technology'] },
       appOnly: { http: ['https://cyber.alt.technology'] },
     },
-    urlParam: 'bob',
+    urlParam: 'cyber',
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_CYBER, 10_000e6),
     stablecoins: [USDC_CYBER],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.SHAPE]: {
+    ...shape,
+    id: UniverseChainId.SHAPE,
+    sdkId: UniswapSDKChainId.SHAPE,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: 'https://relay.link/bridge/shape',
+    chainPriority: 0,
+    docs: 'https://docs.shape.network',
+    elementName: ElementName.ChainShape,
+    explorer: {
+      name: 'Shape Scan',
+      url: 'https://shapescan.xyz',
+      apiURL: 'https://shapescan.xyz/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://shape.network',
+    infuraPrefix: undefined,
+    interfaceName: 'shape',
+    label: 'Shape',
+    logo: SHAPE_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://mainnet.shape.network'] },
+      default: { http: ['https://mainnet.shape.network'] },
+      appOnly: { http: ['https://mainnet.shape.network'] },
+    },
+    urlParam: 'shape',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_SHAPE, 10_000e6),
+    stablecoins: [USDC_SHAPE],
     supportsClientSideRouting: false,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {
