@@ -6,7 +6,7 @@ import Row, { RowBetween } from 'components/Row'
 import CommonBases from 'components/SearchModal/CommonBases'
 import CurrencyList, { CurrencyRow, formatAnalyticsEventProperties } from 'components/SearchModal/CurrencyList'
 import { PaddedColumn, SearchInput, Separator } from 'components/SearchModal/styled'
-import { useCurrencySearchResults } from 'components/SearchModal/useCurrencySearchResults'
+import { useCurrencySearchResultsLegacy } from 'components/SearchModal/useCurrencySearchResultsLegacy'
 import useDebounce from 'hooks/useDebounce'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useSelectChain from 'hooks/useSelectChain'
@@ -90,7 +90,7 @@ export function DeprecatedCurrencySearch({
     searchCurrency,
     allCurrencyRows,
     loading: currencySearchResultsLoading,
-  } = useCurrencySearchResults({
+  } = useCurrencySearchResultsLegacy({
     searchQuery: debouncedQuery,
     filters,
     selectedCurrency,
@@ -251,6 +251,7 @@ export function DeprecatedCurrencySearch({
           <Column style={{ padding: '20px', height: '100%' }}>
             <ThemedText.DeprecatedMain color={theme.neutral3} textAlign="center" mb="20px">
               <Trans i18nKey="common.noResults" />
+              NONONONONONO
             </ThemedText.DeprecatedMain>
           </Column>
         )}

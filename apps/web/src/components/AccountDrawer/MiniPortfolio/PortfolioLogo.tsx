@@ -12,6 +12,7 @@ import Identicon from 'components/Identicon'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import styled from 'lib/styled-components'
 import React, { memo } from 'react'
+import { TokenFromList } from 'state/lists/tokenFromList'
 import { Flex, SpinningLoader, styled as TamaguiStyled } from 'ui/src'
 import { InterfaceChainId, UniverseChainId } from 'uniswap/src/types/chains'
 
@@ -80,6 +81,15 @@ export const PortfolioLogo = memo(function PortfolioLogo(props: PortfolioLogoPro
 })
 
 function getLogo({ accountAddress, currencies, images, size = LOGO_DEFAULT_SIZE }: PortfolioLogoProps) {
+  if (currencies && currencies.length === 1) {
+    if (currencies[0] instanceof TokenFromList) {
+      return (
+        <SingleLogoContainer size={size}>
+          <CircleLogoImage size={size} src={currencies[0].tokenInfo.logoURI ?? blankTokenUrl} />
+        </SingleLogoContainer>
+      )
+    }
+  }
   if (accountAddress) {
     return <Identicon account={accountAddress} size={size} />
   }
