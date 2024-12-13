@@ -209,6 +209,14 @@ export const USDC_CYBER = new Token(
   'USDC',
 )
 
+export const USDC_SHAPE = new Token(
+  UniverseChainId.SHAPE,
+  '0xdb7DD8B00EdC5778Fe00B2408bf35C7c054f8BBe',
+  6,
+  'USDC',
+  'USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

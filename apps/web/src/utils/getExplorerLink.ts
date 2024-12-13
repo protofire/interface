@@ -22,6 +22,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Zero]: 'https://zero-network.calderaexplorer.xyz',
   [UniverseChainId.BOB]: 'https://explorer.gobob.xyz',
   [UniverseChainId.CYBER]: 'https://cyberscan.co',
+  [UniverseChainId.SHAPE]: 'https://shapescan.xyz',
 }
 
 export enum ExplorerDataType {

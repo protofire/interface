@@ -29,6 +29,7 @@ export enum UniverseChainId {
   Zero = UniswapSDKChainId.ZERO,
   BOB = UniswapSDKChainId.BOB,
   CYBER = UniswapSDKChainId.CYBER,
+  SHAPE = UniswapSDKChainId.SHAPE
 }
 
 export type WalletChainId =
@@ -49,6 +50,7 @@ export type WalletChainId =
   | UniverseChainId.Zero
   | UniverseChainId.BOB
   | UniverseChainId.CYBER
+  | UniverseChainId.SHAPE
 
 
 // DON'T CHANGE - order here determines ordering of networks in app
@@ -92,7 +94,8 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   //
   UniverseChainId.Zero,
   UniverseChainId.BOB,
-  UniverseChainId.CYBER
+  UniverseChainId.CYBER,
+  UniverseChainId.SHAPE
 ]
 
 export enum RPCType {
