@@ -1294,7 +1294,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://shapescan.xyz/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://shape.network',
+    infoLink: 'https://info.reservoir.app/#/shape',
     infuraPrefix: undefined,
     interfaceName: 'shape',
     label: 'Shape',
