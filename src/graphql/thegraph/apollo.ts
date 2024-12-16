@@ -3,7 +3,7 @@ import { ChainId } from '@uniswap/sdk-core'
 
 import store from '../../state/index'
 
-const API_KEY = process.env.REACT_APP_GRAPH_API_KEY ?? '2f4a91bec2a65276da7373494a68652e'
+const API_KEY = process.env.REACT_APP_GRAPH_API_KEY ?? '008c213be89135e15e1d295450a35ea1'
 
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.MAINNET]: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3',
