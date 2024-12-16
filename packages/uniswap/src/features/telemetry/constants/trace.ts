@@ -126,6 +126,7 @@ export const ElementName = {
   ChainBob: 'chain-bob',
   ChainCyber: 'chain-cyber',
   ChainShape: 'chain-shape',
+  ChainInk: 'chain-ink',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',

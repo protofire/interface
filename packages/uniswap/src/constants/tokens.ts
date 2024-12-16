@@ -217,6 +217,14 @@ export const USDC_SHAPE = new Token(
   'USDC',
 )
 
+export const USDC_INK = new Token(
+  UniverseChainId.INK,
+  '0x0000000000000000000000000000000000000000', // Temporary
+  6,
+  'USDC',
+  'USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

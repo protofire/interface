@@ -12,6 +12,7 @@ import {
   USDC_CELO,
   USDC_CYBER,
   USDC_GOERLI,
+  USDC_INK,
   USDC_OPTIMISM,
   USDC_POLYGON,
   USDC_SHAPE,
@@ -45,6 +46,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.BOB]: CurrencyAmount.fromRawAmount(USDC_BOB, 10_000e6),
   [UniverseChainId.CYBER]: CurrencyAmount.fromRawAmount(USDC_CYBER, 10_000e6),
   [UniverseChainId.SHAPE]: CurrencyAmount.fromRawAmount(USDC_SHAPE, 10_000e6),
+  [UniverseChainId.INK]: CurrencyAmount.fromRawAmount(USDC_INK, 10_000e6),
 }
 
 /**

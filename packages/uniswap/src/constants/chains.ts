@@ -11,6 +11,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  INK_LOGO,
   MUMBAI_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
@@ -22,6 +23,7 @@ import { config } from 'uniswap/src/config'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
+import { ink } from 'uniswap/src/constants/chainDefinitions/ink'
 import { shape } from 'uniswap/src/constants/chainDefinitions/shape'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
@@ -44,6 +46,7 @@ import {
   USDC_CELO,
   USDC_CYBER,
   USDC_GOERLI,
+  USDC_INK,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -1317,6 +1320,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_SHAPE, 10_000e6),
     stablecoins: [USDC_SHAPE],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.INK]: {
+    ...ink,
+    id: UniverseChainId.INK,
+    sdkId: UniswapSDKChainId.INK,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: 'https://inkonchain.com/bridge',
+    chainPriority: 0,
+    docs: 'https://docs.inkonchain.com',
+    elementName: ElementName.ChainShape,
+    explorer: {
+      name: 'Ink Scan',
+      url: '', // Temporary
+      apiURL: '', // Temporary
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://inkonchain.com',
+    infuraPrefix: undefined,
+    interfaceName: 'ink',
+    label: 'Ink',
+    logo: INK_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: [''] }, // Temporary
+      default: { http: [''] }, // Temporary
+      appOnly: { http: [''] }, // Temporary
+    },
+    urlParam: 'ink',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_INK, 10_000e6),
+    stablecoins: [USDC_INK],
     supportsClientSideRouting: false,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {
