@@ -1366,9 +1366,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: [''] }, // Temporary
-      default: { http: [''] }, // Temporary
-      appOnly: { http: [''] }, // Temporary
+      [RPCType.Public]: { http: [config.inkRPCURL || ''] }, // Temporary
+      default: { http: [config.inkRPCURL || ''] }, // Temporary
+      appOnly: { http: [config.inkRPCURL || ''] }, // Temporary
     },
     urlParam: 'ink',
     statusPage: undefined,
