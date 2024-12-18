@@ -12,6 +12,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  INK_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
   SHAPE_LOGO,
@@ -179,6 +180,18 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
           }
         : {
             symbol: SHAPE_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
+          }
+    case UniverseChainId.INK:
+      return darkMode
+        ? {
+            symbol: INK_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: INK_LOGO,
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
           }

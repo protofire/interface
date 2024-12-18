@@ -219,7 +219,13 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
   // Temporary disable Zero gas checks due to timestamp mismatch
   const insufficientGas =
     chainId &&
-    [UniverseChainId.Zero, UniverseChainId.BOB, UniverseChainId.CYBER, UniverseChainId.SHAPE].includes(chainId)
+    [
+      UniverseChainId.Zero,
+      UniverseChainId.BOB,
+      UniverseChainId.CYBER,
+      UniverseChainId.SHAPE,
+      UniverseChainId.INK,
+    ].includes(chainId)
       ? false
       : isClassicTrade(trade.trade) &&
         (nativeCurrencyBalanceUSD ?? 0) < (trade.trade.totalGasUseEstimateUSDWithBuffer ?? 0)
