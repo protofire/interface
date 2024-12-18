@@ -67,11 +67,6 @@ export default function SwapPage({ className }: { className?: string }) {
 
   return (
     <Trace logImpression page={InterfacePageName.SWAP_PAGE}>
-      <Flex centered top={32}>
-        <Text variant="heading2" textAlign="center" mb={24}>
-          Access Uniswap on any chain
-        </Text>
-      </Flex>
       <PageWrapper>
         <Swap
           className={className}
@@ -91,7 +86,7 @@ export default function SwapPage({ className }: { className?: string }) {
           <LearnMoreLink to="https://docs.reservoir.tools/docs/reservoir-swap" target="_blank">
             Learn more
           </LearnMoreLink>{' '}
-          about deploying on your chain
+          about deploying Uniswap V2 & V3 on your chain
         </Text>
       </Flex>
       {location.pathname === '/swap' && <SwitchLocaleLink />}
