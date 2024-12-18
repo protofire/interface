@@ -1341,17 +1341,17 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
-    bridge: 'https://inkonchain.com/bridge',
+    bridge: 'https://www.relay.link/bridge/ink',
     chainPriority: 0,
     docs: 'https://docs.inkonchain.com',
     elementName: ElementName.ChainShape,
     explorer: {
       name: 'Ink Scan',
-      url: '', // Temporary
+      url: 'https://explorer.inkonchain.com', // Temporary
       apiURL: '', // Temporary
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://inkonchain.com',
+    infoLink: 'https://info.reservoir.app',
     infuraPrefix: undefined,
     interfaceName: 'ink',
     label: 'Ink',
