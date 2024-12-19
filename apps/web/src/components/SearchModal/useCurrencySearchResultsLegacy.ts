@@ -84,13 +84,8 @@ export function useCurrencySearchResultsLegacy({
       }
     }
 
-    // Filter out tokens with balances so they aren't duplicated when we merge below.
     const filteredListTokens = fullBaseList.filter((token) => {
-      if (token.isNative) {
-        return !((token.symbol ?? 'ETH') in balanceMap)
-      } else {
-        return !(token.address?.toLowerCase() in balanceMap)
-      }
+      return token.symbol !== 'ETH'
     })
 
     const portfolioTokens = getSortedPortfolioTokens(balanceList, balanceMap, chainId, {
