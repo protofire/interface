@@ -81,12 +81,15 @@ export default function SwapPage({ className }: { className?: string }) {
           syncTabToUrl={true}
         />
       </PageWrapper>
-      <Flex centered top={52}>
+      <Flex centered top={52} gap={12}>
+        <Text variant="body2" textAlign="center">
+          Reservoir Swap is an interface for Uniswap v2 & v3
+        </Text>
         <Text variant="body2" textAlign="center">
           <LearnMoreLink to="https://docs.reservoir.tools/docs/reservoir-swap" target="_blank">
             Learn more
           </LearnMoreLink>{' '}
-          about deploying Uniswap V2 & V3 on your chain
+          about deploying on your chain
         </Text>
       </Flex>
       {location.pathname === '/swap' && <SwitchLocaleLink />}
