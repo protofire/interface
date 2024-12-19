@@ -251,7 +251,6 @@ export function DeprecatedCurrencySearch({
           <Column style={{ padding: '20px', height: '100%' }}>
             <ThemedText.DeprecatedMain color={theme.neutral3} textAlign="center" mb="20px">
               <Trans i18nKey="common.noResults" />
-              NONONONONONO
             </ThemedText.DeprecatedMain>
           </Column>
         )}

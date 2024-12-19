@@ -36,6 +36,7 @@ interface PortfolioLogoProps {
   size?: number
   style?: React.CSSProperties
   loading?: boolean
+  overwriteImages?: string
 }
 
 function SquareL2Logo({ chainId, size }: { chainId: InterfaceChainId; size: number }) {
@@ -73,22 +74,26 @@ export const PortfolioLogo = memo(function PortfolioLogo(props: PortfolioLogoPro
             <SpinningLoader size={props.size + 6} width={2} />
           </AbsoluteCenteredElement>
         )}
-        {getLogo(props)}
+        {getLogo(props, props.overwriteImages)}
       </Flex>
       <SquareL2Logo chainId={props.chainId} size={props.size ?? LOGO_DEFAULT_SIZE} />
     </LogoContainer>
   )
 })
 
-function getLogo({ accountAddress, currencies, images, size = LOGO_DEFAULT_SIZE }: PortfolioLogoProps) {
-  if (currencies && currencies.length === 1) {
-    if (currencies[0] instanceof TokenFromList) {
-      return (
-        <SingleLogoContainer size={size}>
-          <CircleLogoImage size={size} src={currencies[0].tokenInfo.logoURI ?? blankTokenUrl} />
-        </SingleLogoContainer>
-      )
-    }
+function getLogo(
+  { accountAddress, currencies, images, size = LOGO_DEFAULT_SIZE }: PortfolioLogoProps,
+  overwriteImages?: string,
+) {
+  const overwriteURL =
+    currencies && currencies[0] instanceof TokenFromList ? currencies[0].tokenInfo.logoURI : overwriteImages
+
+  if (overwriteURL) {
+    return (
+      <SingleLogoContainer size={size}>
+        <CircleLogoImage size={size} src={overwriteURL} />
+      </SingleLogoContainer>
+    )
   }
   if (accountAddress) {
     return <Identicon account={accountAddress} size={size} />
