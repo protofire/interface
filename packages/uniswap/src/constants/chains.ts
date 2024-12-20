@@ -1357,7 +1357,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://explorer.inkonchain.com/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://info.reservoir.app',
+    infoLink: 'https://info.reservoir.tools/#/ink',
     infuraPrefix: undefined,
     interfaceName: 'ink',
     label: 'Ink',
