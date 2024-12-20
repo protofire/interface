@@ -14,12 +14,12 @@ export const ink = /*#__PURE__*/ defineChain({
     symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: [''] }, // Temporary
+    default: { http: ['https://rpc-gel.inkonchain.com'] }, // Temporary
   },
   blockExplorers: {
     default: {
-      name: 'Ink Scan',
-      url: '', // Temporary
+      name: 'Ink Explorer',
+      url: 'https://explorer.inkonchain.com',
     },
   },
   testnet: false,

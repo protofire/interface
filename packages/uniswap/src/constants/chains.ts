@@ -1347,9 +1347,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     docs: 'https://docs.inkonchain.com',
     elementName: ElementName.ChainShape,
     explorer: {
-      name: 'Ink Scan',
-      url: '', // Temporary
-      apiURL: '', // Temporary
+      name: 'Ink Explorer',
+      url: 'https://explorer.inkonchain.com',
+      apiURL: 'https://explorer.inkonchain.com/api',
     },
     helpCenterUrl: undefined,
     infoLink: 'https://inkonchain.com',
@@ -1366,9 +1366,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: [config.inkRPCURL || ''] }, // Temporary
-      default: { http: [config.inkRPCURL || ''] }, // Temporary
-      appOnly: { http: [config.inkRPCURL || ''] }, // Temporary
+      [RPCType.Public]: { http: [config.inkRPCURL || 'https://rpc-gel.inkonchain.com'] },
+      default: { http: [config.inkRPCURL || 'https://rpc-gel.inkonchain.com'] },
+      appOnly: { http: [config.inkRPCURL || 'https://rpc-gel.inkonchain.com'] },
     },
     urlParam: 'ink',
     statusPage: undefined,
