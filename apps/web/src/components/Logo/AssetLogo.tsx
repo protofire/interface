@@ -1,5 +1,6 @@
 import { Currency } from '@uniswap/sdk-core'
 import { PortfolioLogo } from 'components/AccountDrawer/MiniPortfolio/PortfolioLogo'
+import useAssetLogoSource from 'hooks/useAssetLogoSource'
 import styled from 'lib/styled-components'
 import React from 'react'
 import { UniverseChainId } from 'uniswap/src/types/chains'
@@ -45,9 +46,16 @@ export default function AssetLogo({
   style,
   loading,
 }: AssetLogoProps) {
+  const tokenListLogo = useAssetLogoSource(currency)
   return (
     <LogoContainer style={{ height: size, width: size, ...style }}>
-      <PortfolioLogo currencies={currency ? [currency] : []} size={size} chainId={chainId} loading={loading} />
+      <PortfolioLogo
+        currencies={currency ? [currency] : []}
+        size={size}
+        chainId={chainId}
+        loading={loading}
+        overwriteImages={tokenListLogo[0]}
+      />
     </LogoContainer>
   )
 }
