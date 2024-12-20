@@ -239,12 +239,12 @@ export const COMMON_BASES: ChainCurrencyList = {
     USDC_INK,
   ].map(buildCurrencyInfo),
   [UniverseChainId.REDSTONE]: [
-    nativeOnChain(UniverseChainId.INK),
+    nativeOnChain(UniverseChainId.REDSTONE),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.REDSTONE] as Token,
     USDC_REDSTONE,
   ].map(buildCurrencyInfo),
   [UniverseChainId.REDSTONE_GARNET]: [
-    nativeOnChain(UniverseChainId.INK),
+    nativeOnChain(UniverseChainId.REDSTONE_GARNET),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.REDSTONE_GARNET] as Token,
     USDC_REDSTONE_GARNET,
   ].map(buildCurrencyInfo),
