@@ -225,6 +225,22 @@ export const USDC_INK = new Token(
   'Bridged USDC (Stargate)',
 )
 
+export const USDC_REDSTONE = new Token(
+  UniverseChainId.REDSTONE,
+  '0xD5d59fC063e7548b6015A36fEb10B875924A19be',
+  6,
+  'USDC.e',
+  'Bridged USDC (Lattice)',
+)
+
+export const USDC_REDSTONE_GARNET = new Token(
+  UniverseChainId.REDSTONE_GARNET,
+  '0xD2cA61F265a2dA2d2CD7607F05C26eBfA18AD5F6',
+  6,
+  'mUSDC',
+  'Mock USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
