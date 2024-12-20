@@ -55,7 +55,8 @@
     "https://assets.relay.link",
     "https://coin-images.coingecko.com",
     "https://raw.githubusercontent.com",
-    "https://rpc.redstonechain.com"
+    "https://rpc.redstonechain.com",
+    "https://rpc-gel.inkonchain.com"
   ],
   "workerSrc": [
     "'self'",
