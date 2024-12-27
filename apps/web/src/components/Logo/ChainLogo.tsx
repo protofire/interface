@@ -126,6 +126,7 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             textColor: '#3667F6',
           }
     case UniverseChainId.AbstractTestnet:
+    case UniverseChainId.AbstractMainnet:
       return darkMode
         ? {
             symbol: ABSTRACT_LOGO,
