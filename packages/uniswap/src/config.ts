@@ -59,6 +59,7 @@ export interface Config {
   firebaseAppCheckDebugToken: string
   webSupportedChains?: UniverseChainId[]
   inkRPCURL?: string
+  abstractRPCURL?: string
 }
 
 /**
@@ -114,6 +115,7 @@ const _config: Config = {
         .filter((id): id is UniverseChainId => !!id)
     : undefined,
   inkRPCURL: process.env.REACT_APP_INK_RPC_URL,
+  abstractRPCURL: process.env.REACT_APP_ABSTRACT_RPC_URL,
 }
 
 export const config = Object.freeze(_config)

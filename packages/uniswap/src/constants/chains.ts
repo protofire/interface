@@ -1536,9 +1536,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: [''] },
-      default: { http: [''] },
-      appOnly: { http: [''] },
+      [RPCType.Public]: { http: [config.abstractRPCURL || ''] },
+      default: { http: [config.abstractRPCURL || ''] },
+      appOnly: { http: [config.abstractRPCURL || ''] },
     },
     urlParam: 'abstract',
     statusPage: undefined,
