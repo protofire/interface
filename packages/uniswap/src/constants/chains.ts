@@ -1521,7 +1521,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: '',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://abs.xyz',
+    infoLink: 'https://info.reservoir.tools/#/abstract',
     infuraPrefix: undefined,
     interfaceName: 'abstract',
     label: 'Abstract',
