@@ -1518,7 +1518,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     elementName: ElementName.ChainAbstractMainnet,
     explorer: {
       name: 'Abstract Explorer',
-      url: '',
+      url: 'https://explorer.mainnet.abs.xyz',
       apiURL: '',
     },
     helpCenterUrl: undefined,
