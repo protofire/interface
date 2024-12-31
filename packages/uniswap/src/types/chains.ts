@@ -33,7 +33,8 @@ export enum UniverseChainId {
   INK = UniswapSDKChainId.INK,
   REDSTONE = UniswapSDKChainId.REDSTONE,
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET, 
+  REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET,
+  AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
 }
 
 export type WalletChainId =
@@ -57,7 +58,8 @@ export type WalletChainId =
   | UniverseChainId.SHAPE
   | UniverseChainId.INK
   | UniverseChainId.REDSTONE
-  | UniverseChainId.REDSTONE_GARNET  
+  | UniverseChainId.REDSTONE_GARNET
+  | UniverseChainId.AbstractMainnet
 
 
 // DON'T CHANGE - order here determines ordering of networks in app
@@ -98,14 +100,14 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   // UniverseChainId.Zora,
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
-  //
+  // UniverseChainId.REDSTONE_GARNET,
   UniverseChainId.Zero,
   UniverseChainId.BOB,
   UniverseChainId.CYBER,
   UniverseChainId.SHAPE,
   UniverseChainId.INK,
   UniverseChainId.REDSTONE,
-  UniverseChainId.REDSTONE_GARNET
+  UniverseChainId.AbstractMainnet
 ]
 
 export enum RPCType {

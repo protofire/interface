@@ -241,6 +241,14 @@ export const USDC_REDSTONE_GARNET = new Token(
   'Mock USDC',
 )
 
+export const USDC_ABSTRACT_MAINNET = new Token(
+  UniverseChainId.AbstractMainnet,
+  '0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1',
+  6,
+  'USDC.e',
+  'Bridged USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

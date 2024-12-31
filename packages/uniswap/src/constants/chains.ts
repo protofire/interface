@@ -22,6 +22,7 @@ import {
   ZORA_LOGO,
 } from 'ui/src/assets'
 import { config } from 'uniswap/src/config'
+import { abstract } from 'uniswap/src/constants/chainDefinitions/abstract'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
@@ -40,6 +41,7 @@ import {
   MATIC_POLYGON,
   USDB_BLAST,
   USDC,
+  USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
   USDC_ARBITRUM,
   USDC_ARBITRUM_GOERLI,
@@ -1494,6 +1496,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.ABSTRACT_MAINNET]: {
+    ...abstract,
+    id: UniverseChainId.AbstractMainnet,
+    sdkId: UniswapSDKChainId.ABSTRACT_MAINNET,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: '',
+    chainPriority: 0,
+    docs: 'https://docs.abs.xyz',
+    elementName: ElementName.ChainAbstractMainnet,
+    explorer: {
+      name: 'Abstract Explorer',
+      url: 'https://explorer.mainnet.abs.xyz',
+      apiURL: '',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://abs.xyz',
+    infuraPrefix: undefined,
+    interfaceName: 'abstract',
+    label: 'Abstract',
+    logo: ABSTRACT_LOGO,
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: [config.abstractRPCURL || ''] },
+      default: { http: [config.abstractRPCURL || ''] },
+      appOnly: { http: [config.abstractRPCURL || ''] },
+    },
+    urlParam: 'abstract',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_MAINNET, 10_000e6),
+    stablecoins: [USDC_ABSTRACT_MAINNET],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Ether',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0x3439153EB7AF838Ad19d56E1571FBD09333C2809',
     },
   } as const satisfies UniverseChainInfo,
 }
