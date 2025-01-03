@@ -10,6 +10,7 @@ const forkConfig = {
   multipleRouteOptionsEnabled: true,
   apiRoutingEnabled: true,
   inDevelopment: true,
+  documentationAvailable: false,
 }
 
 export default forkConfig
