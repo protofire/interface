@@ -55,9 +55,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@abstract-foundation/agw-client@npm:0.1.5":
-  version: 0.1.5
-  resolution: "@abstract-foundation/agw-client@npm:0.1.5"
+"@abstract-foundation/agw-client@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@abstract-foundation/agw-client@npm:1.0.0"
   peerDependencies:
     abitype: ^1.0.0
     typescript: ">=5.0.4"
@@ -65,15 +65,16 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 29ae6c3bcec0fb7b46e2f627fc13b141298a1a246ecb878ba22e05deeca69344181073e3d6e66bd1ea8d1509de485f097874bb033c4b2d255339d526e72d9467
+  checksum: 4e68a931cfde14aabb6c4b3c4b5fa4ba949262c0a91d1bb729ff52a3779169642f65bcb171c34f6bc88638dcd11625c6f025dffb57be8765b784727855bad07e
   languageName: node
   linkType: hard
 
-"@abstract-foundation/agw-react@npm:0.1.7":
-  version: 0.1.7
-  resolution: "@abstract-foundation/agw-react@npm:0.1.7"
+"@abstract-foundation/agw-react@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@abstract-foundation/agw-react@npm:1.0.0"
+  dependencies:
+    "@abstract-foundation/agw-client": 1.0.0
   peerDependencies:
-    "@abstract-foundation/agw-client": ^0.1.5
     "@privy-io/cross-app-connect": ^0.1.2
     "@privy-io/react-auth": ^1.97.0
     "@tanstack/react-query": ^5
@@ -90,7 +91,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 4ddeff14bee5a39b20eab1bf5cf257652c68f1e12850851c80a9b9b640a4ee0ae5fe508454420f82f2ad1fb374393a7aa054f8f1ea0fa33415f5dc775ff01fca
+  checksum: c531d9158c5bbbff2ced23514f93e5200409d296f924fdef2f9c3f86f0d64aa2d8ea2db37aff93a89d21602bf61aba326ee1506ddc326f5414044d44c2faf02b
   languageName: node
   linkType: hard
 
@@ -15444,8 +15445,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uniswap/interface@workspace:apps/web"
   dependencies:
-    "@abstract-foundation/agw-client": 0.1.5
-    "@abstract-foundation/agw-react": 0.1.7
+    "@abstract-foundation/agw-client": 1.0.0
+    "@abstract-foundation/agw-react": 1.0.0
     "@amplitude/analytics-browser": 1.12.1
     "@apollo/client": 3.10.4
     "@babel/preset-env": 7.23.3
