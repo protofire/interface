@@ -7,7 +7,8 @@
     "data:",
     "'wasm-unsafe-eval'",
     "https://translate.googleapis.com/",
-    "https://posthog.reservoir.tools"
+    "https://posthog.reservoir.tools",
+    "https://static.cloudflareinsights.com"
   ],
   "styleSrc": [
     "'self'",
