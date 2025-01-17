@@ -35,6 +35,7 @@ export enum UniverseChainId {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET,
   AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
+  AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
 }
 
 export type WalletChainId =
@@ -60,6 +61,7 @@ export type WalletChainId =
   | UniverseChainId.REDSTONE
   | UniverseChainId.REDSTONE_GARNET
   | UniverseChainId.AbstractMainnet
+  | UniverseChainId.AnimeTestnet
 
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
@@ -106,7 +108,8 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   UniverseChainId.INK,
   UniverseChainId.REDSTONE,
   UniverseChainId.REDSTONE_GARNET,
-  UniverseChainId.AbstractMainnet
+  UniverseChainId.AbstractMainnet,
+  UniverseChainId.AnimeTestnet,
 ]
 
 export enum RPCType {

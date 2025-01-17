@@ -49,6 +49,7 @@ import { getNativeLogoURI, getTokenLogoURI } from 'lib/hooks/useCurrencyLogoURIs
 import {
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
+  USDC_ANIME_TESTNET,
   USDC_BOB,
   USDC_CYBER,
   USDC_INK,
@@ -253,6 +254,11 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.AbstractMainnet),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.AbstractMainnet] as Token,
     USDC_ABSTRACT_MAINNET,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.AnimeTestnet]: [
+    nativeOnChain(UniverseChainId.AnimeTestnet),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.AnimeTestnet] as Token,
+    USDC_ANIME_TESTNET,
   ].map(buildCurrencyInfo),
 }
 
