@@ -56,7 +56,8 @@
     "https://coin-images.coingecko.com",
     "https://raw.githubusercontent.com",
     "https://rpc.redstonechain.com",
-    "https://rpc-gel.inkonchain.com"
+    "https://rpc-gel.inkonchain.com",
+    "https://*.reservoir.tools/tokenlist/v1"
   ],
   "workerSrc": [
     "'self'",

@@ -105,8 +105,14 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             },
             {
               label: t('common.pools'),
-              quickKey: 'T',
+              quickKey: 'P',
               href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/pools`,
+              internal: false,
+            },
+            {
+              label: 'V2',
+              quickKey: 'V',
+              href: `https://v2.info.reservoir.app/`,
               internal: false,
             },
           ],
