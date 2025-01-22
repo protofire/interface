@@ -1,6 +1,6 @@
 // Testnets
 const ABSTRACT_LIST = getTokenListApiURL('abstract-testnet')
-const REDSTONE_GARNET_LIST = getLegacyTokenListApiURL('17069') // legacy URL
+const REDSTONE_GARNET_LIST = getTokenListApiURL('garnet')
 // For faster load using URL with specified chainID param
 const ZERO_LIST = getTokenListApiURL('zero')
 const CYBER_LIST = getTokenListApiURL('cyber')
