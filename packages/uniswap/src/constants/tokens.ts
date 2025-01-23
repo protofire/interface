@@ -251,10 +251,10 @@ export const USDC_ABSTRACT_MAINNET = new Token(
 
 export const USDC_ANIME_TESTNET = new Token(
   UniverseChainId.AnimeTestnet,
-  '0x0000000000000000000000000000000000000000',
+  '0x69D30A49fcbaB7142d604635772B7Eef958aE0bd',
   6,
   'USDC',
-  'Placeholder USDC',
+  'USDC',
 )
 
 export const WBTC = new Token(

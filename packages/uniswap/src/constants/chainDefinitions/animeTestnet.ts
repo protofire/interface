@@ -19,7 +19,7 @@ export const animeTestnet = /*#__PURE__*/ defineChain({
   blockExplorers: {
     default: {
       name: 'Animechain Testnet Explorer',
-      url: '',
+      url: 'https://testnet-explorer.anime.xyz',
     },
   },
   testnet: false,

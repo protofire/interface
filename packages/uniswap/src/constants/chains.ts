@@ -1575,8 +1575,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     elementName: ElementName.ChainAnimeTestnet,
     explorer: {
       name: 'Animechain Explorer',
-      url: '',
-      apiURL: '',
+      url: 'https://testnet-explorer.anime.xyz/',
+      apiURL: 'https://testnet-explorer.anime.xyz/api',
     },
     helpCenterUrl: undefined,
     infoLink: '',
