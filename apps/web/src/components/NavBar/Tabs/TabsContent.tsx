@@ -7,7 +7,8 @@ import { useTabsVisible } from 'components/NavBar/ScreenSizes'
 import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
-// import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
+import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
@@ -33,7 +34,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const { pathname } = useLocation()
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
-
+  const { chainId } = useSwapAndLimitContext()
   return [
     {
       title: t('common.trade'),
@@ -80,7 +81,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.reservoir.tools/`,
+      href: `https://info.reservoir.tools/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
@@ -112,7 +113,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `https://info.reservoir.tools/`, //TODO: update with chain name slug
+              href: `https://info.reservoir.tools/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
               internal: false,
             },
             {
