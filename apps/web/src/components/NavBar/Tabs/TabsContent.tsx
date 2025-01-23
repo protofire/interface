@@ -7,7 +7,7 @@ import { useTabsVisible } from 'components/NavBar/ScreenSizes'
 import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
-import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
+// import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
@@ -80,7 +80,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}`,
+      href: `https://info.reservoir.tools/`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
@@ -97,21 +97,27 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
               : []),
           ]
         : [
+            // {
+            //   label: t('common.tokens'),
+            //   quickKey: 'T',
+            //   href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/tokens`,
+            //   internal: false,
+            // },
+            // {
+            //   label: t('common.pools'),
+            //   quickKey: 'P',
+            //   href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/pools`,
+            //   internal: false,
+            // },
             {
-              label: t('common.tokens'),
+              label: 'V3 Analytics',
               quickKey: 'T',
-              href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/tokens`,
+              href: `https://info.reservoir.tools/`, //TODO: update with chain name slug
               internal: false,
             },
             {
-              label: t('common.pools'),
+              label: 'V2 Analytics',
               quickKey: 'P',
-              href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/pools`,
-              internal: false,
-            },
-            {
-              label: 'V2',
-              quickKey: 'V',
               href: `https://v2.info.reservoir.app/`,
               internal: false,
             },
