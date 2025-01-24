@@ -34,8 +34,8 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const { pathname } = useLocation()
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
-  const { chainId } = useSwapAndLimitContext()
-
+  const { chainId: universeChainId } = useSwapAndLimitContext()
+  const chainId = universeChainId ? universeChainId : UniverseChainId.Zero
   return [
     {
       title: t('common.trade'),
