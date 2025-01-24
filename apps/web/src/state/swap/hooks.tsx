@@ -227,6 +227,8 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.INK,
       UniverseChainId.REDSTONE,
       UniverseChainId.REDSTONE_GARNET,
+      UniverseChainId.AbstractMainnet,
+      UniverseChainId.AnimeTestnet,
     ].includes(chainId)
       ? false
       : isClassicTrade(trade.trade) &&

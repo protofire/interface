@@ -59,7 +59,8 @@
     "https://raw.githubusercontent.com",
     "https://rpc.redstonechain.com",
     "https://rpc-gel.inkonchain.com",
-    "https://posthog.reservoir.tools"
+    "https://posthog.reservoir.tools",
+    "https://*.reservoir.tools/tokenlist/v1"
   ],
   "workerSrc": [
     "'self'",
