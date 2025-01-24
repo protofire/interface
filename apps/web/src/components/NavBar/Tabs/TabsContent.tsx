@@ -116,12 +116,16 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
               href: `https://info.reservoir.tools/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
               internal: false,
             },
-            {
-              label: 'V2 Analytics',
-              quickKey: 'P',
-              href: `https://v2.info.reservoir.app/`,
-              internal: false,
-            },
+            ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)
+              ? [
+                  {
+                    label: 'V2 Analytics',
+                    quickKey: 'P',
+                    href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.reservoir.tools`,
+                    internal: false,
+                  },
+                ]
+              : []),
           ],
     },
     {
