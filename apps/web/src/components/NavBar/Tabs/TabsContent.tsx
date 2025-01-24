@@ -35,6 +35,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
   const { chainId } = useSwapAndLimitContext()
+
   return [
     {
       title: t('common.trade'),
