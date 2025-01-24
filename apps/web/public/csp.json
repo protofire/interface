@@ -57,7 +57,8 @@
     "https://raw.githubusercontent.com",
     "https://rpc.redstonechain.com",
     "https://rpc-gel.inkonchain.com",
-    "https://auth.privy.io"
+    "https://auth.privy.io",
+    "https://*.reservoir.tools/tokenlist/v1"
   ],
   "workerSrc": [
     "'self'",

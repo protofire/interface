@@ -169,4 +169,10 @@ export const UNIVERSE_CHAIN_LOGO = {
       logoDark: BlockExplorer,
     },
   } as const satisfies UniverseChainLogoInfo,
+  [UniverseChainId.AnimeTestnet]: {
+    explorer: {
+      logoLight: BlockExplorer,
+      logoDark: BlockExplorer,
+    },
+  } as const satisfies UniverseChainLogoInfo,
 }

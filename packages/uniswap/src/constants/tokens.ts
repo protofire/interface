@@ -249,6 +249,14 @@ export const USDC_ABSTRACT_MAINNET = new Token(
   'Bridged USDC',
 )
 
+export const USDC_ANIME_TESTNET = new Token(
+  UniverseChainId.AnimeTestnet,
+  '0x69D30A49fcbaB7142d604635772B7Eef958aE0bd',
+  6,
+  'USDC',
+  'USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

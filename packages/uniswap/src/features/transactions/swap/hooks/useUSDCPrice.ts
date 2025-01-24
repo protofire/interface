@@ -6,6 +6,7 @@ import {
   USDC,
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
+  USDC_ANIME_TESTNET,
   USDC_ARBITRUM,
   USDC_AVALANCHE,
   USDC_BASE,
@@ -53,6 +54,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.REDSTONE]: CurrencyAmount.fromRawAmount(USDC_REDSTONE, 10_000e6),
   [UniverseChainId.REDSTONE_GARNET]: CurrencyAmount.fromRawAmount(USDC_REDSTONE_GARNET, 10_000e6),
   [UniverseChainId.AbstractMainnet]: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_MAINNET, 10_000e6),
+  [UniverseChainId.AnimeTestnet]: CurrencyAmount.fromRawAmount(USDC_ANIME_TESTNET, 10_000e6),
 }
 
 /**
