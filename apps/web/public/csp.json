@@ -60,6 +60,7 @@
     "https://rpc.redstonechain.com",
     "https://rpc-gel.inkonchain.com",
     "https://posthog.reservoir.tools",
+    "https://auth.privy.io",
     "https://*.reservoir.tools/tokenlist/v1"
   ],
   "workerSrc": [

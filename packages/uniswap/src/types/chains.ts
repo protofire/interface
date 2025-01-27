@@ -102,16 +102,14 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = config.webSupportedCh
   // UniverseChainId.Zora,
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
-  //
+  // UniverseChainId.REDSTONE_GARNET,
   UniverseChainId.Zero,
   UniverseChainId.BOB,
   UniverseChainId.CYBER,
   UniverseChainId.SHAPE,
   UniverseChainId.INK,
   UniverseChainId.REDSTONE,
-  UniverseChainId.REDSTONE_GARNET,
-  UniverseChainId.AbstractMainnet,
-  UniverseChainId.AnimeTestnet,
+  UniverseChainId.AbstractMainnet
 ]
 
 export enum RPCType {
