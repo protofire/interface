@@ -12,7 +12,6 @@ if (isRemoteReportingEnabled()) {
   setupSentry()
 }
 
-// @TODO: remove unused tracing
 setupPosthog()
 
 setupAmplitude()
