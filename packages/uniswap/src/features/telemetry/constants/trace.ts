@@ -129,6 +129,7 @@ export const ElementName = {
   ChainInk: 'chain-ink',
   ChainAbstractMainnet: 'chain-abstract',
   ChainAnimeTestnet: 'chain-anime-testnet',
+  ChainMode: 'chain-mode',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',
