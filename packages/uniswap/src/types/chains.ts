@@ -110,8 +110,8 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   UniverseChainId.SHAPE,
   UniverseChainId.INK,
   UniverseChainId.REDSTONE,
-  UniverseChainId.AbstractMainnet
-  UniverseChainId.Mode,
+  UniverseChainId.AbstractMainnet,
+  // UniverseChainId.Mode,
 ]
 
 export enum RPCType {
