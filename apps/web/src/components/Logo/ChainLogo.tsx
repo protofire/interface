@@ -14,6 +14,7 @@ import {
   CYBER_LOGO,
   ETHEREUM_LOGO,
   INK_LOGO,
+  MODE_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
   REDSTONE_GARNET_LOGO,
@@ -222,6 +223,18 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             symbol: ANIME_TESTNET_LOGO,
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
+          }
+    case UniverseChainId.Mode:
+      return darkMode
+        ? {
+            symbol: MODE_LOGO,
+            bgColor: '#FCFF5233',
+            textColor: '#FCFF52',
+          }
+        : {
+            symbol: MODE_LOGO,
+            bgColor: '#FCFF5299',
+            textColor: '#655947',
           }
     default:
       return undefined

@@ -15,6 +15,7 @@ import {
   USDC_CYBER,
   USDC_GOERLI,
   USDC_INK,
+  USDC_MODE,
   USDC_OPTIMISM,
   USDC_POLYGON,
   USDC_REDSTONE,
@@ -55,6 +56,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.REDSTONE_GARNET]: CurrencyAmount.fromRawAmount(USDC_REDSTONE_GARNET, 10_000e6),
   [UniverseChainId.AbstractMainnet]: CurrencyAmount.fromRawAmount(USDC_ABSTRACT_MAINNET, 10_000e6),
   [UniverseChainId.AnimeTestnet]: CurrencyAmount.fromRawAmount(USDC_ANIME_TESTNET, 10_000e6),
+  [UniverseChainId.Mode]: CurrencyAmount.fromRawAmount(USDC_MODE, 10_000e6),
 }
 
 /**
