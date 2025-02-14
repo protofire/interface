@@ -28,6 +28,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.REDSTONE_GARNET]: 'https://explorer.garnetchain.com',
   [UniverseChainId.AbstractMainnet]: '', // Temporary
   [UniverseChainId.AnimeTestnet]: 'https://testnet-explorer.anime.xyz',
+  [UniverseChainId.Mode]: 'https://explorer.mode.network/',
 }
 
 export enum ExplorerDataType {

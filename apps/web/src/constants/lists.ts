@@ -10,6 +10,7 @@ const INK_LIST = getTokenListApiURL('ink')
 const REDSTONE_LIST = getTokenListApiURL('redstone')
 const ABSTRACT_MAINNET_LIST = getTokenListApiURL('abstract')
 const ANIME_TESTNET = getTokenListApiURL('anime-testnet')
+const MODE_LIST = getTokenListApiURL('mode')
 
 export const DEFAULT_INACTIVE_LIST_URLS: string[] = []
 export const DEFAULT_ACTIVE_LIST_URLS: string[] = [
@@ -23,6 +24,7 @@ export const DEFAULT_ACTIVE_LIST_URLS: string[] = [
   REDSTONE_GARNET_LIST,
   ABSTRACT_MAINNET_LIST,
   ANIME_TESTNET,
+  MODE_LIST,
 ]
 export const DEFAULT_LIST_OF_LISTS: string[] = [...DEFAULT_ACTIVE_LIST_URLS]
 

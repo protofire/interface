@@ -61,7 +61,8 @@
     "https://rpc-gel.inkonchain.com",
     "https://posthog.reservoir.tools",
     "https://auth.privy.io",
-    "https://*.reservoir.tools/tokenlist/v1"
+    "https://*.reservoir.tools/tokenlist/v1",
+    "https://1rpc.io/*"
   ],
   "workerSrc": [
     "'self'",

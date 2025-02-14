@@ -257,6 +257,14 @@ export const USDC_ANIME_TESTNET = new Token(
   'USDC',
 )
 
+export const USDC_MODE = new Token(
+  UniverseChainId.Mode,
+  '0xd988097fb8612cc24eeC14542bC03424c656005f',
+  6,
+  'USDC',
+  'USDC',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
