@@ -20,8 +20,11 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useTokenBalance } from 'state/connection/hooks'
+import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { ExternalLink, ThemedText } from 'theme/components'
+import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { Trans } from 'uniswap/src/i18n'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { currencyId } from 'utils/currencyId'
 import { unwrappedToken } from 'utils/unwrappedToken'
 
@@ -164,6 +167,9 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
   const userDefaultPoolBalance = useTokenBalance(account.address, pair.liquidityToken)
   const totalPoolTokens = useTotalSupply(pair.liquidityToken)
 
+  const { chainId: universeChainId } = useSwapAndLimitContext()
+  const chainId = universeChainId ? universeChainId : UniverseChainId.Zero
+
   // if staked balance balance provided, add to standard liquidity amount
   const userPoolBalance = stakedBalance ? userDefaultPoolBalance?.add(stakedBalance) : userDefaultPoolBalance
 
@@ -294,7 +300,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             <ButtonSecondary padding="8px" $borderRadius="8px">
               <ExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href={`https://v2.info.reservoir.app/account/${account?.address}`}
+                href={`https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.reservoir.tools/account/${account?.address}`}
               >
                 <Trans i18nKey="pool.accruedFees" />
                 <span style={{ fontSize: '11px' }}>↗</span>
