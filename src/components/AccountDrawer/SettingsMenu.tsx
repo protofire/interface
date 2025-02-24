@@ -70,12 +70,12 @@ export default function SettingsMenu({ onClose }: { onClose: () => void }) {
         <TestnetsToggle /> */}
       </ToggleWrapper>
 
-      <SectionTitle data-testid="wallet-header">
+      {/* <SectionTitle data-testid="wallet-header">
         <Trans>Language</Trans>
       </SectionTitle>
       {SUPPORTED_LOCALES.map((locale) => (
         <LanguageMenuItem locale={locale} isActive={activeLocale === locale} key={locale} />
-      ))}
+      ))} */}
       <GitVersionRow />
     </SlideOutMenu>
   )
