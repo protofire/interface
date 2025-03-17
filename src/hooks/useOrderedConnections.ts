@@ -3,7 +3,7 @@ import { ConnectionType } from 'connection/types'
 import { useMemo } from 'react'
 
 const SELECTABLE_WALLETS = [
-  ConnectionType.UNISWAP_WALLET_V2,
+  // ConnectionType.UNISWAP_WALLET_V2,
   ConnectionType.INJECTED,
   ConnectionType.WALLET_CONNECT_V2,
   ConnectionType.COINBASE_WALLET,
