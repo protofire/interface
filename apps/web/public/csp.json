@@ -62,7 +62,8 @@
     "https://posthog.reservoir.tools",
     "https://auth.privy.io",
     "https://*.reservoir.tools/tokenlist/v1",
-    "https://1rpc.io/*"
+    "https://1rpc.io/*",
+    "https://graph-node.reservoir.tools"
   ],
   "workerSrc": [
     "'self'",
