@@ -3,6 +3,7 @@ import { CSSProperties } from 'react'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import {
   ABSTRACT_LOGO,
+  ANIME_LOGO,
   ANIME_TESTNET_LOGO,
   ARBITRUM_LOGO,
   AVALANCHE_LOGO,
@@ -212,6 +213,18 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
         bgColor: '#FF042033',
         textColor: '#FF0420',
       }
+    case UniverseChainId.Anime:
+      return darkMode
+        ? {
+            symbol: ANIME_LOGO,
+            bgColor: 'rgba(97, 137, 255, 0.12)',
+            textColor: '#6189FF',
+          }
+        : {
+            symbol: ANIME_LOGO,
+            bgColor: 'rgba(54, 103, 246, 0.12)',
+            textColor: '#3667F6',
+          }
     case UniverseChainId.AnimeTestnet:
       return darkMode
         ? {

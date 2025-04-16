@@ -2,6 +2,7 @@
 import { CurrencyAmount, ChainId as UniswapSDKChainId } from '@uniswap/sdk-core'
 import {
   ABSTRACT_LOGO,
+  ANIME_LOGO,
   ANIME_TESTNET_LOGO,
   ARBITRUM_LOGO,
   AVALANCHE_LOGO,
@@ -26,6 +27,7 @@ import {
 import { config } from 'uniswap/src/config'
 import { abstract } from 'uniswap/src/constants/chainDefinitions/abstract'
 import { abstractTestnet } from 'uniswap/src/constants/chainDefinitions/abstractTestnet'
+import { anime } from 'uniswap/src/constants/chainDefinitions/anime'
 import { animeTestnet } from 'uniswap/src/constants/chainDefinitions/animeTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
@@ -46,6 +48,7 @@ import {
   USDC,
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
+  USDC_ANIME,
   USDC_ANIME_TESTNET,
   USDC_ARBITRUM,
   USDC_ARBITRUM_GOERLI,
@@ -1611,6 +1614,55 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x8f3e2785985aa4005c63f97f7cc89ce91a948267',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.ANIME]: {
+    ...anime,
+    id: UniverseChainId.Anime,
+    sdkId: UniswapSDKChainId.ANIME,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: '',
+    chainPriority: 0,
+    docs: '',
+    elementName: ElementName.ChainAnime,
+    explorer: {
+      name: 'Animechain Explorer',
+      url: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/',
+      apiURL: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: '',
+    infuraPrefix: undefined,
+    interfaceName: 'anime',
+    label: 'Anime',
+    logo: ANIME_LOGO,
+    nativeCurrency: { name: 'ANIME', symbol: 'ANIME', decimals: 18, address: DEFAULT_NATIVE_ADDRESS },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
+      default: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
+      appOnly: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
+    },
+    urlParam: 'anime',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ANIME, 10_000e6),
+    stablecoins: [USDC_ANIME],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped ANIME',
+      symbol: 'WANIME',
+      decimals: 18,
+      address: '0x164906a76f1A2Ea933366c446AE0Ec6a37062c42',
     },
   } as const satisfies UniverseChainInfo,
   [UniswapSDKChainId.MODE]: {

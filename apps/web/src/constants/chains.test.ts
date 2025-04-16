@@ -76,6 +76,7 @@ const chainIdNames: { [chainId in SupportedInterfaceChainId]: string } = {
   [UniverseChainId.REDSTONE_GARNET]: 'redstone-garnet',
   [UniverseChainId.AbstractMainnet]: 'abstract',
   [UniverseChainId.AnimeTestnet]: 'anime-testnet',
+  [UniverseChainId.Anime]: 'anime',
   [UniverseChainId.Mode]: 'mode',
 } as const
 
