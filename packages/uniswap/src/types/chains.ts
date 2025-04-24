@@ -36,6 +36,7 @@ export enum UniverseChainId {
   AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
   AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
   Mode = UniswapSDKChainId.MODE,
+  Anime = UniswapSDKChainId.ANIME,
 }
 
 export type WalletChainId =
@@ -63,6 +64,7 @@ export type WalletChainId =
   | UniverseChainId.AbstractMainnet
   | UniverseChainId.AnimeTestnet
   | UniverseChainId.Mode
+  | UniverseChainId.Anime
 
 
 // DON'T CHANGE - order here determines ordering of networks in app
@@ -111,7 +113,9 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   UniverseChainId.INK,
   UniverseChainId.REDSTONE,
   UniverseChainId.AbstractMainnet,
+  // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
+  UniverseChainId.Anime,
 ]
 
 export enum RPCType {

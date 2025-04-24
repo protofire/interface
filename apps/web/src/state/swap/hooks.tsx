@@ -229,6 +229,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.REDSTONE_GARNET,
       UniverseChainId.AbstractMainnet,
       UniverseChainId.AnimeTestnet,
+      UniverseChainId.Anime,
       UniverseChainId.Mode,
     ].includes(chainId)
       ? false

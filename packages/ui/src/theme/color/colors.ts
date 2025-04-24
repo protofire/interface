@@ -170,6 +170,10 @@ export const networkColors = {
     light: '#222222',
     dark: '#FFFFFF',
   },
+  anime: {
+    light: '#222222',
+    dark: '#FFFFFF',
+  },
   mode: {
     light: '#B08603',
     dark: '#FFBF17',
@@ -343,6 +347,7 @@ export const colorsLight = {
   chain_690: networkColors.optimism.light,
   chain_17069: networkColors.optimism.light,
   chain_6900: networkColors.animeTestnet.light,
+  chain_69000: networkColors.anime.light,
   chain_34443: networkColors.mode.light,
 
   // Testnets
@@ -433,6 +438,7 @@ export const colorsDark = {
   chain_690: networkColors.optimism.dark,
   chain_17069: networkColors.optimism.dark,
   chain_6900: networkColors.animeTestnet.dark,
+  chain_69000: networkColors.anime.dark,
   chain_34443: networkColors.mode.dark,
 
   // Testnets
