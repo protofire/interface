@@ -62,7 +62,8 @@
     "https://posthog.reservoir.tools",
     "https://auth.privy.io",
     "https://*.reservoir.tools/tokenlist/v1",
-    "https://1rpc.io/*"
+    "https://1rpc.io/*",
+    "https://rpc-animechain-39xf6m45e3.t.conduit.xyz"
   ],
   "workerSrc": [
     "'self'",
