@@ -25,6 +25,7 @@ import { Input as NumericalInput } from '../NumericalInput'
 import { RowBetween, RowFixed } from '../Row'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
 import { FiatValue } from './FiatValue'
+import { WARNING_LIST } from 'constants/lists'
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${flexColumnNoWrap};
@@ -242,6 +243,8 @@ export default function SwapCurrencyInputPanel({
   }, [setModalOpen])
 
   const chainAllowed = isSupportedChain(chainId)
+  const isFlaggedAddress =
+    currency?.isToken && 'address' in currency && WARNING_LIST.includes(currency.address.toLowerCase())
 
   return (
     <InputPanel id={id} hideInput={hideInput} {...rest}>
@@ -348,6 +351,13 @@ export default function SwapCurrencyInputPanel({
               )}
             </RowBetween>
           </FiatRow>
+        )}
+        {isFlaggedAddress && (
+          <LabelRow style={{ marginTop: '4px'}}>
+            <ThemedText.DeprecatedSmall color="red" fontWeight={500}>
+              <Trans>⚠️ Proceed with caution: This token address has been flagged.</Trans>
+            </ThemedText.DeprecatedSmall>
+          </LabelRow>
         )}
       </Container>
       {onCurrencySelect && (

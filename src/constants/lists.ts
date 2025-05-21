@@ -62,3 +62,9 @@ export const DEFAULT_INACTIVE_LIST_URLS: string[] = [
 ]
 
 export const DEFAULT_LIST_OF_LISTS: string[] = [...DEFAULT_ACTIVE_LIST_URLS, ...DEFAULT_INACTIVE_LIST_URLS]
+
+
+
+export const WARNING_LIST = [
+  "0xe4ee991aa59e0c2c6a617fd8feea85e0e446cd92"
+]
