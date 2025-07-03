@@ -7,21 +7,18 @@ export type Ticks = AllV3TicksQuery['ticks']
 export type TickData = Ticks[number]
 
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
-  [UniverseChainId.AbstractTestnet]:
-    'https://graph-node.internal.reservoir.tools/subgraphs/name/absctract-testnet/v3-subgraph',
-  [UniverseChainId.Zero]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/zero/v3-subgraph',
-  [UniverseChainId.BOB]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/bob/v3-subgraph',
-  [UniverseChainId.CYBER]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/cyber/v3-subgraph',
-  [UniverseChainId.SHAPE]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/shape/v3-subgraph',
-  [UniverseChainId.INK]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/ink/v3-subgraph',
-  [UniverseChainId.REDSTONE]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/redstone/v3-subgraph',
-  [UniverseChainId.REDSTONE_GARNET]:
-    'https://graph-node.internal.reservoir.tools/subgraphs/name/redstone-garnet/v3-subgraph',
-  [UniverseChainId.AbstractMainnet]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/abstract/v3-subgraph',
-  [UniverseChainId.AnimeTestnet]:
-    'https://graph-node.internal.reservoir.tools/subgraphs/name/anime-testnet/v3-subgraph',
-  [UniverseChainId.Anime]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/anime/v3-subgraph',
-  [UniverseChainId.Mode]: 'https://graph-node.internal.reservoir.tools/subgraphs/name/mode/v3-subgraph',
+  [UniverseChainId.AbstractTestnet]: 'https://graph-node.reservoir.tools/subgraphs/name/absctract-testnet/v3-subgraph',
+  [UniverseChainId.Zero]: 'https://graph-node.reservoir.tools/subgraphs/name/zero/v3-subgraph',
+  [UniverseChainId.BOB]: 'https://graph-node.reservoir.tools/subgraphs/name/bob/v3-subgraph',
+  [UniverseChainId.CYBER]: 'https://graph-node.reservoir.tools/subgraphs/name/cyber/v3-subgraph',
+  [UniverseChainId.SHAPE]: 'https://graph-node.reservoir.tools/subgraphs/name/shape/v3-subgraph',
+  [UniverseChainId.INK]: 'https://graph-node.reservoir.tools/subgraphs/name/ink/v3-subgraph',
+  [UniverseChainId.REDSTONE]: 'https://graph-node.reservoir.tools/subgraphs/name/redstone/v3-subgraph',
+  [UniverseChainId.REDSTONE_GARNET]: 'https://graph-node.reservoir.tools/subgraphs/name/redstone-garnet/v3-subgraph',
+  [UniverseChainId.AbstractMainnet]: 'https://graph-node.reservoir.tools/subgraphs/name/abstract/v3-subgraph',
+  [UniverseChainId.AnimeTestnet]: 'https://graph-node.reservoir.tools/subgraphs/name/anime-testnet/v3-subgraph',
+  [UniverseChainId.Anime]: 'https://graph-node.reservoir.tools/subgraphs/name/anime/v3-subgraph',
+  [UniverseChainId.Mode]: 'https://graph-node.reservoir.tools/subgraphs/name/mode/v3-subgraph',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractTestnet] })
