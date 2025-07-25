@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { useWeb3React } from '@web3-react/core'
 import { useAccountDrawer } from 'components/AccountDrawer'
 import Web3Status from 'components/Web3Status'
+import { INFO_URL } from 'constants/misc'
 import { chainIdToBackendName } from 'graphql/data/util'
 import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
 import { useIsNftPage } from 'hooks/useIsNftPage'
@@ -88,10 +89,10 @@ export const PageTabs = () => {
           <Trans>Positions</Trans>
         </MenuItem>
       </Box>
-      <MenuItem href="https://info.swap.harmony.one/#/harmony/pools" external dataTestId="pool-nav-link">
+      <MenuItem href={`${INFO_URL}/#/harmony/pools`} external dataTestId="pool-nav-link">
         <Trans>Pools</Trans>
       </MenuItem>
-      <MenuItem href="https://info.swap.harmony.one/#/harmony/tokens" external dataTestId="pool-nav-link">
+      <MenuItem href={`${INFO_URL}/#/harmony/tokens`} external dataTestId="pool-nav-link">
         <Trans>Tokens</Trans>
       </MenuItem>
       <MenuItem href="/getone" isActive={pathname.startsWith('/getone')}>

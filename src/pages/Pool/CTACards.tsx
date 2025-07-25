@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { useWeb3React } from '@web3-react/core'
 import { AutoColumn } from 'components/Column'
 import { getChainInfoOrDefault } from 'constants/chainInfo'
+import { INFO_URL } from 'constants/misc'
 import styled from 'styled-components/macro'
 import { ThemedText } from 'theme'
 
@@ -79,7 +80,7 @@ export default function CTACards() {
           </ThemedText.DeprecatedBody>
         </ResponsiveColumn>
       </CTA>
-      <CTA href="https://info.swap.harmony.one">
+      <CTA href={INFO_URL}>
         <ResponsiveColumn>
           <HeaderText style={{ alignSelf: 'flex-start' }}>
             <Trans>Top pools</Trans> ↗

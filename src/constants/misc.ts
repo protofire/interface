@@ -1,7 +1,13 @@
 import { Percent } from '@uniswap/sdk-core'
 import JSBI from 'jsbi'
+import { isStagingEnv } from 'utils/env'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+// Environment-based info URL
+export const INFO_URL = isStagingEnv() 
+  ? 'https://info.stg.swap.country' 
+  : 'https://info.swap.harmony.one'
 
 // TODO(WEB-1984): Convert the deadline to minutes and remove unecessary conversions from
 // seconds to minutes in the codebase.
