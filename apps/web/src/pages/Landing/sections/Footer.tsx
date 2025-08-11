@@ -121,7 +121,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">© 2024</Text>
+        <Text variant="body3">© 2025</Text>
         <Text variant="body3">Swap Interface is a fork of open source Uniswap Protocol</Text>
         <Flex row alignItems="center" gap="$spacing16">
           {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">

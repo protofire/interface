@@ -41,8 +41,8 @@ export const WC_PARAMS = {
   metadata: {
     name: 'Reservoir Swap',
     description: 'Reservoir Swap',
-    url: 'https://swap.reservoir.tools',
-    icons: ['https://swap.reservoir.tools/favicon.png'],
+    url: 'https://swap.replace.domain',
+    icons: ['https://swap.replace.domain/favicon.png'],
   },
   qrModalOptions: {
     themeVariables: {

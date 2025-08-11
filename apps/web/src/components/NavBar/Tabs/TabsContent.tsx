@@ -82,7 +82,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.reservoir.tools/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: `https://info.replace.domain/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
@@ -114,7 +114,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `https://info.reservoir.tools/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+              href: `https://info.replace.domain/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
               internal: false,
             },
             ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)
@@ -122,7 +122,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                   {
                     label: 'V2 Analytics',
                     quickKey: 'P',
-                    href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.reservoir.tools`,
+                    href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.replace.domain`,
                     internal: false,
                   },
                 ]

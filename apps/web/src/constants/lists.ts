@@ -31,7 +31,7 @@ export const DEFAULT_ACTIVE_LIST_URLS: string[] = [
 export const DEFAULT_LIST_OF_LISTS: string[] = [...DEFAULT_ACTIVE_LIST_URLS]
 
 function getTokenListApiURL(slug: string) {
-  return `https://api-${slug}.reservoir.tools/tokenlist/v1`
+  return `https://api-${slug}.replace.domain/tokenlist/v1`
 }
 
 function getLegacyTokenListApiURL(chainId: string) {

@@ -40,7 +40,7 @@
     "https://apiv2.reservoir.w3us.site",
     "https://apiv1.staging.reservoir.w3us.site",
     "https://apiv2.staging.reservoir.w3us.site",
-    "https://graph-node.internal.reservoir.tools",
+    "https://graph-node.internal.replace.domain",
     "https://api.testnets.relay.link",
     "https://api.relay.link",
     "https://static.optimism.io",
@@ -57,10 +57,10 @@
     "https://raw.githubusercontent.com",
     "https://rpc.redstonechain.com",
     "https://rpc-gel.inkonchain.com",
-    "https://*.reservoir.tools/tokenlist/v1",
+    "https://*.replace.domain/tokenlist/v1",
     "https://1rpc.io/*",
     "https://rpc-animechain-39xf6m45e3.t.conduit.xyz",
-    "https://graph-node.reservoir.tools"
+    "https://graph-node.replace.domain"
   ],
   "workerSrc": [
     "'self'",
