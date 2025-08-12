@@ -12,45 +12,58 @@ import {
 } from 'utilities/src/telemetry/analytics/constants'
 import { generateAnalyticsLoggers } from 'utilities/src/telemetry/analytics/logging'
 
+const ANALYTICES_ENABLED = false
 const loggers = generateAnalyticsLoggers('telemetry/analytics.web')
 let allowAnalytics: boolean = true
 let commitHash: Maybe<string>
 let userId: Maybe<string>
 
 async function setAnalyticsAtomDirect(allowed: boolean): Promise<void> {
-  try {
-    window.localStorage.setItem(ALLOW_ANALYTICS_ATOM_KEY, JSON.stringify(allowed))
-    document.dispatchEvent(new Event('analyticsToggled'))
-  } catch {
-    await chrome.storage.local.set({ ALLOW_ANALYTICS_ATOM_KEY: JSON.stringify(allowed) })
+  if (ANALYTICES_ENABLED) {
+    try {
+      window.localStorage.setItem(ALLOW_ANALYTICS_ATOM_KEY, JSON.stringify(allowed))
+      document.dispatchEvent(new Event('analyticsToggled'))
+    } catch {
+      await chrome.storage.local.set({ ALLOW_ANALYTICS_ATOM_KEY: JSON.stringify(allowed) })
+    }
   }
 }
 
 async function getAnalyticsAtomFromStorage(): Promise<boolean> {
-  try {
-    return window.localStorage.getItem(ALLOW_ANALYTICS_ATOM_KEY) !== 'false'
-  } catch {
-    const res = await chrome.storage.local.get(ALLOW_ANALYTICS_ATOM_KEY)
-    return res[ALLOW_ANALYTICS_ATOM_KEY] !== 'false'
+  if (ANALYTICES_ENABLED) {
+    try {
+      return window.localStorage.getItem(ALLOW_ANALYTICS_ATOM_KEY) !== 'false'
+    } catch {
+      const res = await chrome.storage.local.get(ALLOW_ANALYTICS_ATOM_KEY)
+      return res[ALLOW_ANALYTICS_ATOM_KEY] !== 'false'
+    }
+  } else {
+    return false
   }
 }
 
 export async function getAnalyticsAtomDirect(forceRead?: boolean): Promise<boolean> {
-  if (forceRead) {
-    allowAnalytics = await getAnalyticsAtomFromStorage()
+  if (ANALYTICES_ENABLED) {
+    if (forceRead) {
+      allowAnalytics = await getAnalyticsAtomFromStorage()
+    }
+    return allowAnalytics
+  } else {
+    return false
   }
-
-  return allowAnalytics
 }
 
 // Listen for changes from other areas
 const updateLocalVar = async (): Promise<void> => {
   allowAnalytics = await getAnalyticsAtomFromStorage()
 }
-try {
-  window.document.addEventListener('analyticsToggled', updateLocalVar, false)
-} catch {
-  chrome.storage.local.onChanged.addListener(updateLocalVar)
+
+if (ANALYTICES_ENABLED) {
+  try {
+    window.document.addEventListener('analyticsToggled', updateLocalVar, false)
+  } catch {
+    chrome.storage.local.onChanged.addListener(updateLocalVar)
+  }
 }
 
 export const analytics: Analytics = {
@@ -60,71 +73,81 @@ export const analytics: Analytics = {
     initHash?: string,
     userIdGetter?: () => Promise<string>,
   ): Promise<void> {
-    // Set properties
-    commitHash = initHash
-    await setAnalyticsAtomDirect(allowed)
+    if (ANALYTICES_ENABLED) {
+      // Set properties
+      commitHash = initHash
+      await setAnalyticsAtomDirect(allowed)
 
-    try {
-      init(
-        DUMMY_KEY, // Amplitude custom reverse proxy takes care of API key
-        undefined, // User ID should be undefined to let Amplitude default to Device ID
-        {
-          transportProvider, // Used to support custom reverse proxy header
-          // Disable tracking of private user information by Amplitude
-          trackingOptions: AMPLITUDE_SHARED_TRACKING_OPTIONS,
-        },
-      )
+      try {
+        init(
+          DUMMY_KEY, // Amplitude custom reverse proxy takes care of API key
+          undefined, // User ID should be undefined to let Amplitude default to Device ID
+          {
+            transportProvider, // Used to support custom reverse proxy header
+            // Disable tracking of private user information by Amplitude
+            trackingOptions: AMPLITUDE_SHARED_TRACKING_OPTIONS,
+          },
+        )
 
-      userId = userIdGetter ? await userIdGetter() : getUserId()
+        userId = userIdGetter ? await userIdGetter() : getUserId()
 
-      if (allowed && userId) {
-        setDeviceId(userId)
+        if (allowed && userId) {
+          setDeviceId(userId)
+        }
+
+        if (!allowed) {
+          setDeviceId(ANONYMOUS_DEVICE_ID)
+        }
+      } catch (error) {
+        loggers.init(error)
       }
-
-      if (!allowed) {
-        setDeviceId(ANONYMOUS_DEVICE_ID)
-      }
-    } catch (error) {
-      loggers.init(error)
     }
   },
   async setAllowAnalytics(allowed: boolean): Promise<void> {
-    await setAnalyticsAtomDirect(allowed)
-    if (allowed) {
-      if (userId) {
-        setDeviceId(userId)
+    if (ANALYTICES_ENABLED) {
+      await setAnalyticsAtomDirect(allowed)
+      if (allowed) {
+        if (userId) {
+          setDeviceId(userId)
+        }
+      } else {
+        loggers.setAllowAnalytics(allowed)
+        identify(new Identify().clearAll()) // Clear all custom user properties
+        setDeviceId(ANONYMOUS_DEVICE_ID)
       }
-    } else {
-      loggers.setAllowAnalytics(allowed)
-      identify(new Identify().clearAll()) // Clear all custom user properties
-      setDeviceId(ANONYMOUS_DEVICE_ID)
     }
   },
   async sendEvent(eventName: string, eventProperties?: Record<string, unknown>): Promise<void> {
-    if (!(await getAnalyticsAtomDirect()) && !ANONYMOUS_EVENT_NAMES.includes(eventName)) {
-      return
+    if (ANALYTICES_ENABLED) {
+      if (!(await getAnalyticsAtomDirect()) && !ANONYMOUS_EVENT_NAMES.includes(eventName)) {
+        return
+      }
+      const finalProperties = {
+        ...eventProperties,
+        ...(commitHash ? { git_commit_hash: commitHash } : {}),
+      }
+      loggers.sendEvent(eventName, finalProperties)
+      track(eventName, finalProperties)
     }
-    const finalProperties = {
-      ...eventProperties,
-      ...(commitHash ? { git_commit_hash: commitHash } : {}),
-    }
-    loggers.sendEvent(eventName, finalProperties)
-    track(eventName, finalProperties)
   },
   flushEvents(): void {
-    loggers.flushEvents()
-    flush()
+    if (ANALYTICES_ENABLED) {
+      loggers.flushEvents()
+      flush()
+    }
   },
   async setUserProperty(property: string, value: UserPropertyValue, insert?: boolean): Promise<void> {
-    if (!(await getAnalyticsAtomDirect())) {
-      return
-    }
+    if (ANALYTICES_ENABLED) {
+      if (!(await getAnalyticsAtomDirect())) {
+        return
+      }
 
-    if (insert) {
-      identify(new Identify().postInsert(property, value))
-    } else {
-      loggers.setUserProperty(property, value)
-      identify(new Identify().set(property, value))
+      if (insert) {
+        identify(new Identify().postInsert(property, value))
+      } else {
+        loggers.setUserProperty(property, value)
+        identify(new Identify().set(property, value))
+      }
     }
   },
 }
