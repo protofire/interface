@@ -60,7 +60,8 @@
     "https://*.replace.domain/tokenlist/v1",
     "https://1rpc.io/*",
     "https://rpc-animechain-39xf6m45e3.t.conduit.xyz",
-    "https://graph-node.replace.domain"
+    "https://graph-node.replace.domain",
+    "https://*.swap.w3us.site"
   ],
   "workerSrc": [
     "'self'",
