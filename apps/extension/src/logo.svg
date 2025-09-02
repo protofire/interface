@@ -7,7 +7,7 @@
 <path d="M80.8923 170.72C73.8229 161.619 63.3058 142.862 57.9031 130.021C54.906 122.898 59.9506 117.818 67.6631 118.307C64.5877 110.328 67.2993 102.17 75.8384 102.626C95.0357 103.652 128.365 114.382 140.269 119.039C156.128 125.244 163.027 134.198 167.173 143.027C171.319 151.856 170.467 160.395 169.243 165.78C168.019 171.166 166.046 182.091 154.884 190.555C143.722 199.02 123.013 199.652 110.638 194.054C98.2619 188.455 91.2714 184.081 80.8923 170.72Z" fill="url(#paint4_radial_2508_1768)" fill-opacity="0.6"/>
 <defs>
 <radialGradient id="paint0_radial_2508_1768" cx="0" cy="0" r="1" gradientTransform="matrix(-17 -92.5 98.6311 -47.6498 173 139.325)" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D26378"/> #FFC2C2 #D26378
+<stop stop-color="#D26378"/>
 <stop offset="1" stop-color="#FFC2C2"/>
 </radialGradient>
 <radialGradient id="paint1_radial_2508_1768" cx="0" cy="0" r="1" gradientTransform="matrix(-17 -92.5 98.6311 -47.6498 173 139.325)" gradientUnits="userSpaceOnUse">
