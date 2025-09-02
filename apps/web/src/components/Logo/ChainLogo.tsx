@@ -133,25 +133,25 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
       return darkMode
         ? {
             symbol: ABSTRACT_LOGO,
-            bgColor: 'rgba(187, 247, 208, 0.12)',
-            textColor: '#BBF7D0',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: ABSTRACT_LOGO,
-            bgColor: 'rgba(0, 222, 115, 0.12)',
-            textColor: '#00DE73',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.Zero:
       return darkMode
         ? {
             symbol: ZERO_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: ZERO_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.BOB:
       return darkMode
