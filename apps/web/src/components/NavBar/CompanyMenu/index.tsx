@@ -60,12 +60,8 @@ export function CompanyMenu() {
       <Popover.Trigger data-testid="nav-company-menu">
         <Trigger>
           <UniIcon onClick={handleLogoClick} data-testid="nav-uniswap-logo">
-            <NavIcon width="48" height="48" />
-            {isLargeScreen && (
-              <Text variant="subheading1" color="$accent1" userSelect="none">
-                Swap
-              </Text>
-            )}
+            <NavIcon width="200" height="48" />
+            {isLargeScreen && <Text variant="subheading1" color="$accent1" userSelect="none"></Text>}
           </UniIcon>
           {(isSmallScreen || isTouchDevice) && <Hamburger size={22} color="$neutral2" cursor="pointer" ml="16px" />}
           <ArrowDown $isActive={isOpen} width="12px" height="12px" />
