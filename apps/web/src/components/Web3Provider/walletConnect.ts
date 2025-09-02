@@ -39,8 +39,8 @@ export interface WalletConnectConnector extends Connector {
 export const WC_PARAMS = {
   projectId: WALLET_CONNECT_PROJECT_ID,
   metadata: {
-    name: 'Reservoir Swap',
-    description: 'Reservoir Swap',
+    name: 'Swap',
+    description: 'Swap',
     url: 'https://swap.replace.domain',
     icons: ['https://swap.replace.domain/favicon.png'],
   },

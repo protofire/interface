@@ -1,6 +1,7 @@
 import { PreferencesHeader } from 'components/NavBar/PreferencesMenu/Header'
 import { PreferencesView } from 'components/NavBar/PreferencesMenu/shared'
 import { LOCALE_LABEL } from 'constants/locales'
+import forkConfig from 'forkConfig'
 import { useActiveLocalCurrency } from 'hooks/useActiveLocalCurrency'
 import { useActiveLocale } from 'hooks/useActiveLocale'
 import styled, { useTheme } from 'lib/styled-components'
@@ -66,16 +67,29 @@ export function PreferenceSettings({
       label: t('themeToggle.theme'),
       component: <ThemeSelector compact />,
     },
-    {
-      label: t('common.language'),
-      component: (
-        <SelectButton label={LOCALE_LABEL[activeLocale]} onClick={() => setSettingsView(PreferencesView.LANGUAGE)} />
-      ),
-    },
-    {
-      label: t('common.currency'),
-      component: <SelectButton label={activeLocalCurrency} onClick={() => setSettingsView(PreferencesView.CURRENCY)} />,
-    },
+    ...(forkConfig.languageAvailable
+      ? [
+          {
+            label: t('common.language'),
+            component: (
+              <SelectButton
+                label={LOCALE_LABEL[activeLocale]}
+                onClick={() => setSettingsView(PreferencesView.LANGUAGE)}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(forkConfig.currencyAvailable
+      ? [
+          {
+            label: t('common.currency'),
+            component: (
+              <SelectButton label={activeLocalCurrency} onClick={() => setSettingsView(PreferencesView.CURRENCY)} />
+            ),
+          },
+        ]
+      : []),
   ]
 
   return (

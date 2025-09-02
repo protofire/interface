@@ -11,6 +11,8 @@ const forkConfig = {
   apiRoutingEnabled: true,
   inDevelopment: true,
   documentationAvailable: false,
+  currencyAvailable: false,
+  languageAvailable: false,
 }
 
 export default forkConfig
