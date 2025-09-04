@@ -11,7 +11,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.Zero]: 'https://graph-node.replace.domain/subgraphs/name/zero/v3-subgraph',
   [UniverseChainId.BOB]: 'https://graph-node.replace.domain/subgraphs/name/bob/v3-subgraph',
   [UniverseChainId.CYBER]: 'https://graph-node.replace.domain/subgraphs/name/cyber/v3-subgraph',
-  [UniverseChainId.SHAPE]: 'https://graph-node.replace.domain/subgraphs/shape/shape/v3-subgraph',
+  [UniverseChainId.SHAPE]: 'https://graph.swap.w3us.site/subgraphs/name/shape/uniswap-v3',
   [UniverseChainId.INK]: 'https://graph-node.replace.domain/subgraphs/name/ink/v3-subgraph',
   [UniverseChainId.REDSTONE]: 'https://graph-node.replace.domain/subgraphs/name/redstone/v3-subgraph',
   [UniverseChainId.REDSTONE_GARNET]: 'https://graph-node.replace.domain/subgraphs/name/redstone-garnet/v3-subgraph',
