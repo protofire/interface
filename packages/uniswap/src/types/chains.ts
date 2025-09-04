@@ -70,17 +70,7 @@ export type WalletChainId =
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
 export const WALLET_SUPPORTED_CHAIN_IDS: WalletChainId[] = [
-  UniverseChainId.Mainnet,
-  UniverseChainId.Polygon,
-  UniverseChainId.ArbitrumOne,
-  UniverseChainId.Optimism,
-  UniverseChainId.Base,
-  UniverseChainId.Bnb,
-  UniverseChainId.Blast,
-  UniverseChainId.Avalanche,
-  UniverseChainId.Celo,
-  UniverseChainId.Zora,
-  UniverseChainId.Zksync,
+  UniverseChainId.SHAPE
 ]
 
 export type InterfaceChainId = UniverseChainId
