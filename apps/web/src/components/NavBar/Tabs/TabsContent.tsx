@@ -122,7 +122,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                   {
                     label: 'V2 Analytics',
                     quickKey: 'P',
-                    href: `https://info.staging.shape-swap.w3us.site/home`,
+                    href: `https://v2-info.staging.shape-swap.w3us.site`,
                     internal: false,
                   },
                 ]
