@@ -7,64 +7,65 @@ import { ElementNameType } from 'uniswap/src/features/telemetry/constants'
 import { Chain as WagmiChain } from 'wagmi/chains'
 
 export enum UniverseChainId {
-  Mainnet = UniswapSDKChainId.MAINNET,
-  Goerli = UniswapSDKChainId.GOERLI,
-  Sepolia = UniswapSDKChainId.SEPOLIA,
-  Optimism = UniswapSDKChainId.OPTIMISM,
-  OptimismGoerli = UniswapSDKChainId.OPTIMISM_GOERLI,
-  ArbitrumOne = UniswapSDKChainId.ARBITRUM_ONE,
-  ArbitrumGoerli = UniswapSDKChainId.ARBITRUM_GOERLI,
-  Polygon = UniswapSDKChainId.POLYGON,
-  PolygonMumbai = UniswapSDKChainId.POLYGON_MUMBAI,
-  Avalanche = UniswapSDKChainId.AVALANCHE,
-  Celo = UniswapSDKChainId.CELO,
-  CeloAlfajores = UniswapSDKChainId.CELO_ALFAJORES,
-  Bnb = UniswapSDKChainId.BNB,
-  Base = UniswapSDKChainId.BASE,
-  Blast = UniswapSDKChainId.BLAST,
-  Zora = UniswapSDKChainId.ZORA,
-  Zksync = UniswapSDKChainId.ZKSYNC,
-  AbstractTestnet = UniswapSDKChainId.ABSTRACT_TESTNET,
-  Zero = UniswapSDKChainId.ZERO,
-  BOB = UniswapSDKChainId.BOB,
-  CYBER = UniswapSDKChainId.CYBER,
+  // Mainnet = UniswapSDKChainId.MAINNET,
+  // Goerli = UniswapSDKChainId.GOERLI,
+  // Sepolia = UniswapSDKChainId.SEPOLIA,
+  // Optimism = UniswapSDKChainId.OPTIMISM,
+  // OptimismGoerli = UniswapSDKChainId.OPTIMISM_GOERLI,
+  // ArbitrumOne = UniswapSDKChainId.ARBITRUM_ONE,
+  // ArbitrumGoerli = UniswapSDKChainId.ARBITRUM_GOERLI,
+  // Polygon = UniswapSDKChainId.POLYGON,
+  // PolygonMumbai = UniswapSDKChainId.POLYGON_MUMBAI,
+  // Avalanche = UniswapSDKChainId.AVALANCHE,
+  // Celo = UniswapSDKChainId.CELO,
+  // CeloAlfajores = UniswapSDKChainId.CELO_ALFAJORES,
+  // Bnb = UniswapSDKChainId.BNB,
+  // Base = UniswapSDKChainId.BASE,
+  // Blast = UniswapSDKChainId.BLAST,
+  // Zora = UniswapSDKChainId.ZORA,
+  // Zksync = UniswapSDKChainId.ZKSYNC,
+  // AbstractTestnet = UniswapSDKChainId.ABSTRACT_TESTNET,
+  // Zero = UniswapSDKChainId.ZERO,
+  // BOB = UniswapSDKChainId.BOB,
+  // CYBER = UniswapSDKChainId.CYBER,
   SHAPE = UniswapSDKChainId.SHAPE,
-  INK = UniswapSDKChainId.INK,
-  REDSTONE = UniswapSDKChainId.REDSTONE,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET,
-  AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
-  AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
-  Mode = UniswapSDKChainId.MODE,
-  Anime = UniswapSDKChainId.ANIME,
+  // INK = UniswapSDKChainId.INK,
+  // REDSTONE = UniswapSDKChainId.REDSTONE,
+  // // eslint-disable-next-line @typescript-eslint/naming-convention
+  // REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET,
+  // AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
+  // AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
+  // Mode = UniswapSDKChainId.MODE,
+  // Anime = UniswapSDKChainId.ANIME,
 }
 
 export type WalletChainId =
-  | UniverseChainId.Mainnet
-  | UniverseChainId.Goerli
-  | UniverseChainId.ArbitrumOne
-  | UniverseChainId.Avalanche
-  | UniverseChainId.Base
-  | UniverseChainId.Celo
-  | UniverseChainId.Optimism
-  | UniverseChainId.Polygon
-  | UniverseChainId.PolygonMumbai
-  | UniverseChainId.Blast
-  | UniverseChainId.Bnb
-  | UniverseChainId.Zora
-  | UniverseChainId.Zksync
-  | UniverseChainId.AbstractTestnet
-  | UniverseChainId.Zero
-  | UniverseChainId.BOB
-  | UniverseChainId.CYBER
   | UniverseChainId.SHAPE
-  | UniverseChainId.INK
-  | UniverseChainId.REDSTONE
-  | UniverseChainId.REDSTONE_GARNET
-  | UniverseChainId.AbstractMainnet
-  | UniverseChainId.AnimeTestnet
-  | UniverseChainId.Mode
-  | UniverseChainId.Anime
+
+  // | UniverseChainId.Mainnet
+  // | UniverseChainId.Goerli
+  // | UniverseChainId.ArbitrumOne
+  // | UniverseChainId.Avalanche
+  // | UniverseChainId.Base
+  // | UniverseChainId.Celo
+  // | UniverseChainId.Optimism
+  // | UniverseChainId.Polygon
+  // | UniverseChainId.PolygonMumbai
+  // | UniverseChainId.Blast
+  // | UniverseChainId.Bnb
+  // | UniverseChainId.Zora
+  // | UniverseChainId.Zksync
+  // | UniverseChainId.AbstractTestnet
+  // | UniverseChainId.Zero
+  // | UniverseChainId.BOB
+  // | UniverseChainId.CYBER
+  // | UniverseChainId.INK
+  // | UniverseChainId.REDSTONE
+  // | UniverseChainId.REDSTONE_GARNET
+  // | UniverseChainId.AbstractMainnet
+  // | UniverseChainId.AnimeTestnet
+  // | UniverseChainId.Mode
+  // | UniverseChainId.Anime
 
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
@@ -103,18 +104,18 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   // UniverseChainId.Blast,
   // UniverseChainId.Zora,
   // UniverseChainId.Zksync,
-  UniverseChainId.AbstractTestnet,
-  UniverseChainId.Zero,
-  UniverseChainId.BOB,
-  UniverseChainId.CYBER,
+  // UniverseChainId.AbstractTestnet,
+  // UniverseChainId.Zero,
+  // UniverseChainId.BOB,
+  // UniverseChainId.CYBER,
   UniverseChainId.SHAPE,
-  UniverseChainId.INK,
-  UniverseChainId.REDSTONE,
-  UniverseChainId.REDSTONE_GARNET,
-  UniverseChainId.AbstractMainnet,
-  UniverseChainId.AnimeTestnet,
-  UniverseChainId.Mode,
-  UniverseChainId.Anime,
+  // UniverseChainId.INK,
+  // UniverseChainId.REDSTONE,
+  // UniverseChainId.REDSTONE_GARNET,
+  // UniverseChainId.AbstractMainnet,
+  // UniverseChainId.AnimeTestnet,
+  // UniverseChainId.Mode,
+  // UniverseChainId.Anime,
 ]
 
 export enum RPCType {
