@@ -12,7 +12,7 @@ const Rive = lazy(() => import(/* webpackPreload: true */ 'setupRive'))
 const Grain = styled(Flex, {
   position: 'absolute',
   inset: 0,
-  background: 'url(/images/noise-color.png)',
+  // background: 'url(/images/noise-color.png)',
   opacity: 0.018,
   zIndex: 0,
 })

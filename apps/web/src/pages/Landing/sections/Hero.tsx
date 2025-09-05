@@ -1,12 +1,10 @@
-import { ColumnCenter } from 'components/Column'
 import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
 import { useScroll } from 'hooks/useScroll'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
-import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
+import { RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
 import { Fragment } from 'react'
-import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
 import { Flex, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
@@ -112,7 +110,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
       <Flex flex={1} />
 
-      <Flex
+      {/* <Flex
         position="absolute"
         width="100%"
         centered
@@ -139,7 +137,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             </Hover>
           </Flex>
         </RiseIn>
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

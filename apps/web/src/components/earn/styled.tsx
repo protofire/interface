@@ -1,5 +1,4 @@
 import uImage from 'assets/images/big_unicorn.png'
-import noise from 'assets/images/noise.png'
 import xlUnicorn from 'assets/images/xl_uni.png'
 import { AutoColumn } from 'components/Column'
 import styled from 'lib/styled-components'
@@ -41,7 +40,6 @@ export const CardBGImageSmaller = styled.span<{ desaturate?: boolean }>`
 `
 
 export const CardNoise = styled.span`
-  background: url(${noise});
   background-size: cover;
   mix-blend-mode: overlay;
   border-radius: 12px;

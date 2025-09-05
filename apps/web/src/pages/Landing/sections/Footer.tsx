@@ -1,3 +1,4 @@
+import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
@@ -9,7 +10,6 @@ import { useTogglePrivacyPolicy } from 'state/application/hooks'
 import { Anchor, Flex, Separator, Text, styled } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
-
 const SOCIAL_ICONS_SIZE = `${iconSizes.icon32}px`
 
 const SocialIcon = deprecatedStyled(Wiggle)`
@@ -121,10 +121,12 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">© 2025</Text>
-        <Text variant="body3">
-          Supported by <a href="temp">Company Name </a>
-        </Text>
+        <Text variant="body3">2025 Sakura Swap</Text>
+        <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
+          <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
+            Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
+          </Text>
+        </Anchor>
         <Flex row alignItems="center" gap="$spacing16">
           <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
