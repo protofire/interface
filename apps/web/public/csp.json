@@ -61,7 +61,8 @@
     "https://1rpc.io/*",
     "https://rpc-animechain-39xf6m45e3.t.conduit.xyz",
     "https://graph-node.replace.domain",
-    "https://*.swap.w3us.site"
+    "https://*.swap.w3us.site",
+    "https://raw.githubusercontent.com/protofire/token-list/*"
   ],
   "workerSrc": [
     "'self'",

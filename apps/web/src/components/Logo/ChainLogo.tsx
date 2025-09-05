@@ -157,97 +157,97 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
       return darkMode
         ? {
             symbol: BOB_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: BOB_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.CYBER:
       return darkMode
         ? {
             symbol: CYBER_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: CYBER_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.SHAPE:
       return darkMode
         ? {
             symbol: SHAPE_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: SHAPE_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.INK:
       return darkMode
         ? {
             symbol: INK_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: INK_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.REDSTONE:
       return {
         symbol: REDSTONE_LOGO,
-        bgColor: '#FF042033',
-        textColor: '#FF0420',
+        bgColor: '#FFDDE3',
+        textColor: '#6B3841',
       }
     case UniverseChainId.REDSTONE_GARNET:
       return {
         symbol: REDSTONE_GARNET_LOGO,
-        bgColor: '#FF042033',
-        textColor: '#FF0420',
+        bgColor: '#FFDDE3',
+        textColor: '#6B3841',
       }
     case UniverseChainId.Anime:
       return darkMode
         ? {
             symbol: ANIME_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: ANIME_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.AnimeTestnet:
       return darkMode
         ? {
             symbol: ANIME_TESTNET_LOGO,
-            bgColor: 'rgba(97, 137, 255, 0.12)',
-            textColor: '#6189FF',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: ANIME_TESTNET_LOGO,
-            bgColor: 'rgba(54, 103, 246, 0.12)',
-            textColor: '#3667F6',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     case UniverseChainId.Mode:
       return darkMode
         ? {
             symbol: MODE_LOGO,
-            bgColor: '#FCFF5233',
-            textColor: '#FCFF52',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
         : {
             symbol: MODE_LOGO,
-            bgColor: '#FCFF5299',
-            textColor: '#655947',
+            bgColor: '#FFDDE3',
+            textColor: '#6B3841',
           }
     default:
       return undefined

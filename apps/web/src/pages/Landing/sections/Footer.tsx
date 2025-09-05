@@ -2,7 +2,7 @@ import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
-import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
+import { Github, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
 import { useTogglePrivacyPolicy } from 'state/application/hooks'
@@ -33,21 +33,21 @@ const PolicyLink = styled(Text, {
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
-      <SocialIcon $hoverColor="#00C32B">
+      <SocialIcon $hoverColor="#DE6579">
         <Anchor href="https://github.com/temp" target="_blank">
           <Github size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      <SocialIcon $hoverColor="#20BAFF">
+      <SocialIcon $hoverColor="#DE6579">
         <Anchor href="https://x.com/temp" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      <SocialIcon $hoverColor="#5F51FF">
+      {/* <SocialIcon $hoverColor="#DE6579">
         <Anchor href="https://discord.com/invite/temp" target="_blank">
           <Discord size={iconSize} fill="inherit" />
         </Anchor>
-      </SocialIcon>
+      </SocialIcon> */}
     </Flex>
   )
 }
@@ -122,11 +122,13 @@ export function Footer() {
         justifyContent="space-between"
       >
         <Text variant="body3">© 2025</Text>
-        <Text variant="body3">Swap Interface is a fork of open source Uniswap Protocol</Text>
+        <Text variant="body3">
+          Supported by <a href="temp">Company Name </a>
+        </Text>
         <Flex row alignItems="center" gap="$spacing16">
-          {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
+          <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
-          </Anchor> */}
+          </Anchor>
           <PolicyLink onPress={togglePrivacyPolicy}>{t('common.privacyPolicy')}</PolicyLink>
         </Flex>
       </Flex>
