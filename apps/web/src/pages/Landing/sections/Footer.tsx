@@ -128,9 +128,9 @@ export function Footer() {
           </Text>
         </Anchor>
         <Flex row alignItems="center" gap="$spacing16">
-          <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
+          {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
-          </Anchor>
+          </Anchor> */}
           <PolicyLink onPress={togglePrivacyPolicy}>{t('common.privacyPolicy')}</PolicyLink>
         </Flex>
       </Flex>
