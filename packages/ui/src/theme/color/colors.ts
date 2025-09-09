@@ -203,8 +203,8 @@ const sporeLight = {
 
   accent1: '#3A8DFF',
   accent1Hovered: '#0056E0',
-  accent2: '#3a8dff14',
-  accent2Hovered: '#3a8dff1f',
+  accent2: '#2b5b88',
+  accent2Hovered: '#2b5b88',
   accent3: '#222222',
   accent3Hovered: '#000000',
 
@@ -248,8 +248,8 @@ const sporeDark = {
 
     accent1: '#3A8DFF',
   accent1Hovered: '#0056E0',
-  accent2: '#3a8dff14',
-  accent2Hovered: '#3a8dff1f',
+  accent2: '#173764',
+  accent2Hovered: '#173764',
   accent3: '#FFFFFF',
   accent3Hovered: '#F5F5F5',
 
