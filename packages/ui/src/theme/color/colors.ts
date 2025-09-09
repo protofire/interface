@@ -246,7 +246,7 @@ const sporeDark = {
   surface4: 'rgba(255,255,255,0.20)',
   surface5: 'rgba(0,0,0,0.04)',
 
-    accent1: '#3A8DFF',
+  accent1: '#3A8DFF',
   accent1Hovered: '#0056E0',
   accent2: '#173764',
   accent2Hovered: '#173764',
