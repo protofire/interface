@@ -1,10 +1,12 @@
+import { ColumnCenter } from 'components/Column'
 import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
 import { useScroll } from 'hooks/useScroll'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
-import { RiseIn, RiseInText } from 'pages/Landing/components/animations'
+import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
 import { Fragment } from 'react'
+import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
 import { Flex, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
@@ -110,34 +112,36 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
       <Flex flex={1} />
 
-      {/* <Flex
-        position="absolute"
-        width="100%"
-        centered
-        pointerEvents="none"
-        bottom={48}
-        style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
-        $midHeight={{ display: 'none' }}
-      >
-        <RiseIn delay={0.3}>
-          <Flex
-            alignItems="center"
-            justifyContent="flex-start"
-            onPress={() => scrollToRef()}
-            cursor="pointer"
-            width={500}
-          >
-            <Hover>
-              <ColumnCenter>
-                <Text variant="body2">
-                  <Trans i18nKey="hero.scroll" />
-                </Text>
-                <ChevronDown />
-              </ColumnCenter>
-            </Hover>
-          </Flex>
-        </RiseIn>
-      </Flex> */}
+      {forkConfig.scrollToRefEnabled && (
+        <Flex
+          position="absolute"
+          width="100%"
+          centered
+          pointerEvents="none"
+          bottom={48}
+          style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
+          $midHeight={{ display: 'none' }}
+        >
+          <RiseIn delay={0.3}>
+            <Flex
+              alignItems="center"
+              justifyContent="flex-start"
+              onPress={() => scrollToRef()}
+              cursor="pointer"
+              width={500}
+            >
+              <Hover>
+                <ColumnCenter>
+                  <Text variant="body2">
+                    <Trans i18nKey="hero.scroll" />
+                  </Text>
+                  <ChevronDown />
+                </ColumnCenter>
+              </Hover>
+            </Flex>
+          </RiseIn>
+        </Flex>
+      )}
     </Flex>
   )
 }

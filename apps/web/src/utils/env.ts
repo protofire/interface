@@ -5,9 +5,8 @@ function isAppUniswapOrg({ hostname }: { hostname: string }): boolean {
   return hostname === 'app.futurehost.xyz'
 }
 
-function isAppUniswapStagingOrg({ hostname }: { hostname: string }): boolean {
-  //FIXME: update with real host
-  return hostname === 'app.futurehost.xyz'
+export function isAppUniswapStagingOrg({ hostname }: { hostname: string }): boolean {
+  return hostname.includes('staging') || hostname.includes('stg')
 }
 
 export function isBrowserRouterEnabled(): boolean {
@@ -24,7 +23,7 @@ export function isBrowserRouterEnabled(): boolean {
   return true // local dev builds
 }
 
-function isLocalhost({ hostname }: { hostname: string }): boolean {
+export function isLocalhost({ hostname }: { hostname: string }): boolean {
   return hostname === 'localhost'
 }
 
@@ -36,5 +35,5 @@ export function isRemoteReportingEnabled(): boolean {
   if (isProdEnv() && !isAppUniswapOrg(window.location)) {
     return false
   }
-  return process.env.REACT_APP_SENTRY_ENABLED === 'true'
+  return false
 }

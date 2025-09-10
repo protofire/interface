@@ -2,7 +2,6 @@ import Navbar from 'components/NavBar/index'
 import { InDevelopmentBanner } from 'components/TopLevelBanners/InDevelopmentBanner'
 import { MobileAppPromoBanner, useMobileAppPromoBannerEligible } from 'components/TopLevelBanners/MobileAppPromoBanner'
 import { UkBanner, useRenderUkBanner } from 'components/TopLevelBanners/UkBanner'
-import forkConfig from 'forkConfig'
 import { ScrollDirection, useScroll } from 'hooks/useScroll'
 import styled from 'lib/styled-components'
 import { useBag } from 'nft/hooks'
@@ -12,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { NAV_HEIGHT } from 'theme'
 import { Z_INDEX } from 'theme/zIndex'
 import { useIsTouchDevice } from 'ui/src'
+import { isAppUniswapStagingOrg, isLocalhost } from 'utils/env'
 
 const AppHeader = styled.div`
   grid-area: ${GRID_AREAS.HEADER};
@@ -48,7 +48,7 @@ export const Header = memo(function Header() {
       <Banners>
         {extensionEligible && <MobileAppPromoBanner />}
         {renderUkBanner && <UkBanner />}
-        {forkConfig.inDevelopment && <InDevelopmentBanner />}
+        {(isAppUniswapStagingOrg(window.location) || isLocalhost(window.location)) && <InDevelopmentBanner />}
       </Banners>
       <NavOnScroll
         $hide={isTouchDevice && !isExplorePage && scrollDirection === ScrollDirection.DOWN}

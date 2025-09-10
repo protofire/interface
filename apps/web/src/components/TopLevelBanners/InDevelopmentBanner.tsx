@@ -59,7 +59,7 @@ const ReadMoreWrapper = styled(ButtonText)`
   }
 `
 
-const bannerText = 'This interface is still in the development phase and used only for internal testing purposes.'
+const bannerText = 'This interface is still in the development phase and used only for internal testing purposes. '
 
 export function InDevelopmentBanner() {
   return (
@@ -68,7 +68,7 @@ export function InDevelopmentBanner() {
         <BannerTextWrapper lineHeight="24px">{bannerText}</BannerTextWrapper>
         <ReadMoreWrapper>
           <ThemedText.BodySecondary lineHeight="24px" color="accent1">
-            The project has been modified to be compatible with additional networks.
+            The banner will appear in local or staging environment
           </ThemedText.BodySecondary>
         </ReadMoreWrapper>
       </BannerContents>

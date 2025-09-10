@@ -3,10 +3,10 @@ import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
-import { Github, Twitter } from 'pages/Landing/components/Icons'
+import { Github, Medium, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-import { useTogglePrivacyPolicy } from 'state/application/hooks'
+// import { useTogglePrivacyPolicy } from 'state/application/hooks'
 import { Anchor, Flex, Separator, Text, styled } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
@@ -34,20 +34,21 @@ export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
       <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://github.com/temp" target="_blank">
-          <Github size={iconSize} fill="inherit" />
-        </Anchor>
-      </SocialIcon>
-      <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://x.com/temp" target="_blank">
+        <Anchor href="https://x.com/protofire" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      {/* <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://discord.com/invite/temp" target="_blank">
-          <Discord size={iconSize} fill="inherit" />
+      <SocialIcon $hoverColor="#DE6579">
+        <Anchor href="https://github.com/protofire" target="_blank">
+          <Github size={iconSize} fill="inherit" />
         </Anchor>
-      </SocialIcon> */}
+      </SocialIcon>
+
+      <SocialIcon $hoverColor="#DE6579">
+        <Anchor href="https://medium.com/@Protofire_io" target="_blank">
+          <Medium size={iconSize} fill="inherit" />
+        </Anchor>
+      </SocialIcon>
     </Flex>
   )
 }
@@ -73,7 +74,6 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
-  const togglePrivacyPolicy = useTogglePrivacyPolicy()
   //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {
@@ -131,7 +131,7 @@ export function Footer() {
           {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
           </Anchor> */}
-          <PolicyLink onPress={togglePrivacyPolicy}>{t('common.privacyPolicy')}</PolicyLink>
+          <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
         </Flex>
       </Flex>
     </Flex>

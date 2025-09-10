@@ -1,20 +1,18 @@
 import { InterfacePageName } from '@uniswap/analytics-events'
-import darkImage from 'assets/images/404-page-dark.png'
-import lightImage from 'assets/images/404-page-light.png'
+import { ReactComponent as SakuraIcon } from 'assets/svg/sakura.svg'
 import { SmallButtonPrimary } from 'components/Button'
 import { useIsMobile } from 'hooks/screenSize'
 import styled from 'lib/styled-components'
 import { Link } from 'react-router-dom'
 import { ThemedText } from 'theme/components'
-import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import Trace from 'uniswap/src/features/telemetry/Trace'
 import { Trans } from 'uniswap/src/i18n'
 
-const Image = styled.img`
-  max-width: 510px;
-  width: 100%;
-  padding: 0 75px;
-`
+// const Image = styled.img`
+//   max-width: 510px;
+//   width: 100%;
+//   padding: 0 75px;
+// `
 
 const Container = styled.div`
   display: flex;
@@ -38,7 +36,6 @@ const PageWrapper = styled(Container)`
 `
 
 export default function NotFound() {
-  const isDarkMode = useIsDarkMode()
   const isMobile = useIsMobile()
 
   const Title = isMobile ? ThemedText.LargeHeader : ThemedText.Hero
@@ -54,7 +51,7 @@ export default function NotFound() {
               <Trans i18nKey="common.pageNotFound" />
             </Paragraph>
           </Container>
-          <Image src={isDarkMode ? darkImage : lightImage} alt="Liluni" />
+          <SakuraIcon />
         </Header>
         <SmallButtonPrimary as={Link} to="/">
           <Trans i18nKey="notFound.oops" />
