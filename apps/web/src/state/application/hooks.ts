@@ -135,9 +135,9 @@ export function useToggleSelfClaimModal(): () => void {
   return useToggleModal(ApplicationModal.SELF_CLAIM)
 }
 
-export function useTogglePrivacyPolicy(): () => void {
-  return useToggleModal(ApplicationModal.PRIVACY_POLICY)
-}
+// export function useTogglePrivacyPolicy(): () => void {
+//   return useToggleModal(ApplicationModal.PRIVACY_POLICY)
+// }
 
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string, removeAfterMs?: number) => void {
