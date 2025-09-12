@@ -20,10 +20,12 @@ export const UNISWAP_WEB_URL = `https://${UNISWAP_WEB_HOSTNAME}`
 export const UNISWAP_APP_URL = 'https://uniswap.org/app'
 
 const helpUrl = 'https://support.uniswap.org/hc/en-us'
+const protofireHelpUrl = 'https://swap-support.protofire.io/'
 
 export const uniswapUrls = {
   // Help and web articles/items
   helpUrl,
+  protofireHelpUrl,
   helpRequestUrl: `${helpUrl}/requests/new`,
   helpArticleUrls: {
     approvalsExplainer: `${helpUrl}/articles/8120520483085-What-is-an-approval-transaction`,

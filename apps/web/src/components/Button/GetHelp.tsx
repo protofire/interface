@@ -26,7 +26,7 @@ const StyledExternalLink = styled(ExternalLink)`
 `
 export default function GetHelp({ url }: { url?: string }) {
   return (
-    <StyledExternalLink href={url ?? uniswapUrls.helpUrl}>
+    <StyledExternalLink href={url ?? uniswapUrls.protofireHelpUrl}>
       <Row gap="4px">
         <EnvelopeHeartIcon />
         <Trans i18nKey="common.getHelp.button" />
