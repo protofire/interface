@@ -11,14 +11,13 @@ import { useAccount } from 'hooks/useAccount'
 import { useNetworkSupportsV2 } from 'hooks/useNetworkSupportsV2'
 import { useV3Positions } from 'hooks/useV3Positions'
 import deprecatedStyled, { css, useTheme } from 'lib/styled-components'
-import CTACards from 'pages/LegacyPool/CTACards'
 import { PoolVersionMenu } from 'pages/LegacyPool/shared'
 import { LoadingRows } from 'pages/LegacyPool/styled'
 import { useMemo, useState } from 'react'
 import { AlertTriangle, BookOpen, ChevronsRight, Inbox, Layers } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { useUserHideClosedPositions } from 'state/user/hooks'
-import { HideSmall, ThemedText } from 'theme/components'
+import { ThemedText } from 'theme/components'
 import { PositionDetails } from 'types/position'
 import { Anchor, Flex, Text, styled } from 'ui/src'
 import { ProtocolVersion } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
@@ -281,9 +280,6 @@ export default function Pool() {
                 </ErrorContainer>
               )}
             </MainContentWrapper>
-            <HideSmall>
-              <CTACards />
-            </HideSmall>
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>
