@@ -91,14 +91,13 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
     )
     const injectedConnectors = injectedConnectorsBase.map((c) => ({ ...c, isInjected: true }))
 
-    const coinbaseSdkConnector = getConnectorWithId(connectors, CONNECTION.COINBASE_SDK_CONNECTOR_ID, SHOULD_THROW)
     const walletConnectConnector = getConnectorWithId(connectors, CONNECTION.WALLET_CONNECT_CONNECTOR_ID, SHOULD_THROW)
     const uniswapWalletConnectConnector = getConnectorWithId(
       connectors,
       CONNECTION.UNISWAP_WALLET_CONNECT_CONNECTOR_ID,
       SHOULD_THROW,
     )
-    if (!coinbaseSdkConnector || !walletConnectConnector || !uniswapWalletConnectConnector) {
+    if (!walletConnectConnector || !uniswapWalletConnectConnector) {
       // FIXME: update with the final list
       // throw new Error('Expected connector(s) missing from wagmi context.')
     }
@@ -106,11 +105,6 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
     // Special-case: Only display the injected connector for in-wallet browsers.
     if (isMobileWeb && injectedConnectors.length === 1) {
       return injectedConnectors
-    }
-
-    // Special-case: Only display the Coinbase connector in the Coinbase Wallet.
-    if (isCoinbaseWalletBrowser) {
-      return [coinbaseSdkConnector]
     }
 
     const orderedConnectors: InjectableConnector[] = []
@@ -126,7 +120,6 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
 
     // WalletConnect and Coinbase are added last in the list.
     orderedConnectors.push(walletConnectConnector)
-    orderedConnectors.push(coinbaseSdkConnector)
 
     // Place the most recent connector at the top of the list.
     orderedConnectors.sort(sortByRecent)
