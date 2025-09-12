@@ -78,9 +78,7 @@ function SwapFeeTooltipContent({ hasFee }: { hasFee: boolean }) {
 
 export function SlippageTooltipContent() {
   return (
-    <BaseTooltipContent url="https://support.uniswap.org/hc/en-us/articles/20131678274957">
-      <Trans i18nKey="swap.slippage.tooltip" />
-    </BaseTooltipContent>
+    <Trans i18nKey="swap.slippage.tooltip" />
   )
 }
 
@@ -89,9 +87,7 @@ function MinimumOutputTooltipContent({ amount }: { amount: CurrencyAmount<Curren
   const formattedAmount = formatCurrencyAmount({ amount, type: NumberType.SwapDetailsAmount })
 
   return (
-    <BaseTooltipContent url="https://support.uniswap.org/hc/en-us/articles/8643794102669-Price-Impact-vs-Price-Slippage">
-      <Trans i18nKey="swap.minPriceSlip.revert" values={{ amount: `${formattedAmount} ${amount.currency.symbol}` }} />
-    </BaseTooltipContent>
+    <Trans i18nKey="swap.minPriceSlip.revert" values={{ amount: `${formattedAmount} ${amount.currency.symbol}` }} />
   )
 }
 

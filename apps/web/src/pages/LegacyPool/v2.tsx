@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useStakingInfo } from 'state/stake/hooks'
 import { toV2LiquidityToken, useTrackedTokenPairs } from 'state/user/hooks'
-import { ExternalLink, HideSmall, ThemedText } from 'theme/components'
+import { HideSmall, ThemedText } from 'theme/components'
 import { ProtocolVersion } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import Trace from 'uniswap/src/features/telemetry/Trace'
 import { Trans } from 'uniswap/src/i18n'
@@ -156,15 +156,6 @@ export default function Pool() {
                     <Trans i18nKey="pool.liquidity.earn.fee" />
                   </ThemedText.DeprecatedWhite>
                 </RowBetween>
-                <ExternalLink
-                  style={{ color: theme.white, textDecoration: 'underline' }}
-                  target="_blank"
-                  href="https://docs.uniswap.org/contracts/v2/concepts/core-concepts/pools"
-                >
-                  <ThemedText.DeprecatedWhite fontSize={14}>
-                    <Trans i18nKey="pool.learnAbout" />
-                  </ThemedText.DeprecatedWhite>
-                </ExternalLink>
               </AutoColumn>
             </CardSection>
             <CardBGImage />
