@@ -38,7 +38,7 @@ const PageWrapper = styled(AutoColumn)`
 `
 
 const LPFeeExplainer = styled(DataCard)`
-  background: radial-gradient(76.02% 75.41% at 1.84% 0%, #27ae60 0%, #000000 100%);
+  background: radial-gradient(76.02% 75.41% at 1.84% 0%, #ffc2c2 0%, #de6579 100%);
   margin: 0 0 16px 0;
   overflow: hidden;
 `
@@ -161,9 +161,9 @@ export default function Pool() {
                   target="_blank"
                   href="https://docs.uniswap.org/contracts/v2/concepts/core-concepts/pools"
                 >
-                  <ThemedText.DeprecatedWhite fontSize={14}>
+                  {/* <ThemedText.DeprecatedWhite fontSize={14}>
                     <Trans i18nKey="pool.learnAbout" />
-                  </ThemedText.DeprecatedWhite>
+                  </ThemedText.DeprecatedWhite> */}
                 </ExternalLink>
               </AutoColumn>
             </CardSection>

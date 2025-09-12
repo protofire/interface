@@ -281,9 +281,11 @@ export default function Pool() {
                 </ErrorContainer>
               )}
             </MainContentWrapper>
-            <HideSmall>
-              <CTACards />
-            </HideSmall>
+            {forkConfig.analyticsEnabled && (
+              <HideSmall>
+                <CTACards />
+              </HideSmall>
+            )}
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>

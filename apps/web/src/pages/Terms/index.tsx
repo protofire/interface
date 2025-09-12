@@ -6,6 +6,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${({ theme }) => theme.neutral2};
 `
 
 const PageWrapper = styled(Container)`
