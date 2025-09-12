@@ -6,6 +6,7 @@ export interface MenuItem {
   internal?: boolean
   overflow?: boolean
   closeMenu?: () => void
+  blank?: boolean
 }
 
 export interface MenuSection {

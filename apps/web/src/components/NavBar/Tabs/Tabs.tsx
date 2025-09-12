@@ -49,12 +49,13 @@ interface TItemProps {
   quickKey: string
   path: string
   closeMenu: () => void
+  blank?: boolean
 }
-function Item({ icon, label, quickKey, path, closeMenu }: TItemProps) {
+function Item({ icon, label, quickKey, path, closeMenu, blank }: TItemProps) {
   const navHotkeysEnabled = useFeatureFlag(FeatureFlags.NavigationHotkeys)
 
   return (
-    <NavLink to={path} style={{ textDecoration: 'none' }} onClick={closeMenu}>
+    <NavLink to={path} style={{ textDecoration: 'none' }} onClick={closeMenu} target={blank ? '_blank' : '_self'}>
       <ItemContainer>
         {icon}
         <Text variant="buttonLabel2" width="100%" color="$neutral2">
@@ -77,11 +78,13 @@ const Tab = ({
   isActive,
   path,
   items,
+  blank,
 }: {
   label: string
   isActive?: boolean
   path: string
-  items?: TabsItem[]
+  items?: TabsItem[],
+  blank?: boolean
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
@@ -95,7 +98,7 @@ const Tab = ({
   useEffect(() => closeMenu(), [location, closeMenu])
 
   const Label = (
-    <NavLink to={path} style={{ textDecoration: 'none' }}>
+    <NavLink to={path} style={{ textDecoration: 'none' }} target={blank ? '_blank' : '_self'} onClick={closeMenu}>
       <TabText
         variant="subheading1"
         color={isActive || isOpen ? '$neutral1' : '$neutral2'}
@@ -151,6 +154,7 @@ const Tab = ({
               quickKey={item.quickKey}
               path={item.href}
               closeMenu={closeMenu}
+              blank={item?.blank}
             />
           ))}
         </NavDropdownTabWrapper>
@@ -163,8 +167,8 @@ export function Tabs() {
   const tabsContent: TabsSection[] = useTabsContent()
   return (
     <>
-      {tabsContent.map(({ title, isActive, href, items }, index) => (
-        <Tab key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} />
+      {tabsContent.map(({ title, isActive, href, items, blank }, index) => (
+        <Tab key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} blank={blank} />
       ))}
     </>
   )

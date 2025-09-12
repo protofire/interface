@@ -20,6 +20,7 @@ export type TabsSection = {
   isActive?: boolean
   items?: TabsItem[]
   closeMenu?: () => void
+  blank?: boolean
 }
 
 export type TabsItem = MenuItem & {
@@ -84,6 +85,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       href: `https://info.staging.shape-swap.w3us.site/home`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
+      blank: true,
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
             { label: t('common.tokens'), quickKey: 'T', href: '/explore/tokens', internal: true },
@@ -116,6 +118,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
               quickKey: 'T',
               href: `https://info.staging.shape-swap.w3us.site/home`,
               internal: false,
+              blank: true,
             },
             ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)
               ? [
@@ -124,6 +127,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                     quickKey: 'P',
                     href: `https://v2-info.staging.shape-swap.w3us.site`,
                     internal: false,
+                    blank: true,
                   },
                 ]
               : []),
