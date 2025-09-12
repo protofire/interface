@@ -2,8 +2,9 @@ import { EnvelopeHeartIcon } from 'components/Icons/EnvelopeHeart'
 import Row from 'components/Row'
 import styled from 'lib/styled-components'
 import { ExternalLink } from 'theme/components'
-import { uniswapUrls } from 'uniswap/src/constants/urls'
 import { Trans } from 'uniswap/src/i18n'
+
+const protofireHelpUrl = 'https://swap-support.protofire.io/'
 
 const StyledExternalLink = styled(ExternalLink)`
   width: fit-content;
@@ -26,7 +27,7 @@ const StyledExternalLink = styled(ExternalLink)`
 `
 export default function GetHelp({ url }: { url?: string }) {
   return (
-    <StyledExternalLink href={url ?? uniswapUrls.helpUrl}>
+    <StyledExternalLink href={url ?? protofireHelpUrl}>
       <Row gap="4px">
         <EnvelopeHeartIcon />
         <Trans i18nKey="common.getHelp.button" />
