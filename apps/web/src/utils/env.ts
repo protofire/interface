@@ -18,7 +18,7 @@ export function isBrowserRouterEnabled(): boolean {
     ) {
       return true
     }
-    return false // production builds *not* served through our domains or localhost, eg IPFS
+    return true // production builds *not* served through our domains or localhost, eg IPFS
   }
   return true // local dev builds
 }
