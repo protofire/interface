@@ -1329,9 +1329,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: ['https://mainnet.shape.network'] },
-      default: { http: ['https://mainnet.shape.network'] },
-      appOnly: { http: ['https://mainnet.shape.network'] },
+      [RPCType.Public]: { http: ['https://shape-mainnet.g.alchemy.com/public'] },
+      default: { http: ['https://shape-mainnet.g.alchemy.com/public'] },
+      appOnly: { http: ['https://shape-mainnet.g.alchemy.com/public'] },
     },
     urlParam: 'shape',
     statusPage: undefined,
