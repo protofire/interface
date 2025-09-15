@@ -24,6 +24,13 @@ export const useMenuContent = (): MenuSection[] => {
       title: 'Network',
       items: [{ label: 'Docs', href: 'https://temp.xyz/' }],
     },
+    {
+      title: 'Terms',
+      items: [
+        { label: 'Terms and Conditions', href: '/terms' },
+        { label: 'Privacy Policy', href: '/privacy' },
+      ],
+    },
     // {
     //   title: t('common.company'),
     //   items: [
