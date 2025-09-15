@@ -5,7 +5,6 @@ import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-import { useTogglePrivacyPolicy } from 'state/application/hooks'
 import { Anchor, Flex, Separator, Text, styled } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
@@ -73,7 +72,6 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
-  const togglePrivacyPolicy = useTogglePrivacyPolicy()
   //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {
@@ -127,7 +125,7 @@ export function Footer() {
           {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
           </Anchor> */}
-          <PolicyLink onPress={togglePrivacyPolicy}>{t('common.privacyPolicy')}</PolicyLink>
+          <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
         </Flex>
       </Flex>
     </Flex>
