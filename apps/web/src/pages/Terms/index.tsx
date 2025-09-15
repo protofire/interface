@@ -43,7 +43,7 @@ const SwapTerms = () => {
   return <main>{content ? <ReactMarkdown source={content} /> : <>Loading terms...</>}</main>
 }
 
-export function Terms() {
+export default function Terms() {
   return (
     <PageWrapper>
       <SwapTerms />

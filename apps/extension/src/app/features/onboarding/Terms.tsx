@@ -4,7 +4,7 @@ import { Link, LinkProps } from 'react-router-dom'
 import { Text } from 'ui/src'
 import { uniswapUrls } from 'uniswap/src/constants/urls'
 
-export function Terms(): JSX.Element {
+export default function Terms(): JSX.Element {
   return (
     <Text color="$neutral3" textAlign="center" variant="body4">
       <Trans

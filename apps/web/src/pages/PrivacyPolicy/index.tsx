@@ -43,7 +43,7 @@ const SwapPrivacyPolicy = () => {
   return <main>{content ? <ReactMarkdown source={content} /> : <>Loading privacy policy...</>}</main>
 }
 
-export function PrivacyPolicy() {
+export default function PrivacyPolicy() {
   return (
     <PageWrapper>
       <SwapPrivacyPolicy />
