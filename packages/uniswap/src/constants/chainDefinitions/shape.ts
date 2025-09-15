@@ -14,7 +14,7 @@ export const shape = /*#__PURE__*/ defineChain({
     symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: ['https://mainnet.shape.network'] },
+    default: { http: ['https://shape-mainnet.g.alchemy.com/public'] },
   },
   blockExplorers: {
     default: {
