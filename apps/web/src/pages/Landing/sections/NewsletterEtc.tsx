@@ -127,7 +127,7 @@ export function NewsletterEtc() {
             </SquareCard>
             <SquareCard
               group="card"
-              href="https://blog.uniswap.org/"
+              href="https://swap-support.protofire.io"
               target="_blank"
               rel="noopener noreferrer"
               backgroundColor="rgba(98, 84, 50, 0.04)"
