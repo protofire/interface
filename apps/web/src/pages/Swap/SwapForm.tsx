@@ -238,7 +238,7 @@ export function SwapForm({
       outputCurrency: currencyState.outputCurrency,
       typedValue: swapState.typedValue,
       independentField: swapState.independentField,
-      chainId: supportedChainId ?? UniverseChainId.AbstractMainnet,
+      chainId: supportedChainId ?? UniverseChainId.SHAPE,
     })
     navigate('/swap' + serializedSwapState)
   }, [
@@ -763,7 +763,7 @@ function SwapNotice() {
             components={{
               termsLink: (
                 // FIXME: update with real URL
-                <ExternalLink href="https://futurehost.xyz/terms-of-service">
+                <ExternalLink href="/terms">
                   <Trans i18nKey="common.termsOfService" />
                 </ExternalLink>
               ),
