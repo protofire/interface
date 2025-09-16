@@ -85,10 +85,7 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
   )
 
   return useMemo(() => {
-    const { injectedConnectors: injectedConnectorsBase, isCoinbaseWalletBrowser } = getInjectedConnectors(
-      connectors,
-      excludeUniswapConnections,
-    )
+    const { injectedConnectors: injectedConnectorsBase } = getInjectedConnectors(connectors, excludeUniswapConnections)
     const injectedConnectors = injectedConnectorsBase.map((c) => ({ ...c, isInjected: true }))
 
     const walletConnectConnector = getConnectorWithId(connectors, CONNECTION.WALLET_CONNECT_CONNECTOR_ID, SHOULD_THROW)

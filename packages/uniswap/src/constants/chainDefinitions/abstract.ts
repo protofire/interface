@@ -14,7 +14,7 @@ export const abstract = /*#__PURE__*/ defineChain({
     symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: [''] }, // Temporary
+    default: { http: ['https://api.mainnet.abs.xyz'] },
   },
   blockExplorers: {
     default: {
