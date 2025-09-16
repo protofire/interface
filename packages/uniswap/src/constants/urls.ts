@@ -58,8 +58,8 @@ export const uniswapUrls = {
     wethExplainer: `${helpUrl}/articles/16015852009997-Why-do-ETH-swaps-involve-converting-to-WETH`,
   },
   // FIXME: update with real URL
-  termsOfServiceUrl: 'https://futurehost.xyz/terms-of-service',
-  privacyPolicyUrl: 'https://futurehost.xyz/privacy-policy',
+  termsOfServiceUrl: '/terms',
+  privacyPolicyUrl: '/privacy',
   chromeExtension: 'http://uniswap.org/ext',
 
   // Core API Urls

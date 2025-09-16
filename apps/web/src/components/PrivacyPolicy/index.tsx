@@ -119,8 +119,7 @@ function PrivacyPolicy() {
       <AutoColumn gap="16px">
         <AutoColumn gap="sm" style={{ width: '100%' }}>
           <StyledExternalCard>
-            {/* FIXME: update with real URL */}
-            <ExternalLink href="https://futurehost.xyz/terms-of-service">
+            <ExternalLink href="/terms">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
@@ -133,8 +132,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            {/* FIXME: update with real URL */}
-            <ExternalLink href="https://futurehost.xyz/privacy-policy/">
+            <ExternalLink href="/privacy">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
