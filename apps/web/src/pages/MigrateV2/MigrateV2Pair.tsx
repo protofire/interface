@@ -30,7 +30,7 @@ import { useGetTransactionDeadline } from 'hooks/useTransactionDeadline'
 import { useV2LiquidityTokenPermit } from 'hooks/useV2LiquidityTokenPermit'
 import JSBI from 'jsbi'
 import { NEVER_RELOAD, useSingleCallResult } from 'lib/hooks/multicall'
-import { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/styled-components'
 import { BodyWrapper } from 'pages/App/AppBody'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { AlertCircle, AlertTriangle, ArrowDown } from 'react-feather'
@@ -56,6 +56,11 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { unwrappedToken } from 'utils/unwrappedToken'
 import { MigrateHeader } from '.'
+
+const StyledBodyWrapper = styled(BodyWrapper)`
+  padding: 24px;
+  max-width: 640px;
+`
 
 const ZERO = JSBI.BigInt(0)
 
@@ -511,8 +516,8 @@ function V2PairMigration({
                     <Trans
                       i18nKey="migrate.symbolPrice"
                       values={{
-                        name: isNotUniswap ? 'SushiSwap' : 'V2',
-                        sym: invertPrice ? currency1.symbol : currency0.symbol,
+                        protocolName: isNotUniswap ? 'SushiSwap' : 'V2',
+                        tokenSymbol: invertPrice ? currency1.symbol : currency0.symbol,
                       }}
                     />
                   </ThemedText.DeprecatedBody>
@@ -761,7 +766,7 @@ export default function MigrateV2Pair() {
   }
 
   return (
-    <BodyWrapper style={{ padding: 24 }}>
+    <StyledBodyWrapper>
       <AutoColumn gap="16px">
         <AutoRow style={{ alignItems: 'center', justifyContent: 'space-between' }} gap="8px">
           <BackArrowLink to="/migrate/v2" />
@@ -793,6 +798,6 @@ export default function MigrateV2Pair() {
           <EmptyState message={<Trans i18nKey="common.loading" />} />
         )}
       </AutoColumn>
-    </BodyWrapper>
+    </StyledBodyWrapper>
   )
 }
