@@ -1099,7 +1099,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     helpCenterUrl: undefined,
     //FIXME: update with correct URL
-    infoLink: 'https://info.staging.reservoir.w3us.site/#',
+    infoLink: 'https://info.reservoir.w3us.site/#',
     infuraPrefix: undefined,
     interfaceName: 'abstract_testnet',
     label: 'Abstract Testnet',
