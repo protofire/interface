@@ -20,10 +20,10 @@ export const useMenuContent = (): MenuSection[] => {
 
   return [
     // TODO: add translations once content is confirmed
-    {
-      title: 'Network',
-      items: [{ label: 'Docs', href: 'https://temp.xyz/' }],
-    },
+    // {
+    //   title: 'Network',
+    //   items: [{ label: 'Docs', href: 'https://temp.xyz/' }],
+    // },
     {
       title: 'Terms',
       items: [

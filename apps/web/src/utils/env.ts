@@ -1,20 +1,20 @@
 import { isBetaEnv, isProdEnv } from 'utilities/src/environment'
 
-function isAppUniswapOrg({ hostname }: { hostname: string }): boolean {
+function isAppUniswapOrg(): boolean {
   //FIXME: update with real host
-  return hostname === 'app.futurehost.xyz'
+  return true // hostname === 'app.futurehost.xyz'
 }
 
-function isAppUniswapStagingOrg({ hostname }: { hostname: string }): boolean {
+function isAppUniswapStagingOrg(): boolean {
   //FIXME: update with real host
-  return hostname === 'app.futurehost.xyz'
+  return true // hostname === 'app.futurehost.xyz'
 }
 
 export function isBrowserRouterEnabled(): boolean {
   if (isProdEnv()) {
     if (
-      isAppUniswapOrg(window.location) ||
-      isAppUniswapStagingOrg(window.location) ||
+      isAppUniswapOrg() ||
+      isAppUniswapStagingOrg() ||
       isLocalhost(window.location) // cypress tests
     ) {
       return true
@@ -30,10 +30,10 @@ function isLocalhost({ hostname }: { hostname: string }): boolean {
 
 export function isRemoteReportingEnabled(): boolean {
   // Disable in e2e test environments
-  if (isBetaEnv() && !isAppUniswapStagingOrg(window.location)) {
+  if (isBetaEnv() && !isAppUniswapStagingOrg()) {
     return false
   }
-  if (isProdEnv() && !isAppUniswapOrg(window.location)) {
+  if (isProdEnv() && !isAppUniswapOrg()) {
     return false
   }
   return process.env.REACT_APP_SENTRY_ENABLED === 'true'
