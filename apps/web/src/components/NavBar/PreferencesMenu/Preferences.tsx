@@ -1,7 +1,5 @@
 import { PreferencesHeader } from 'components/NavBar/PreferencesMenu/Header'
-import { PreferencesView } from 'components/NavBar/PreferencesMenu/shared'
-import styled, { useTheme } from 'lib/styled-components'
-import { ChevronRight } from 'react-feather'
+import styled from 'lib/styled-components'
 import { ThemeSelector } from 'theme/components/ThemeToggle'
 import { Text } from 'ui/src'
 import { Trans, t } from 'uniswap/src/i18n'
@@ -15,44 +13,14 @@ const Pref = styled.div`
   padding: 8px 0px;
   gap: 12px;
 `
-const StyledChevron = styled(ChevronRight)`
-  opacity: 0.8;
-`
-const SelectButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  width: 100%;
-  justify-content: end;
-  transition: opacity 0.2s;
-  &:hover {
-    opacity: 0.6;
-  }
-`
-
-function SelectButton({ label, onClick }: { label: string; onClick?: () => void }) {
-  const theme = useTheme()
-  return (
-    <SelectButtonContainer onClick={onClick}>
-      <Text variant="buttonLabel2" color="$neutral1">
-        {label}
-      </Text>
-      <StyledChevron size={24} color={theme.neutral1} />
-    </SelectButtonContainer>
-  )
-}
-
 type SettingItem = {
   label: string
   component: JSX.Element
 }
 
 export function PreferenceSettings({
-  setSettingsView,
   showHeader = true,
 }: {
-  setSettingsView: (view: PreferencesView) => void
   showHeader?: boolean
 }) {
   const items: SettingItem[] = [

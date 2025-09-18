@@ -17,7 +17,7 @@ interface HeroProps {
   transition?: boolean
 }
 
-export function Hero({ scrollToRef, transition }: HeroProps) {
+export function Hero({ transition }: HeroProps) {
   const multichainUXEnabled = useFeatureFlag(FeatureFlags.MultichainUX)
 
   const { height: scrollPosition } = useScroll()
