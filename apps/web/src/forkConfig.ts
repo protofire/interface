@@ -13,6 +13,7 @@ const forkConfig = {
   currencyAvailable: false,
   languageAvailable: false,
   scrollToRefEnabled: false,
+  testnetSupported: false,
 }
 
 export default forkConfig

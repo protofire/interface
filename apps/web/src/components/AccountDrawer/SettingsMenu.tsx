@@ -87,7 +87,7 @@ export default function SettingsMenu({
               </>
             )}
             <ThemeToggle />
-            <TestnetsToggle />
+            {forkConfig.testnetSupported && <TestnetsToggle />}
           </ToggleWrapper>
 
           {forkConfig.uniSpecificFeaturesEnabled && (
