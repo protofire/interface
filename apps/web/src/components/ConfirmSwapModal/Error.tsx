@@ -91,11 +91,6 @@ export default function Error({ errorType, trade, showTrade, swapResult, onRetry
       body={
         <ColumnCenter gap="sm">
           {showTrade && trade && <TradeSummary trade={trade} />}
-          {supportArticleURL && (
-            <ExternalLink href={supportArticleURL}>
-              <Trans i18nKey="common.button.learn" />
-            </ExternalLink>
-          )}
           {swapResult && swapResult.type === TradeFillType.Classic && (
             <ExternalLink
               href={getExplorerLink(

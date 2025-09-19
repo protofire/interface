@@ -82,7 +82,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.staging.shape-swap.w3us.site/home`,
+      href: `https://info.staging.shapeswap.xyz/home`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       blank: true,
       items: forkConfig.uniSpecificFeaturesEnabled
@@ -115,7 +115,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `https://info.staging.shape-swap.w3us.site/home`,
+              href: `https://info.staging.shapeswap.xyz/home`,
               internal: false,
               blank: true,
             },
@@ -124,7 +124,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                   {
                     label: 'V2 Analytics',
                     quickKey: 'P',
-                    href: `https://v2-info.staging.shape-swap.w3us.site`,
+                    href: `https://v2-info.staging.shapeswap.xyz`,
                     internal: false,
                     blank: true,
                   },

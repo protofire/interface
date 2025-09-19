@@ -45,7 +45,7 @@ export function PreferenceMenu() {
             currentIndex={getSettingsViewIndex(settingsView)}
             animationType={settingsView === PreferencesView.SETTINGS ? 'forward' : 'backward'}
           >
-            <PreferenceSettings setSettingsView={(view: PreferencesView) => setSettingsView(view)} />
+            <PreferenceSettings />
             <LanguageSettings onExitMenu={handleExitMenu} />
             <CurrencySettings onExitMenu={handleExitMenu} />
           </AnimateTransition>

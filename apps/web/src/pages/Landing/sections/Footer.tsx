@@ -1,3 +1,4 @@
+import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
@@ -101,6 +102,7 @@ export function Footer() {
             <FooterSection title={t('common.app')} items={appSectionItems} />
             {/* <FooterSection title={sections[0].title} items={[...sections[0].items, brandAssets]} /> */}
             <FooterSection title={sections[0].title} items={sections[0].items} />
+            <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
           {/* <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
             <FooterSection title={sections[1].title} items={sections[1].items} />
@@ -120,12 +122,16 @@ export function Footer() {
         justifyContent="space-between"
       >
         <Text variant="body3">© 2025</Text>
-        <Text variant="body3">Swap Interface is a fork of open source Uniswap Protocol</Text>
+        <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
+          <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
+            Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
+          </Text>
+        </Anchor>
         <Flex row alignItems="center" gap="$spacing16">
           {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
           </Anchor> */}
-          <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
+          {/* <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink> */}
         </Flex>
       </Flex>
     </Flex>

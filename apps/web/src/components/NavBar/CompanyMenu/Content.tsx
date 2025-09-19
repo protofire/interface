@@ -1,4 +1,4 @@
-// import { useTranslation } from 'uniswap/src/i18n'
+import { useTranslation } from 'uniswap/src/i18n'
 
 export interface MenuItem {
   label: string
@@ -16,14 +16,19 @@ export interface MenuSection {
 }
 
 export const useMenuContent = (): MenuSection[] => {
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
 
   return [
-    // TODO: add translations once content is confirmed
-    // {
-    //   title: 'Network',
-    //   items: [{ label: 'Docs', href: 'https://temp.xyz/' }],
-    // },
+    {
+      title: 'Help',
+      items: [{ label: 'Contact Support', href: 'https://swap-support.protofire.io/' }],
+    },
+    {
+      title: t('common.company'),
+      items: [
+        { label: 'Shape', href: 'https://shape.network/' },
+      ],
+    },
     {
       title: 'Terms',
       items: [
@@ -31,13 +36,6 @@ export const useMenuContent = (): MenuSection[] => {
         { label: 'Privacy Policy', href: '/privacy' },
       ],
     },
-    // {
-    //   title: t('common.company'),
-    //   items: [
-    //     { label: t('common.careers'), href: 'https://boards.greenhouse.io/uniswaplabs' },
-    //     { label: t('common.blog'), href: 'https://blog.uniswap.org/' },
-    //   ],
-    // },
     // {
     //   title: t('common.protocol'),
     //   items: [
