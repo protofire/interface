@@ -185,6 +185,7 @@ const commonTheme = {
 
   brandedGradient: 'linear-gradient(139.57deg, #FF79C9 4.35%, #FFB8E2 96.44%);',
   promotionalGradient: colors.accent1_light,
+  socials: '#6B3841',
 }
 
 export const darkTheme = {
@@ -219,6 +220,8 @@ export const darkTheme = {
   scrim: colors.scrim,
 
   warning2: colors.gold200,
+
+  socials: colors.white,
 }
 
 export const lightTheme: ThemeColors = {

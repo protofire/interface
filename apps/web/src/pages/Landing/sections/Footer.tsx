@@ -14,7 +14,7 @@ const SOCIAL_ICONS_SIZE = `${iconSizes.icon32}px`
 
 const SocialIcon = deprecatedStyled(Wiggle)`
   flex: 0;
-  fill: ${(props) => props.theme.neutral1};
+  fill: ${(props) => props.theme.socials};
   cursor: pointer;
   transition: fill;
   transition-duration: 0.2s;
@@ -33,7 +33,7 @@ const PolicyLink = styled(Text, {
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
-      <SocialIcon $hoverColor="#DE6579">
+      <SocialIcon color="6B3841" $hoverColor="#DE6579">
         <Anchor href="https://x.com/protofire" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
@@ -57,7 +57,9 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
   const theme = useTheme()
   return (
     <Flex width={130} $md={{ width: '100%' }} flexGrow={0} flexShrink={1} flexBasis="auto" gap={10}>
-      <Text variant="body1">{title}</Text>
+      <Text variant="body1" color={theme.socials}>
+        {title}
+      </Text>
       {items.map((item, index) => (
         <MenuLink
           key={`footer_${title}_${index}}`}
@@ -66,6 +68,7 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
           internal={item.internal}
           overflow={item.overflow}
           $hoverColor={theme.neutral1}
+          $color={theme.socials}
         />
       ))}
     </Flex>
@@ -74,7 +77,6 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
-  //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {
     return tabsContent.map((tab) => ({
@@ -84,14 +86,9 @@ export function Footer() {
     }))
   }, [tabsContent])
   const sections = useMenuContent()
-  // const brandAssets = {
-  //   label: t('common.brandAssets'),
-  //   href: 'https://github.com/Uniswap/brand-assets/raw/main/Uniswap%20Brand%20Assets.zip',
-  //   internal: false,
-  // }
-
+  const theme = useTheme()
   return (
-    <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
+    <Flex maxWidth="100%" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
       <Flex row $md={{ flexDirection: 'column' }} justifyContent="space-between" gap="$spacing32">
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }}>
@@ -101,13 +98,8 @@ export function Footer() {
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
           <Flex row gap="$spacing16" justifyContent="space-between" $md={{ width: 'auto' }}>
             <FooterSection title={t('common.app')} items={appSectionItems} />
-            {/* <FooterSection title={sections[0].title} items={[...sections[0].items, brandAssets]} /> */}
             <FooterSection title={sections[0].title} items={sections[0].items} />
           </Flex>
-          {/* <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
-            <FooterSection title={sections[1].title} items={sections[1].items} />
-            <FooterSection title={sections[2].title} items={sections[2].items} />
-          </Flex> */}
         </Flex>
         <Flex $md={{ display: 'flex' }} display="none">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
@@ -121,18 +113,12 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 Sakura Swap</Text>
-        <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
-          <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
+        <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
+        <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://protofire.io" target="_blank">
+          <span style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
-          </Text>
+          </span>
         </Anchor>
-        <Flex row alignItems="center" gap="$spacing16">
-          {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
-            <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
-          </Anchor> */}
-          <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
-        </Flex>
       </Flex>
     </Flex>
   )

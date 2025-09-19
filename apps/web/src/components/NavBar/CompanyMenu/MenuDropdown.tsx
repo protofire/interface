@@ -21,10 +21,10 @@ const Container = styled.div`
   height: unset;
   border-radius: 12px;
 `
-const LinkStyles = css<{ $hoverColor?: string }>`
+const LinkStyles = css<{ $hoverColor?: string; $color?: string }>`
   font-size: 16px;
   text-decoration: none;
-  color: ${({ theme }) => theme.neutral2};
+  color: ${({ theme, $color }) => $color || theme.neutral2};
   transition: color ${({ theme }) => theme.transition.duration.fast};
   padding: 4px 0;
   &:hover {
@@ -32,22 +32,29 @@ const LinkStyles = css<{ $hoverColor?: string }>`
     opacity: 1;
   }
 `
-const StyledInternalLink = styled(Link)<{ $hoverColor?: string }>`
+const StyledInternalLink = styled(Link)<{ $hoverColor?: string; $color?: string }>`
   ${LinkStyles}
   padding: 0;
 `
-const StyledExternalLink = styled(ExternalLink)<{ $hoverColor?: string }>`
+const StyledExternalLink = styled(ExternalLink)<{ $hoverColor?: string; $color?: string }>`
   ${LinkStyles}
   padding: 0;
 `
 
-export function MenuLink({ label, href, internal, $hoverColor, closeMenu }: MenuItem & { $hoverColor?: string }) {
+export function MenuLink({
+  label,
+  href,
+  internal,
+  $hoverColor,
+  $color,
+  closeMenu,
+}: MenuItem & { $hoverColor?: string; $color?: string }) {
   return internal ? (
-    <StyledInternalLink to={href} onClick={closeMenu} $hoverColor={$hoverColor}>
+    <StyledInternalLink to={href} onClick={closeMenu} $hoverColor={$hoverColor} $color={$color}>
       {label}
     </StyledInternalLink>
   ) : (
-    <StyledExternalLink href={href} onClick={closeMenu} $hoverColor={$hoverColor}>
+    <StyledExternalLink href={href} onClick={closeMenu} $hoverColor={$hoverColor} $color={$color}>
       {label}
     </StyledExternalLink>
   )
