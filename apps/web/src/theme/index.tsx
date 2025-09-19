@@ -166,6 +166,21 @@ export const ThemedGlobalStyle = createGlobalStyle`
   html {
     color: ${({ theme }) => theme.neutral1};
     background-color: ${({ theme }) => theme.background} !important;
+    background-image: ${({ theme }) =>
+      theme.darkMode ? "url('/images/bg-dark.png')" : "url('/images/bg-light.png')"} !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    min-height: 100vh;
+  }
+
+  body {
+    background-image: ${({ theme }) =>
+      theme.darkMode ? "url('/images/bg-dark.png')" : "url('/images/bg-light.png')"} !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    min-height: 100vh;
   }
 
  summary::-webkit-details-marker {

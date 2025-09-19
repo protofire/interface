@@ -12,7 +12,7 @@ import { Flex, Text, useIsDarkMode } from 'ui/src'
 import { useTheme } from 'lib/styled-components'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
-import { Trans, useTranslation } from 'uniswap/src/i18n'
+import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 
 interface HeroProps {
@@ -26,7 +26,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
   const { height: scrollPosition } = useScroll()
   const initialInputCurrency = useCurrency('ETH')
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   const translateY = -scrollPosition / 7
   const opacityY = 1 - scrollPosition / 1000
@@ -44,7 +44,12 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       height="min-content"
       pt={NAV_HEIGHT}
       pointerEvents="none"
-      // style={{background: isDarkMode ? 'url(/images/bg-dark.png)' :'url(/images/bg-light.png)' }}
+      // style={{
+      //   backgroundImage: isDarkMode ? 'url(/images/bg-dark.png)' : 'url(/images/bg-light.png)',
+      //   backgroundSize: 'cover',
+      //   backgroundPosition: 'center',
+      //   backgroundRepeat: 'no-repeat',
+      // }}
     >
       {forkConfig.approvedTokens && <TokenCloud transition={transition} />}
 
