@@ -1,6 +1,8 @@
 import styled from 'lib/styled-components'
+import { useState } from 'react'
+import { X } from 'react-feather'
 import { BREAKPOINTS } from 'theme'
-import { ButtonText, ThemedText } from 'theme/components'
+import { ThemedText } from 'theme/components'
 import { Z_INDEX } from 'theme/zIndex'
 
 const BannerWrapper = styled.div`
@@ -50,28 +52,28 @@ const BannerTextWrapper = styled(ThemedText.BodySecondary)`
   }
 `
 
-const ReadMoreWrapper = styled(ButtonText)`
-  flex-shrink: 0;
-  width: max-content;
-
-  :focus {
-    text-decoration: none;
-  }
+const CloseButton = styled.button`
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => theme.neutral1};
 `
 
-const bannerText = 'This interface is still in the development phase and used only for internal testing purposes. '
+const bannerText =
+  'This interface is still in the development phase and used only for internal testing purposes. The banner will appear in local or staging environment'
 
 export function InDevelopmentBanner() {
-  return (
+  const [show, setShow] = useState(true)
+  return show ? (
     <BannerWrapper>
-      <BannerContents>
+      <BannerContents style={{ alignItems: 'center', justifyContent: 'center' }}>
         <BannerTextWrapper lineHeight="24px">{bannerText}</BannerTextWrapper>
-        <ReadMoreWrapper>
-          <ThemedText.BodySecondary lineHeight="24px" color="accent1">
-            The banner will appear in local or staging environment
-          </ThemedText.BodySecondary>
-        </ReadMoreWrapper>
       </BannerContents>
+      <CloseButton onClick={() => setShow(false)}>
+        <X size={24} />
+      </CloseButton>
     </BannerWrapper>
+  ) : (
+    <></>
   )
 }
