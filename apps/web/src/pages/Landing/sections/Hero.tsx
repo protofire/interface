@@ -8,7 +8,8 @@ import { Swap } from 'pages/Swap'
 import { Fragment } from 'react'
 import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
-import { Flex, Text } from 'ui/src'
+import { Flex, Text, useIsDarkMode } from 'ui/src'
+import { useTheme } from 'lib/styled-components'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans, useTranslation } from 'uniswap/src/i18n'
@@ -20,6 +21,7 @@ interface HeroProps {
 }
 
 export function Hero({ scrollToRef, transition }: HeroProps) {
+  const theme = useTheme()
   const multichainUXEnabled = useFeatureFlag(FeatureFlags.MultichainUX)
 
   const { height: scrollPosition } = useScroll()
@@ -28,6 +30,8 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
   const translateY = -scrollPosition / 7
   const opacityY = 1 - scrollPosition / 1000
+
+  const isDarkMode = useIsDarkMode()
 
   return (
     <Flex
@@ -40,6 +44,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       height="min-content"
       pt={NAV_HEIGHT}
       pointerEvents="none"
+      // style={{background: isDarkMode ? 'url(/images/bg-dark.png)' :'url(/images/bg-light.png)' }}
     >
       {forkConfig.approvedTokens && <TokenCloud transition={transition} />}
 
@@ -68,19 +73,25 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             $sm={{ variant: 'heading2', fontSize: 36 }}
             $short={{ variant: 'heading2', fontSize: 36 }}
           >
-            {t('hero.swap.title')
-              .split(' ')
-              .map((word, index) => {
-                if (word === '<br/>') {
-                  return <br key={word} />
-                } else {
-                  return (
-                    <Fragment key={word}>
-                      <RiseInText delay={index * 0.1}>{word}</RiseInText>{' '}
-                    </Fragment>
-                  )
-                }
-              })}
+            {['Swap', 'Simple', '<br/>', 'With', 'Sakura'].map((word, index) => {
+              if (word === '<br/>') {
+                return <br key={`br_${index}`} />
+              }
+              const isSwap = word === 'Swap'
+              const isSakura = word === 'Sakura'
+              const style = isSakura
+                ? { fontWeight: 700 as const, color: theme.accent1 }
+                : isSwap
+                ? { fontWeight: 700 as const }
+                : undefined
+              return (
+                <Fragment key={`${word}_${index}`}>
+                  <RiseInText delay={index * 0.1}>
+                    <span style={style}>{word}</span>
+                  </RiseInText>{' '}
+                </Fragment>
+              )
+            })}
           </Text>
         </Flex>
 

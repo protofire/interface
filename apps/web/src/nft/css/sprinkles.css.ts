@@ -276,8 +276,8 @@ export const vars = createGlobalTheme(':root', {
     '44': '44px',
   },
   fontWeight: {
-    book: '485',
-    medium: '535',
+    book: '400',
+    medium: '700',
   },
   time: {
     '125': '125ms',
@@ -285,8 +285,8 @@ export const vars = createGlobalTheme(':root', {
     '500': '500ms',
   },
   fonts: {
-    body: 'Inter, sans-serif',
-    heading: 'Adieu, sans-serif',
+    body: 'Dosis, sans-serif',
+    heading: 'Dosis, sans-serif',
   },
 })
 
