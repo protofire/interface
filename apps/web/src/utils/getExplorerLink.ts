@@ -26,7 +26,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.INK]: 'https://explorer.inkonchain.com',
   [UniverseChainId.REDSTONE]: 'https://explorer.redstone.xyz',
   [UniverseChainId.REDSTONE_GARNET]: 'https://explorer.garnetchain.com',
-  [UniverseChainId.AbstractMainnet]: '', // Temporary
+  [UniverseChainId.AbstractMainnet]: 'https://abscan.org',
   [UniverseChainId.AnimeTestnet]: 'https://testnet-explorer.anime.xyz',
   [UniverseChainId.Mode]: 'https://explorer.mode.network/',
   [UniverseChainId.Anime]: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/',
