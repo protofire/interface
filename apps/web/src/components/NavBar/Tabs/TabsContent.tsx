@@ -35,7 +35,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
   const { chainId: universeChainId } = useSwapAndLimitContext()
-  const chainId = universeChainId ? universeChainId : UniverseChainId.Zero
+  const chainId = universeChainId ? universeChainId : UniverseChainId.AbstractMainnet
   return [
     {
       title: t('common.trade'),
@@ -122,7 +122,8 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                   {
                     label: 'V2 Analytics',
                     quickKey: 'P',
-                    href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.swap.w3us.site`,
+                    // href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.swap.w3us.site`,
+                    href: 'https://v2-info.swap.w3us.site',
                     internal: false,
                   },
                 ]
