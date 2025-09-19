@@ -129,7 +129,7 @@ export function MobileMenuDrawer({ isOpen, closeMenu }: { isOpen: boolean; close
               ))}
 
               <MenuSection title={t('common.displaySettings')}>
-                <PreferenceSettings showHeader={false} setSettingsView={changeView} />
+                <PreferenceSettings showHeader={false} />
               </MenuSection>
 
               {forkConfig.uniSpecificFeaturesEnabled && <DownloadApp onClick={closeMenu} />}
