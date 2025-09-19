@@ -217,8 +217,8 @@ const logolessColorSchemes: LogolessColorSchemes = {
     dark: { foreground: '#FFF612', background: '#1F1E02' },
   },
   [LOGOLESS_COLORS.GREEN]: {
-    light: { foreground: '#2FBA61', background: '#EEFBF1' },
-    dark: { foreground: '#2FBA61', background: '#0F2C1A' },
+    light: { foreground: '#D26378', background: '#EEFBF1' },
+    dark: { foreground: '#D26378', background: '#0F2C1A' },
   },
   [LOGOLESS_COLORS.TURQUOISE]: {
     light: { foreground: '#00C3A0', background: '#F7FEEB' },
