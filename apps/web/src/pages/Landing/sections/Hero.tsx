@@ -2,6 +2,7 @@ import { ColumnCenter } from 'components/Column'
 import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
 import { useScroll } from 'hooks/useScroll'
+import { useTheme } from 'lib/styled-components'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
 import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
@@ -9,7 +10,6 @@ import { Fragment } from 'react'
 import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
 import { Flex, Text, useIsDarkMode } from 'ui/src'
-import { useTheme } from 'lib/styled-components'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans } from 'uniswap/src/i18n'
@@ -31,7 +31,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
   const translateY = -scrollPosition / 7
   const opacityY = 1 - scrollPosition / 1000
 
-  const isDarkMode = useIsDarkMode()
+  // const isDarkMode = useIsDarkMode()
 
   return (
     <Flex
@@ -44,12 +44,6 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       height="min-content"
       pt={NAV_HEIGHT}
       pointerEvents="none"
-      // style={{
-      //   backgroundImage: isDarkMode ? 'url(/images/bg-dark.png)' : 'url(/images/bg-light.png)',
-      //   backgroundSize: 'cover',
-      //   backgroundPosition: 'center',
-      //   backgroundRepeat: 'no-repeat',
-      // }}
     >
       {forkConfig.approvedTokens && <TokenCloud transition={transition} />}
 
@@ -87,8 +81,8 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
               const style = isSakura
                 ? { fontWeight: 700 as const, color: theme.accent1 }
                 : isSwap
-                ? { fontWeight: 700 as const }
-                : undefined
+                  ? { fontWeight: 700 as const }
+                  : undefined
               return (
                 <Fragment key={`${word}_${index}`}>
                   <RiseInText delay={index * 0.1}>
