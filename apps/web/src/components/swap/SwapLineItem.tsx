@@ -10,6 +10,7 @@ import GasEstimateTooltip from 'components/swap/GasEstimateTooltip'
 import { RoutingTooltip, SwapRoute } from 'components/swap/SwapRoute'
 import TradePrice from 'components/swap/TradePrice'
 import { SUPPORTED_GAS_ESTIMATE_CHAIN_IDS } from 'constants/chains'
+import forkConfig from 'forkConfig'
 import { useUSDPrice } from 'hooks/useUSDPrice'
 import styled, { DefaultTheme } from 'lib/styled-components'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -56,9 +57,11 @@ function BaseTooltipContent({ children, url }: { children: ReactNode; url: strin
     <>
       {children}
       <br />
-      <ExternalLink href={url}>
-        <Trans i18nKey="common.button.learn" />
-      </ExternalLink>
+      {forkConfig.documentationAvailable && (
+        <ExternalLink href={url}>
+          <Trans i18nKey="common.button.learn" />
+        </ExternalLink>
+      )}
     </>
   )
 }

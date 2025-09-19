@@ -2,6 +2,7 @@ import { ColumnCenter } from 'components/Column'
 import { TradeSummary } from 'components/ConfirmSwapModal/TradeSummary'
 import { DialogButtonType, DialogContent } from 'components/Dialog/Dialog'
 import AlertTriangleFilled from 'components/Icons/AlertTriangleFilled'
+import forkConfig from 'forkConfig'
 import { SwapResult } from 'hooks/useSwapCallback'
 import { InterfaceTrade, TradeFillType } from 'state/routing/types'
 import { isLimitTrade, isUniswapXTrade } from 'state/routing/utils'
@@ -91,7 +92,7 @@ export default function Error({ errorType, trade, showTrade, swapResult, onRetry
       body={
         <ColumnCenter gap="sm">
           {showTrade && trade && <TradeSummary trade={trade} />}
-          {supportArticleURL && (
+          {supportArticleURL && forkConfig.documentationAvailable && (
             <ExternalLink href={supportArticleURL}>
               <Trans i18nKey="common.button.learn" />
             </ExternalLink>
