@@ -26,9 +26,14 @@ const TabText = styled(Text)`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Dosis' !important;
   &:hover {
     color: ${({ theme }) => theme.neutral1} !important;
   }
+`
+
+const MenuText = styled(Text)`
+  font-family: 'Dosis' !important;
 `
 const QuickKey = styled.div`
   display: flex;
@@ -57,14 +62,14 @@ function Item({ icon, label, quickKey, path, closeMenu }: TItemProps) {
     <NavLink to={path} style={{ textDecoration: 'none' }} onClick={closeMenu}>
       <ItemContainer>
         {icon}
-        <Text variant="buttonLabel2" width="100%" color="$neutral2">
+        <MenuText variant="buttonLabel2" width="100%" color="$neutral2">
           {label}
-        </Text>
+        </MenuText>
         {navHotkeysEnabled && (
           <QuickKey>
-            <Text variant="body3" color="$neutral2">
+            <MenuText variant="body3" color="$neutral2">
               {quickKey}
-            </Text>
+            </MenuText>
           </QuickKey>
         )}
       </ItemContainer>

@@ -93,6 +93,9 @@ export function Footer() {
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }}>
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
+            <span style={{ marginTop: 16, color: theme.socials }}>
+              Powered by Uniswap V3 & Approved by Uniswap DAO{' '}
+            </span>
           </Flex>
         </Flex>
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
