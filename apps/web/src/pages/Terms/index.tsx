@@ -1,4 +1,4 @@
-import styled from 'lib/styled-components'
+import styled, { createGlobalStyle } from 'lib/styled-components'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -23,6 +23,13 @@ const EFFECTIVE_DATE = 'September 11, 2025.'
 
 const TERMS_LINKS = 'https://raw.githubusercontent.com/protofire/swap-legal/refs/heads/main/terms.md'
 
+const PageBackgroundReset = createGlobalStyle`
+  html, body {
+    background-image: none !important;
+    background-color: ${({ theme }) => theme.background} !important;
+  }
+`
+
 const SwapTerms = () => {
   const [content, setContent] = useState<string>('')
 
@@ -40,11 +47,16 @@ const SwapTerms = () => {
     fetchContent()
   }, [])
 
-  return <main>{content ? <ReactMarkdown source={content} /> : <>Loading terms...</>}</main>
+  return (
+    <main>
+      {content ? <ReactMarkdown source={content} /> : <>Loading terms...</>}
+    </main>
+  )
 }
 export default function Terms() {
   return (
     <PageWrapper>
+      <PageBackgroundReset />
       <SwapTerms />
     </PageWrapper>
   )

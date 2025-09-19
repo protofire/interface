@@ -1,4 +1,4 @@
-import styled from 'lib/styled-components'
+import styled, { createGlobalStyle } from 'lib/styled-components'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -23,6 +23,13 @@ const EFFECTIVE_DATE = 'September 11, 2025.'
 
 const POLICY_LINK = 'https://raw.githubusercontent.com/protofire/swap-legal/refs/heads/main/privacy.md'
 
+const PageBackgroundReset = createGlobalStyle`
+  html, body {
+    background-image: none !important;
+    background-color: ${({ theme }) => theme.background} !important;
+  }
+`
+
 const SwapPrivacyPolicy = () => {
   const [content, setContent] = useState<string>('')
 
@@ -40,11 +47,16 @@ const SwapPrivacyPolicy = () => {
     fetchContent()
   }, [])
 
-  return <main>{content ? <ReactMarkdown source={content} /> : <>Loading privacy policy...</>}</main>
+  return (
+    <main>
+      {content ? <ReactMarkdown source={content} /> : <>Loading privacy policy...</>}
+    </main>
+  )
 }
 export default function PrivacyPolicy() {
   return (
     <PageWrapper>
+      <PageBackgroundReset />
       <SwapPrivacyPolicy />
     </PageWrapper>
   )
