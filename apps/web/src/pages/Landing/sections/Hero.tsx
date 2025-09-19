@@ -6,10 +6,11 @@ import { useTheme } from 'lib/styled-components'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
 import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
+import { transparentize } from 'polished'
 import { Fragment } from 'react'
 import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
-import { Flex, Text, useIsDarkMode } from 'ui/src'
+import { Flex, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans } from 'uniswap/src/i18n'
@@ -32,7 +33,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
   const opacityY = 1 - scrollPosition / 1000
 
   // const isDarkMode = useIsDarkMode()
-
+  const panelBg = transparentize(0.4, theme.surface1)
   return (
     <Flex
       position="relative"
@@ -100,24 +101,25 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             width={480}
             p="$padding8"
             borderRadius="$rounded24"
-            backgroundColor="$surface1"
+            // backgroundColor="$surface1"
             maxWidth="100%"
+            style={{ backgroundColor: panelBg, padding: 24, margin: 24 }}
           >
             <Swap
               syncTabToUrl={false}
               hideHeader
-              chainId={initialInputCurrency?.chainId ?? UniverseChainId.Mainnet}
+              chainId={initialInputCurrency?.chainId ?? UniverseChainId.AbstractMainnet}
               initialInputCurrency={initialInputCurrency}
               multichainUXEnabled={multichainUXEnabled}
             />
           </Flex>
         </RiseIn>
-
+        {/* 
         <RiseIn delay={0.3}>
           <Text variant="body1" textAlign="center" maxWidth={430} color="$neutral2" $short={{ variant: 'body2' }}>
             <Trans i18nKey="hero.subtitle" />
           </Text>
-        </RiseIn>
+        </RiseIn> */}
       </Flex>
 
       <Flex flex={1} />

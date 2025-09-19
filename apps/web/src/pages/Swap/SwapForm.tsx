@@ -648,6 +648,7 @@ export function SwapForm({
               onClick={() => navigateToSwapWithParams()}
               fontWeight={535}
               data-testid="wrap-button"
+              style={{ marginTop: 10 }}
             >
               <Text variant="buttonLabel1" color="neutralContrast">
                 <Trans i18nKey="common.getStarted" />
@@ -717,6 +718,7 @@ export function SwapForm({
                 id="swap-button"
                 data-testid="swap-button"
                 disabled={isUsingBlockedExtension || !getIsReviewableQuote(trade, tradeState, swapInputError)}
+                style={{ marginTop: 10 }}
               >
                 <Text fontSize={20} color="neutralContrast">
                   {swapInputError ?? <Trans i18nKey="common.swap" />}

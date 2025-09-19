@@ -8,10 +8,12 @@ import { PageWrapper, SwapWrapper } from 'components/swap/styled'
 import { useSupportedChainId } from 'constants/chains'
 import { useScreenSize } from 'hooks/screenSize'
 import { useAccount } from 'hooks/useAccount'
+import { useTheme } from 'lib/styled-components'
 import { BuyForm } from 'pages/Swap/Buy/BuyForm'
 import { LimitFormWrapper } from 'pages/Swap/Limit/LimitForm'
 import { SendForm } from 'pages/Swap/Send/SendForm'
 import { SwapForm } from 'pages/Swap/SwapForm'
+import { transparentize } from 'polished'
 import { ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
 import { InterfaceTrade, TradeState } from 'state/routing/types'
@@ -59,22 +61,32 @@ export default function SwapPage({ className }: { className?: string }) {
   } = useInitialCurrencyState()
   const isUnsupportedConnectedChain = useSupportedChainId(useAccount().chainId) === undefined
   const shouldDisableTokenInputs = multichainUXEnabled ? false : isUnsupportedConnectedChain
+  const theme = useTheme()
+  const panelBg = transparentize(0.4, theme.surface1)
 
   return (
     <Trace logImpression page={InterfacePageName.SWAP_PAGE}>
       <PageWrapper>
-        <Swap
-          className={className}
-          chainId={initialChainId}
-          multichainUXEnabled={multichainUXEnabled}
-          disableTokenInputs={shouldDisableTokenInputs}
-          initialInputCurrency={initialInputCurrency}
-          initialOutputCurrency={initialOutputCurrency}
-          initialTypedValue={initialTypedValue}
-          initialIndependentField={initialField}
-          initialCurrencyLoading={initialCurrencyLoading}
-          syncTabToUrl={true}
-        />
+        <Flex
+          pointerEvents="auto"
+          width={480}
+          borderRadius="$rounded24"
+          maxWidth="100%"
+          style={{ backgroundColor: panelBg, padding: 24, margin: 24 }}
+        >
+          <Swap
+            className={className}
+            chainId={initialChainId}
+            multichainUXEnabled={multichainUXEnabled}
+            disableTokenInputs={shouldDisableTokenInputs}
+            initialInputCurrency={initialInputCurrency}
+            initialOutputCurrency={initialOutputCurrency}
+            initialTypedValue={initialTypedValue}
+            initialIndependentField={initialField}
+            initialCurrencyLoading={initialCurrencyLoading}
+            syncTabToUrl={true}
+          />
+        </Flex>
       </PageWrapper>
       {location.pathname === '/swap' && <SwitchLocaleLink />}
     </Trace>

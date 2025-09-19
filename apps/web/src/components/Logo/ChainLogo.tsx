@@ -133,12 +133,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
       return darkMode
         ? {
             symbol: ABSTRACT_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
+            bgColor: '20193F',
+            textColor: '#FFF',
           }
         : {
             symbol: ABSTRACT_LOGO,
-            bgColor: '#FFDDE3',
+            bgColor: '#FFFFFF',
             textColor: '#6B3841',
           }
     case UniverseChainId.Zero:

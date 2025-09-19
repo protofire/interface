@@ -47,11 +47,7 @@ const SwapPrivacyPolicy = () => {
     fetchContent()
   }, [])
 
-  return (
-    <main>
-      {content ? <ReactMarkdown source={content} /> : <>Loading privacy policy...</>}
-    </main>
-  )
+  return <main>{content ? <ReactMarkdown source={content} /> : <>Loading privacy policy...</>}</main>
 }
 export default function PrivacyPolicy() {
   return (

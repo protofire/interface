@@ -47,11 +47,7 @@ const SwapTerms = () => {
     fetchContent()
   }, [])
 
-  return (
-    <main>
-      {content ? <ReactMarkdown source={content} /> : <>Loading terms...</>}
-    </main>
-  )
+  return <main>{content ? <ReactMarkdown source={content} /> : <>Loading terms...</>}</main>
 }
 export default function Terms() {
   return (
