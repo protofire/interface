@@ -1,6 +1,7 @@
 import { ColumnCenter } from 'components/Column'
 import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
+import { useIsMobile } from 'hooks/screenSize'
 import { useScroll } from 'hooks/useScroll'
 import { useTheme } from 'lib/styled-components'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
@@ -34,6 +35,10 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
 
   // const isDarkMode = useIsDarkMode()
   const panelBg = transparentize(0.4, theme.surface1)
+
+  const isMobile = useIsMobile()
+
+  const swapMargin = isMobile ? 10 : 24
   return (
     <Flex
       position="relative"
@@ -103,7 +108,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             borderRadius="$rounded24"
             // backgroundColor="$surface1"
             maxWidth="100%"
-            style={{ backgroundColor: panelBg, padding: 24, margin: 24 }}
+            style={{ backgroundColor: panelBg, padding: swapMargin, margin: swapMargin }}
           >
             <Swap
               syncTabToUrl={false}

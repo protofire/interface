@@ -6,7 +6,7 @@ import SwapHeader from 'components/swap/SwapHeader'
 import { Field } from 'components/swap/constants'
 import { PageWrapper, SwapWrapper } from 'components/swap/styled'
 import { useSupportedChainId } from 'constants/chains'
-import { useScreenSize } from 'hooks/screenSize'
+import { useIsMobile, useScreenSize } from 'hooks/screenSize'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { BuyForm } from 'pages/Swap/Buy/BuyForm'
@@ -64,6 +64,10 @@ export default function SwapPage({ className }: { className?: string }) {
   const theme = useTheme()
   const panelBg = transparentize(0.4, theme.surface1)
 
+  const isMobile = useIsMobile()
+
+  const swapMargin = isMobile ? 10 : 24
+
   return (
     <Trace logImpression page={InterfacePageName.SWAP_PAGE}>
       <PageWrapper>
@@ -72,7 +76,7 @@ export default function SwapPage({ className }: { className?: string }) {
           width={480}
           borderRadius="$rounded24"
           maxWidth="100%"
-          style={{ backgroundColor: panelBg, padding: 24, margin: 24 }}
+          style={{ backgroundColor: panelBg, padding: swapMargin}}
         >
           <Swap
             className={className}
