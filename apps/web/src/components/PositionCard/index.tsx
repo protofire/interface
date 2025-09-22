@@ -6,6 +6,7 @@ import { AutoColumn } from 'components/Column'
 import { DoubleCurrencyLogo } from 'components/DoubleLogo'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
 import { AutoRow, RowBetween, RowFixed } from 'components/Row'
+import { StyledExternalLink } from 'components/Table/styled'
 import { CardNoise } from 'components/earn/styled'
 import { Dots } from 'components/swap/styled'
 import { chainIdToBackendChain } from 'constants/chains'
@@ -291,13 +292,14 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             </FixedHeightRow>
 
             <ButtonSecondary padding="8px" $borderRadius="8px">
-              <StyledInternalLink
+              <StyledExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                href="https://v2-info.swap.w3us.site/"
+                // to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
               >
                 <Trans i18nKey="pool.accruedFees" />
                 <span style={{ fontSize: '11px' }}>↗</span>
-              </StyledInternalLink>
+              </StyledExternalLink>
             </ButtonSecondary>
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <RowBetween marginTop="10px">
