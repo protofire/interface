@@ -53,27 +53,36 @@ interface TItemProps {
   label: string
   quickKey: string
   path: string
+  internal?: boolean
   closeMenu: () => void
 }
-function Item({ icon, label, quickKey, path, closeMenu }: TItemProps) {
+function Item({ icon, label, quickKey, path, internal = true, closeMenu }: TItemProps) {
   const navHotkeysEnabled = useFeatureFlag(FeatureFlags.NavigationHotkeys)
 
-  return (
+  const content = (
+    <ItemContainer>
+      {icon}
+      <MenuText variant="buttonLabel2" width="100%" color="$neutral2">
+        {label}
+      </MenuText>
+      {navHotkeysEnabled && (
+        <QuickKey>
+          <MenuText variant="body3" color="$neutral2">
+            {quickKey}
+          </MenuText>
+        </QuickKey>
+      )}
+    </ItemContainer>
+  )
+
+  return internal ? (
     <NavLink to={path} style={{ textDecoration: 'none' }} onClick={closeMenu}>
-      <ItemContainer>
-        {icon}
-        <MenuText variant="buttonLabel2" width="100%" color="$neutral2">
-          {label}
-        </MenuText>
-        {navHotkeysEnabled && (
-          <QuickKey>
-            <MenuText variant="body3" color="$neutral2">
-              {quickKey}
-            </MenuText>
-          </QuickKey>
-        )}
-      </ItemContainer>
+      {content}
     </NavLink>
+  ) : (
+    <a href={path} style={{ textDecoration: 'none' }} onClick={closeMenu} target="_blank" rel="noopener noreferrer">
+      {content}
+    </a>
   )
 }
 
@@ -155,6 +164,7 @@ const Tab = ({
               label={item.label}
               quickKey={item.quickKey}
               path={item.href}
+              internal={item.internal}
               closeMenu={closeMenu}
             />
           ))}

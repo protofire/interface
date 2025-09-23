@@ -76,7 +76,7 @@ export default function SwapPage({ className }: { className?: string }) {
           width={480}
           borderRadius="$rounded24"
           maxWidth="100%"
-          style={{ backgroundColor: panelBg, padding: swapMargin}}
+          style={{ backgroundColor: panelBg, padding: swapMargin }}
         >
           <Swap
             className={className}
