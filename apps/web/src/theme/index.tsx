@@ -172,6 +172,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
     background-position: center !important;
     background-repeat: no-repeat !important;
     min-height: 100vh;
+    transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
   }
 
   body {
@@ -181,6 +182,11 @@ export const ThemedGlobalStyle = createGlobalStyle`
     background-position: center !important;
     background-repeat: no-repeat !important;
     min-height: 100vh;
+    transition: background-color 0.3s ease, background-image 0.3s ease, color 0.3s ease;
+  }
+
+  * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
  summary::-webkit-details-marker {
