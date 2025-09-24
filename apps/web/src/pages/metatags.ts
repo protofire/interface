@@ -6,8 +6,8 @@ import { t } from 'uniswap/src/i18n'
 const DEFAULT_METATAGS: MetaTagInjectorInput = {
   title: t('interface.metatags.title'),
   description: t`interface.metatags.description`,
-  image: `https://app.uniswap.com/images/1200x630_Rich_Link_Preview_Image.png`,
-  url: 'https://app.uniswap.com',
+  image: `https://sakuraswap.com/images/1200x630_Rich_Link_Preview_Image.png`,
+  url: 'https://sakuraswap.com',
 }
 
 type MetatagAttributes = { property?: string; name?: string; content: string }

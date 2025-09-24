@@ -42,7 +42,7 @@ export const WC_PARAMS = {
     name: 'Swap',
     description: 'Swap',
     url: 'https://swap.w3us.site',
-    icons: ['https://swap.swap.w3us.site/favicon.png'],
+    icons: ['https://swap.w3us.site/favicon.png'],
   },
   qrModalOptions: {
     themeVariables: {
