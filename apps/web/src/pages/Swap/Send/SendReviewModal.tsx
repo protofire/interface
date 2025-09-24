@@ -127,15 +127,17 @@ export function SendReviewModal({ onConfirm, onDismiss }: { onConfirm: () => voi
             />
           </Column>
           <Separator />
-          <Row width="100%" justify="space-between">
-            <ThemedText.BodySmall color="neutral2" lineHeight="20px">
-              <Trans i18nKey="common.networkCost" />
-            </ThemedText.BodySmall>
-            <Row width="min-content" gap="xs">
-              <ChainLogo chainId={chainId ?? UniverseChainId.Mainnet} size={16} />
-              <ThemedText.BodySmall>{gasFeeFormatted}</ThemedText.BodySmall>
+          {gasFeeFormatted !== '-' && (
+            <Row width="100%" justify="space-between">
+              <ThemedText.BodySmall color="neutral2" lineHeight="20px">
+                <Trans i18nKey="common.networkCost" />
+              </ThemedText.BodySmall>
+              <Row width="min-content" gap="xs">
+                <ChainLogo chainId={chainId ?? UniverseChainId.Mainnet} size={16} />
+                <ThemedText.BodySmall>{gasFeeFormatted}</ThemedText.BodySmall>
+              </Row>
             </Row>
-          </Row>
+          )}
         </ReviewContentContainer>
         <Trace logPress element={InterfaceElementName.SEND_REVIEW_BUTTON}>
           <ButtonPrimary onClick={onConfirm}>
