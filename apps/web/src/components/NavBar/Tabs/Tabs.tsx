@@ -176,8 +176,8 @@ export function Tabs() {
   const tabsContent: TabsSection[] = useTabsContent()
   return (
     <>
-      {tabsContent.map(({ title, isActive, href, items }, index) => (
-        <Tab key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} />
+      {tabsContent.map(({ title, isActive, href, items, internal}, index) => (
+        <Tab key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} internal={internal} />
       ))}
     </>
   )
