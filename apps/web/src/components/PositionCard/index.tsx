@@ -294,7 +294,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             <ButtonSecondary padding="8px" $borderRadius="8px">
               <StyledExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href="https://v2-info.swap.w3us.site/"
+                href="https://v2-info.sakuraswap.com"
                 // to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
               >
                 <Trans i18nKey="pool.accruedFees" />

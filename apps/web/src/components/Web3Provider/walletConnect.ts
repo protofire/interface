@@ -41,8 +41,8 @@ export const WC_PARAMS = {
   metadata: {
     name: 'Swap',
     description: 'Swap',
-    url: 'https://swap.w3us.site',
-    icons: ['https://swap.w3us.site/favicon.png'],
+    url: 'https://sakuraswap.com',
+    icons: ['https://sakuraswap.com/favicon.png'],
   },
   qrModalOptions: {
     themeVariables: {

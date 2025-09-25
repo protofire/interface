@@ -62,7 +62,8 @@
     "https://raw.githubusercontent.com/protofire/token-list/*",
     "https://auth.privy.io",
     "https://api.mainnet.abs.xyz",
-    "https://*.sakuraswap.com"
+    "https://*.sakuraswap.com",
+    "https://sakuraswap.com"
   ],
   "workerSrc": [
     "'self'",
