@@ -87,7 +87,7 @@ const Tab = ({
   isActive,
   path,
   items,
-  internal,
+  internal = true,
 }: {
   label: string
   isActive?: boolean
