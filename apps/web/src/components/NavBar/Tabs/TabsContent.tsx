@@ -20,6 +20,7 @@ export type TabsSection = {
   isActive?: boolean
   items?: TabsItem[]
   closeMenu?: () => void
+  internal?: boolean
 }
 
 export type TabsItem = MenuItem & {
@@ -82,6 +83,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
+      internal: false,
       href: `https://info.swap.w3us.site/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled

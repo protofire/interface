@@ -75,14 +75,10 @@ function Item({ icon, label, quickKey, path, internal = true, closeMenu }: TItem
     </ItemContainer>
   )
 
-  return internal ? (
-    <NavLink to={path} style={{ textDecoration: 'none' }} onClick={closeMenu}>
+  return (
+    <NavLink target={!internal ? '_blank' : '_self'} to={path} style={{ textDecoration: 'none' }} onClick={closeMenu}>
       {content}
     </NavLink>
-  ) : (
-    <a href={path} style={{ textDecoration: 'none' }} onClick={closeMenu} target="_blank" rel="noopener noreferrer">
-      {content}
-    </a>
   )
 }
 
@@ -91,11 +87,13 @@ const Tab = ({
   isActive,
   path,
   items,
+  internal,
 }: {
   label: string
   isActive?: boolean
   path: string
   items?: TabsItem[]
+  internal?: boolean
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
@@ -109,7 +107,7 @@ const Tab = ({
   useEffect(() => closeMenu(), [location, closeMenu])
 
   const Label = (
-    <NavLink to={path} style={{ textDecoration: 'none' }}>
+    <NavLink target={!internal ? '_blank' : '_self'} to={path} style={{ textDecoration: 'none' }}>
       <TabText
         variant="subheading1"
         color={isActive || isOpen ? '$neutral1' : '$neutral2'}
