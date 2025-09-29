@@ -8,6 +8,7 @@ import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { ExternalLink } from 'ui/src/components/icons'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -21,6 +22,7 @@ export type TabsSection = {
   items?: TabsItem[]
   closeMenu?: () => void
   internal?: boolean
+  icon?: JSX.Element
 }
 
 export type TabsItem = MenuItem & {
@@ -83,6 +85,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
       href: `https://info.sakuraswap.com/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
