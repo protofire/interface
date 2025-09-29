@@ -87,7 +87,9 @@ export function useDerivedSwapInfo(state: TransactionState): DerivedSwapInfo {
     }
   }, [exactAmountToken, isWrap, otherCurrency])
 
-  const sendPortionEnabled = useFeatureFlag(FeatureFlags.PortionFields)
+  // FIXME: put into .env or feature flag
+  // const sendPortionEnabled = useFeatureFlag(FeatureFlags.PortionFields)
+  const sendPortionEnabled = true
 
   const tradeParams = {
     account,
