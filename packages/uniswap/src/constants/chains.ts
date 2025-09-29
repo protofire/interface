@@ -1144,7 +1144,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: 'https://bridge.zero.network',
-    chainPriority: 0,
+    chainPriority: 1,
     docs: 'https://docs.zero.network',
     elementName: ElementName.ChainZero,
     explorer: {
