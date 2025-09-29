@@ -14,8 +14,6 @@
     ]
   },
   "dependencies": {
-    "@abstract-foundation/agw-client": "1.9.1",
-    "@abstract-foundation/agw-react": "1.9.1",
     "@amplitude/analytics-browser": "1.12.1",
     "@apollo/client": "3.10.4",
     "@graphql-codegen/cli": "^3.3.1",

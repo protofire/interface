@@ -55,44 +55,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@abstract-foundation/agw-client@npm:1.9.1":
-  version: 1.9.1
-  resolution: "@abstract-foundation/agw-client@npm:1.9.1"
-  peerDependencies:
-    abitype: ^1.0.0
-    typescript: ">=5.0.4"
-    viem: ^2.33.3
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 29737818f78246c895f4f83cdc54d72a328ebef840ab2391582bbcd669d6a446ffc153d9751ccdb7e8f36b05e5ee3281e2521ccb8ead2747c09ff598322b2841
-  languageName: node
-  linkType: hard
-
-"@abstract-foundation/agw-react@npm:1.9.1":
-  version: 1.9.1
-  resolution: "@abstract-foundation/agw-react@npm:1.9.1"
-  dependencies:
-    "@abstract-foundation/agw-client": 1.9.1
-  peerDependencies:
-    "@privy-io/cross-app-connect": ^0.2.2
-    "@privy-io/react-auth": ^2.21.2
-    "@tanstack/react-query": ^5
-    react: ">=18"
-    secp256k1: ">=5.0.1"
-    thirdweb: ^5.68.0
-    typescript: ">=5.0.4"
-    viem: ^2.33.3
-    wagmi: ^2.14.11
-  peerDependenciesMeta:
-    thirdweb:
-      optional: true
-    typescript:
-      optional: true
-  checksum: 6e9862624f3527db1d46bb029261bfe83052a29cf74b2e859610109465db4d81d415d0ac30383a1e6698f1bf5f76b047a06e07e1625e062d18950b9afe9d72df
-  languageName: node
-  linkType: hard
-
 "@actions/core@npm:1.10.1":
   version: 1.10.1
   resolution: "@actions/core@npm:1.10.1"
@@ -15423,8 +15385,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uniswap/interface@workspace:apps/web"
   dependencies:
-    "@abstract-foundation/agw-client": 1.9.1
-    "@abstract-foundation/agw-react": 1.9.1
     "@amplitude/analytics-browser": 1.12.1
     "@apollo/client": 3.10.4
     "@babel/preset-env": 7.23.3
