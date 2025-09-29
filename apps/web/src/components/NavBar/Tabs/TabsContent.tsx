@@ -12,6 +12,7 @@ import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
+import { ExternalLink } from 'ui/src/components/icons'
 
 export type TabsSection = {
   title: string
@@ -19,7 +20,8 @@ export type TabsSection = {
   isActive?: boolean
   items?: TabsItem[]
   closeMenu?: () => void
-  blank?: boolean
+  internal?: boolean
+  icon?: JSX.Element
 }
 
 export type TabsItem = MenuItem & {
@@ -84,7 +86,8 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       href: `https://info.staging.shapeswap.xyz/home`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
-      blank: true,
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
             { label: t('common.tokens'), quickKey: 'T', href: '/explore/tokens', internal: true },
