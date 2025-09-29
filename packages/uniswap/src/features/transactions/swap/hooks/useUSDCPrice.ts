@@ -14,6 +14,7 @@ import {
   USDC_BOB,
   USDC_CELO,
   USDC_CYBER,
+  USDC_FLOW_TESTNET,
   USDC_GOERLI,
   USDC_INK,
   USDC_MODE,
@@ -59,6 +60,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.AnimeTestnet]: CurrencyAmount.fromRawAmount(USDC_ANIME_TESTNET, 10_000e6),
   [UniverseChainId.Anime]: CurrencyAmount.fromRawAmount(USDC_ANIME, 10_000e6),
   [UniverseChainId.Mode]: CurrencyAmount.fromRawAmount(USDC_MODE, 10_000e6),
+  [UniverseChainId.FlowTestnet]: CurrencyAmount.fromRawAmount(USDC_FLOW_TESTNET, 10_000e6),
 }
 
 /**

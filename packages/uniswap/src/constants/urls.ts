@@ -17,7 +17,7 @@ const FLOWS_USING_BETA = [TrafficFlows.FOR]
 export const UNISWAP_WEB_HOSTNAME = 'futurehost.xyz'
 
 export const UNISWAP_WEB_URL = `https://${UNISWAP_WEB_HOSTNAME}`
-export const UNISWAP_APP_URL = 'https://uniswap.org/app'
+export const UNISWAP_APP_URL = 'https://staging.flowswap.io/'
 
 const helpUrl = 'https://support.uniswap.org/hc/en-us'
 
@@ -63,7 +63,7 @@ export const uniswapUrls = {
   chromeExtension: 'http://uniswap.org/ext',
 
   // Core API Urls
-  apiOrigin: 'https://api.uniswap.org',
+  apiOrigin: 'https://staging.flowswap.io',
   apiBaseUrl: getCloudflareApiBaseUrl(),
   apiBaseUrlV2: `${getCloudflareApiBaseUrl()}/v2`,
   graphQLUrl: `${getCloudflareApiBaseUrl(TrafficFlows.GraphQL)}/v1/graphql`,

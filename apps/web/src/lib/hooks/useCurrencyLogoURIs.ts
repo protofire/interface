@@ -1,5 +1,6 @@
 import EthereumLogo from 'assets/images/ethereum-logo.png'
 import AnimeLogo from 'assets/png/anime-logo.png'
+import FlowLogo from 'assets/png/flow-logo.png'
 import AvaxLogo from 'assets/svg/avax_logo.svg'
 import BnbLogo from 'assets/svg/bnb-logo.svg'
 import CeloLogo from 'assets/svg/celo_logo.svg'
@@ -23,6 +24,8 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
       return AvaxLogo
     case UniverseChainId.Anime:
       return AnimeLogo
+    case UniverseChainId.FlowTestnet:
+      return FlowLogo
     default:
       return EthereumLogo
   }
@@ -36,6 +39,18 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
   }
   if (isCelo(chainId) && isSameAddress(address, PORTAL_ETH_CELO.address)) {
     return EthereumLogo
+  }
+
+  // Flow Testnet specific tokens
+  if (chainId === UniverseChainId.FlowTestnet) {
+    // WFLOW
+    if (isSameAddress(address, '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e')) {
+      return FlowLogo
+    }
+    // USDC
+    if (isSameAddress(address, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73')) {
+      return 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png'
+    }
   }
 
   if (networkName) {

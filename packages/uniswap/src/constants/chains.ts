@@ -13,6 +13,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  FLOW_TESTNET_LOGO,
   INK_LOGO,
   MODE_LOGO,
   MUMBAI_LOGO,
@@ -31,6 +32,7 @@ import { anime } from 'uniswap/src/constants/chainDefinitions/anime'
 import { animeTestnet } from 'uniswap/src/constants/chainDefinitions/animeTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
+import { flowTestnet } from 'uniswap/src/constants/chainDefinitions/flowTestnet'
 import { ink } from 'uniswap/src/constants/chainDefinitions/ink'
 import { redstone } from 'uniswap/src/constants/chainDefinitions/redstone'
 import { redstoneGarnet } from 'uniswap/src/constants/chainDefinitions/redstoneGarnet'
@@ -58,6 +60,7 @@ import {
   USDC_BOB,
   USDC_CELO,
   USDC_CYBER,
+  USDC_FLOW_TESTNET,
   USDC_GOERLI,
   USDC_INK,
   USDC_MODE,
@@ -1717,6 +1720,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.FLOW_TESTNET]: {
+    ...flowTestnet,
+    id: UniverseChainId.FlowTestnet,
+    sdkId: UniswapSDKChainId.FLOW_TESTNET,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: '',
+    chainPriority: 0,
+    docs: 'https://developers.flow.com/',
+    elementName: ElementName.ChainFlowTestnet,
+    explorer: {
+      name: 'Flow EVM Testnet Explorer',
+      url: 'https://evm-testnet.flowscan.io/',
+      apiURL: 'https://evm-testnet.flowscan.io/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://info.staging.flowswap.io',
+    infuraPrefix: undefined,
+    interfaceName: 'flow-testnet',
+    label: 'Flow EVM Testnet',
+    logo: FLOW_TESTNET_LOGO, // TODO: Replace with actual Flow logo
+    nativeCurrency: {
+      name: 'FLOW',
+      symbol: 'FLOW',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L1,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://testnet.evm.nodes.onflow.org'] },
+      default: { http: ['https://testnet.evm.nodes.onflow.org'] },
+      appOnly: { http: ['https://testnet.evm.nodes.onflow.org'] },
+    },
+    urlParam: 'flow-testnet',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_FLOW_TESTNET, 10_000e6),
+    stablecoins: [USDC_FLOW_TESTNET],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped FLOW',
+      symbol: 'WFLOW',
+      decimals: 18,
+      address: '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e',
     },
   } as const satisfies UniverseChainInfo,
 }

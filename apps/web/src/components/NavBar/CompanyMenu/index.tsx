@@ -1,4 +1,4 @@
-import { ReactComponent as SakuraLogo } from 'assets/svg/sakura.svg'
+import FlowLogo from 'assets/png/flow-logo.png'
 import { ArrowChangeDown } from 'components/Icons/ArrowChangeDown'
 import { NavIcon } from 'components/Logo/NavIcon'
 import { MenuDropdown } from 'components/NavBar/CompanyMenu/MenuDropdown'
@@ -63,7 +63,11 @@ export function CompanyMenu() {
       <Popover.Trigger data-testid="nav-company-menu">
         <Trigger>
           <UniIcon onClick={handleLogoClick} data-testid="nav-uniswap-logo">
-            {isMobile ? <SakuraLogo style={{ height: '48px', width: '48px' }} /> : <NavIcon width="200" height="48" />}
+            {isMobile ? (
+              <img src={FlowLogo} alt="FlowSwap" style={{ height: '48px', width: '48px' }} />
+            ) : (
+              <NavIcon width="200" height="48" />
+            )}
             {isLargeScreen && <Text variant="subheading1" color="$accent1" userSelect="none"></Text>}
           </UniIcon>
           {(isSmallScreen || isTouchDevice) && <Hamburger size={22} color="$neutral2" cursor="pointer" ml="16px" />}

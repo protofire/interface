@@ -1,5 +1,5 @@
 import { InterfacePageName } from '@uniswap/analytics-events'
-import { ReactComponent as SakuraIcon } from 'assets/svg/sakura.svg'
+import FlowIcon from 'assets/png/flow-logo.png'
 import { SmallButtonPrimary } from 'components/Button'
 import { useIsMobile } from 'hooks/screenSize'
 import styled from 'lib/styled-components'
@@ -51,7 +51,7 @@ export default function NotFound() {
               <Trans i18nKey="common.pageNotFound" />
             </Paragraph>
           </Container>
-          <SakuraIcon />
+          <img src={FlowIcon} alt="FlowSwap" style={{ width: '100px', height: '100px' }} />
         </Header>
         <SmallButtonPrimary as={Link} to="/">
           <Trans i18nKey="notFound.oops" />

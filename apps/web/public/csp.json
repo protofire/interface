@@ -40,6 +40,10 @@
     "https://apiv2.reservoir.w3us.site",
     "https://apiv1.staging.reservoir.w3us.site",
     "https://apiv2.staging.reservoir.w3us.site",
+    "https://apiv1.staging.flowswap.io",
+    "https://apiv2.staging.flowswap.io",
+    "https://apiv1.flowswap.io",
+    "https://apiv2.flowswap.io",
     "https://graph-node.internal.replace.domain",
     "https://api.testnets.relay.link",
     "https://api.relay.link",
@@ -64,7 +68,8 @@
     "https://*.swap.w3us.site",
     "https://raw.githubusercontent.com/protofire/token-list/*",
     "https://auth.privy.io",
-    "https://api.mainnet.abs.xyz"
+    "https://api.mainnet.abs.xyz",
+    "https://testnet.evm.nodes.onflow.org"
   ],
   "workerSrc": [
     "'self'",

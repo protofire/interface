@@ -17,9 +17,10 @@ export function useNetworkColors(chainId: WalletChainId): {
   background: string
 } {
   const colors = useSporeColors()
-  const color = colors[getNetworkColorKey(chainId)].val
+  const colorKey = getNetworkColorKey(chainId)
+  const color = (colors as Record<string, { val: string }>)[colorKey]?.val
 
-  const foreground = color
+  const foreground = color || '#21C95E' // Fallback to Flow green for missing chains
   assert(foreground, 'Network color is not defined in Theme')
 
   return {

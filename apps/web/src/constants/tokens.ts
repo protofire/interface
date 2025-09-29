@@ -542,6 +542,10 @@ export function isCelo(chainId: number): chainId is UniverseChainId.Celo | Unive
   return chainId === UniverseChainId.CeloAlfajores || chainId === UniverseChainId.Celo
 }
 
+export function isFlowTestnet(chainId: number): chainId is UniverseChainId.FlowTestnet {
+  return chainId === UniverseChainId.FlowTestnet
+}
+
 function getCeloNativeCurrency(chainId: number) {
   switch (chainId) {
     case UniverseChainId.CeloAlfajores:
@@ -657,6 +661,22 @@ class AnimeNativeCurrency extends NativeCurrency {
   }
 }
 
+class FlowNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
+  }
+
+  public constructor(chainId: number) {
+    super(chainId, 18, 'FLOW', 'FLOW')
+  }
+}
+
 class ExtendedEther extends NativeCurrency {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -697,6 +717,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
     nativeCurrency = new AvaxNativeCurrency(chainId)
   } else if (isAnime(chainId)) {
     nativeCurrency = new AnimeNativeCurrency(chainId)
+  } else if (isFlowTestnet(chainId)) {
+    nativeCurrency = new FlowNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
   }

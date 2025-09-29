@@ -89,9 +89,9 @@ export function BlockNumberProvider({ children }: PropsWithChildren) {
   }, [provider, windowVisible, onChainBlock, multicallChainId])
   // Poll once for the mainnet block number using the network provider.
   useEffect(() => {
-    RPC_PROVIDERS[UniverseChainId.AbstractMainnet]
+    RPC_PROVIDERS[UniverseChainId.FlowTestnet]
       .getBlockNumber()
-      .then((block) => onChainBlock(UniverseChainId.AbstractMainnet, block))
+      .then((block) => onChainBlock(UniverseChainId.FlowTestnet, block))
       // swallow errors - it's ok if this fails, as we'll try again if we activate mainnet
       .catch(() => undefined)
   }, [onChainBlock])
