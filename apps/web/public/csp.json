@@ -66,6 +66,7 @@
     "https://rpc-animechain-39xf6m45e3.t.conduit.xyz",
     "https://graph-node.replace.domain",
     "https://*.swap.w3us.site",
+    "https://*.staging.flowswap.io",
     "https://raw.githubusercontent.com/protofire/token-list/*",
     "https://auth.privy.io",
     "https://api.mainnet.abs.xyz",

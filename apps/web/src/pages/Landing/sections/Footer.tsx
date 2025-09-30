@@ -3,7 +3,7 @@ import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
-import { Github, Medium, Twitter } from 'pages/Landing/components/Icons'
+import { Github, Discord, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
 // import { useTogglePrivacyPolicy } from 'state/application/hooks'
@@ -34,19 +34,19 @@ export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
       <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://x.com/protofire" target="_blank">
+        <Anchor href="https://x.com/flow_blockchain" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
       <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://github.com/protofire" target="_blank">
+        <Anchor href="https://github.com/onflow" target="_blank">
           <Github size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
 
       <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://medium.com/@Protofire_io" target="_blank">
-          <Medium size={iconSize} fill="inherit" />
+        <Anchor href="https://discord.com/invite/J6fFnh2xx6" target="_blank">
+          <Discord size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
     </Flex>
@@ -104,10 +104,10 @@ export function Footer() {
             {/* <FooterSection title={sections[0].title} items={[...sections[0].items, brandAssets]} /> */}
             <FooterSection title={sections[0].title} items={sections[0].items} />
           </Flex>
-          {/* <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
-            <FooterSection title={sections[1].title} items={sections[1].items} />
+          <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
+            {/* <FooterSection title={sections[1].title} items={sections[1].items} /> */}
             <FooterSection title={sections[2].title} items={sections[2].items} />
-          </Flex> */}
+          </Flex>
         </Flex>
         <Flex $md={{ display: 'flex' }} display="none">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
@@ -127,12 +127,12 @@ export function Footer() {
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
           </Text>
         </Anchor>
-        <Flex row alignItems="center" gap="$spacing16">
-          {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
+        {/* <Flex row alignItems="center" gap="$spacing16">
+          <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
-          </Anchor> */}
+          </Anchor>
           <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Flex>
   )

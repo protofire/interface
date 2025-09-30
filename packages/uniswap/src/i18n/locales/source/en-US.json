@@ -851,7 +851,7 @@
   "forceUpgrade.title": "Update the app to continue",
   "globalPreferences.title": "Global preferences",
   "hero.scroll": "Scroll to learn more",
-  "hero.subtitle": "Powered by Uniswap V3. Approved by Uniswap DAO",
+  "hero.subtitle": "Powered by Uniswap V3",
   "hero.swap.title": "Swap Simple <br/> With Flow",
   "home.activity.empty.button": "Receive tokens or NFTs",
   "home.activity.empty.description.default": "When you approve, trade, or transfer tokens or NFTs, your transactions will appear here.",

@@ -277,8 +277,8 @@ export const USDC_FLOW_TESTNET = new Token(
   UniverseChainId.FlowTestnet,
   '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73',
   6,
-  'USDC',
-  'USDC',
+  'USDCf',
+  'USDC Flow',
 )
 
 export const WBTC = new Token(

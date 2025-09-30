@@ -25,7 +25,7 @@ export const useMenuContent = (): MenuSection[] => {
     },
     {
       title: 'Company',
-      items: [{ label: 'Protofire', href: 'https://protofire.io/' }],
+      items: [{ label: 'Flow', href: 'https://flow.com/' }],
     },
     {
       title: 'Terms',

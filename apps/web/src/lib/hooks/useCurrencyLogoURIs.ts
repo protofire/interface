@@ -49,7 +49,7 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
     }
     // USDC
     if (isSameAddress(address, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73')) {
-      return 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png'
+      return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
     }
   }
 
