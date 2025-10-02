@@ -30,7 +30,6 @@ export type TabsItem = MenuItem & {
 export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSection[] => {
   const { t } = useTranslation()
   const forAggregatorEnabled = useFeatureFlag(FeatureFlags.ForAggregator)
-  const isMultichainExploreEnabled = useFeatureFlag(FeatureFlags.MultichainExplore)
   const { pathname } = useLocation()
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
@@ -84,50 +83,20 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
-      items: forkConfig.uniSpecificFeaturesEnabled
-        ? [
-            { label: t('common.tokens'), quickKey: 'T', href: '/explore/tokens', internal: true },
-            { label: t('common.pools'), quickKey: 'P', href: '/explore/pools', internal: true },
-            {
-              label: t('common.transactions'),
-              quickKey: 'X',
-              href: `/explore/transactions${isMultichainExploreEnabled ? '/ethereum' : ''}`,
-              internal: true,
-            },
-            ...(props?.includeNftsLink
-              ? [{ label: t('common.nfts'), quickKey: 'N', href: '/nfts', internal: true }]
-              : []),
-          ]
-        : [
-            // {
-            //   label: t('common.tokens'),
-            //   quickKey: 'T',
-            //   href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/tokens`,
-            //   internal: false,
-            // },
-            // {
-            //   label: t('common.pools'),
-            //   quickKey: 'P',
-            //   href: `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractTestnet].infoLink}/pools`,
-            //   internal: false,
-            // },
-            {
-              label: 'V3 Analytics',
-              quickKey: 'T',
-              href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
-              internal: false,
-            },
-            ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)
-              ? [
-                  {
-                    label: 'V2 Analytics',
-                    quickKey: 'P',
-                    href: `https://v2-info.staging.flowswap.io`,
-                    internal: false,
-                  },
-                ]
-              : []),
-          ],
+      items: [
+        {
+          label: 'V3 Analytics',
+          quickKey: 'T',
+          href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+          internal: false,
+        },
+        {
+          label: 'V2 Analytics',
+          quickKey: 'P',
+          href: `https://v2-info.staging.flowswap.io`,
+          internal: false,
+        },
+      ],
     },
     {
       title: t('common.pool'),
