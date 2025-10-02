@@ -5,7 +5,7 @@ import forkConfig from 'forkConfig'
 // import { ABSTRACT_LOGO } from 'ui/src/assets'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 // import { UNISWAP_WEB_URL } from 'uniswap/src/constants/urls'
-import { WEB_SUPPORTED_CHAIN_IDS } from 'uniswap/src/types/chains'
+import { UniverseChainId, WEB_SUPPORTED_CHAIN_IDS } from 'uniswap/src/types/chains'
 import { createClient } from 'viem'
 import { createConfig, http } from 'wagmi'
 import { connect } from 'wagmi/actions'
@@ -18,7 +18,10 @@ declare module 'wagmi' {
 }
 
 export const wagmiConfig = createConfig({
-  chains: [...WEB_SUPPORTED_CHAIN_IDS.map((chainId) => UNIVERSE_CHAIN_INFO[chainId])],
+  chains: [
+    UNIVERSE_CHAIN_INFO[UniverseChainId.FlowTestnet],
+    ...WEB_SUPPORTED_CHAIN_IDS.map((chainId) => UNIVERSE_CHAIN_INFO[chainId]),
+  ],
   connectors: [
     injectedWithFallback(),
     walletConnect(WC_PARAMS),

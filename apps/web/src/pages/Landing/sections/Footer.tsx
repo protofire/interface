@@ -3,11 +3,10 @@ import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
-import { Github, Discord, Twitter } from 'pages/Landing/components/Icons'
+import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-// import { useTogglePrivacyPolicy } from 'state/application/hooks'
-import { Anchor, Flex, Separator, Text, styled } from 'ui/src'
+import { Anchor, Flex, Separator, Text } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
 const SOCIAL_ICONS_SIZE = `${iconSizes.icon32}px`
@@ -22,13 +21,6 @@ const SocialIcon = deprecatedStyled(Wiggle)`
     fill: ${(props) => props.$hoverColor};
   }
 `
-const PolicyLink = styled(Text, {
-  variant: 'body3',
-  animation: '100ms',
-  color: '$neutral2',
-  cursor: 'pointer',
-  hoverStyle: { color: '$neutral1' },
-})
 
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (

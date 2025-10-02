@@ -656,8 +656,11 @@ function AddLiquidity() {
     ((!!currencyIdA && BLAST_REBASING_TOKENS.includes(currencyIdA)) ||
       (!!currencyIdB && BLAST_REBASING_TOKENS.includes(currencyIdB)))
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showBlastRebasingModal = useAtomValue(blastRebasingAlertAtom) && showBlastRebasingWarning
   const updateShowBlastRebasingModal = useUpdateAtom(blastRebasingAlertAtom)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleBlastModalContinue = useCallback(() => {
     updateShowBlastRebasingModal(false)
   }, [updateShowBlastRebasingModal])

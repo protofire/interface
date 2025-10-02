@@ -306,10 +306,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
-  [UniverseChainId.FlowTestnet]: [
-    ...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet],
-    USDC_FLOW_TESTNET,
-  ],
+  [UniverseChainId.FlowTestnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet], USDC_FLOW_TESTNET],
 }
 
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
