@@ -4,7 +4,7 @@ import { useKeyPress } from 'hooks/useKeyPress'
 import styled from 'lib/styled-components'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { Popover, Text } from 'ui/src'
+import { Flex, Popover, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 
@@ -78,13 +78,15 @@ const Tab = ({
   isActive,
   path,
   items,
-  blank,
+  internal = true,
+  icon
 }: {
   label: string
   isActive?: boolean
   path: string
-  items?: TabsItem[],
-  blank?: boolean
+  items?: TabsItem[]
+  internal?: boolean
+  icon?: JSX.Element
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
@@ -98,17 +100,18 @@ const Tab = ({
   useEffect(() => closeMenu(), [location, closeMenu])
 
   const Label = (
-    <NavLink to={path} style={{ textDecoration: 'none' }} target={blank ? '_blank' : '_self'} onClick={closeMenu}>
-      <TabText
-        variant="subheading1"
-        color={isActive || isOpen ? '$neutral1' : '$neutral2'}
-        m="8px"
-        gap="4px"
-        cursor="pointer"
-        userSelect="none"
-      >
-        {label}
-      </TabText>
+    <NavLink target={!internal ? '_blank' : '_self'} to={path} style={{ textDecoration: 'none' }}>
+      <Flex alignItems="center" gap="$spacing4" m="8px" flexDirection="row">
+        <TabText
+          variant="subheading1"
+          color={isActive || isOpen ? '$neutral1' : '$neutral2'}
+          cursor="pointer"
+          userSelect="none"
+        >
+          {label}
+        </TabText>
+        {icon}
+      </Flex>
     </NavLink>
   )
 
@@ -167,8 +170,8 @@ export function Tabs() {
   const tabsContent: TabsSection[] = useTabsContent()
   return (
     <>
-      {tabsContent.map(({ title, isActive, href, items, blank }, index) => (
-        <Tab key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} blank={blank} />
+      {tabsContent.map(({ title, isActive, href, items, internal, icon}, index) => (
+        <Tab icon={icon} key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} internal={internal} />
       ))}
     </>
   )

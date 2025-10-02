@@ -131,6 +131,10 @@ const StyledConnectButton = styled.button`
   font-size: 16px;
   padding: 10px 12px;
   color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `
 
 function ExistingUserCTAButton() {
