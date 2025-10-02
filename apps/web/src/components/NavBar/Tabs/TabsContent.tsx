@@ -4,6 +4,7 @@ import { Send } from 'components/Icons/Send'
 import { SwapV2 } from 'components/Icons/SwapV2'
 import { MenuItem } from 'components/NavBar/CompanyMenu/Content'
 import { useTabsVisible } from 'components/NavBar/ScreenSizes'
+import { getInfoV2Link, getInfoV2Domain } from "constants/links"
 import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
@@ -87,7 +88,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
-      href: `https://info.sakuraswap.com/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: `${getInfoV2Domain()}/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
@@ -119,7 +120,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `https://info.sakuraswap.com/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+              href: `${getInfoV2Domain()}/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
               internal: false,
             },
             ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)
@@ -128,7 +129,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                     label: 'V2 Analytics',
                     quickKey: 'P',
                     // href: `https://v2-info-${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam.replace(/_/g, '-')}.swap.w3us.site`,
-                    href: 'https://v2-info.sakuraswap.com',
+                    href: getInfoV2Link(chainId!),
                     internal: false,
                   },
                 ]
