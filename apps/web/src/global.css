@@ -11,6 +11,10 @@
   text-decoration: none;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 @media screen and (max-width: 864px) {
   /* the :root:root:root is to have higher specificity than tamagui */
   :root:root:root .connect-with-us-layout {
