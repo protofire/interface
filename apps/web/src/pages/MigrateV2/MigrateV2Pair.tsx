@@ -608,12 +608,10 @@ function V2PairMigration({
 
           {invalidRange ? (
             <YellowCard padding="8px 12px" $borderRadius="12px">
-              <RowBetween>
-                <AlertTriangle stroke={theme.deprecated_yellow3} size="16px" />
-                <Text color="$" ml={12} fontSize={12}>
-                  <Trans i18nKey="migrate.invalidRange" />
-                </Text>
-              </RowBetween>
+              <AlertTriangle stroke={theme.deprecated_yellow3} size="16px" />
+              <Text color="$" ml={12} fontSize={12}>
+                <Trans i18nKey="migrate.invalidRange" />
+              </Text>
             </YellowCard>
           ) : null}
 
