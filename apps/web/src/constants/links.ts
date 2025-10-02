@@ -1,12 +1,13 @@
 import { isProdEnv } from 'utilities/src/environment'
 
 export const getInfoV2Link = (chainId: string | number) => {
+  const isProd = isProdEnv()
   switch (chainId) {
     case 69000:
-      return 'https://v2-info-anime.sakuraswap.com'
+      return isProd ? 'https://v2-info-anime.sakuraswap.com' : 'https://v2-info-anime.staging.sakuraswap.com'
     default:
-      return isProdEnv() ? 'https://v2-info.sakuraswap.com' : 'https://v2-info.staging.sakuraswap.com'
+      return isProd ? 'https://v2-info.sakuraswap.com' : 'https://v2-info.staging.sakuraswap.com'
   }
 }
 
-export const getInfoV2Domain = () => isProdEnv() ? 'https://info.sakuraswap.com' : 'https://info.staging.sakuraswap.com'
+export const getInfoV3Domain = () => isProdEnv() ? 'https://info.sakuraswap.com' : 'https://info.staging.sakuraswap.com'
