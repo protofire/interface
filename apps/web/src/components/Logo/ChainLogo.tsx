@@ -14,6 +14,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  FLOW_LOGO,
   FLOW_TESTNET_LOGO,
   INK_LOGO,
   MODE_LOGO,
@@ -250,6 +251,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             bgColor: '#FFDDE3',
             textColor: '#6B3841',
           }
+    case UniverseChainId.FlowMainnet:
+      return {
+        symbol: FLOW_LOGO,
+        bgColor: '#00EF8B33',
+        textColor: '#00EF8B',
+      }
     case UniverseChainId.FlowTestnet:
       return {
         symbol: FLOW_TESTNET_LOGO,

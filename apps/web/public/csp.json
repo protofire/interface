@@ -70,7 +70,10 @@
     "https://raw.githubusercontent.com/protofire/token-list/*",
     "https://auth.privy.io",
     "https://api.mainnet.abs.xyz",
-    "https://testnet.evm.nodes.onflow.org"
+    "https://testnet.evm.nodes.onflow.org",
+    "https://mainnet.evm.nodes.onflow.org",
+    "https://evm.flowscan.io",
+    "https://raw.githubusercontent.com/onflow/assets/main/tokens/*"
   ],
   "workerSrc": [
     "'self'",

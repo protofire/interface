@@ -13,6 +13,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  FLOW_LOGO,
   FLOW_TESTNET_LOGO,
   INK_LOGO,
   MODE_LOGO,
@@ -32,6 +33,7 @@ import { anime } from 'uniswap/src/constants/chainDefinitions/anime'
 import { animeTestnet } from 'uniswap/src/constants/chainDefinitions/animeTestnet'
 import { bob } from 'uniswap/src/constants/chainDefinitions/bob'
 import { cyber } from 'uniswap/src/constants/chainDefinitions/cyber'
+import { flow } from 'uniswap/src/constants/chainDefinitions/flow'
 import { flowTestnet } from 'uniswap/src/constants/chainDefinitions/flowTestnet'
 import { ink } from 'uniswap/src/constants/chainDefinitions/ink'
 import { redstone } from 'uniswap/src/constants/chainDefinitions/redstone'
@@ -60,6 +62,7 @@ import {
   USDC_BOB,
   USDC_CELO,
   USDC_CYBER,
+  USDC_FLOW_MAINNET,
   USDC_FLOW_TESTNET,
   USDC_GOERLI,
   USDC_INK,
@@ -1720,6 +1723,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.FLOW_MAINNET]: {
+    ...flow,
+    id: UniverseChainId.FlowMainnet,
+    sdkId: UniswapSDKChainId.FLOW_MAINNET,
+    assetRepoNetworkName: 'flow',
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: '',
+    chainPriority: 10,
+    docs: 'https://developers.flow.com/',
+    elementName: ElementName.ChainFlow,
+    explorer: {
+      name: 'FlowScan',
+      url: 'https://evm.flowscan.io',
+      apiURL: 'https://evm.flowscan.io/api',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://info.staging.flowswap.io',
+    infuraPrefix: undefined,
+    interfaceName: 'flow',
+    label: 'Flow Mainnet',
+    logo: FLOW_LOGO,
+    nativeCurrency: {
+      name: 'Flow',
+      symbol: 'FLOW',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L1,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://mainnet.evm.nodes.onflow.org'] },
+      default: { http: ['https://mainnet.evm.nodes.onflow.org'] },
+      appOnly: { http: ['https://mainnet.evm.nodes.onflow.org'] },
+    },
+    urlParam: 'flow',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_FLOW_MAINNET, 10_000e6),
+    stablecoins: [USDC_FLOW_MAINNET],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped Flow',
+      symbol: 'WFLOW',
+      decimals: 18,
+      address: '0xd3bf53dac106a0290b0483ecbc89d40fcc961f3e',
     },
   } as const satisfies UniverseChainInfo,
   [UniswapSDKChainId.FLOW_TESTNET]: {

@@ -19,7 +19,8 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.AnimeTestnet]: 'https://graph-node.replace.domain/subgraphs/name/anime-testnet/v3-subgraph',
   [UniverseChainId.Anime]: 'https://graph-node.replace.domain/subgraphs/name/anime/v3-subgraph',
   [UniverseChainId.Mode]: 'https://graph-node.replace.domain/subgraphs/name/mode/v3-subgraph',
-  [UniverseChainId.FlowTestnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow-testnet/v3-subgraph',
+  [UniverseChainId.FlowMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow/uniswap-v3',
+  [UniverseChainId.FlowTestnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow-testnet/uniswap-v3',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })

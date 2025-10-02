@@ -354,6 +354,7 @@ export const colorsLight = {
   chain_69000: networkColors.anime.light,
   chain_34443: networkColors.mode.light,
   chain_545: networkColors.flow.light,
+  chain_747: networkColors.flow.light,
 
   // Testnets
   chain_3: colors.yellowVibrant,
@@ -446,6 +447,7 @@ export const colorsDark = {
   chain_69000: networkColors.anime.dark,
   chain_34443: networkColors.mode.dark,
   chain_545: networkColors.flow.dark,
+  chain_747: networkColors.flow.dark,
 
   // Testnets
   chain_3: colors.yellowVibrant,

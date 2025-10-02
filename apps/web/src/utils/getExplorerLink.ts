@@ -31,6 +31,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Mode]: 'https://explorer.mode.network/',
   [UniverseChainId.Anime]: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/',
   [UniverseChainId.FlowTestnet]: 'https://evm-testnet.flowscan.io/',
+  [UniverseChainId.FlowMainnet]: 'https://evm.flowscan.io/',
 }
 
 export enum ExplorerDataType {

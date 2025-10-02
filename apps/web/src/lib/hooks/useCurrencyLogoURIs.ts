@@ -25,6 +25,7 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
     case UniverseChainId.Anime:
       return AnimeLogo
     case UniverseChainId.FlowTestnet:
+    case UniverseChainId.FlowMainnet:
       return FlowLogo
     default:
       return EthereumLogo
@@ -49,6 +50,18 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
     }
     // USDC
     if (isSameAddress(address, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73')) {
+      return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
+    }
+  }
+
+  // Flow Mainnet specific tokens
+  if (chainId === UniverseChainId.FlowMainnet) {
+    // WFLOW
+    if (isSameAddress(address, '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e')) {
+      return FlowLogo
+    }
+    // USDC
+    if (isSameAddress(address, '0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED')) {
       return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
     }
   }

@@ -546,6 +546,10 @@ export function isFlowTestnet(chainId: number): chainId is UniverseChainId.FlowT
   return chainId === UniverseChainId.FlowTestnet
 }
 
+export function isFlowMainnet(chainId: number): chainId is UniverseChainId.FlowMainnet {
+  return chainId === UniverseChainId.FlowMainnet
+}
+
 function getCeloNativeCurrency(chainId: number) {
   switch (chainId) {
     case UniverseChainId.CeloAlfajores:
@@ -718,6 +722,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
   } else if (isAnime(chainId)) {
     nativeCurrency = new AnimeNativeCurrency(chainId)
   } else if (isFlowTestnet(chainId)) {
+    nativeCurrency = new FlowNativeCurrency(chainId)
+  } else if (isFlowMainnet(chainId)) {
     nativeCurrency = new FlowNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
