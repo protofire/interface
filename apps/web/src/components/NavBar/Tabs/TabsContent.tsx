@@ -13,6 +13,7 @@ import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
+import { ExternalLink } from 'ui/src/components/icons'
 
 export type TabsSection = {
   title: string
@@ -20,6 +21,8 @@ export type TabsSection = {
   isActive?: boolean
   items?: TabsItem[]
   closeMenu?: () => void
+  internal?: boolean
+  icon?: JSX.Element
 }
 
 export type TabsItem = MenuItem & {
@@ -83,6 +86,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       items: [
         {
           label: 'V3 Analytics',
