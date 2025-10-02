@@ -5,7 +5,7 @@ export const getInfoV2Link = (chainId: string | number) => {
     case 69000:
       return 'https://v2-info-anime.sakuraswap.com'
     default:
-      return 'https://v2-info.sakuraswap.com'
+      return isProdEnv() ? 'https://v2-info.sakuraswap.com' : 'https://v2-info.staging.sakuraswap.com'
   }
 }
 
