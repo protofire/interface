@@ -8,6 +8,8 @@ import styled from 'lib/styled-components'
 import { ThemedText } from 'theme/components'
 import { Flex, RadioButton } from 'ui/src'
 import { useFormatter } from 'utils/formatNumbers'
+import { useMedia } from 'tamagui'
+
 
 const ResponsiveText = styled(ThemedText.DeprecatedLabel)`
   line-height: 16px;
@@ -29,12 +31,14 @@ interface FeeOptionProps {
 
 export function FeeOption({ feeAmount, selected, poolState, distributions, onClick }: FeeOptionProps) {
   const { formatDelta } = useFormatter()
+  const media = useMedia()
 
   return (
     <Flex
       alignItems="center"
       py="$padding12"
       px="$padding8"
+      {...media.md && { minWidth: '46%' }}
       borderRadius="$rounded12"
       borderWidth="$spacing1"
       borderColor={selected ? '$accent1' : '$surface3'}
