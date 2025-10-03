@@ -114,6 +114,24 @@ export const StyledInternalLink = styled(Link)`
   ${LinkStyle}
 `
 
+export const StyledInternalLinkLight = styled(Link)`
+  ${ClickableStyle}
+  color: ${({ theme }) => theme.accent2};
+  stroke: ${({ theme }) => theme.accent2};
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:focus {
+    color: ${({ theme }) => theme.accent1};
+  }
+  &:hover {
+    color: ${({ theme }) => theme.accent1};
+  }
+  &:active {
+    color: ${({ theme }) => theme.accent1};
+  }
+`
+
 const IconStyle = css`
   height: 16px;
   width: 18px;
