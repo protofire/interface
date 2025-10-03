@@ -84,20 +84,20 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: `https://info.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       items: [
         {
           label: 'V3 Analytics',
           quickKey: 'T',
-          href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+          href: `https://info.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
           internal: false,
         },
         {
           label: 'V2 Analytics',
           quickKey: 'P',
-          href: `https://v2-info.staging.flowswap.io`,
+          href: `https://v2-info.flowswap.io`,
           internal: false,
         },
       ],
