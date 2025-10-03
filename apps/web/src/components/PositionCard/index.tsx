@@ -262,7 +262,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 '-'
               )}
             </FixedHeightRow>
-
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={535}>
@@ -280,7 +279,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 '-'
               )}
             </FixedHeightRow>
-
             <FixedHeightRow>
               <Text fontSize={16} fontWeight={535}>
                 <Trans i18nKey="pool.share.label" />
@@ -291,8 +289,8 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   : '-'}
               </Text>
             </FixedHeightRow>
-
-            {isDarkMode ? (
+            {/* Dark Mode Button */}
+            {isDarkMode && (
               <ButtonSecondary padding="8px" $borderRadius="8px">
                 <StyledInternalLink
                   style={{ width: '100%', textAlign: 'center' }}
@@ -302,7 +300,9 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   <span style={{ fontSize: '11px' }}>↗</span>
                 </StyledInternalLink>
               </ButtonSecondary>
-            ) : (
+            )}
+            {/* Light Mode Button */}
+            {!isDarkMode && (
               <ButtonSecondaryLight padding="8px" $borderRadius="8px">
                 <StyledInternalLinkLight
                   style={{ width: '100%', textAlign: 'center' }}
@@ -313,7 +313,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 </StyledInternalLinkLight>
               </ButtonSecondaryLight>
             )}
-
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <RowBetween marginTop="10px">
                 <ButtonPrimary
