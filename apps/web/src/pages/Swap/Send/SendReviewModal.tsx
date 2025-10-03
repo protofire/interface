@@ -3,11 +3,9 @@ import { PortfolioLogo } from 'components/AccountDrawer/MiniPortfolio/PortfolioL
 import { ButtonPrimary } from 'components/Button'
 import Column, { ColumnCenter } from 'components/Column'
 import Identicon from 'components/Identicon'
-import { ChainLogo } from 'components/Logo/ChainLogo'
 import Modal from 'components/Modal'
 import { GetHelpHeader } from 'components/Modal/GetHelpHeader'
 import Row from 'components/Row'
-import { useStablecoinValue } from 'hooks/useStablecoinPrice'
 import styled from 'lib/styled-components'
 import { ReactNode } from 'react'
 import { useSendContext } from 'state/send/SendContext'
@@ -71,7 +69,7 @@ export function SendReviewModal({ onConfirm, onDismiss }: { onConfirm: () => voi
   const { chainId } = useSwapAndLimitContext()
   const {
     sendState: { inputCurrency, inputInFiat, exactAmountFiat },
-    derivedSendInfo: { parsedTokenAmount, exactAmountOut, gasFeeCurrencyAmount, recipientData },
+    derivedSendInfo: { parsedTokenAmount, exactAmountOut, recipientData },
   } = useSendContext()
 
   const { formatConvertedFiatNumberOrString, formatCurrencyAmount } = useFormatter()
@@ -81,12 +79,6 @@ export function SendReviewModal({ onConfirm, onDismiss }: { onConfirm: () => voi
   })
   const formattedFiatInputAmount = formatConvertedFiatNumberOrString({
     input: (inputInFiat ? exactAmountFiat : exactAmountOut) || '0',
-    type: NumberType.PortfolioBalance,
-  })
-
-  const gasFeeUSD = useStablecoinValue(gasFeeCurrencyAmount)
-  const gasFeeFormatted = formatCurrencyAmount({
-    amount: gasFeeUSD,
     type: NumberType.PortfolioBalance,
   })
 
@@ -127,15 +119,6 @@ export function SendReviewModal({ onConfirm, onDismiss }: { onConfirm: () => voi
             />
           </Column>
           <Separator />
-          <Row width="100%" justify="space-between">
-            <ThemedText.BodySmall color="neutral2" lineHeight="20px">
-              <Trans i18nKey="common.networkCost" />
-            </ThemedText.BodySmall>
-            <Row width="min-content" gap="xs">
-              <ChainLogo chainId={chainId ?? UniverseChainId.Mainnet} size={16} />
-              <ThemedText.BodySmall>{gasFeeFormatted}</ThemedText.BodySmall>
-            </Row>
-          </Row>
         </ReviewContentContainer>
         <Trace logPress element={InterfaceElementName.SEND_REVIEW_BUTTON}>
           <ButtonPrimary onClick={onConfirm}>
