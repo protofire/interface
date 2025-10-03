@@ -8,12 +8,12 @@ import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { ExternalLink } from 'ui/src/components/icons'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
-import { ExternalLink } from 'ui/src/components/icons'
 
 export type TabsSection = {
   title: string
@@ -37,7 +37,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const theme = useTheme()
   const areTabsVisible = useTabsVisible()
   const { chainId: universeChainId } = useSwapAndLimitContext()
-  const chainId = universeChainId ? universeChainId : UniverseChainId.Zero
+  const chainId = universeChainId ? universeChainId : UniverseChainId.FlowMainnet
   return [
     {
       title: t('common.trade'),
@@ -87,6 +87,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
       items: [
         {
           label: 'V3 Analytics',

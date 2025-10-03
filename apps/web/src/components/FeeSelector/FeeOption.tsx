@@ -5,11 +5,10 @@ import { FEE_AMOUNT_DETAIL } from 'components/FeeSelector/shared'
 import { useFeeTierDistribution } from 'hooks/useFeeTierDistribution'
 import { PoolState } from 'hooks/usePools'
 import styled from 'lib/styled-components'
+import { useMedia } from 'tamagui'
 import { ThemedText } from 'theme/components'
 import { Flex, RadioButton } from 'ui/src'
 import { useFormatter } from 'utils/formatNumbers'
-import { useMedia } from 'tamagui'
-
 
 const ResponsiveText = styled(ThemedText.DeprecatedLabel)`
   line-height: 16px;
@@ -38,7 +37,7 @@ export function FeeOption({ feeAmount, selected, poolState, distributions, onCli
       alignItems="center"
       py="$padding12"
       px="$padding8"
-      {...media.md && { minWidth: '46%' }}
+      {...(media.md && { minWidth: '46%' })}
       borderRadius="$rounded12"
       borderWidth="$spacing1"
       borderColor={selected ? '$accent1' : '$surface3'}
