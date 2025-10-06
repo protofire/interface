@@ -5,6 +5,7 @@ import { GeneratedIcon } from 'ui/src'
 import { Chain as BackendChainId } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { ElementNameType } from 'uniswap/src/features/telemetry/constants'
 import { Chain as WagmiChain } from 'wagmi/chains'
+import { isProdEnv } from "../utils/env"
 
 export enum UniverseChainId {
   Mainnet = UniswapSDKChainId.MAINNET,
@@ -84,8 +85,16 @@ export const WALLET_SUPPORTED_CHAIN_IDS: WalletChainId[] = [
 
 export type InterfaceChainId = UniverseChainId
 
-export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
-[
+
+
+export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = isProdEnv() ? [
+  UniverseChainId.AbstractMainnet,
+] : [
+  UniverseChainId.AbstractMainnet,
+  UniverseChainId.Zero,
+  UniverseChainId.Anime,
+]
+// [
   // UniverseChainId.Mainnet,
   // UniverseChainId.Goerli,
   // UniverseChainId.Sepolia,
@@ -104,18 +113,18 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   // UniverseChainId.Zora,
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
-  UniverseChainId.Zero,
+  // UniverseChainId.Zero,
   // UniverseChainId.BOB,
   // UniverseChainId.CYBER,
   // UniverseChainId.SHAPE,
   // UniverseChainId.INK,
   // UniverseChainId.REDSTONE,
   // UniverseChainId.REDSTONE_GARNET,
-  UniverseChainId.AbstractMainnet,
+  // UniverseChainId.AbstractMainnet,
   // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
-  UniverseChainId.Anime,
-]
+  // UniverseChainId.Anime,
+// ]
 
 export enum RPCType {
   Public = 'public',
