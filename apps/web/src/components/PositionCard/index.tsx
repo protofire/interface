@@ -9,6 +9,7 @@ import { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import { StyledExternalLink } from 'components/Table/styled'
 import { CardNoise } from 'components/earn/styled'
 import { Dots } from 'components/swap/styled'
+import { getInfoV2Link } from "constants/links"
 // import { chainIdToBackendChain } from 'constants/chains'
 import { BIG_INT_ZERO } from 'constants/misc'
 import { useAccount } from 'hooks/useAccount'
@@ -22,8 +23,10 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useTokenBalance } from 'state/connection/hooks'
+import { useSwapAndLimitContext } from "state/swap/useSwapContext"
 import { ThemedText } from 'theme/components'
 import { Trans } from 'uniswap/src/i18n'
+import { UniverseChainId } from "uniswap/src/types/chains"
 import { currencyId } from 'utils/currencyId'
 import { unwrappedToken } from 'utils/unwrappedToken'
 
@@ -157,6 +160,8 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
 
 export default function FullPositionCard({ pair, border, stakedBalance }: PositionCardProps) {
   const account = useAccount()
+  const { chainId: universeChainId } = useSwapAndLimitContext()
+  const chainId = universeChainId ? universeChainId : UniverseChainId.AbstractMainnet
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
@@ -294,7 +299,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             <ButtonSecondary padding="8px" $borderRadius="8px">
               <StyledExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href="https://v2-info.sakuraswap.com"
+                href={getInfoV2Link(chainId!)}
                 // to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
               >
                 <Trans i18nKey="pool.accruedFees" />

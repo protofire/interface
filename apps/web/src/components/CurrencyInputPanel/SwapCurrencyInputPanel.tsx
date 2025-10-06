@@ -355,7 +355,13 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                   <Aligner>
                     <RowFixed>
                       <AnimatePresence>
-                        <Flex row animation="300ms" exitStyle={{ opacity: 0 }} enterStyle={{ opacity: 0 }}>
+                        <Flex
+                          row
+                          animation="300ms"
+                          exitStyle={{ opacity: 0 }}
+                          enterStyle={{ opacity: 0 }}
+                          style={{ top: '-1px' }}
+                        >
                           {pair ? (
                             <span style={{ marginRight: '0.5rem' }}>
                               <DoubleCurrencyLogo currencies={[pair.token0, pair.token1]} size={24} />

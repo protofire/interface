@@ -8,6 +8,8 @@ export type TickData = Ticks[number]
 
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.AbstractMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/abstract/uniswap-v3',
+  [UniverseChainId.Zero]: 'https://graph.swap.w3us.site/subgraphs/name/zero/uniswap-v3',
+  [UniverseChainId.Anime]: 'https://graph.swap.w3us.site/subgraphs/name/anime/uniswap-v3',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })

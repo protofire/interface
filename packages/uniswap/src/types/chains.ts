@@ -104,7 +104,7 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   // UniverseChainId.Zora,
   // UniverseChainId.Zksync,
   // UniverseChainId.AbstractTestnet,
-  // UniverseChainId.Zero,
+  UniverseChainId.Zero,
   // UniverseChainId.BOB,
   // UniverseChainId.CYBER,
   // UniverseChainId.SHAPE,
@@ -114,7 +114,7 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   UniverseChainId.AbstractMainnet,
   // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
-  // UniverseChainId.Anime,
+  UniverseChainId.Anime,
 ]
 
 export enum RPCType {
