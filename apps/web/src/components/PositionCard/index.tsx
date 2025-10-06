@@ -1,6 +1,6 @@
 import { CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 import { Pair } from '@uniswap/v2-sdk'
-import { ButtonEmpty, ButtonPrimary, ButtonSecondary } from 'components/Button'
+import { ButtonEmpty, ButtonPrimary, ButtonSecondary, ButtonSecondaryLight } from 'components/Button'
 import { GrayCard, LightCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
 import { DoubleCurrencyLogo } from 'components/DoubleLogo'
@@ -21,7 +21,8 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useTokenBalance } from 'state/connection/hooks'
-import { StyledInternalLink, ThemedText } from 'theme/components'
+import { StyledInternalLink, StyledInternalLinkLight, ThemedText } from 'theme/components'
+import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import { Trans } from 'uniswap/src/i18n'
 import { currencyId } from 'utils/currencyId'
 import { unwrappedToken } from 'utils/unwrappedToken'
@@ -156,6 +157,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
 
 export default function FullPositionCard({ pair, border, stakedBalance }: PositionCardProps) {
   const account = useAccount()
+  const isDarkMode = useIsDarkMode()
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
@@ -260,7 +262,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 '-'
               )}
             </FixedHeightRow>
-
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={535}>
@@ -278,7 +279,6 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 '-'
               )}
             </FixedHeightRow>
-
             <FixedHeightRow>
               <Text fontSize={16} fontWeight={535}>
                 <Trans i18nKey="pool.share.label" />
@@ -289,16 +289,30 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   : '-'}
               </Text>
             </FixedHeightRow>
-
-            <ButtonSecondary padding="8px" $borderRadius="8px">
-              <StyledInternalLink
-                style={{ width: '100%', textAlign: 'center' }}
-                to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
-              >
-                <Trans i18nKey="pool.accruedFees" />
-                <span style={{ fontSize: '11px' }}>↗</span>
-              </StyledInternalLink>
-            </ButtonSecondary>
+            {/* Dark Mode Button */}
+            {isDarkMode && (
+              <ButtonSecondary padding="8px" $borderRadius="8px">
+                <StyledInternalLink
+                  style={{ width: '100%', textAlign: 'center' }}
+                  to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                >
+                  <Trans i18nKey="pool.accruedFees" />
+                  <span style={{ fontSize: '11px' }}>↗</span>
+                </StyledInternalLink>
+              </ButtonSecondary>
+            )}
+            {/* Light Mode Button */}
+            {!isDarkMode && (
+              <ButtonSecondaryLight padding="8px" $borderRadius="8px">
+                <StyledInternalLinkLight
+                  style={{ width: '100%', textAlign: 'center' }}
+                  to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                >
+                  <Trans i18nKey="pool.accruedFees" />
+                  <span style={{ fontSize: '11px' }}>↗</span>
+                </StyledInternalLinkLight>
+              </ButtonSecondaryLight>
+            )}
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <RowBetween marginTop="10px">
                 <ButtonPrimary

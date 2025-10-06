@@ -1,6 +1,6 @@
 import styled from 'lib/styled-components'
 import { BREAKPOINTS } from 'theme'
-import { ButtonText, ThemedText } from 'theme/components'
+import { ThemedText } from 'theme/components'
 import { Z_INDEX } from 'theme/zIndex'
 
 const BannerWrapper = styled.div`
@@ -50,16 +50,8 @@ const BannerTextWrapper = styled(ThemedText.BodySecondary)`
   }
 `
 
-const ReadMoreWrapper = styled(ButtonText)`
-  flex-shrink: 0;
-  width: max-content;
-
-  :focus {
-    text-decoration: none;
-  }
-`
-
-const bannerText = 'This interface is still in the development phase and used only for internal testing purposes. The project has been modified to be compatible with additional networks.'
+const bannerText =
+  'This interface is still in the development phase and used only for internal testing purposes. The project has been modified to be compatible with additional networks.'
 
 export function InDevelopmentBanner() {
   return (

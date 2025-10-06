@@ -188,6 +188,35 @@ export const ButtonSecondary = styled(BaseButton)`
   }
 `
 
+export const ButtonSecondaryLight = styled(BaseButton)`
+  border: 1px solid ${({ theme }) => theme.accent2};
+  color: ${({ theme }) => theme.accent2};
+  background-color: transparent;
+  font-size: 16px;
+  border-radius: 12px;
+  padding: ${({ padding }) => (padding ? padding : '10px')};
+  transition: 0.2s;
+
+  &:focus {
+    box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent1};
+    border: 1px solid ${({ theme }) => theme.accent1};
+  }
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.accent1};
+  }
+  &:active {
+    box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent1};
+    border: 1px solid ${({ theme }) => theme.accent1};
+  }
+  &:disabled {
+    opacity: 50%;
+    cursor: auto;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+`
+
 export const ButtonOutlined = styled(BaseButton)`
   border: 1px solid ${({ theme }) => theme.surface3};
   background-color: transparent;

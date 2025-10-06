@@ -4,7 +4,7 @@ import { LoaderV3 } from 'components/Icons/LoadingSpinner'
 import Row, { RowBetween } from 'components/Row'
 import styled, { Keyframes, keyframes } from 'lib/styled-components'
 import { ReactElement, useEffect, useState } from 'react'
-import { ExternalLink, ThemedText } from 'theme/components'
+import { ThemedText } from 'theme/components'
 
 export interface StepDetails {
   // Left-justified icon representing the step and grayed out when step is not active
@@ -134,11 +134,7 @@ function Timer({ secondsRemaining }: { secondsRemaining: number }) {
 const Container = styled(RowBetween)`
   padding-right: 16px;
 `
-const StyledExternalLink = styled(ExternalLink)`
-  font-size: 12px;
-  font-weight: 485px;
-  line-height: 16px;
-`
+
 export function Step({ stepStatus, stepDetails }: { stepStatus: StepStatus; stepDetails: StepDetails }) {
   // Timer is shown in two cases:
   // (1) User has a specified amount of time to perform a required action. Timer starts running as soon as the step becomes active.
@@ -177,11 +173,6 @@ export function Step({ stepStatus, stepDetails }: { stepStatus: StepStatus; step
             stepDetails={stepDetails}
             isTimeRemaining={secondsRemaining === null || secondsRemaining > 0}
           />
-          {stepStatus === StepStatus.ACTIVE && stepDetails.learnMoreLinkHref && (
-            <StyledExternalLink href={stepDetails.learnMoreLinkHref || ''}>
-              {stepDetails.learnMoreLinkText}
-            </StyledExternalLink>
-          )}
         </Column>
       </Row>
       {secondsRemaining !== null && <Timer secondsRemaining={secondsRemaining} />}
