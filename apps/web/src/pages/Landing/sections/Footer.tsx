@@ -102,6 +102,7 @@ export function Footer() {
           <Flex row gap="$spacing16" justifyContent="space-between" $md={{ width: 'auto' }}>
             <FooterSection title={t('common.app')} items={appSectionItems} />
             <FooterSection title={sections[0].title} items={sections[0].items} />
+            <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
         </Flex>
         <Flex $md={{ display: 'flex' }} display="none">
