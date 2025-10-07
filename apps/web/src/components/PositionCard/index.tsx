@@ -8,7 +8,6 @@ import CurrencyLogo from 'components/Logo/CurrencyLogo'
 import { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import { CardNoise } from 'components/earn/styled'
 import { Dots } from 'components/swap/styled'
-import { chainIdToBackendChain } from 'constants/chains'
 import { BIG_INT_ZERO } from 'constants/misc'
 import { useAccount } from 'hooks/useAccount'
 import { useColor } from 'hooks/useColor'
@@ -294,7 +293,8 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
               <ButtonSecondary padding="8px" $borderRadius="8px">
                 <StyledInternalLink
                   style={{ width: '100%', textAlign: 'center' }}
-                  to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                  to="https://v2-info.staging.flowswap.io/"
+                  target="_blank"
                 >
                   <Trans i18nKey="pool.accruedFees" />
                   <span style={{ fontSize: '11px' }}>↗</span>
@@ -306,7 +306,8 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
               <ButtonSecondaryLight padding="8px" $borderRadius="8px">
                 <StyledInternalLinkLight
                   style={{ width: '100%', textAlign: 'center' }}
-                  to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                  to="https://v2-info.staging.flowswap.io/"
+                  target="_blank"
                 >
                   <Trans i18nKey="pool.accruedFees" />
                   <span style={{ fontSize: '11px' }}>↗</span>
