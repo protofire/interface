@@ -1,7 +1,6 @@
 /* eslint-disable rulesdir/no-undefined-or */
 import { SupportedInterfaceChainId, useSupportedChainId } from 'constants/chains'
 import { useMemo } from 'react'
-import { UniverseChainId } from "uniswap/src/types/chains"
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { UseAccountReturnType as UseAccountReturnTypeWagmi, useAccount as useAccountWagmi, useChainId } from 'wagmi'
 
@@ -21,7 +20,7 @@ export function useAccount(): UseAccountReturnType {
   return useMemo(
     () => ({
       ...rest,
-      chainId: supportedChainId ?? UniverseChainId.SHAPE,
+      chainId: supportedChainId,
     }),
     [rest, supportedChainId],
   )
