@@ -122,13 +122,16 @@ export const StyledInternalLinkLight = styled(Link)`
   transition: 0.2s;
 
   &:focus {
-    color: ${({ theme }) => theme.accent1};
+    color: ${({ theme }) => theme.white};
+    opacity: 1;
   }
   &:hover {
-    color: ${({ theme }) => theme.accent1};
+    color: ${({ theme }) => theme.white};
+    opacity: 1;
   }
   &:active {
-    color: ${({ theme }) => theme.accent1};
+    color: ${({ theme }) => theme.white};
+    opacity: 1;
   }
 `
 

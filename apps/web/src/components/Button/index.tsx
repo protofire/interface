@@ -198,15 +198,15 @@ export const ButtonSecondaryLight = styled(BaseButton)`
   transition: 0.2s;
 
   &:focus {
-    box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent1};
-    border: 1px solid ${({ theme }) => theme.accent1};
+    box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent2};
+    background-color: ${({ theme }) => theme.accent2};
   }
   &:hover {
-    border: 1px solid ${({ theme }) => theme.accent1};
+    background-color: ${({ theme }) => theme.accent2};
   }
   &:active {
     box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent1};
-    border: 1px solid ${({ theme }) => theme.accent1};
+    background-color: ${({ theme }) => theme.accent2};
   }
   &:disabled {
     opacity: 50%;
