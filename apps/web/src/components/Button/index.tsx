@@ -189,12 +189,12 @@ export const ButtonSecondary = styled(BaseButton)`
 `
 
 export const ButtonSecondaryLight = styled(BaseButton)`
+  padding: 0;
   border: 1px solid ${({ theme }) => theme.accent2};
   color: ${({ theme }) => theme.accent2};
   background-color: transparent;
   font-size: 16px;
   border-radius: 12px;
-  padding: ${({ padding }) => (padding ? padding : '10px')};
   transition: 0.2s;
 
   &:focus {
