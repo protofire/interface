@@ -467,12 +467,11 @@ function V2PairMigration({
               <AlertCircle color={theme.white} style={{ marginBottom: '12px', opacity: 0.8 }} />
               <ThemedText.DeprecatedBody
                 fontSize={14}
-                style={{ marginBottom: 8, fontWeight: 535, opacity: 0.8 }}
+                style={{ color: theme.white, marginBottom: 8, fontWeight: 535, opacity: 0.8 }}
                 textAlign="center"
               >
                 <Trans
                   i18nKey="migrate.firstLP"
-                  color={theme.white}
                   values={{
                     source: isNotUniswap ? 'SushiSwap' : 'V2',
                   }}
@@ -483,8 +482,7 @@ function V2PairMigration({
                 fontWeight="$medium"
                 textAlign="center"
                 fontSize={14}
-                color={theme.white}
-                style={{ marginTop: '8px', opacity: 0.8 }}
+                style={{ color: theme.white, marginTop: '8px', opacity: 0.8 }}
               >
                 <Trans i18nKey="migrate.highGasCost" />
               </ThemedText.DeprecatedBody>
@@ -492,7 +490,7 @@ function V2PairMigration({
               {v2SpotPrice && (
                 <AutoColumn gap="sm" style={{ marginTop: '12px' }}>
                   <RowBetween>
-                    <ThemedText.DeprecatedBody fontWeight={535} fontSize={14}>
+                    <ThemedText.DeprecatedBody fontWeight={535} fontSize={14} color={theme.accent1}>
                       <Trans
                         i18nKey="migrate.symbolPrice"
                         values={{
