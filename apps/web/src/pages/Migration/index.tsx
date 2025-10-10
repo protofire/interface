@@ -1,4 +1,8 @@
+import { SmallButtonPrimary } from 'components/Button'
 import styled, { createGlobalStyle } from 'lib/styled-components'
+import { Link } from 'react-router-dom'
+import { ListItem } from 'tamagui'
+import { isProdEnv } from "utilities/src/environment"
 
 const Container = styled.div`
   display: flex;
@@ -19,40 +23,72 @@ const PageWrapper = styled(Container)`
 `
 
 const PageBackgroundReset = createGlobalStyle`
-  html, body {
-    background-image: none !important;
-    background-color: ${({ theme }) => theme.background} !important;
+  html, body #root {
+    background-color: rgba(0, 0, 0, 0.7) !important;
   }
 `
+
+const isProd = isProdEnv()
+const domain = isProd ? 'https://sakuraswap.com/' : 'https://staging.sakuraswap.com/'
+const SupportedChainList = [
+  { name: 'Abstract', icon: '/images/logos/Abstract_Logo.png', url: `${domain}swap?chain=abstract` },
+  { name: 'Anime', icon: '/images/logos/Anime_Logo.png', url: `${domain}swap?chain=anime` },
+  { name: 'Zora', icon: '/images/logos/Zora_Logo.png', url: `${domain}swap?chain=zora` },
+]
 
 export default function PrivacyPolicy() {
   return (
     <PageWrapper>
       <PageBackgroundReset />
-      <Container>
-        <h1>Site Migration in Progress</h1>
+      <Container style={{ maxWidth: '800px', textAlign: 'center' }}>
+        <h1>New UI for Reservoir Swap supported chains</h1>
         <p>
-          We're migrating to a new and improved platform. During this transition,
-          some features may be temporarily unavailable. Thank you for your patience
-          as we work to enhance your experience.
+          With a focus on building a cross-chain payments system, Relay (former Reservoir) has officially wound down
+          Reservoir Swap, handing over support for most chains to Protofire as part of Sakura Swap or standalone
+          Frontends.
         </p>
 
-        <h2>Supported Networks</h2>
-        <ul>
-          <li>Ethereum Mainnet</li>
-          <li>Polygon</li>
-          <li>Arbitrum</li>
-          <li>Optimism</li>
-          <li>Base</li>
-          <li>BNB Chain</li>
-          <li>Avalanche</li>
-        </ul>
+        <p>You can continue LP'ing, managing your positions and swapping via the following interfaces:</p>
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris.
-        </p>
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '20px' }}>
+          {SupportedChainList.map((chain) => (
+            <a
+              key={chain.name}
+              href={chain.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              style={{ textDecoration: 'none' }}
+            >
+              <ListItem
+                key={chain.name}
+                href={chain.url}
+                target="_blank"
+                style={{
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  width: '150px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                }}
+                hoverStyle={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  transform: 'translateY(-2px)',
+                }}
+              >
+                <img src={chain.icon} alt={`${chain.name} logo`} style={{ width: '40px', height: '40px' }} />
+                <span style={{ marginTop: '10px', color: '#FFFFFF', fontWeight: 'bold' }}>{chain.name}</span>
+              </ListItem>
+            </a>
+          ))}
+        </div>
+
+        <p>Want support for your chain?</p>
+        <SmallButtonPrimary as={Link} to="https://swap-support.protofire.io/" target="_blank">
+          Add a new chain
+        </SmallButtonPrimary>
       </Container>
     </PageWrapper>
   )
