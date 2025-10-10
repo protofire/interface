@@ -3,6 +3,7 @@ import { DownloadApp } from 'components/NavBar/CompanyMenu/DownloadAppCTA'
 import { NavDropdown } from 'components/NavBar/NavDropdown'
 import { useTabsVisible } from 'components/NavBar/ScreenSizes'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
+import NewChainButton from "components/NewChainButton"
 import forkConfig from 'forkConfig'
 import styled, { css } from 'lib/styled-components'
 import { Socials } from 'pages/Landing/sections/Footer'
@@ -107,6 +108,8 @@ export function MenuDropdown({ close }: { close?: () => void }) {
           <Separator />
           {forkConfig.uniSpecificFeaturesEnabled && <DownloadApp onClick={close} />}
           <Socials iconSize="25px" />
+          <Separator />
+          <NewChainButton />
         </Flex>
       </Container>
     </NavDropdown>

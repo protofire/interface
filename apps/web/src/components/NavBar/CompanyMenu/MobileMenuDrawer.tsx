@@ -8,6 +8,7 @@ import { LanguageSettings } from 'components/NavBar/PreferencesMenu/Language'
 import { PreferenceSettings } from 'components/NavBar/PreferencesMenu/Preferences'
 import { PreferencesView } from 'components/NavBar/PreferencesMenu/shared'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
+import NewChainButton from "components/NewChainButton"
 import forkConfig from 'forkConfig'
 import styled, { useTheme } from 'lib/styled-components'
 import { Socials } from 'pages/Landing/sections/Footer'
@@ -134,6 +135,8 @@ export function MobileMenuDrawer({ isOpen, closeMenu }: { isOpen: boolean; close
 
               {forkConfig.uniSpecificFeaturesEnabled && <DownloadApp onClick={closeMenu} />}
               <Socials iconSize="25px" />
+
+              <NewChainButton />
             </Flex>
           </Accordion>
 
