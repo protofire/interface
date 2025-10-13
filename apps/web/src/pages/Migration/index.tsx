@@ -33,7 +33,7 @@ const domain = isProd ? 'https://sakuraswap.com/' : 'https://staging.sakuraswap.
 const SupportedChainList = [
   { name: 'Abstract', icon: '/images/logos/Abstract_Logo.png', url: `${domain}swap?chain=abstract` },
   { name: 'Anime', icon: '/images/logos/Anime_Logo.png', url: `${domain}swap?chain=anime` },
-  { name: 'Zora', icon: '/images/logos/Zora_Logo.png', url: `${domain}swap?chain=zora` },
+  { name: 'Zero', icon: '/images/logos/Zero_Logo.png', url: `${domain}swap?chain=zero` },
 ]
 
 export default function PrivacyPolicy() {
