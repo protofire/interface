@@ -45,7 +45,19 @@ export default createReducer(initialState, (builder) =>
 
       // no-op if update does nothing
       if (current) {
-        const upgradeType = getVersionUpgrade(current.version, tokenList.version)
+        // Extract actual version values from Proxy objects
+        const currentVersion = {
+          major: current.version.major,
+          minor: current.version.minor,
+          patch: current.version.patch,
+        }
+        const newVersion = {
+          major: tokenList.version.major,
+          minor: tokenList.version.minor,
+          patch: tokenList.version.patch,
+        }
+
+        const upgradeType = getVersionUpgrade(currentVersion, newVersion)
 
         if (upgradeType === VersionUpgrade.NONE) {
           return
