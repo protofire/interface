@@ -70,7 +70,19 @@ export default function Updater(): null {
     Object.keys(lists).forEach((listUrl) => {
       const list = lists[listUrl]
       if (list.current && list.pendingUpdate) {
-        const bump = getVersionUpgrade(list.current.version, list.pendingUpdate.version)
+        // Extract actual version values from Proxy objects
+        const currentVersion = {
+          major: list.current.version.major,
+          minor: list.current.version.minor,
+          patch: list.current.version.patch,
+        }
+        const pendingVersion = {
+          major: list.pendingUpdate.version.major,
+          minor: list.pendingUpdate.version.minor,
+          patch: list.pendingUpdate.version.patch,
+        }
+        
+        const bump = getVersionUpgrade(currentVersion, pendingVersion)
         switch (bump) {
           case VersionUpgrade.NONE:
             throw new Error('unexpected no version bump')
