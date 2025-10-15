@@ -180,6 +180,9 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
     throw new Error('No V2 factory address on this chain')
   }
 
+  /* eslint-disable no-console */
+  console.log('V2_FACTORY_ADDRESS', tokenA.chainId, V2_FACTORY_ADDRESSES[tokenA.chainId])
+
   return new Token(
     tokenA.chainId,
     computePairAddress({

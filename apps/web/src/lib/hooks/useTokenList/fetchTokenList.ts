@@ -3,7 +3,6 @@ import contenthashToUri from 'lib/utils/contenthashToUri'
 import parseENSAddress from 'lib/utils/parseENSAddress'
 import { uriToHttpUrls } from 'utilities/src/format/urls'
 import { logger } from 'utilities/src/logger/logger'
-import { validateTokenList } from 'utils/validateTokenList'
 
 const listCache = new Map<string, TokenList>()
 
@@ -12,6 +11,7 @@ const listCache = new Map<string, TokenList>()
  * For a given token list URL, we try to fetch the list from all the possible HTTP URLs.
  * For example, IPFS URLs can be fetched through multiple gateways.
  */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export default async function fetchTokenList(
   listUrl: string,
   resolveENSContentHash: (ensName: string) => Promise<string>,
@@ -70,9 +70,9 @@ export default async function fetchTokenList(
       // The content of the result is sometimes invalid even with a 200 status code.
       // A response can be invalid if it's not a valid JSON or if it doesn't match the TokenList schema.
       const json = await response.json()
-      const list = skipValidation ? json : await validateTokenList(json)
-      listCache?.set(listUrl, list)
-      return list
+      // const list = skipValidation ? json : await validateTokenList(json)
+      listCache?.set(listUrl, json)
+      return json
     } catch (error) {
       logger.debug(
         'fetchTokenList',
