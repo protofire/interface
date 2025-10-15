@@ -56,10 +56,7 @@ export default async function fetchTokenList(
     let response
     try {
       response = await fetch(url, { 
-        credentials: 'omit',
-        headers: {
-          'Cache-Control': 'max-age=600'
-        }
+        credentials: 'omit'
       })
     } catch (error) {
       logger.debug('fetchTokenList', 'fetchTokenList', `failed to fetch list: ${listUrl} (${url})`, error)
