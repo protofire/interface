@@ -2,7 +2,7 @@ import Navbar from 'components/NavBar/index'
 import { InDevelopmentBanner } from 'components/TopLevelBanners/InDevelopmentBanner'
 import { MobileAppPromoBanner, useMobileAppPromoBannerEligible } from 'components/TopLevelBanners/MobileAppPromoBanner'
 import { UkBanner, useRenderUkBanner } from 'components/TopLevelBanners/UkBanner'
-import { ScrollDirection, useScroll } from 'hooks/useScroll'
+import { useScroll } from 'hooks/useScroll'
 import styled from 'lib/styled-components'
 import { useBag } from 'nft/hooks'
 import { GRID_AREAS } from 'pages/App/utils/shared'
@@ -50,10 +50,7 @@ export const Header = memo(function Header() {
         {renderUkBanner && <UkBanner />}
         {(isAppUniswapStagingOrg(window.location) || isLocalhost(window.location)) && <InDevelopmentBanner />}
       </Banners>
-      <NavOnScroll
-        $hide={isTouchDevice && !isExplorePage && scrollDirection === ScrollDirection.DOWN}
-        $transparent={isHeaderTransparent}
-      >
+      <NavOnScroll $hide={false} $transparent={false}>
         <Navbar />
       </NavOnScroll>
     </AppHeader>

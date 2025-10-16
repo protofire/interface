@@ -26,15 +26,15 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
   const initialInputCurrency = useCurrency('ETH')
   const { t } = useTranslation()
 
-  const translateY = -scrollPosition / 7
-  const opacityY = 1 - scrollPosition / 1000
+  // const translateY = -scrollPosition / 14
+  // const opacityY = 1 - scrollPosition / 100
 
   return (
     <Flex
       position="relative"
       justifyContent="center"
-      y={translateY}
-      opacity={opacityY}
+      // y={translateY}
+      // opacity={opacityY}
       minWidth="100%"
       minHeight="100vh"
       height="min-content"
@@ -49,8 +49,8 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
         pointerEvents="none"
         pt={48}
         gap="$gap20"
-        transform={`translate(0px, ${translateY}px)`}
-        opacity={opacityY}
+        // transform={`translate(0px, ${translateY}px)`}
+        // opacity={opacityY}
         $lg={{ pt: 24 }}
         $sm={{ pt: 8 }}
         $platform-web={{
@@ -119,7 +119,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
           centered
           pointerEvents="none"
           bottom={48}
-          style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
+          // style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
           $midHeight={{ display: 'none' }}
         >
           <RiseIn delay={0.3}>
