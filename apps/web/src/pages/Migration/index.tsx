@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
           Frontends.
         </p>
 
-        <p>You can continue LP'ing, managing your positions and swapping via the following interfaces:</p>
+        <p>You can continue LP&apos;ing, managing your positions and swapping via the following interfaces:</p>
 
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '20px' }}>
           {SupportedChainList.map((chain) => (
