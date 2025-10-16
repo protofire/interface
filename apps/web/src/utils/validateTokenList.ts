@@ -51,6 +51,7 @@ export async function validateTokens(json: TokenInfo[]): Promise<TokenInfo[]> {
  * Validates a token list.
  * @param json the TokenList to validate
  */
+/* eslint-disable import/no-unused-modules */
 export async function validateTokenList(json: TokenList): Promise<TokenList> {
   try {
     await validate(ValidationSchema.LIST, json)

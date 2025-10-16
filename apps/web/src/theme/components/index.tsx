@@ -116,19 +116,21 @@ export const StyledInternalLink = styled(Link)`
 
 export const StyledInternalLinkLight = styled(Link)`
   ${ClickableStyle}
+  padding: 8px;
   color: ${({ theme }) => theme.accent2};
   stroke: ${({ theme }) => theme.accent2};
   font-weight: 500;
   transition: 0.2s;
 
   &:focus {
-    color: ${({ theme }) => theme.accent1};
+    opacity: 1;
   }
   &:hover {
-    color: ${({ theme }) => theme.accent1};
+    color: ${({ theme }) => theme.white};
+    opacity: 1;
   }
   &:active {
-    color: ${({ theme }) => theme.accent1};
+    opacity: 1;
   }
 `
 
