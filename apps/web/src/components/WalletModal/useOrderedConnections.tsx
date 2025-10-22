@@ -100,7 +100,7 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
     }
 
     // Special-case: Only display the injected connector for in-wallet browsers.
-    if (isMobileWeb && injectedConnectors.length === 1) {
+    if (isMobileWeb && injectedConnectors.length === 1 && injectedConnectors[0].name !== 'Abstract') {
       return injectedConnectors
     }
 
