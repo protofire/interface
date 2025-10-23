@@ -16,7 +16,8 @@ import useSelectChain from 'hooks/useSelectChain'
 import { useAtomValue } from 'jotai/utils'
 import { useTheme } from 'lib/styled-components'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { AlertTriangle } from 'react-feather'
+import { AlertTriangle, Plus } from 'react-feather'
+import { ReactComponent as LogoChain } from 'assets/svg/logo-chain.svg'
 import { useSearchParams } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { Flex, Popover } from 'ui/src'
@@ -153,6 +154,63 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
           {unsupportedChains.map((selectorChain) => (
             <ChainSelectorRow disabled targetChain={selectorChain} key={selectorChain} isPending={false} />
           ))}
+          {/* Add Chain Button - styled like network options */}
+          <button 
+            style={{ 
+              border: `1px solid ${theme.accent1}`,
+              borderRadius: '12px',
+              margin: '4px 0',
+              cursor: 'pointer',
+              display: 'grid',
+              gridTemplateColumns: 'min-content 1fr min-content',
+              justifyContent: 'space-between',
+              lineHeight: '20px',
+              padding: '10px 8px',
+              textAlign: 'left',
+              outline: 'none',
+              backgroundColor: 'transparent',
+              transition: `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`,
+              width: '100%'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = theme.surface3
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent'
+            }}
+            onClick={() => {
+              window.open('https://swap-support.protofire.io', '_blank')
+              setIsOpen(false)
+            }}
+          >
+            <LogoChain 
+              width="20"
+              height="20"
+              style={{
+                marginRight: '12px',
+                display: 'block',
+                flexShrink: 0
+              }}
+            />
+            <div style={{ 
+              gridColumn: '2', 
+              gridRow: '1', 
+              fontSize: '16px', 
+              fontWeight: '485',
+              color: theme.accent1
+            }}>
+              Add my chain
+            </div>
+            <div style={{ 
+              gridColumn: '3', 
+              gridRow: '1', 
+              display: 'flex', 
+              alignItems: 'center', 
+              width: '20px' 
+            }}>
+              <Plus size={20} color={theme.accent1} />
+            </div>
+          </button>
         </Flex>
       </NavDropdown>
     </Popover>
