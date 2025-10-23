@@ -1,3 +1,5 @@
+import DAODarkMode from 'assets/png/DAO-dark-mode.png'
+import DAOLightMode from 'assets/png/DAO-light-mode.png'
 import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
@@ -6,9 +8,10 @@ import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-import { Anchor, Flex, Separator, Text } from 'ui/src'
+import { Anchor, Flex, Separator, Text, useIsDarkMode } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
+
 const SOCIAL_ICONS_SIZE = `${iconSizes.icon32}px`
 
 const SocialIcon = deprecatedStyled(Wiggle)`
@@ -19,6 +22,16 @@ const SocialIcon = deprecatedStyled(Wiggle)`
   transition-duration: 0.2s;
   &:hover {
     fill: ${(props) => props.$hoverColor};
+  }
+`
+
+const DAOLogo = deprecatedStyled.img`
+  height: 48px;
+  width: auto;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 0.8;
   }
 `
 
@@ -66,6 +79,7 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
+  const isDarkMode = useIsDarkMode()
   //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {
@@ -86,8 +100,11 @@ export function Footer() {
     <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
       <Flex row $md={{ flexDirection: 'column' }} justifyContent="space-between" gap="$spacing32">
         <Flex height="100%" gap="$spacing60">
-          <Flex $md={{ display: 'none' }}>
+          <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
+            <Anchor>
+              <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
+            </Anchor>
           </Flex>
         </Flex>
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
@@ -101,8 +118,11 @@ export function Footer() {
             <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
         </Flex>
-        <Flex $md={{ display: 'flex' }} display="none">
+        <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
+          <Anchor>
+            <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
+          </Anchor>
         </Flex>
       </Flex>
       <Separator />

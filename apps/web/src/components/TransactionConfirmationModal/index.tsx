@@ -168,7 +168,7 @@ function TransactionSubmittedContent({
           </ButtonPrimary>
           {chainId && hash && (
             <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
-              <ThemedText.Link color={theme.accent1}>{explorerText}</ThemedText.Link>
+              <ThemedText.Link style={{ color: theme.accent2 }}>{explorerText}</ThemedText.Link>
             </ExternalLink>
           )}
         </ConfirmationModalContentWrapper>
