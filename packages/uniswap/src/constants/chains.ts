@@ -1793,7 +1793,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: '',
-    chainPriority: 0,
+    chainPriority: 100,
     docs: 'https://developers.flow.com/',
     elementName: ElementName.ChainFlowTestnet,
     explorer: {

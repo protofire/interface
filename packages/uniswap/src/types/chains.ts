@@ -119,8 +119,8 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
   // UniverseChainId.Anime,
-  UniverseChainId.FlowTestnet,
   UniverseChainId.FlowMainnet,
+  UniverseChainId.FlowTestnet,
 ]
 
 export enum RPCType {
