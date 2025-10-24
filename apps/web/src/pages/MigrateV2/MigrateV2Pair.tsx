@@ -464,10 +464,11 @@ function V2PairMigration({
           <FeeSelector feeAmount={feeAmount} handleFeePoolSelect={setFeeAmount} />
           {noLiquidity && (
             <BlueCard style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <AlertCircle color={theme.neutral1} style={{ marginBottom: '12px', opacity: 0.8 }} />
+              <AlertCircle color={theme.accent1} style={{ marginBottom: '12px', opacity: 0.8 }} />
               <ThemedText.DeprecatedBody
                 fontSize={14}
                 style={{ marginBottom: 8, fontWeight: 535, opacity: 0.8 }}
+                color={theme.accent1}
                 textAlign="center"
               >
                 <Trans
@@ -482,6 +483,7 @@ function V2PairMigration({
                 fontWeight="$medium"
                 textAlign="center"
                 fontSize={14}
+                color={theme.accent1}
                 style={{ marginTop: '8px', opacity: 0.8 }}
               >
                 <Trans i18nKey="migrate.highGasCost" />
@@ -490,7 +492,7 @@ function V2PairMigration({
               {v2SpotPrice && (
                 <AutoColumn gap="sm" style={{ marginTop: '12px' }}>
                   <RowBetween>
-                    <ThemedText.DeprecatedBody fontWeight={535} fontSize={14}>
+                    <ThemedText.DeprecatedBody fontWeight={535} fontSize={14} color={theme.accent1}>
                       <Trans
                         i18nKey="migrate.symbolPrice"
                         values={{

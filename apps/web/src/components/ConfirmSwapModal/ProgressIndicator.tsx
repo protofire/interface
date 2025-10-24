@@ -4,6 +4,7 @@ import { Step, StepDetails, StepStatus } from 'components/ConfirmSwapModal/Step'
 import { Sign } from 'components/Icons/Sign'
 import { Swap } from 'components/Icons/Swap'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
+import forkConfig from 'forkConfig'
 import { useAccount } from 'hooks/useAccount'
 import { useBlockConfirmationTime } from 'hooks/useBlockConfirmationTime'
 import { useColor } from 'hooks/useColor'
@@ -120,15 +121,21 @@ export default function ProgressIndicator({
         previewTitle: t('common.wrap', { symbol: nativeCurrency.symbol }),
         actionRequiredTitle: t('common.wrapIn', { symbol: nativeCurrency.symbol }),
         inProgressTitle: t('common.wrappingToken', { symbol: nativeCurrency.symbol }),
-        learnMoreLinkText: t('common.whyWrap', { symbol: nativeCurrency.symbol }),
-        learnMoreLinkHref: uniswapUrls.helpArticleUrls.wethExplainer,
+        learnMoreLinkText: forkConfig.documentationAvailable
+          ? t('common.whyWrap', { symbol: nativeCurrency.symbol })
+          : '',
+        learnMoreLinkHref: forkConfig.documentationAvailable ? uniswapUrls.helpArticleUrls.wethExplainer : '',
       },
       [ConfirmModalState.RESETTING_TOKEN_ALLOWANCE]: {
         icon: <CurrencyLogo currency={trade?.inputAmount.currency} />,
         rippleColor: inputTokenColor,
         previewTitle: t('common.resetLimit', { symbol: trade?.inputAmount.currency.symbol }),
-        actionRequiredTitle: t('common.resetLimitWallet', { symbol: trade?.inputAmount.currency.symbol }),
-        inProgressTitle: t('common.resettingLimit', { symbol: trade?.inputAmount.currency.symbol }),
+        actionRequiredTitle: forkConfig.documentationAvailable
+          ? t('common.resetLimitWallet', { symbol: trade?.inputAmount.currency.symbol })
+          : '',
+        inProgressTitle: forkConfig.documentationAvailable
+          ? t('common.resettingLimit', { symbol: trade?.inputAmount.currency.symbol })
+          : '',
       },
       [ConfirmModalState.APPROVING_TOKEN]: {
         icon: <CurrencyLogo currency={trade?.inputAmount.currency} />,
@@ -136,16 +143,16 @@ export default function ProgressIndicator({
         previewTitle: t('common.approveSpend', { symbol: trade?.inputAmount.currency.symbol }),
         actionRequiredTitle: t('common.wallet.approve'),
         inProgressTitle: t('common.approvePending'),
-        learnMoreLinkText: t('common.whyApprove'),
-        learnMoreLinkHref: uniswapUrls.helpArticleUrls.approvalsExplainer,
+        learnMoreLinkText: forkConfig.documentationAvailable ? t('common.whyApprove') : '',
+        learnMoreLinkHref: forkConfig.documentationAvailable ? uniswapUrls.helpArticleUrls.approvalsExplainer : '',
       },
       [ConfirmModalState.PERMITTING]: {
         icon: <Sign />,
         rippleColor: theme.accent1,
         previewTitle: t('common.signMessage'),
         actionRequiredTitle: t('common.signMessageWallet'),
-        learnMoreLinkText: t('common.whySign'),
-        learnMoreLinkHref: uniswapUrls.helpArticleUrls.approvalsExplainer,
+        learnMoreLinkText: forkConfig.documentationAvailable ? t('common.whySign') : '',
+        learnMoreLinkHref: forkConfig.documentationAvailable ? uniswapUrls.helpArticleUrls.approvalsExplainer : '',
       },
       [ConfirmModalState.PENDING_CONFIRMATION]: {
         icon: <Swap />,
@@ -157,10 +164,16 @@ export default function ProgressIndicator({
           timeToStart: trade.order.info.deadline - Math.floor(Date.now() / 1000),
           delayedStartTitle: t('common.confirmTimedOut'),
         }),
-        learnMoreLinkText: isLimitTrade(trade) ? t('limits.learnMore') : t('common.learnMoreSwap'),
-        learnMoreLinkHref: isLimitTrade(trade)
-          ? uniswapUrls.helpArticleUrls.limitsInfo
-          : uniswapUrls.helpArticleUrls.howToSwapTokens,
+        learnMoreLinkText: forkConfig.documentationAvailable
+          ? isLimitTrade(trade)
+            ? t('limits.learnMore')
+            : t('common.learnMoreSwap')
+          : '',
+        learnMoreLinkHref: forkConfig.documentationAvailable
+          ? isLimitTrade(trade)
+            ? uniswapUrls.helpArticleUrls.limitsInfo
+            : uniswapUrls.helpArticleUrls.howToSwapTokens
+          : '',
       },
     }),
     [inputTokenColor, nativeCurrency.symbol, trade, theme.accent1],

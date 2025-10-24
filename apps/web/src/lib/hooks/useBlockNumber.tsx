@@ -87,14 +87,16 @@ export function BlockNumberProvider({ children }: PropsWithChildren) {
     }
     return
   }, [provider, windowVisible, onChainBlock, multicallChainId])
-  // Poll once for the mainnet block number using the network provider.
+  // Poll once for the current chain block number using the network provider.
   useEffect(() => {
-    RPC_PROVIDERS[UniverseChainId.AbstractMainnet]
-      .getBlockNumber()
-      .then((block) => onChainBlock(UniverseChainId.AbstractMainnet, block))
-      // swallow errors - it's ok if this fails, as we'll try again if we activate mainnet
-      .catch(() => undefined)
-  }, [onChainBlock])
+    if (multicallChainId && RPC_PROVIDERS[multicallChainId]) {
+      RPC_PROVIDERS[multicallChainId]
+        .getBlockNumber()
+        .then((block) => onChainBlock(multicallChainId, block))
+        // swallow errors - it's ok if this fails, as we'll try again if we activate this chain
+        .catch(() => undefined)
+    }
+  }, [multicallChainId, onChainBlock])
   const value = useMemo(
     () => ({
       fastForward: (update: number) => {
