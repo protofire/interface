@@ -1,5 +1,5 @@
-import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { ReactComponent as AddChainButton } from 'assets/svg/add-chain-button.svg'
+import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
@@ -119,17 +119,17 @@ export function Footer() {
         justifyContent="space-between"
       >
         <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
-        
+
         <Anchor href="/migration" target="_self" style={{ textDecoration: 'none' }}>
-          <AddChainButton 
-            width="160" 
-            height="50" 
-            style={{ 
-              cursor: 'pointer'
+          <AddChainButton
+            width="160"
+            height="50"
+            style={{
+              cursor: 'pointer',
             }}
           />
         </Anchor>
-        
+
         <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://protofire.io" target="_blank">
           <span style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

@@ -271,11 +271,11 @@ export default function MigrationPage() {
               <p style={{ fontSize: '1rem', color: theme.neutral2, marginBottom: '24px', lineHeight: '1.6' }}>
                 Interface for Zora network{' '}
                 <span style={{ color: theme.neutral2, fontWeight: 'bold' }}>{chain.oldUrl}</span> is no longer
-                available. <br/>
+                available. <br />
                 You can swap in Zora network using the official Uniswap interface.
               </p>
               <ExternalLink href={chain.newUrl}>
-                <SmallButtonPrimary as="span"  width="auto" style={{ gap: '8px', display: 'inline-flex' }}>
+                <SmallButtonPrimary as="span" width="auto" style={{ gap: '8px', display: 'inline-flex' }}>
                   Swap Zora Here
                   <ExternalLinkIcon size={18} />
                 </SmallButtonPrimary>
