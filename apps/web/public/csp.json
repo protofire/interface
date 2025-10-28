@@ -19,7 +19,6 @@
   ],
   "frameSrc": [
     "'self'",
-    "https://cyan-legislative-leech-117.mypinata.cloud",
     "https://buy.moonpay.com/",
     "https://verify.walletconnect.com/",
     "https://verify.walletconnect.org/"
@@ -74,7 +73,8 @@
     "https://testnet.evm.nodes.onflow.org",
     "https://mainnet.evm.nodes.onflow.org",
     "https://evm.flowscan.io",
-    "https://raw.githubusercontent.com/onflow/assets/main/tokens/*"
+    "https://raw.githubusercontent.com/onflow/assets/main/tokens/*",
+    "https://cyan-legislative-leech-117.mypinata.cloud"
   ],
   "workerSrc": [
     "'self'",
