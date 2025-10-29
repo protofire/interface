@@ -34,6 +34,7 @@ const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
 const TokenDetails = lazy(() => import('pages/TokenDetails'))
 const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const Terms = lazy(() => import('pages/Terms'))
+const AggregatorPage = lazy(() => import('pages/Aggregator'))
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -206,6 +207,15 @@ export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/swap',
     getElement: () => <Swap />,
+    getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
+  }),
+  createRouteDefinition({
+    path: '/aggregator',
+    getElement: () => (
+      <Suspense fallback={null}>
+        <AggregatorPage />
+      </Suspense>
+    ),
     getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
   }),
   createRouteDefinition({

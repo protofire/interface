@@ -1,0 +1,197 @@
+import { useState, useEffect } from 'react'
+
+interface EisenQuoteParams {
+  fromAddress: string
+  fromChain: number
+  toChain: number
+  fromToken: string
+  toToken: string
+  fromAmount: string
+  toAddress: string
+  order?: string
+  integrator?: string
+  fee?: string
+  slippage?: string
+  referrer?: string
+  includedDex?: string
+  maxSplit?: number
+  maxEdge?: number
+}
+
+interface EisenQuoteResponse {
+  result: {
+    type: string
+    id: string
+    tool: string
+    toolDetails: {
+      key: string
+      name: string
+      logoURI: string
+    }
+    action: {
+      fromToken: {
+        address: string
+        chainId: number
+        symbol: string
+        decimals: number
+        name: string
+        coinKey: string
+        logoURI: string
+        priceUSD: string
+      }
+      fromAmount: string
+      toToken: {
+        address: string
+        chainId: number
+        symbol: string
+        decimals: number
+        name: string
+        coinKey: string
+        logoURI: string
+        priceUSD: string
+      }
+      fromChainId: number
+      toChainId: number
+      slippage: number
+      fromAddress: string
+      toAddress: string
+    }
+    estimate: {
+      tool: string
+      approvalAddress: string
+      toAmountMin: string
+      toAmount: string
+      fromAmount: string
+      gasCosts: Array<{
+        type: string
+        price: string
+        estimate: string
+        limit: string
+        amount: string
+        amountUSD: string
+        token: {
+          address: string
+          chainId: number
+          symbol: string
+          decimals: number
+          name: string
+          coinKey: string
+          logoURI: string
+          priceUSD: string
+        }
+      }>
+      executionDuration: number
+      fromAmountUSD: string
+      toAmountUSD: string
+    }
+    includedSteps: Array<any>
+    integrator: string
+    transactionRequest: {
+      value: string
+      to: string
+      data: string
+      chainId: number
+      gasPrice: string
+      gasLimit: string
+      from: string
+    }
+  }
+}
+
+/**
+ * Fetches a quote from Eisen API
+ */
+export function useEisenQuote(params: EisenQuoteParams | null) {
+  const [quote, setQuote] = useState<EisenQuoteResponse | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchQuote = async () => {
+      if (!params) {
+        setQuote(null)
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+
+      try {
+        // Build query params manually to avoid URLSearchParams double encoding issues
+        const queryParts: string[] = [
+          `fromAddress=${encodeURIComponent(params.fromAddress)}`,
+          `fromChain=${params.fromChain}`,
+          `toChain=${params.toChain}`,
+          `fromToken=${encodeURIComponent(params.fromToken)}`,
+          `toToken=${encodeURIComponent(params.toToken)}`,
+          `fromAmount=${encodeURIComponent(params.fromAmount)}`,
+          `toAddress=${encodeURIComponent(params.toAddress)}`,
+        ]
+        
+        // Add optional parameters only if provided
+        if (params.order) {
+          queryParts.push(`order=${params.order}`)
+        }
+        if (params.integrator) {
+          queryParts.push(`integrator=${encodeURIComponent(params.integrator)}`)
+        }
+        if (params.fee) {
+          queryParts.push(`fee=${params.fee}`)
+        }
+        if (params.slippage) {
+          queryParts.push(`slippage=${params.slippage}`)
+        }
+        if (params.referrer) {
+          queryParts.push(`referrer=${encodeURIComponent(params.referrer)}`)
+        }
+        if (params.includedDex) {
+          queryParts.push(`includedDex=${encodeURIComponent(params.includedDex)}`)
+        }
+        if (params.maxSplit) {
+          queryParts.push(`maxSplit=${params.maxSplit}`)
+        }
+        if (params.maxEdge) {
+          queryParts.push(`maxEdge=${params.maxEdge}`)
+        }
+
+        const queryString = queryParts.join('&')
+
+        const response = await fetch(`https://hiker.hetz-01.eisenfinance.com/public/v1/quote?${queryString}`, {
+          headers: {
+            'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch quote: ${response.statusText}`)
+        }
+
+        const data = await response.json()
+        setQuote(data)
+      } catch (err) {
+        console.error('Error fetching quote from Eisen API:', err)
+        setError(err instanceof Error ? err.message : 'Failed to fetch quote')
+        setQuote(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchQuote()
+  }, [
+    params?.fromAddress,
+    params?.fromChain,
+    params?.toChain,
+    params?.fromToken,
+    params?.toToken,
+    params?.fromAmount,
+    params?.toAddress,
+  ])
+
+  return {
+    quote,
+    loading,
+    error,
+  }
+}
+
