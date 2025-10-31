@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE, LOCALE_LABEL, SupportedLocale } from 'constants/locales'
+import forkConfig from 'forkConfig'
 import { navigatorLocale, useActiveLocale } from 'hooks/useActiveLocale'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import { useMemo } from 'react'
@@ -10,13 +11,16 @@ import { Trans } from 'uniswap/src/i18n'
 const useTargetLocale = (activeLocale: SupportedLocale) => {
   const browserLocale = useMemo(() => navigatorLocale(), [])
 
-  if (browserLocale && (browserLocale !== DEFAULT_LOCALE || activeLocale !== DEFAULT_LOCALE)) {
-    if (activeLocale === browserLocale) {
-      return DEFAULT_LOCALE
-    } else {
-      return browserLocale
+  if (forkConfig.languageAvailable) {
+    if (browserLocale && (browserLocale !== DEFAULT_LOCALE || activeLocale !== DEFAULT_LOCALE)) {
+      if (activeLocale === browserLocale) {
+        return DEFAULT_LOCALE
+      } else {
+        return browserLocale
+      }
     }
   }
+
   return null
 }
 
