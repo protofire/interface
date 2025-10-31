@@ -1,12 +1,12 @@
 import { DEFAULT_LOCALE } from 'constants/locales'
-import { navigatorLocale, parseLocale, storeLocale, useActiveLocale } from 'hooks/useActiveLocale'
+import { parseLocale, storeLocale, useActiveLocale } from 'hooks/useActiveLocale'
 import { ReactNode, useEffect } from 'react'
 import { useUserLocaleManager } from 'state/user/hooks'
 import { changeLanguage } from 'uniswap/src/i18n'
 
 function setupInitialLanguage() {
   const lngQuery = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('lng') : ''
-  const initialLocale = parseLocale(lngQuery) ?? storeLocale() ?? navigatorLocale() ?? DEFAULT_LOCALE
+  const initialLocale = parseLocale(lngQuery) ?? storeLocale() ?? DEFAULT_LOCALE
   changeLanguage(initialLocale)
 }
 
