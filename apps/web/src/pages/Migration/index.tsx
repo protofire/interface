@@ -48,12 +48,12 @@ const SakuraSwapChains = [
 
 const StandaloneChains = [
   { name: 'Shape', icon: '/images/logos/Shape_Logo.png', url: 'https://shapeswap.xyz' },
-  { name: 'Flow', icon: '/images/logos/Flow_Logo.png', url: 'https://flowswap.io' },
   { name: 'Harmony', icon: '/images/logos/Harmony_Logo.png', url: 'https://swap.harmony.one' },
+  { name: 'More coming soon', icon: '/images/logos/New_chain.svg', url: '', disabled: true },
 ]
 
 const SupportChains = [
-  { name: 'Add a new chain', icon: '/images/256x256_App_Icon_Pink.svg', url: 'https://swap-support.protofire.io/' },
+  { name: 'Add a new chain', icon: '/images/256x256_App_Icon_Pink.svg', url: 'https://integration-form.protofire.io/' },
   { name: 'About Protofire', icon: '/images/logos/Protofire_Logo.png', url: 'https://protofire.io' },
 ]
 
@@ -67,7 +67,7 @@ const ExternalMigrationChains = [
 ]
 
 interface ChainLinkProps {
-  chain: { name: string; icon: string; url: string }
+  chain: { name: string; icon: string; url: string; disabled?: boolean }
   showExternalIcon?: boolean
 }
 
@@ -77,6 +77,7 @@ function ChainLink({ chain, showExternalIcon = false }: ChainLinkProps) {
   const linkStyle = {
     ...chainLinkStyle,
     backgroundColor: theme.surface2,
+    cursor: chain.disabled ? 'default' : 'pointer',
   }
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -118,7 +119,7 @@ interface ChainCardProps {
   title: string
   titleColor: string
   backgroundColor: string
-  chains: Array<{ name: string; icon: string; url: string }>
+  chains: Array<{ name: string; icon: string; url: string; disabled?: boolean }>
   showExternalIcon?: boolean
   description?: string
 }
@@ -155,7 +156,7 @@ function ChainCard({
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {chains.map((chain) => (
-          <ChainLink key={chain.name} chain={chain} showExternalIcon={showExternalIcon} />
+          <ChainLink key={chain.name} chain={chain} showExternalIcon={showExternalIcon && !chain.disabled} />
         ))}
       </div>
     </div>
