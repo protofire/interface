@@ -6,6 +6,7 @@ import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Github, Medium, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
+import { ADD_NEW_CHAIN_URL } from 'pages/Migration/constants'
 import { useMemo } from 'react'
 // import { useTogglePrivacyPolicy } from 'state/application/hooks'
 import { Anchor, Flex, Separator, Text } from 'ui/src'
@@ -120,7 +121,7 @@ export function Footer() {
       >
         <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
 
-        <Anchor href="/migration" target="_self" style={{ textDecoration: 'none' }}>
+        <Anchor href={ADD_NEW_CHAIN_URL} target="_blank" style={{ textDecoration: 'none' }}>
           <AddChainButton
             width="160"
             height="50"

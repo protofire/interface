@@ -16,6 +16,7 @@ import { useAccount } from 'hooks/useAccount'
 import useSelectChain from 'hooks/useSelectChain'
 import { useAtomValue } from 'jotai/utils'
 import { useTheme } from 'lib/styled-components'
+import { ADD_NEW_CHAIN_URL } from 'pages/Migration/constants'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { AlertTriangle, Plus } from 'react-feather'
 import { useSearchParams } from 'react-router-dom'
@@ -179,7 +180,7 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
               e.currentTarget.style.backgroundColor = 'transparent'
             }}
             onClick={() => {
-              window.open('https://swap-support.protofire.io', '_blank')
+              window.open(ADD_NEW_CHAIN_URL, '_blank')
               setIsOpen(false)
             }}
           >
