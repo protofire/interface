@@ -49,7 +49,7 @@ const SakuraSwapChains = [
 const StandaloneChains = [
   { name: 'Shape', icon: '/images/logos/Shape_Logo.png', url: 'https://shapeswap.xyz' },
   { name: 'Harmony', icon: '/images/logos/Harmony_Logo.png', url: 'https://swap.harmony.one' },
-  { name: 'More coming soon', icon: '/images/logos/New_chain.svg', url: '', disabled: true },
+  { name: 'More coming soon', icon: '/images/logos/New_Chain.svg', url: '', disabled: true },
 ]
 
 const SupportChains = [
