@@ -15,6 +15,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Bnb]: 'https://bscscan.com',
   [UniverseChainId.Avalanche]: 'https://snowtrace.io',
   [UniverseChainId.Base]: 'https://basescan.org',
+  [UniverseChainId.BaseSepolia]: 'https://sepolia.basescan.org',
   [UniverseChainId.Blast]: 'https://blastscan.io',
   [UniverseChainId.Zora]: 'https://zora.superscan.network',
   [UniverseChainId.Zksync]: 'https://explorer.zksync.io',

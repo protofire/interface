@@ -94,6 +94,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
         bgColor: '#0052FF33',
         textColor: '#0052FF',
       }
+    case UniverseChainId.BaseSepolia:
+      return {
+        symbol: BASE_LOGO,
+        bgColor: '#0052FF33',
+        textColor: '#0052FF',
+      }
     case UniverseChainId.Blast:
       return darkMode
         ? {

@@ -73,7 +73,14 @@
     "https://testnet.evm.nodes.onflow.org",
     "https://mainnet.evm.nodes.onflow.org",
     "https://evm.flowscan.io",
-    "https://raw.githubusercontent.com/onflow/assets/main/tokens/*"
+    "https://raw.githubusercontent.com/onflow/assets/main/tokens/*",
+    "https://sepolia.base.org",
+    "https://sepolia.basescan.org",
+    "https://graph.swap.w3us.site",
+    "https://apiv1.testing.swap.w3us.site",
+    "https://apiv2.testing.swap.w3us.site",
+    "https://info.testing.swap.w3us.site",
+    "https://v2-info.testing.swap.w3us.site"
   ],
   "workerSrc": [
     "'self'",

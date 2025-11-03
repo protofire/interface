@@ -75,6 +75,13 @@ export const USDC_BASE = new Token(
   'USDC',
   'USD Coin',
 )
+export const USDC_BASE_SEPOLIA = new Token(
+  UniverseChainId.BaseSepolia,
+  '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+  6,
+  'USDC',
+  'USD Coin',
+)
 
 export const DAI = new Token(
   UniverseChainId.Mainnet,
@@ -370,6 +377,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
   ),
   [UniverseChainId.Base]: new Token(
     UniverseChainId.Base,
+    '0x4200000000000000000000000000000000000006',
+    18,
+    'WETH',
+    'Wrapped Ether',
+  ),
+  [UniverseChainId.BaseSepolia]: new Token(
+    UniverseChainId.BaseSepolia,
     '0x4200000000000000000000000000000000000006',
     18,
     'WETH',

@@ -63,6 +63,7 @@ const chainIdNames: { [chainId in SupportedInterfaceChainId]: string } = {
   [UniverseChainId.Bnb]: 'bnb',
   [UniverseChainId.Avalanche]: 'avalanche',
   [UniverseChainId.Base]: 'base',
+  [UniverseChainId.BaseSepolia]: 'base-sepolia',
   [UniverseChainId.Blast]: 'blast',
   [UniverseChainId.Zora]: 'zora',
   [UniverseChainId.Zksync]: 'zksync',

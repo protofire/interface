@@ -92,13 +92,17 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
         {
           label: 'V3 Analytics',
           quickKey: 'T',
-          href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+          href: chainId === UniverseChainId.BaseSepolia 
+            ? 'https://info.testing.swap.w3us.site' 
+            : `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
           internal: false,
         },
         {
           label: 'V2 Analytics',
           quickKey: 'P',
-          href: `https://v2-info.staging.flowswap.io`,
+          href: chainId === UniverseChainId.BaseSepolia 
+            ? 'https://v2-info.testing.swap.w3us.site' 
+            : 'https://v2-info.staging.flowswap.io',
           internal: false,
         },
       ],

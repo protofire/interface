@@ -21,6 +21,7 @@ export enum UniverseChainId {
   CeloAlfajores = UniswapSDKChainId.CELO_ALFAJORES,
   Bnb = UniswapSDKChainId.BNB,
   Base = UniswapSDKChainId.BASE,
+  BaseSepolia = UniswapSDKChainId.BASE_SEPOLIA,
   Blast = UniswapSDKChainId.BLAST,
   Zora = UniswapSDKChainId.ZORA,
   Zksync = UniswapSDKChainId.ZKSYNC,
@@ -47,6 +48,7 @@ export type WalletChainId =
   | UniverseChainId.ArbitrumOne
   | UniverseChainId.Avalanche
   | UniverseChainId.Base
+  | UniverseChainId.BaseSepolia
   | UniverseChainId.Celo
   | UniverseChainId.Optimism
   | UniverseChainId.Polygon
@@ -78,6 +80,7 @@ export const WALLET_SUPPORTED_CHAIN_IDS: WalletChainId[] = [
   UniverseChainId.ArbitrumOne,
   UniverseChainId.Optimism,
   UniverseChainId.Base,
+  UniverseChainId.BaseSepolia,
   UniverseChainId.Bnb,
   UniverseChainId.Blast,
   UniverseChainId.Avalanche,

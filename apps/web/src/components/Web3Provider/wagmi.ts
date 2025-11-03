@@ -19,6 +19,7 @@ declare module 'wagmi' {
 
 export const wagmiConfig = createConfig({
   chains: [
+    UNIVERSE_CHAIN_INFO[UniverseChainId.BaseSepolia],
     UNIVERSE_CHAIN_INFO[UniverseChainId.FlowTestnet],
     ...WEB_SUPPORTED_CHAIN_IDS.map((chainId) => UNIVERSE_CHAIN_INFO[chainId]),
   ],

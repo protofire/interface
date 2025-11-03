@@ -28,6 +28,8 @@ export function toGraphQLChain(chainId: ChainId | number): Chain | undefined {
       return Chain.Polygon
     case ChainId.BASE:
       return Chain.Base
+    case ChainId.BASE_SEPOLIA:
+      return undefined // Backend does not support Base Sepolia yet
     case ChainId.BNB:
       return Chain.Bnb
     case ChainId.AVALANCHE:
