@@ -1,3 +1,4 @@
+import { ReactComponent as LogoChain } from 'assets/svg/logo-chain.svg'
 import { showTestnetsAtom } from 'components/AccountDrawer/TestnetsToggle'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import ChainSelectorRow from 'components/NavBar/ChainSelector/ChainSelectorRow'
@@ -15,9 +16,9 @@ import { useAccount } from 'hooks/useAccount'
 import useSelectChain from 'hooks/useSelectChain'
 import { useAtomValue } from 'jotai/utils'
 import { useTheme } from 'lib/styled-components'
+import { ADD_NEW_CHAIN_URL } from 'pages/Migration/constants'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { AlertTriangle, Plus } from 'react-feather'
-import { ReactComponent as LogoChain } from 'assets/svg/logo-chain.svg'
 import { useSearchParams } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { Flex, Popover } from 'ui/src'
@@ -155,8 +156,8 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
             <ChainSelectorRow disabled targetChain={selectorChain} key={selectorChain} isPending={false} />
           ))}
           {/* Add Chain Button - styled like network options */}
-          <button 
-            style={{ 
+          <button
+            style={{
               border: `1px solid ${theme.accent1}`,
               borderRadius: '12px',
               margin: '4px 0',
@@ -170,7 +171,7 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
               outline: 'none',
               backgroundColor: 'transparent',
               transition: `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`,
-              width: '100%'
+              width: '100%',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = theme.surface3
@@ -179,35 +180,39 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
               e.currentTarget.style.backgroundColor = 'transparent'
             }}
             onClick={() => {
-              window.open('https://swap-support.protofire.io', '_blank')
+              window.open(ADD_NEW_CHAIN_URL, '_blank')
               setIsOpen(false)
             }}
           >
-            <LogoChain 
+            <LogoChain
               width="20"
               height="20"
               style={{
                 marginRight: '12px',
                 display: 'block',
-                flexShrink: 0
+                flexShrink: 0,
               }}
             />
-            <div style={{ 
-              gridColumn: '2', 
-              gridRow: '1', 
-              fontSize: '16px', 
-              fontWeight: '485',
-              color: theme.accent1
-            }}>
+            <div
+              style={{
+                gridColumn: '2',
+                gridRow: '1',
+                fontSize: '16px',
+                fontWeight: '485',
+                color: theme.accent1,
+              }}
+            >
               Add my chain
             </div>
-            <div style={{ 
-              gridColumn: '3', 
-              gridRow: '1', 
-              display: 'flex', 
-              alignItems: 'center', 
-              width: '20px' 
-            }}>
+            <div
+              style={{
+                gridColumn: '3',
+                gridRow: '1',
+                display: 'flex',
+                alignItems: 'center',
+                width: '20px',
+              }}
+            >
               <Plus size={20} color={theme.accent1} />
             </div>
           </button>

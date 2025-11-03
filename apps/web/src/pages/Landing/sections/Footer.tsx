@@ -1,11 +1,12 @@
-import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { ReactComponent as AddChainButton } from 'assets/svg/add-chain-button.svg'
+import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Github, Medium, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
+import { ADD_NEW_CHAIN_URL } from 'pages/Migration/constants'
 import { useMemo } from 'react'
 // import { useTogglePrivacyPolicy } from 'state/application/hooks'
 import { Anchor, Flex, Separator, Text } from 'ui/src'
@@ -119,17 +120,17 @@ export function Footer() {
         justifyContent="space-between"
       >
         <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
-        
-        <Anchor href="/migration" target="_self" style={{ textDecoration: 'none' }}>
-          <AddChainButton 
-            width="160" 
-            height="50" 
-            style={{ 
-              cursor: 'pointer'
+
+        <Anchor href={ADD_NEW_CHAIN_URL} target="_blank" style={{ textDecoration: 'none' }}>
+          <AddChainButton
+            width="160"
+            height="50"
+            style={{
+              cursor: 'pointer',
             }}
           />
         </Anchor>
-        
+
         <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://protofire.io" target="_blank">
           <span style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

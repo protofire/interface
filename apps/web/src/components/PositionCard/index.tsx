@@ -9,7 +9,7 @@ import { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import { StyledExternalLink } from 'components/Table/styled'
 import { CardNoise } from 'components/earn/styled'
 import { Dots } from 'components/swap/styled'
-import { getInfoV2Link } from "constants/links"
+import { getInfoV2Link } from 'constants/links'
 // import { chainIdToBackendChain } from 'constants/chains'
 import { BIG_INT_ZERO } from 'constants/misc'
 import { useAccount } from 'hooks/useAccount'
@@ -23,10 +23,10 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useTokenBalance } from 'state/connection/hooks'
-import { useSwapAndLimitContext } from "state/swap/useSwapContext"
+import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { ThemedText } from 'theme/components'
 import { Trans } from 'uniswap/src/i18n'
-import { UniverseChainId } from "uniswap/src/types/chains"
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { currencyId } from 'utils/currencyId'
 import { unwrappedToken } from 'utils/unwrappedToken'
 

@@ -4,7 +4,7 @@ import { Send } from 'components/Icons/Send'
 import { SwapV2 } from 'components/Icons/SwapV2'
 import { MenuItem } from 'components/NavBar/CompanyMenu/Content'
 import { useTabsVisible } from 'components/NavBar/ScreenSizes'
-import { getInfoV2Link, getInfoV3Domain } from "constants/links"
+import { getInfoV2Link, getInfoV3Domain } from 'constants/links'
 import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'

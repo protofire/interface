@@ -12,4 +12,5 @@ export const getInfoV2Link = (chainId: string | number) => {
   }
 }
 
-export const getInfoV3Domain = () => isProdEnv() ? 'https://info.sakuraswap.com' : 'https://info.staging.sakuraswap.com'
+export const getInfoV3Domain = () =>
+  isProdEnv() ? 'https://info.sakuraswap.com' : 'https://info.staging.sakuraswap.com'
