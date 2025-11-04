@@ -35,6 +35,7 @@ const TokenDetails = lazy(() => import('pages/TokenDetails'))
 const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const Terms = lazy(() => import('pages/Terms'))
 const Migration = lazy(() => import('pages/Migration'))
+const Deployments = lazy(() => import('pages/Deployments'))
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -82,6 +83,8 @@ const StaticTitlesAndDescriptions = {
   TermsDescription: 'Terms',
   MigrationTitle: 'Migration',
   MigrationDescription: 'Migration in progress',
+  DeploymentsTitle: 'Contract Deployments',
+  DeploymentsDescription: 'View contract addresses for supported networks',
 }
 
 export interface RouteDefinition {
@@ -383,6 +386,12 @@ export const routes: RouteDefinition[] = [
     getElement: () => <Migration />,
     getTitle: () => StaticTitlesAndDescriptions.MigrationTitle,
     getDescription: () => StaticTitlesAndDescriptions.MigrationDescription,
+  }),
+  createRouteDefinition({
+    path: '/deployments',
+    getElement: () => <Deployments />,
+    getTitle: () => StaticTitlesAndDescriptions.DeploymentsTitle,
+    getDescription: () => StaticTitlesAndDescriptions.DeploymentsDescription,
   }),
   createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
   createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),
