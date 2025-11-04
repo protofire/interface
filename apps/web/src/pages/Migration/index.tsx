@@ -177,13 +177,13 @@ export default function MigrationPage() {
             fontSize: '1.1rem',
             lineHeight: '1.6',
             marginBottom: '1rem',
-            color: theme.neutral2,
+            color: theme.neutral1,
             maxWidth: '800px',
             margin: '0 auto 1rem',
           }}
         >
           With a focus on building a cross-chain payments system, Relay (former Reservoir) has officially wound down
-          Reservoir Swap - <span style={{ fontWeight: 'bold' }}>https://swap.reservoir.tools</span>, handing over
+          Reservoir Swap - <span style={{ fontWeight: 'bold', color: theme.neutral2 }}>https://swap.reservoir.tools</span>, handing over
           support for most chains to Protofire.
         </p>
 
@@ -269,7 +269,7 @@ export default function MigrationPage() {
                 <img src={chain.icon} alt="Zora" style={{ width: '56px', height: '56px', borderRadius: '12px' }} />
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1 }}>{chain.name}</h3>
               </div>
-              <p style={{ fontSize: '1rem', color: theme.neutral2, marginBottom: '24px', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '1.1rem', color: theme.neutral1, marginBottom: '24px', lineHeight: '1.6' }}>
                 Interface for Zora network{' '}
                 <span style={{ color: theme.neutral2, fontWeight: 'bold' }}>{chain.oldUrl}</span> is no longer
                 available. <br />
