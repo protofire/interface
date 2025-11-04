@@ -1,3 +1,5 @@
+import DAODarkMode from 'assets/png/DAO-dark-mode.png'
+import DAOLightMode from 'assets/png/DAO-light-mode.png'
 import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
@@ -6,7 +8,7 @@ import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-import { Anchor, Flex, Separator, Text, styled } from 'ui/src'
+import { Anchor, Flex, Separator, Text, useIsDarkMode } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
 
@@ -22,13 +24,16 @@ const SocialIcon = deprecatedStyled(Wiggle)`
     fill: ${(props) => props.$hoverColor};
   }
 `
-const PolicyLink = styled(Text, {
-  variant: 'body3',
-  animation: '100ms',
-  color: '$neutral2',
-  cursor: 'pointer',
-  hoverStyle: { color: '$neutral1' },
-})
+
+const DAOLogo = deprecatedStyled.img`
+  height: 48px;
+  width: auto;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 0.8;
+  }
+`
 
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
@@ -73,6 +78,7 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
+  const isDarkMode = useIsDarkMode()
   //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {
@@ -93,8 +99,11 @@ export function Footer() {
     <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
       <Flex row $md={{ flexDirection: 'column' }} justifyContent="space-between" gap="$spacing32">
         <Flex height="100%" gap="$spacing60">
-          <Flex $md={{ display: 'none' }}>
+          <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
+            <Anchor>
+              <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
+            </Anchor>
           </Flex>
         </Flex>
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
@@ -102,15 +111,17 @@ export function Footer() {
             <FooterSection title={t('common.app')} items={appSectionItems} />
             {/* <FooterSection title={sections[0].title} items={[...sections[0].items, brandAssets]} /> */}
             <FooterSection title={sections[0].title} items={sections[0].items} />
+          </Flex>
+          <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
+            {/* <FooterSection title={sections[1].title} items={sections[1].items} /> */}
             <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
-          {/* <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
-            <FooterSection title={sections[1].title} items={sections[1].items} />
-            <FooterSection title={sections[2].title} items={sections[2].items} />
-          </Flex> */}
         </Flex>
-        <Flex $md={{ display: 'flex' }} display="none">
+        <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
+          <Anchor>
+            <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
+          </Anchor>
         </Flex>
       </Flex>
       <Separator />
@@ -121,18 +132,18 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">© 2025</Text>
+        <Text variant="body3">2025 ShapeSwap</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
           </Text>
         </Anchor>
-        <Flex row alignItems="center" gap="$spacing16">
-          {/* <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
+        {/* <Flex row alignItems="center" gap="$spacing16">
+          <Anchor textDecorationLine="none" href="https://uniswap.org/trademark" target="_blank">
             <PolicyLink>{t('common.trademarkPolicy')}</PolicyLink>
-          </Anchor> */}
-          {/* <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink> */}
-        </Flex>
+          </Anchor>
+          <PolicyLink href="/privacy">{t('common.privacyPolicy')}</PolicyLink>
+        </Flex> */}
       </Flex>
     </Flex>
   )
