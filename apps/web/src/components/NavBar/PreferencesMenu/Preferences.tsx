@@ -18,16 +18,12 @@ type SettingItem = {
   component: JSX.Element
 }
 
-export function PreferenceSettings({
-  showHeader = true,
-}: {
-  showHeader?: boolean
-}) {
+export function PreferenceSettings({ showHeader = true }: { showHeader?: boolean }) {
   const items: SettingItem[] = [
     {
       label: t('themeToggle.theme'),
       component: <ThemeSelector compact />,
-    }
+    },
   ]
 
   return (

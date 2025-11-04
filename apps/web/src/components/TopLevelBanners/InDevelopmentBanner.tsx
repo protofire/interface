@@ -59,7 +59,8 @@ const ReadMoreWrapper = styled(ButtonText)`
   }
 `
 
-const bannerText = 'This interface is still in the development phase and used only for internal testing purposes. The project has been modified to be compatible with additional networks.'
+const bannerText =
+  'This interface is still in the development phase and used only for internal testing purposes. The project has been modified to be compatible with additional networks.'
 
 export function InDevelopmentBanner() {
   return (

@@ -8,11 +8,11 @@ import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { ExternalLink } from 'ui/src/components/icons'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
-import { ExternalLink } from 'ui/src/components/icons'
 
 export type TabsSection = {
   title: string

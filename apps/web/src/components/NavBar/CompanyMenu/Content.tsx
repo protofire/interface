@@ -21,13 +21,14 @@ export const useMenuContent = (): MenuSection[] => {
   return [
     {
       title: 'Help',
-      items: [{ label: 'Contact Support', href: 'https://swap-support.protofire.io/' }],
+      items: [
+        { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
+        { label: 'Contract Deployments', href: '/deployments' },
+      ],
     },
     {
       title: t('common.company'),
-      items: [
-        { label: 'Shape', href: 'https://shape.network/' },
-      ],
+      items: [{ label: 'Shape', href: 'https://shape.network/' }],
     },
     {
       title: 'Terms',

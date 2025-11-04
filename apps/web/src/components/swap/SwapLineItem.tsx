@@ -77,9 +77,7 @@ function SwapFeeTooltipContent({ hasFee }: { hasFee: boolean }) {
 }
 
 export function SlippageTooltipContent() {
-  return (
-    <Trans i18nKey="swap.slippage.tooltip" />
-  )
+  return <Trans i18nKey="swap.slippage.tooltip" />
 }
 
 function MinimumOutputTooltipContent({ amount }: { amount: CurrencyAmount<Currency> }) {
