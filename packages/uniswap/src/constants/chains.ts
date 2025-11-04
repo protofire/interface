@@ -587,7 +587,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_BASE_SEPOLIA, 10_000e6),
     stablecoins: [USDC_BASE_SEPOLIA],
     statusPage: undefined,
-    supportsClientSideRouting: true,
+    supportsClientSideRouting: false,
     supportsGasEstimates: true,
     urlParam: 'base-sepolia',
     wrappedNativeCurrency: {
