@@ -7,40 +7,65 @@ import { useEisenTokens } from './useEisenTokens'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 
+const ModalContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  flex: 1 1;
+  position: relative;
+`
+
+const HeaderSection = styled.div`
+  padding: 16px 20px 0 20px;
+  flex-shrink: 0;
+`
+
 const ModalTitle = styled.div`
   font-size: 20px;
   font-weight: 535;
-  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: ${({ theme }) => theme.neutral1};
 `
 
+const SearchSection = styled.div`
+  padding: 16px 20px;
+  border-top: 1px solid ${({ theme }) => theme.surface3};
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+`
+
 const TokenItem = styled.button<{ $selected: boolean; $disabled: boolean }>`
   background: ${({ $selected, theme }) => ($selected ? theme.surface2 : 'transparent')};
   border: none;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 0;
+  padding: 4px 20px;
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(auto, 1fr);
+  grid-gap: 16px;
   align-items: center;
-  gap: 12px;
   width: 100%;
   text-align: left;
   transition: background 0.15s;
   opacity: ${({ $disabled }) => ($disabled ? 0.4 : 1)};
+  height: 60px;
+  box-sizing: border-box;
   
   &:hover {
     ${({ $disabled, theme }) => !$disabled && `
-      background: ${theme.surface2};
+      background-color: ${theme.deprecated_hoverDefault};
     `}
   }
 `
 
 const TokenIcon = styled.div<{ $logoUrl?: string }>`
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: ${({ theme, $logoUrl }) => $logoUrl ? 'transparent' : theme.accent1};
   display: flex;
@@ -59,19 +84,29 @@ const TokenIcon = styled.div<{ $logoUrl?: string }>`
 `
 
 const TokenInfo = styled.div`
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  overflow: hidden;
 `
 
 const TokenName = styled.div`
   font-size: 16px;
   font-weight: 535;
   color: ${({ theme }) => theme.neutral1};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const TokenSymbol = styled.div`
   font-size: 14px;
   color: ${({ theme }) => theme.neutral2};
   font-weight: 485;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const SectionTitle = styled.div`
@@ -85,6 +120,31 @@ const SectionTitle = styled.div`
 const NoResults = styled.div`
   color: ${({ theme }) => theme.neutral2};
   font-weight: 485;
+`
+
+const ScrollableContainer = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  
+  /* Thin scrollbar styling - overlay mode */
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) => theme.surface3} transparent;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.surface3};
+    border-radius: 8px;
+  }
 `
 
 interface MockTokenSelectModalProps {
@@ -136,18 +196,18 @@ export function MockTokenSelectModal({
   }
   
   return (
-    <Modal isOpen={isOpen} onDismiss={handleDismiss} maxHeight={650} minHeight={600}>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '600px' }}>
-        <div style={{ padding: '20px 20px 0 20px' }}>
+    <Modal isOpen={isOpen} onDismiss={handleDismiss} height="90vh" maxHeight={650} maxWidth={420}>
+      <ModalContentWrapper>
+        <HeaderSection>
           <ModalTitle>
             Select a token
-            <button onClick={handleDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '24px' }}>
+            <button onClick={handleDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '24px', color: 'inherit' }}>
               ×
             </button>
           </ModalTitle>
-        </div>
+        </HeaderSection>
         
-        <div style={{ padding: '16px 20px', borderTop: '1px solid var(--surface3)' }}>
+        <SearchSection>
           <SearchInput
             type="text"
             placeholder="Search name or paste address"
@@ -155,9 +215,9 @@ export function MockTokenSelectModal({
             onChange={(e) => setSearchQuery(e.target.value)}
             autoComplete="off"
           />
-        </div>
+        </SearchSection>
         
-        <div style={{ flex: 1, overflow: 'auto', padding: '8px 0px 20px 0px', minHeight: '450px' }}>
+        <ScrollableContainer>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               Loading tokens...
@@ -168,10 +228,10 @@ export function MockTokenSelectModal({
             </NoResults>
           ) : (
             <>
-              <div style={{ padding: '0 20px', marginBottom: '8px' }}>
+              <div style={{ padding: '8px 20px', marginBottom: '8px' }}>
                 <SectionTitle>Popular tokens</SectionTitle>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '0 20px 20px 20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
                 {filteredTokens.map((token) => {
                   // Create a temporary token for comparison using mockTokenToToken
                   const { mockTokenToToken } = require('./mockTokenData')
@@ -205,9 +265,9 @@ export function MockTokenSelectModal({
               </div>
             </>
           )}
-        </div>
-        </div>
-      </Modal>
-    )
-  }
+        </ScrollableContainer>
+      </ModalContentWrapper>
+    </Modal>
+  )
+}
 

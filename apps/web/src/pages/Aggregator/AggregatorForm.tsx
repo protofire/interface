@@ -1,23 +1,41 @@
-import { Currency } from '@uniswap/sdk-core'
+import { Currency, Token } from '@uniswap/sdk-core'
+import { parseUnits } from '@ethersproject/units'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useAccountDrawer } from 'components/AccountDrawer/MiniPortfolio/hooks'
-import { ButtonLight } from 'components/Button'
-import { GrayCard } from 'components/Card'
+import { ButtonError, ButtonLight, ButtonPrimary } from 'components/Button'
 import { Field } from 'components/swap/constants'
+import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'components/swap/styled'
 import { useAccount } from 'hooks/useAccount'
+import { useTheme } from 'lib/styled-components'
 import { useState, useCallback, useMemo, useRef } from 'react'
 import { ArrowDown } from 'react-feather'
 import { ThemedText } from 'theme/components'
-import { Text } from 'ui/src'
 import { Trans } from 'uniswap/src/i18n'
-import { AggregatorCurrencyInputPanel } from './AggregatorCurrencyInputPanel'
+import { CurrencyField } from 'uniswap/src/types/currency'
+import AggregatorSwapCurrencyInputPanel from './AggregatorSwapCurrencyInputPanel'
 import { useEisenQuote } from './useEisenQuote'
 import { FLOW_CHAIN_ID, FLOW_TESTNET_CHAIN_ID } from './mockTokenData'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { AggregatorQuoteDisplay } from './AggregatorQuoteDisplay'
+import { AggregatorSettings, OrderType } from './AggregatorSettings'
+import { useTokenApproval } from './useTokenApproval'
+import { useEthersProvider } from 'hooks/useEthersProvider'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { ExactInputSwapTransactionInfo, TransactionType } from 'state/transactions/types'
+import { RowBetween, RowFixed } from 'components/Row'
+import { Text } from 'ui/src'
+import styled from 'lib/styled-components'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
 }
+
+const AggregatorHeader = styled(RowBetween)`
+  margin-bottom: 12px;
+  padding-right: 4px;
+  color: ${({ theme }) => theme.neutral2};
+`
 
 interface AggregatorFormProps {
   disableTokenInputs?: boolean
@@ -25,6 +43,10 @@ interface AggregatorFormProps {
 
 export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormProps) {
   const account = useAccount()
+  
+  // Settings state
+  const [order, setOrder] = useState<OrderType>('CHEAPEST')
+  const [slippage, setSlippage] = useState<number>(0.005)
   
   // Auto-detect testnet based on connected wallet's chain ID
   const isTestnet = useMemo(() => {
@@ -55,6 +77,8 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
     independentField: Field.INPUT,
   })
   
+  const [executing, setExecuting] = useState(false)
+  
   const { typedValue, independentField } = swapState
   const inputRef = useRef<HTMLInputElement>(null)
   const outputRef = useRef<HTMLInputElement>(null)
@@ -78,15 +102,41 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   
   // Prepare Eisen quote parameters
   const quoteParams = useMemo(() => {
-    if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !typedValue || !account.address) {
+    if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
+      return null
+    }
+    
+    // Don't fetch quote if amount is empty, zero, or invalid
+    if (!typedValue || typedValue.trim() === '') {
+      return null
+    }
+    
+    // Check if the parsed value is actually greater than 0
+    // This handles cases like "0", "0.", "0.0", "0.00000", etc.
+    const parsedValue = parseFloat(typedValue)
+    if (isNaN(parsedValue) || parsedValue <= 0) {
       return null
     }
     
     // Calculate fromAmount in wei (smallest unit)
     // Convert the input amount to wei based on token decimals
+    // Use parseUnits to avoid scientific notation for large numbers
     const inputCurrency = currencies[Field.INPUT]
     const decimals = inputCurrency?.decimals || 18
-    const fromAmountWei = (parseFloat(typedValue) * Math.pow(10, decimals)).toString()
+    let fromAmountWei: string
+    try {
+      // parseUnits converts human-readable amount to wei, always returns integer string
+      fromAmountWei = parseUnits(typedValue, decimals).toString()
+      
+      // Double check: if the wei amount is 0, don't fetch quote
+      if (fromAmountWei === '0') {
+        return null
+      }
+    } catch (error) {
+      // Fallback if parseUnits fails (shouldn't happen with valid input)
+      console.error('Error parsing amount:', error)
+      return null
+    }
     
     // For native currency, use the zero address
     const NATIVE_TOKEN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
@@ -105,11 +155,10 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
       toToken,
       fromAmount: fromAmountWei,
       toAddress: account.address,
-      // Optional parameters - only include if needed
-      order: 'CHEAPEST',
-      // Omitting includedDex, referrer, fee, slippage to use API defaults
+      order: order,
+      slippage: slippage.toString(),
     }
-  }, [currencies, typedValue, independentField, account.address, currentChainId])
+  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage])
   
   // Fetch quote from Eisen API
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
@@ -206,96 +255,239 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   
   const accountDrawer = useAccountDrawer()
   const isDisconnected = !account.address
+  const theme = useTheme()
+  const { chainId } = useSwapAndLimitContext()
+  const supportedChainId = chainId // For aggregator, we support Flow chains
+  const provider = useEthersProvider({ chainId: account.chainId })
+  const addTransaction = useTransactionAdder()
+
+  // Check if we need approval for the input token
+  const inputToken = quote?.result?.action?.fromToken
+  const routerAddress = quote?.result?.transactionRequest?.to
+  const fromAmount = quote?.result?.action?.fromAmount
+
+  // Create Token object for approval check
+  const tokenForApproval = inputToken && !inputToken.address.toLowerCase().includes('eeee') ? new Token(
+    inputToken.chainId,
+    inputToken.address,
+    inputToken.decimals,
+    inputToken.symbol,
+    inputToken.name
+  ) : null
+
+  // Check if user has approved the router contract to spend their tokens
+  const { needsApproval, isApproving, approve, error: approvalError } = useTokenApproval(
+    tokenForApproval,
+    routerAddress || null,
+    fromAmount || null
+  )
+
+  const handleExecute = async () => {
+    const txnRequest = quote?.result?.transactionRequest
+    if (!txnRequest || !account.address || !provider) {
+      return
+    }
+
+    setExecuting(true)
+    try {
+      const signer = provider.getSigner()
+      
+      // Prepare base transaction
+      const txRequest = {
+        to: txnRequest.to,
+        value: txnRequest.value,
+        data: txnRequest.data as `0x${string}`,
+        gasPrice: txnRequest.gasPrice,
+      }
+      
+      // Estimate gas ourselves (with fallback to quote's gasLimit)
+      let gasLimit: BigNumber
+      try {
+        const gasEstimate = await provider.estimateGas(txRequest)
+        gasLimit = calculateGasMargin(gasEstimate) // Add 20% margin
+      } catch (gasError) {
+        console.warn('Failed to estimate gas, using quote gasLimit:', gasError)
+        // Fallback to quote's gasLimit if estimation fails
+        gasLimit = BigNumber.from(txnRequest.gasLimit)
+      }
+      
+      const tx = await signer.sendTransaction({
+        ...txRequest,
+        gasLimit,
+      })
+
+      console.log('Transaction sent:', tx.hash)
+      
+      // Add transaction to the app's transaction list
+      const action = quote?.result?.action
+      const estimate = quote?.result?.estimate
+      
+      const transactionInfo: ExactInputSwapTransactionInfo = {
+        type: TransactionType.SWAP,
+        tradeType: 'EXACT_INPUT' as any,
+        inputCurrencyId: action?.fromToken?.address || '',
+        outputCurrencyId: action?.toToken?.address || '',
+        inputCurrencyAmountRaw: action?.fromAmount || '0',
+        expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
+        minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
+        isUniswapXOrder: false,
+      }
+      
+      // @ts-ignore - TransactionResponse type
+      addTransaction(tx, transactionInfo)
+    } catch (err) {
+      console.error('Transaction failed:', err)
+    } finally {
+      setExecuting(false)
+    }
+  }
+
+  // Determine button state
+  const hasBothTokens = currencies[Field.INPUT] && currencies[Field.OUTPUT]
+  const hasAmount = typedValue && parseFloat(typedValue) > 0
+  const hasQuote = quote && quote.result?.transactionRequest
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      {/* Network Indicator */}
-      {account.chainId && (
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
-          <span style={{
-            background: isTestnet ? '#66CC66' : '#f0f0f0',
-            color: isTestnet ? 'white' : '#666',
-            borderRadius: '20px',
-            padding: '6px 16px',
-            fontSize: '14px',
-            fontWeight: 535,
-          }}>
-            {isTestnet ? 'Testnet' : 'Mainnet'}
-          </span>
-        </div>
-      )}
+    <>
+      {/* Header with Settings */}
+      <AggregatorHeader>
+        <div />
+        <RowFixed>
+          <AggregatorSettings
+            order={order}
+            slippage={slippage}
+            onOrderChange={setOrder}
+            onSlippageChange={setSlippage}
+            compact={false}
+          />
+        </RowFixed>
+      </AggregatorHeader>
 
-      <AggregatorCurrencyInputPanel
-        label="Sell"
-        value={formattedAmounts[Field.INPUT]}
-        onUserInput={handleTypeInput}
-        onCurrencySelect={handleInputSelect}
-        currency={currencies[Field.INPUT]}
-        otherCurrency={currencies[Field.OUTPUT]}
-        disabled={disableTokenInputs}
-        showMaxButton={showMaxButton}
-        onMax={handleMaxInput}
-        fiatValue={inputFiatValue}
-        ref={inputRef}
-      />
-
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '-12px 0' }}>
-        <button
-          onClick={handleSwitchTokens}
-          style={{
-            background: '#fff',
-            border: '1px solid #e0e0e0',
-            borderRadius: '50%',
-            width: '36px',
-            height: '36px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            zIndex: 10,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#f5f5f5'
-            e.currentTarget.style.borderColor = '#bdbdbd'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = '#fff'
-            e.currentTarget.style.borderColor = '#e0e0e0'
-          }}
-        >
-          <ArrowDown size="18" />
-        </button>
+      <div style={{ display: 'relative' }}>
+        <SwapSection>
+          <AggregatorSwapCurrencyInputPanel
+            label={<Trans i18nKey="common.sell.label" />}
+            disabled={disableTokenInputs}
+            value={formattedAmounts[Field.INPUT]}
+            showMaxButton={showMaxButton}
+            currency={currencies[Field.INPUT] ?? null}
+            currencyField={CurrencyField.INPUT}
+            onUserInput={handleTypeInput}
+            onMax={handleMaxInput}
+            fiatValue={inputFiatValue}
+            onCurrencySelect={handleInputSelect}
+            otherCurrency={currencies[Field.OUTPUT]}
+            id="aggregator-currency-input"
+            loading={independentField === Field.OUTPUT && quoteLoading}
+            ref={inputRef}
+          />
+        </SwapSection>
+        <ArrowWrapper clickable={!!supportedChainId}>
+          <ArrowContainer
+            data-testid="swap-currency-button"
+            onClick={() => {
+              if (disableTokenInputs) {
+                return
+              }
+              handleSwitchTokens()
+            }}
+            color={theme.neutral1}
+          >
+            <ArrowDown size="16" color={theme.neutral1} />
+          </ArrowContainer>
+        </ArrowWrapper>
       </div>
-
-      <AggregatorCurrencyInputPanel
-        label="Buy"
-        value={formattedAmounts[Field.OUTPUT]}
-        onUserInput={handleTypeOutput}
-        onCurrencySelect={handleOutputSelect}
-        currency={currencies[Field.OUTPUT]}
-        otherCurrency={currencies[Field.INPUT]}
-        disabled={disableTokenInputs}
-        fiatValue={outputFiatValue}
-        ref={outputRef}
-      />
+      <OutputSwapSection>
+        <AggregatorSwapCurrencyInputPanel
+          value={formattedAmounts[Field.OUTPUT]}
+          disabled={disableTokenInputs}
+          onUserInput={handleTypeOutput}
+          label={<Trans i18nKey="common.buy.label" />}
+          showMaxButton={false}
+          hideBalance={false}
+          fiatValue={outputFiatValue}
+          currency={currencies[Field.OUTPUT] ?? null}
+          currencyField={CurrencyField.OUTPUT}
+          onCurrencySelect={handleOutputSelect}
+          otherCurrency={currencies[Field.INPUT]}
+          id="aggregator-currency-output"
+          loading={independentField === Field.INPUT && quoteLoading}
+          ref={outputRef}
+        />
+      </OutputSwapSection>
 
       <AggregatorQuoteDisplay quote={quote} loading={quoteLoading} error={quoteError} />
-      
-      <div>
+
+      {/* Swap Button */}
+      <div style={{ marginTop: '16px' }}>
         {isDisconnected ? (
           <ButtonLight onClick={accountDrawer.open} fontWeight={535} $borderRadius="16px">
             <Trans i18nKey="common.connectWallet.button" />
           </ButtonLight>
+        ) : !hasBothTokens ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              <Trans i18nKey="tokens.selector.button.choose" />
+            </Text>
+          </ButtonError>
+        ) : !hasAmount ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              Enter an amount
+            </Text>
+          </ButtonError>
+        ) : quoteLoading ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              Loading quote...
+            </Text>
+          </ButtonError>
+        ) : quoteError ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              Error: {quoteError}
+            </Text>
+          </ButtonError>
+        ) : !hasQuote ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              No quote available
+            </Text>
+          </ButtonError>
+        ) : needsApproval ? (
+          <ButtonPrimary
+            disabled={isApproving}
+            onClick={approve}
+            $borderRadius="16px"
+            style={{ width: '100%', fontWeight: 535 }}
+          >
+            {isApproving ? 'Approving...' : `Approve ${inputToken?.symbol || 'Token'}`}
+          </ButtonPrimary>
         ) : (
-          <GrayCard style={{ textAlign: 'center' }}>
-            <ThemedText.DeprecatedMain mb="4px">
-              <Text color="neutral2">Aggregator mode</Text>
-            </ThemedText.DeprecatedMain>
-          </GrayCard>
+          <ButtonError
+            disabled={executing}
+            onClick={handleExecute}
+            $borderRadius="16px"
+            style={{ width: '100%' }}
+          >
+            <Text fontSize={20} color="neutralContrast">
+              {executing ? 'Processing...' : 'Execute Swap'}
+            </Text>
+          </ButtonError>
+        )}
+        
+        {approvalError && (
+          <div style={{ 
+            color: theme.critical, 
+            fontSize: '12px', 
+            marginTop: '8px', 
+            textAlign: 'center' 
+          }}>
+            Approval failed: {approvalError}
+          </div>
         )}
       </div>
-    </div>
+    </>
   )
 }
 

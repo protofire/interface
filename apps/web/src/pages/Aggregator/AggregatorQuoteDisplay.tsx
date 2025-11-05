@@ -1,14 +1,7 @@
-import { useState } from 'react'
 import styled from 'lib/styled-components'
-import { ButtonPrimary } from 'components/Button'
 import { Trans } from 'uniswap/src/i18n'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
-import { useEthersProvider } from 'hooks/useEthersProvider'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { ExactInputSwapTransactionInfo, TransactionType } from 'state/transactions/types'
-import { useTokenApproval } from './useTokenApproval'
-import { Token } from '@uniswap/sdk-core'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -44,82 +37,11 @@ interface AggregatorQuoteDisplayProps {
   quote: any
   loading: boolean
   error: string | null
-  onExecute?: () => void
 }
 
-export function AggregatorQuoteDisplay({ quote, loading, error, onExecute }: AggregatorQuoteDisplayProps) {
+export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuoteDisplayProps) {
   const account = useAccount()
   const theme = useTheme()
-  const [executing, setExecuting] = useState(false)
-  const provider = useEthersProvider({ chainId: account.chainId })
-  const addTransaction = useTransactionAdder()
-
-  // Check if we need approval for the input token
-  const inputToken = quote?.result?.action?.fromToken
-  const routerAddress = quote?.result?.transactionRequest?.to // This is the router contract that needs approval
-  const fromAmount = quote?.result?.action?.fromAmount
-
-  // Create Token object for approval check
-  const tokenForApproval = inputToken ? new Token(
-    inputToken.chainId,
-    inputToken.address,
-    inputToken.decimals,
-    inputToken.symbol,
-    inputToken.name
-  ) : null
-
-  // Check if user has approved the router contract to spend their tokens
-  const { needsApproval, isApproving, approve, error: approvalError } = useTokenApproval(
-    tokenForApproval,
-    routerAddress || null, // Router contract address that needs approval
-    fromAmount || null // Amount of tokens to approve
-  )
-
-  const handleExecute = async () => {
-    const txnRequest = quote?.result?.transactionRequest
-    if (!txnRequest || !account.address || !provider) {
-      return
-    }
-
-    setExecuting(true)
-    try {
-      const signer = provider.getSigner()
-      
-      const tx = await signer.sendTransaction({
-        to: txnRequest.to,
-        value: txnRequest.value,
-        data: txnRequest.data as `0x${string}`,
-        gasPrice: txnRequest.gasPrice,
-        gasLimit: txnRequest.gasLimit,
-      })
-
-      console.log('Transaction sent:', tx.hash)
-      
-      // Add transaction to the app's transaction list
-      const action = quote?.result?.action
-      const estimate = quote?.result?.estimate
-      
-      const transactionInfo: ExactInputSwapTransactionInfo = {
-        type: TransactionType.SWAP,
-        tradeType: 'EXACT_INPUT' as any,
-        inputCurrencyId: action?.fromToken?.address || '',
-        outputCurrencyId: action?.toToken?.address || '',
-        inputCurrencyAmountRaw: action?.fromAmount || '0',
-        expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
-        minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
-        isUniswapXOrder: false,
-      }
-      
-      // @ts-ignore - TransactionResponse type
-      addTransaction(tx, transactionInfo)
-      
-      onExecute?.()
-    } catch (err) {
-      console.error('Transaction failed:', err)
-    } finally {
-      setExecuting(false)
-    }
-  }
 
   if (loading) {
     return (
@@ -212,41 +134,6 @@ export function AggregatorQuoteDisplay({ quote, loading, error, onExecute }: Agg
             <Value>${parseFloat(gasCost.amountUSD).toFixed(6)}</Value>
           </QuoteRow>
         </GasInfo>
-      )}
-
-      {quote?.result?.transactionRequest && account.address && (
-        <div style={{ marginTop: '16px' }}>
-          {needsApproval ? (
-            <ButtonPrimary
-              disabled={isApproving}
-              onClick={approve}
-              $borderRadius="12px"
-              style={{ width: '100%', fontWeight: 535 }}
-            >
-              {isApproving ? 'Approving...' : `Approve ${inputToken?.symbol || 'Token'}`}
-            </ButtonPrimary>
-          ) : (
-            <ButtonPrimary
-              disabled={executing}
-              onClick={handleExecute}
-              $borderRadius="12px"
-              style={{ width: '100%', fontWeight: 535 }}
-            >
-              {executing ? 'Processing...' : 'Execute Swap'}
-            </ButtonPrimary>
-          )}
-          
-          {approvalError && (
-            <div style={{ 
-              color: theme.critical, 
-              fontSize: '12px', 
-              marginTop: '8px', 
-              textAlign: 'center' 
-            }}>
-              Approval failed: {approvalError}
-            </div>
-          )}
-        </div>
       )}
     </QuoteContainer>
   )

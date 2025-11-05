@@ -186,6 +186,8 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
     params?.toToken,
     params?.fromAmount,
     params?.toAddress,
+    params?.order,
+    params?.slippage,
   ])
 
   return {
