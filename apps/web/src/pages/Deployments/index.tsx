@@ -270,7 +270,7 @@ export default function DeploymentsPage() {
     <>
       <PageWrapper>
         <ThemedText.HeadlineLarge style={{ alignSelf: 'flex-start', marginBottom: '4px' }}>
-          Contract Deployments
+          Deployed Contracts
         </ThemedText.HeadlineLarge>
         <ThemedText.BodySecondary style={{ alignSelf: 'flex-start', marginBottom: '0' }}>
           View contract addresses for the supported networks
