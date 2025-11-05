@@ -83,7 +83,7 @@ const StaticTitlesAndDescriptions = {
   TermsDescription: 'Terms',
   MigrationTitle: 'Migration',
   MigrationDescription: 'Migration in progress',
-  DeploymentsTitle: 'Contract Deployments',
+  DeploymentsTitle: 'Deployed Contracts',
   DeploymentsDescription: 'View contract addresses for supported networks',
 }
 
