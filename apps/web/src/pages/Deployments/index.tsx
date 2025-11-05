@@ -23,6 +23,9 @@ import { CopyLinkIcon, ExternalLink, ThemedText } from 'theme/components'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import { InterfaceChainId, WEB_SUPPORTED_CHAIN_IDS } from 'uniswap/src/types/chains'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { DAO_LINKS } from 'pages/Deployments/constants'
+import daoLightMode from 'assets/png/DAO-light-mode.png'
+import daoDarkMode from 'assets/png/DAO-dark-mode.png'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -89,6 +92,12 @@ const ChainName = styled(ThemedText.SubHeader)`
 const ChainId = styled(ThemedText.BodySmall)`
   color: ${({ theme }) => theme.neutral2};
   font-size: 14px;
+`
+
+const DaoIcon = styled.img`
+  width: 160px;
+  cursor: pointer;
+  margin-right: 12px;
 `
 
 const ContractList = styled(Column)`
@@ -284,6 +293,7 @@ export default function DeploymentsPage() {
           ) : (
             filteredChains.map((chain) => {
               const isExpanded = expandedChains.has(chain.chainId)
+              const daoLink = DAO_LINKS[chain.chainId as keyof typeof DAO_LINKS]
               return (
                 <ChainItem key={chain.chainId}>
                   <Expand
@@ -294,6 +304,16 @@ export default function DeploymentsPage() {
                           <ChainName>{chain.name}</ChainName>
                           <ChainId>Chain ID: {chain.chainId}</ChainId>
                         </Column>
+                        {daoLink && (
+                          <ExternalLink
+                            href={daoLink}
+                            onClick={(e) => e.stopPropagation()}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <DaoIcon src={isDarkMode ? daoDarkMode : daoLightMode} alt="DAO" />
+                          </ExternalLink>
+                        )}
                       </ChainHeader>
                     }
                     button={<div />}
