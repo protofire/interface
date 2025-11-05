@@ -1,4 +1,4 @@
-import { Currency, Token } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useAccountDrawer } from 'components/AccountDrawer/MiniPortfolio/hooks'
@@ -26,6 +26,9 @@ import { RowBetween, RowFixed } from 'components/Row'
 import { Text } from 'ui/src'
 import styled from 'lib/styled-components'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
+import { useCurrencyBalance } from 'state/connection/hooks'
+import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
@@ -92,7 +95,36 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
     [currencyState]
   )
   
-  // Mock balance data - not using real hooks
+  // Get currency balances
+  const inputCurrencyBalance = useCurrencyBalance(account.address, currencies[Field.INPUT] ?? undefined)
+  
+  // Parse typed value to CurrencyAmount
+  const parsedAmount = useMemo(() => {
+    if (!typedValue || !currencies[Field.INPUT]) {
+      return undefined
+    }
+    return tryParseCurrencyAmount(typedValue, currencies[Field.INPUT])
+  }, [typedValue, currencies[Field.INPUT]])
+  
+  // Calculate max input amount (reserving gas for native tokens)
+  const maxInputAmount = useMemo(
+    () => maxAmountSpend(inputCurrencyBalance),
+    [inputCurrencyBalance]
+  )
+  
+  // Show max button if balance > 0 and not already at max
+  const showMaxButton = Boolean(
+    maxInputAmount?.greaterThan(0) && 
+    (!parsedAmount || !parsedAmount.equalTo(maxInputAmount))
+  )
+  
+  // Check for insufficient balance
+  const hasInsufficientFunds = useMemo(() => {
+    if (!parsedAmount || !inputCurrencyBalance) {
+      return false
+    }
+    return inputCurrencyBalance.lessThan(parsedAmount)
+  }, [parsedAmount, inputCurrencyBalance])
   
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
   
@@ -246,12 +278,11 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
     [independentField, dependentField, typedValue, quoteLoading, estimatedOutput]
   )
   
-  // Mock: don't show max button in aggregator mode
-  const showMaxButton = false
-  
   const handleMaxInput = useCallback(() => {
-    // Mock: no-op in aggregator mode
-  }, [])
+    if (maxInputAmount) {
+      handleTypeInput(maxInputAmount.toExact())
+    }
+  }, [maxInputAmount, handleTypeInput])
   
   const accountDrawer = useAccountDrawer()
   const isDisconnected = !account.address
@@ -346,6 +377,19 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   const hasBothTokens = currencies[Field.INPUT] && currencies[Field.OUTPUT]
   const hasAmount = typedValue && parseFloat(typedValue) > 0
   const hasQuote = quote && quote.result?.transactionRequest
+
+  // Get error message for button
+  const buttonError = useMemo(() => {
+    if (hasInsufficientFunds && currencies[Field.INPUT]) {
+      return (
+        <Trans 
+          i18nKey="common.insufficientTokenBalance.error" 
+          values={{ tokenSymbol: currencies[Field.INPUT].symbol }} 
+        />
+      )
+    }
+    return null
+  }, [hasInsufficientFunds, currencies[Field.INPUT]])
 
   return (
     <>
@@ -446,6 +490,12 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           <ButtonError disabled={true} $borderRadius="16px">
             <Text fontSize={20} color="neutralContrast">
               Error: {quoteError}
+            </Text>
+          </ButtonError>
+        ) : hasInsufficientFunds ? (
+          <ButtonError disabled={true} $borderRadius="16px">
+            <Text fontSize={20} color="neutralContrast">
+              {buttonError}
             </Text>
           </ButtonError>
         ) : !hasQuote ? (

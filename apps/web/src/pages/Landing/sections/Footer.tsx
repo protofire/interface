@@ -90,11 +90,6 @@ export function Footer() {
     }))
   }, [tabsContent])
   const sections = useMenuContent()
-  // const brandAssets = {
-  //   label: t('common.brandAssets'),
-  //   href: 'https://github.com/Uniswap/brand-assets/raw/main/Uniswap%20Brand%20Assets.zip',
-  //   internal: false,
-  // }
 
   return (
     <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
@@ -102,9 +97,6 @@ export function Footer() {
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
-            <Anchor>
-              <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
-            </Anchor>
           </Flex>
         </Flex>
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
@@ -120,9 +112,6 @@ export function Footer() {
         </Flex>
         <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
-          <Anchor>
-            <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
-          </Anchor>
         </Flex>
       </Flex>
       <Separator />

@@ -41,89 +41,9 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   return [
     {
       title: t('common.trade'),
-      href: '/swap',
-      isActive: pathname.startsWith('/swap') || pathname.startsWith('/limit') || pathname.startsWith('/send'),
-      items: [
-        {
-          label: t('common.swap'),
-          icon: <SwapV2 fill={theme.neutral2} />,
-          quickKey: 'U',
-          href: '/swap',
-          internal: true,
-        },
-        ...(forkConfig.uniSpecificFeaturesEnabled
-          ? [
-              {
-                label: t('swap.limit'),
-                icon: <Limit fill={theme.neutral2} />,
-                quickKey: 'L',
-                href: '/limit',
-                internal: true,
-              },
-            ]
-          : []),
-        {
-          label: t('common.send.button'),
-          icon: <Send fill={theme.neutral2} />,
-          quickKey: 'E',
-          href: '/send',
-          internal: true,
-        },
-        ...(forAggregatorEnabled && forkConfig.uniSpecificFeaturesEnabled
-          ? [
-              {
-                label: t('common.buy.label'),
-                icon: <CreditCardIcon fill={theme.neutral2} />,
-                quickKey: 'B',
-                href: '/buy',
-                internal: true,
-              },
-            ]
-          : []),
-      ],
+      href: '/aggregator',
+      isActive: pathname.startsWith('/swap') || pathname.startsWith('/limit') || pathname.startsWith('/send')
     },
-    {
-      title: t('common.explore'),
-      href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
-      isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
-      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
-      internal: false,
-      items: [
-        {
-          label: 'V3 Analytics',
-          quickKey: 'T',
-          href: `https://info.staging.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
-          internal: false,
-        },
-        {
-          label: 'V2 Analytics',
-          quickKey: 'P',
-          href: `https://v2-info.staging.flowswap.io`,
-          internal: false,
-        },
-      ],
-    },
-    {
-      title: t('common.pool'),
-      href: '/pool',
-      isActive: pathname.startsWith('/pool'),
-      items: [
-        { label: t('nav.tabs.viewPosition'), quickKey: 'V', href: '/pool', internal: true },
-        {
-          label: t('nav.tabs.createPosition'),
-          quickKey: 'V',
-          href: '/add',
-          internal: true,
-        },
-      ],
-    },
-    ...(!areTabsVisible && props?.includeNftsLink
-      ? [
-          {
-            title: t('common.nfts'),
-            href: '/nfts',
-          },
-        ]
-      : []),
+
   ]
 }

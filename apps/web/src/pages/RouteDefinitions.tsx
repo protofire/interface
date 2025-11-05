@@ -114,101 +114,101 @@ export const routes: RouteDefinition[] = [
       return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Landing />
     },
   }),
-  createRouteDefinition({
-    path: '/explore',
-    getTitle: getExploreTitle,
-    getDescription: getExploreDescription,
-    nestedPaths: [':tab', ':chainName', ':tab/:chainName'],
-    getElement: () => <RedirectExplore />,
-  }),
-  createRouteDefinition({
-    path: '/explore/tokens/:chainName/:tokenAddress',
-    getTitle: () => t('common.buyAndSell'),
-    getDescription: () => StaticTitlesAndDescriptions.TDPDescription,
-    getElement: () => <TokenDetails />,
-  }),
-  createRouteDefinition({
-    path: '/tokens',
-    getTitle: getExploreTitle,
-    getDescription: getExploreDescription,
-    getElement: () => <Navigate to="/explore/tokens" replace />,
-  }),
-  createRouteDefinition({
-    path: '/tokens/:chainName',
-    getTitle: getExploreTitle,
-    getDescription: getExploreDescription,
-    getElement: () => <RedirectExplore />,
-  }),
-  createRouteDefinition({
-    path: '/tokens/:chainName/:tokenAddress',
-    getTitle: () => StaticTitlesAndDescriptions.DetailsPageBaseTitle,
-    getDescription: () => StaticTitlesAndDescriptions.TDPDescription,
-    getElement: () => <RedirectExplore />,
-  }),
-  createRouteDefinition({
-    path: '/explore/pools/:chainName/:poolAddress',
-    getTitle: () => StaticTitlesAndDescriptions.DetailsPageBaseTitle,
-    getDescription: () => StaticTitlesAndDescriptions.PDPDescription,
-    getElement: () => (
-      <Suspense fallback={null}>
-        <PoolDetails />
-      </Suspense>
-    ),
-  }),
-  createRouteDefinition({
-    path: '/vote/*',
-    getTitle: () => t('title.voteOnGov'),
-    getDescription: () => t('title.uniToken'),
-    getElement: () => {
-      return (
-        <Routes>
-          <Route
-            path="*"
-            Component={() => {
-              window.location.href = 'https://vote.uniswapfoundation.org'
-              return null
-            }}
-          ></Route>
-        </Routes>
-      )
-    },
-  }),
-  createRouteDefinition({
-    path: '/create-proposal',
-    getTitle: () => t('title.createGovernanceOn'),
-    getDescription: () => t('title.createGovernanceTo'),
-    getElement: () => <Navigate to="/vote/create-proposal" replace />,
-  }),
-  createRouteDefinition({
-    path: '/buy',
-    getElement: () => <Swap />,
-    getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
-  }),
-  createRouteDefinition({
-    path: '/send',
-    getElement: () => <Swap />,
-    getTitle: () => t('title.sendTokens'),
-  }),
-  createRouteDefinition({
-    path: '/limits',
-    getElement: () => <Navigate to="/limit" replace />,
-    getTitle: () => t('title.placeLimit'),
-  }),
-  createRouteDefinition({
-    path: '/limit',
-    getElement: () => <Swap />,
-    getTitle: () => t('title.placeLimit'),
-  }),
-  createRouteDefinition({
-    path: '/buy',
-    getElement: () => <Swap />,
-    getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
-  }),
-  createRouteDefinition({
-    path: '/swap',
-    getElement: () => <Swap />,
-    getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
-  }),
+  // createRouteDefinition({
+  //   path: '/explore',
+  //   getTitle: getExploreTitle,
+  //   getDescription: getExploreDescription,
+  //   nestedPaths: [':tab', ':chainName', ':tab/:chainName'],
+  //   getElement: () => <RedirectExplore />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/explore/tokens/:chainName/:tokenAddress',
+  //   getTitle: () => t('common.buyAndSell'),
+  //   getDescription: () => StaticTitlesAndDescriptions.TDPDescription,
+  //   getElement: () => <TokenDetails />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/tokens',
+  //   getTitle: getExploreTitle,
+  //   getDescription: getExploreDescription,
+  //   getElement: () => <Navigate to="/explore/tokens" replace />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/tokens/:chainName',
+  //   getTitle: getExploreTitle,
+  //   getDescription: getExploreDescription,
+  //   getElement: () => <RedirectExplore />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/tokens/:chainName/:tokenAddress',
+  //   getTitle: () => StaticTitlesAndDescriptions.DetailsPageBaseTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.TDPDescription,
+  //   getElement: () => <RedirectExplore />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/explore/pools/:chainName/:poolAddress',
+  //   getTitle: () => StaticTitlesAndDescriptions.DetailsPageBaseTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.PDPDescription,
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <PoolDetails />
+  //     </Suspense>
+  //   ),
+  // }),
+  // createRouteDefinition({
+  //   path: '/vote/*',
+  //   getTitle: () => t('title.voteOnGov'),
+  //   getDescription: () => t('title.uniToken'),
+  //   getElement: () => {
+  //     return (
+  //       <Routes>
+  //         <Route
+  //           path="*"
+  //           Component={() => {
+  //             window.location.href = 'https://vote.uniswapfoundation.org'
+  //             return null
+  //           }}
+  //         ></Route>
+  //       </Routes>
+  //     )
+  //   },
+  // }),
+  // createRouteDefinition({
+  //   path: '/create-proposal',
+  //   getTitle: () => t('title.createGovernanceOn'),
+  //   getDescription: () => t('title.createGovernanceTo'),
+  //   getElement: () => <Navigate to="/vote/create-proposal" replace />,
+  // }),
+  // createRouteDefinition({
+  //   path: '/buy',
+  //   getElement: () => <Swap />,
+  //   getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
+  // }),
+  // createRouteDefinition({
+  //   path: '/send',
+  //   getElement: () => <Swap />,
+  //   getTitle: () => t('title.sendTokens'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/limits',
+  //   getElement: () => <Navigate to="/limit" replace />,
+  //   getTitle: () => t('title.placeLimit'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/limit',
+  //   getElement: () => <Swap />,
+  //   getTitle: () => t('title.placeLimit'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/buy',
+  //   getElement: () => <Swap />,
+  //   getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
+  // }),
+  // createRouteDefinition({
+  //   path: '/swap',
+  //   getElement: () => <Swap />,
+  //   getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
+  // }),
   createRouteDefinition({
     path: '/aggregator',
     getElement: () => (
@@ -218,163 +218,163 @@ export const routes: RouteDefinition[] = [
     ),
     getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
   }),
-  createRouteDefinition({
-    path: '/pool/v2/find',
-    getElement: () => <PoolFinder />,
-    getTitle: () => t('title.importLiquidityv2'),
-    getDescription: () => t('title.useImportTool'),
-  }),
-  createRouteDefinition({
-    path: '/pool/v2',
-    getElement: () => <LegacyPoolV2 />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/pool/new',
-    getElement: () => <NewPosition />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-    enabled: (args) => args.featureFlags[FeatureFlags.V4Everywhere] ?? false,
-  }),
-  createRouteDefinition({
-    path: '/pool',
-    getElement: (args) => (args.featureFlags[FeatureFlags.V4Everywhere] ? <Pool /> : <LegacyPool />),
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/pool/:tokenId',
-    getElement: () => <LegacyPositionPage />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/pools/v2/find',
-    getElement: () => <PoolFinder />,
-    getTitle: () => t('title.importLiquidityv2'),
-    getDescription: () => t('title.useImportTool'),
-  }),
-  createRouteDefinition({
-    path: '/pools/v2',
-    getElement: () => <LegacyPoolV2 />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/pools/new',
-    getElement: () => <NewPosition />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-    enabled: (args) => args.featureFlags[FeatureFlags.V4Everywhere] ?? false,
-  }),
-  createRouteDefinition({
-    path: '/pools',
-    getElement: () => <LegacyPool />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/pools/:tokenId',
-    getElement: () => <LegacyPositionPage />,
-    getTitle: getPositionPageTitle,
-    getDescription: getPositionPageDescription,
-  }),
-  createRouteDefinition({
-    path: '/add/v2',
-    nestedPaths: [':currencyIdA', ':currencyIdA/:currencyIdB'],
-    getElement: () => <AddLiquidityV2WithTokenRedirects />,
-    getTitle: getAddLiquidityPageTitle,
-    getDescription: () => StaticTitlesAndDescriptions.AddLiquidityDescription,
-  }),
-  createRouteDefinition({
-    path: '/add',
-    nestedPaths: [
-      ':currencyIdA',
-      ':currencyIdA/:currencyIdB',
-      ':currencyIdA/:currencyIdB/:feeAmount',
-      ':currencyIdA/:currencyIdB/:feeAmount/:tokenId',
-    ],
-    getElement: () => <AddLiquidityWithTokenRedirects />,
-    getTitle: getAddLiquidityPageTitle,
-    getDescription: () => StaticTitlesAndDescriptions.AddLiquidityDescription,
-  }),
-  createRouteDefinition({
-    path: '/remove/v2/:currencyIdA/:currencyIdB',
-    getElement: () => <RemoveLiquidity />,
-    getTitle: () => t('title.removeLiquidityv2'),
-    getDescription: () => t('title.removeTokensv2'),
-  }),
-  createRouteDefinition({
-    path: '/remove/:tokenId',
-    getElement: () => <RemoveLiquidityV3 />,
-    getTitle: () => t('title.removePoolLiquidity'),
-    getDescription: () => t('title.removev3Liquidity'),
-  }),
-  createRouteDefinition({
-    path: '/migrate/v2',
-    getElement: () => <MigrateV2 />,
-    getTitle: () => StaticTitlesAndDescriptions.MigrateTitle,
-    getDescription: () => StaticTitlesAndDescriptions.MigrateDescription,
-  }),
-  createRouteDefinition({
-    path: '/migrate/v2/:address',
-    getElement: () => <MigrateV2Pair />,
-    getTitle: () => StaticTitlesAndDescriptions.MigrateTitle,
-    getDescription: () => StaticTitlesAndDescriptions.MigrateDescription,
-  }),
-  createRouteDefinition({
-    path: '/nfts',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <NftExplore />
-      </Suspense>
-    ),
-    enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t('title.exploreNFTs'),
-    getDescription: () => t('title.betterPricesMoreListings'),
-  }),
-  createRouteDefinition({
-    path: '/nfts/asset/:contractAddress/:tokenId',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <Asset />
-      </Suspense>
-    ),
-    enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
-  }),
-  createRouteDefinition({
-    path: '/nfts/profile',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <Profile />
-      </Suspense>
-    ),
-    enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
-    getDescription: () => t('title.manageNFT'),
-  }),
-  createRouteDefinition({
-    path: '/nfts/collection/:contractAddress',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <Collection />
-      </Suspense>
-    ),
-    enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
-  }),
-  createRouteDefinition({
-    path: '/nfts/collection/:contractAddress/activity',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <Collection />
-      </Suspense>
-    ),
-    enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
-  }),
+  // createRouteDefinition({
+  //   path: '/pool/v2/find',
+  //   getElement: () => <PoolFinder />,
+  //   getTitle: () => t('title.importLiquidityv2'),
+  //   getDescription: () => t('title.useImportTool'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/pool/v2',
+  //   getElement: () => <LegacyPoolV2 />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pool/new',
+  //   getElement: () => <NewPosition />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  //   enabled: (args) => args.featureFlags[FeatureFlags.V4Everywhere] ?? false,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pool',
+  //   getElement: (args) => (args.featureFlags[FeatureFlags.V4Everywhere] ? <Pool /> : <LegacyPool />),
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pool/:tokenId',
+  //   getElement: () => <LegacyPositionPage />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pools/v2/find',
+  //   getElement: () => <PoolFinder />,
+  //   getTitle: () => t('title.importLiquidityv2'),
+  //   getDescription: () => t('title.useImportTool'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/pools/v2',
+  //   getElement: () => <LegacyPoolV2 />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pools/new',
+  //   getElement: () => <NewPosition />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  //   enabled: (args) => args.featureFlags[FeatureFlags.V4Everywhere] ?? false,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pools',
+  //   getElement: () => <LegacyPool />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/pools/:tokenId',
+  //   getElement: () => <LegacyPositionPage />,
+  //   getTitle: getPositionPageTitle,
+  //   getDescription: getPositionPageDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/add/v2',
+  //   nestedPaths: [':currencyIdA', ':currencyIdA/:currencyIdB'],
+  //   getElement: () => <AddLiquidityV2WithTokenRedirects />,
+  //   getTitle: getAddLiquidityPageTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.AddLiquidityDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/add',
+  //   nestedPaths: [
+  //     ':currencyIdA',
+  //     ':currencyIdA/:currencyIdB',
+  //     ':currencyIdA/:currencyIdB/:feeAmount',
+  //     ':currencyIdA/:currencyIdB/:feeAmount/:tokenId',
+  //   ],
+  //   getElement: () => <AddLiquidityWithTokenRedirects />,
+  //   getTitle: getAddLiquidityPageTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.AddLiquidityDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/remove/v2/:currencyIdA/:currencyIdB',
+  //   getElement: () => <RemoveLiquidity />,
+  //   getTitle: () => t('title.removeLiquidityv2'),
+  //   getDescription: () => t('title.removeTokensv2'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/remove/:tokenId',
+  //   getElement: () => <RemoveLiquidityV3 />,
+  //   getTitle: () => t('title.removePoolLiquidity'),
+  //   getDescription: () => t('title.removev3Liquidity'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/migrate/v2',
+  //   getElement: () => <MigrateV2 />,
+  //   getTitle: () => StaticTitlesAndDescriptions.MigrateTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.MigrateDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/migrate/v2/:address',
+  //   getElement: () => <MigrateV2Pair />,
+  //   getTitle: () => StaticTitlesAndDescriptions.MigrateTitle,
+  //   getDescription: () => StaticTitlesAndDescriptions.MigrateDescription,
+  // }),
+  // createRouteDefinition({
+  //   path: '/nfts',
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <NftExplore />
+  //     </Suspense>
+  //   ),
+  //   enabled: (args) => !args.shouldDisableNFTRoutes,
+  //   getTitle: () => t('title.exploreNFTs'),
+  //   getDescription: () => t('title.betterPricesMoreListings'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/nfts/asset/:contractAddress/:tokenId',
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <Asset />
+  //     </Suspense>
+  //   ),
+  //   enabled: (args) => !args.shouldDisableNFTRoutes,
+  //   getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
+  // }),
+  // createRouteDefinition({
+  //   path: '/nfts/profile',
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <Profile />
+  //     </Suspense>
+  //   ),
+  //   enabled: (args) => !args.shouldDisableNFTRoutes,
+  //   getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
+  //   getDescription: () => t('title.manageNFT'),
+  // }),
+  // createRouteDefinition({
+  //   path: '/nfts/collection/:contractAddress',
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <Collection />
+  //     </Suspense>
+  //   ),
+  //   enabled: (args) => !args.shouldDisableNFTRoutes,
+  //   getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
+  // }),
+  // createRouteDefinition({
+  //   path: '/nfts/collection/:contractAddress/activity',
+  //   getElement: () => (
+  //     <Suspense fallback={null}>
+  //       <Collection />
+  //     </Suspense>
+  //   ),
+  //   enabled: (args) => !args.shouldDisableNFTRoutes,
+  //   getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
+  // }),
   createRouteDefinition({
     path: '/privacy',
     getElement: () => <PrivacyPolicy />,

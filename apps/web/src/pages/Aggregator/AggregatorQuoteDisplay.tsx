@@ -2,6 +2,7 @@ import styled from 'lib/styled-components'
 import { Trans } from 'uniswap/src/i18n'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
+import { BigNumber } from '@ethersproject/bignumber'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -74,26 +75,26 @@ export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuot
     return null
   }
 
-  // Parse output amounts with proper decimals (assume 6 decimals for USDF)
-  const formatAmount = (amount: string, decimals: number = 6): string => {
-    if (!amount) return '0'
-    const amountBigInt = BigInt(amount)
-    const divisor = BigInt(10 ** decimals)
-    const quotient = amountBigInt / divisor
-    const remainder = amountBigInt % divisor
-    
-    if (remainder === BigInt(0)) {
-      return quotient.toString()
+  // Parse output amounts with proper decimals - get decimals from the quote's toToken
+  const toToken = quote?.result?.action?.toToken
+  const outputDecimals = toToken?.decimals ?? 18 // Default to 18 if not available
+  const outputTokenSymbol = toToken?.symbol ?? 'tokens'
+  
+  const formatAmount = (amount: string, decimals: number): string => {
+    if (!amount) return '0.000000'
+    try {
+      const amountBN = BigNumber.from(amount)
+      const divisor = BigNumber.from(10).pow(decimals)
+      const amountDecimal = amountBN.mul(BigNumber.from(10).pow(6)).div(divisor)
+      const decimalValue = amountDecimal.toNumber() / 1e6
+      return decimalValue.toFixed(6)
+    } catch {
+      return '0.000000'
     }
-    
-    // Format with proper decimal places
-    const remainderStr = remainder.toString().padStart(decimals, '0')
-    const trimmedRemainder = remainderStr.replace(/0+$/, '')
-    return `${quotient}.${trimmedRemainder}`
   }
   
-  const toAmountFormatted = formatAmount(estimate.toAmount, 6)
-  const minAmountFormatted = formatAmount(estimate.toAmountMin, 6)
+  const toAmountFormatted = formatAmount(estimate.toAmount, outputDecimals)
+  const minAmountFormatted = formatAmount(estimate.toAmountMin, outputDecimals)
 
   // Format gas cost with proper decimals
   const gasCostFormatted = gasCost 
@@ -108,11 +109,11 @@ export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuot
       
       <QuoteRow>
         <Label>Output Amount:</Label>
-        <Value>{toAmountFormatted} tokens</Value>
+        <Value>{toAmountFormatted} {outputTokenSymbol}</Value>
       </QuoteRow>
       <QuoteRow>
         <Label>Min Output:</Label>
-        <Value>{minAmountFormatted} tokens</Value>
+        <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
       </QuoteRow>
       {estimate.toAmountUSD && (
         <QuoteRow>

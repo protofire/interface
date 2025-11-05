@@ -13,6 +13,8 @@ import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans, useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
+import { AggregatorForm } from 'pages/Aggregator/AggregatorForm'
+import { AggregatorContextProvider } from 'pages/Aggregator/AggregatorContext'
 
 interface HeroProps {
   scrollToRef: () => void
@@ -93,13 +95,9 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             backgroundColor="$surface1"
             maxWidth="100%"
           >
-            <Swap
-              syncTabToUrl={false}
-              hideHeader
-              chainId={initialInputCurrency?.chainId ?? UniverseChainId.Mainnet}
-              initialInputCurrency={initialInputCurrency}
-              multichainUXEnabled={multichainUXEnabled}
-            />
+            <AggregatorContextProvider>
+              <AggregatorForm disableTokenInputs={false} />
+            </AggregatorContextProvider>
           </Flex>
         </RiseIn>
 
