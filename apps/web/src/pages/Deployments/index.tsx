@@ -17,7 +17,7 @@ import { ChainLogo } from 'components/Logo/ChainLogo'
 import Row from 'components/Row'
 import { SearchInput as SearchInputStyled } from 'components/SearchModal/styled'
 import { getChain } from 'constants/chains'
-import styled, { createGlobalStyle, useTheme } from 'lib/styled-components'
+import styled, { createGlobalStyle } from 'lib/styled-components'
 import { useMemo, useState } from 'react'
 import { CopyLinkIcon, ExternalLink, ThemedText } from 'theme/components'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
@@ -233,7 +233,6 @@ const contractLabels = {
 }
 
 export default function DeploymentsPage() {
-  const theme = useTheme()
   const isDarkMode = useIsDarkMode()
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedChains, setExpandedChains] = useState<Set<InterfaceChainId>>(new Set())
@@ -250,7 +249,7 @@ export default function DeploymentsPage() {
   }, [])
 
   const filteredChains = useMemo(() => {
-    if (!searchQuery.trim()) return chains
+    if (!searchQuery.trim()) {return chains}
 
     const query = searchQuery.toLowerCase().trim()
     return chains.filter((chain) => {
