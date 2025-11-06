@@ -238,7 +238,7 @@ export function SwapForm({
       outputCurrency: currencyState.outputCurrency,
       typedValue: swapState.typedValue,
       independentField: swapState.independentField,
-      chainId: supportedChainId ?? UniverseChainId.SHAPE,
+      chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
     })
     navigate('/swap' + serializedSwapState)
   }, [
@@ -349,13 +349,21 @@ export function SwapForm({
   )
 
   const handleContinueToReview = useCallback(() => {
+    const swapParams = serializeSwapStateToURLParameters({
+      inputCurrency: currencyState.inputCurrency,
+      outputCurrency: currencyState.outputCurrency,
+      typedValue: swapState.typedValue,
+      independentField: swapState.independentField,
+      chainId: connectedChainId ?? UniverseChainId.FlowMainnet,
+    })
+    navigate('/swap' + swapParams, { replace: true })
     setSwapFormState({
       tradeToConfirm: trade,
       swapError: undefined,
       showConfirm: true,
       swapResult: undefined,
     })
-  }, [trade])
+  }, [trade, currencyState, swapState, connectedChainId])
 
   const clearSwapState = useCallback(() => {
     setSwapFormState((currentState) => ({
