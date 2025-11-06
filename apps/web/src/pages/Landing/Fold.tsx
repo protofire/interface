@@ -26,7 +26,7 @@ const Fold = forwardRef<HTMLDivElement>(function Fold(props, scrollAnchor) {
           <NewsletterEtc />
         </>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </Flex>
   )
 })

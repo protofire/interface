@@ -38,7 +38,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       y={translateY}
       opacity={opacityY}
       minWidth="100%"
-      // minHeight="100vh"
+      minHeight="100vh"
       height="min-content"
       pt={NAV_HEIGHT}
       pointerEvents="none"
