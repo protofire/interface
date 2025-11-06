@@ -442,6 +442,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       const action = quote?.result?.action
       const estimate = quote?.result?.estimate
       
+      // Store token symbols and decimals directly to avoid GraphQL dependency
+      const inputCurrencySymbol = action?.fromToken?.symbol || currencies[Field.INPUT]?.symbol || ''
+      const outputCurrencySymbol = action?.toToken?.symbol || currencies[Field.OUTPUT]?.symbol || ''
+      const inputCurrencyDecimals = action?.fromToken?.decimals || currencies[Field.INPUT]?.decimals || 18
+      const outputCurrencyDecimals = action?.toToken?.decimals || currencies[Field.OUTPUT]?.decimals || 18
+      
       const transactionInfo: ExactInputSwapTransactionInfo = {
         type: TransactionType.SWAP,
         tradeType: 'EXACT_INPUT' as any,
@@ -451,6 +457,10 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
         minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
         isUniswapXOrder: false,
+        inputCurrencySymbol,
+        outputCurrencySymbol,
+        inputCurrencyDecimals,
+        outputCurrencyDecimals,
       }
       
       // @ts-ignore - TransactionResponse type

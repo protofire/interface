@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { queryOptions, useQuery } from '@tanstack/react-query'
-import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, TradeType, Token } from '@uniswap/sdk-core'
 import UniswapXBolt from 'assets/svg/bolt.svg'
 import { getCurrency } from 'components/AccountDrawer/MiniPortfolio/Activity/getCurrency'
 import { Activity, ActivityMap } from 'components/AccountDrawer/MiniPortfolio/Activity/types'
@@ -48,16 +48,20 @@ function buildCurrencyDescriptor(
   formatNumber: FormatNumberFunctionType,
   isSwap = false,
 ) {
-  const formattedA = currencyA
+  // Ensure amounts are valid strings (not undefined)
+  const safeAmtA = amtA || '0'
+  const safeAmtB = amtB || '0'
+  
+  const formattedA = currencyA && safeAmtA
     ? formatNumber({
-        input: parseFloat(CurrencyAmount.fromRawAmount(currencyA, amtA).toSignificant()),
+        input: parseFloat(CurrencyAmount.fromRawAmount(currencyA, safeAmtA).toSignificant()),
         type: NumberType.TokenNonTx,
       })
     : t('common.unknown')
   const symbolA = currencyA?.symbol ? ` ${currencyA?.symbol}` : ''
-  const formattedB = currencyB
+  const formattedB = currencyB && safeAmtB
     ? formatNumber({
-        input: parseFloat(CurrencyAmount.fromRawAmount(currencyB, amtB).toSignificant()),
+        input: parseFloat(CurrencyAmount.fromRawAmount(currencyB, safeAmtB).toSignificant()),
         type: NumberType.TokenNonTx,
       })
     : t('common.unknown')
@@ -92,8 +96,50 @@ async function parseSwap(
       ? [swap.inputCurrencyAmountRaw, swap.settledOutputCurrencyAmountRaw ?? swap.expectedOutputCurrencyAmountRaw]
       : [swap.expectedInputCurrencyAmountRaw, swap.outputCurrencyAmountRaw]
 
+  // If currencies couldn't be resolved and we have symbols stored, use them
+  const inputSymbol = tokenIn?.symbol || (swap as any).inputCurrencySymbol || undefined
+  const outputSymbol = tokenOut?.symbol || (swap as any).outputCurrencySymbol || undefined
+  const inputDecimals = (swap as any).inputCurrencyDecimals || tokenIn?.decimals || 18
+  const outputDecimals = (swap as any).outputCurrencyDecimals || tokenOut?.decimals || 18
+  
+  // Ensure raw amounts are valid strings (not undefined)
+  const safeInputRaw = inputRaw || '0'
+  const safeOutputRaw = outputRaw || '0'
+  
+  // Create a custom descriptor if we have symbols but no currency objects
+  let descriptor: string
+  if ((!tokenIn || !tokenOut) && inputSymbol && outputSymbol && safeInputRaw && safeOutputRaw) {
+    try {
+      // Use stored symbols when currency objects aren't available
+      // Create temporary Token objects with stored decimals for proper formatting
+      const tempInputToken = tokenIn || new Token(chainId, swap.inputCurrencyId || '0x0', inputDecimals, inputSymbol, inputSymbol)
+      const tempOutputToken = tokenOut || new Token(chainId, swap.outputCurrencyId || '0x0', outputDecimals, outputSymbol, outputSymbol)
+      
+      const inputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempInputToken, safeInputRaw).toSignificant())
+      const outputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempOutputToken, safeOutputRaw).toSignificant())
+      
+      const formattedA = formatNumber({
+        input: inputAmount,
+        type: NumberType.TokenNonTx,
+      })
+      const formattedB = formatNumber({
+        input: outputAmount,
+        type: NumberType.TokenNonTx,
+      })
+      descriptor = t('activity.transaction.swap.descriptor', {
+        amountWithSymbolA: `${formattedA} ${inputSymbol}`,
+        amountWithSymbolB: `${formattedB} ${outputSymbol}`,
+      })
+    } catch (error) {
+      // Fallback to buildCurrencyDescriptor if there's an error
+      descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+    }
+  } else {
+    descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+  }
+
   return {
-    descriptor: buildCurrencyDescriptor(tokenIn, inputRaw, tokenOut, outputRaw, formatNumber, true),
+    descriptor,
     currencies: [tokenIn, tokenOut],
     prefixIconSrc: swap.isUniswapXOrder ? UniswapXBolt : undefined,
   }
