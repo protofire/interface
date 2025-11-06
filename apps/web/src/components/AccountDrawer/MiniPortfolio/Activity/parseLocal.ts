@@ -118,24 +118,76 @@ async function parseSwap(
       const inputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempInputToken, safeInputRaw).toSignificant())
       const outputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempOutputToken, safeOutputRaw).toSignificant())
       
-      const formattedA = formatNumber({
-        input: inputAmount,
-        type: NumberType.TokenNonTx,
-      })
-      const formattedB = formatNumber({
-        input: outputAmount,
-        type: NumberType.TokenNonTx,
-      })
-      descriptor = t('activity.transaction.swap.descriptor', {
-        amountWithSymbolA: `${formattedA} ${inputSymbol}`,
-        amountWithSymbolB: `${formattedB} ${outputSymbol}`,
-      })
+      // Check if amounts are effectively 0 or invalid - if so, hide amounts
+      const isInputZero = isNaN(inputAmount) || inputAmount === 0 || inputAmount < 0.000001
+      const isOutputZero = isNaN(outputAmount) || outputAmount === 0 || outputAmount < 0.000001
+      
+      if (isInputZero || isOutputZero) {
+        // Hide amounts, just show symbols
+        descriptor = t('activity.transaction.swap.descriptor', {
+          amountWithSymbolA: inputSymbol,
+          amountWithSymbolB: outputSymbol,
+        })
+      } else {
+        const formattedA = formatNumber({
+          input: inputAmount,
+          type: NumberType.TokenNonTx,
+        })
+        const formattedB = formatNumber({
+          input: outputAmount,
+          type: NumberType.TokenNonTx,
+        })
+        descriptor = t('activity.transaction.swap.descriptor', {
+          amountWithSymbolA: `${formattedA} ${inputSymbol}`,
+          amountWithSymbolB: `${formattedB} ${outputSymbol}`,
+        })
+      }
     } catch (error) {
-      // Fallback to buildCurrencyDescriptor if there's an error
-      descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+      // Fallback: if we have symbols, show them without amounts
+      if (inputSymbol && outputSymbol) {
+        descriptor = t('activity.transaction.swap.descriptor', {
+          amountWithSymbolA: inputSymbol,
+          amountWithSymbolB: outputSymbol,
+        })
+      } else {
+        // Fallback to buildCurrencyDescriptor if there's an error
+        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+      }
     }
   } else {
-    descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+    // Check if amounts are effectively 0 before building descriptor
+    try {
+      if (tokenIn && tokenOut && safeInputRaw !== '0' && safeOutputRaw !== '0') {
+        const inputAmount = parseFloat(CurrencyAmount.fromRawAmount(tokenIn, safeInputRaw).toSignificant())
+        const outputAmount = parseFloat(CurrencyAmount.fromRawAmount(tokenOut, safeOutputRaw).toSignificant())
+        const isInputZero = isNaN(inputAmount) || inputAmount === 0 || inputAmount < 0.000001
+        const isOutputZero = isNaN(outputAmount) || outputAmount === 0 || outputAmount < 0.000001
+        
+        if (isInputZero || isOutputZero) {
+          // Hide amounts, just show symbols
+          const inputSym = tokenIn.symbol || inputSymbol || 'Unknown'
+          const outputSym = tokenOut.symbol || outputSymbol || 'Unknown'
+          descriptor = t('activity.transaction.swap.descriptor', {
+            amountWithSymbolA: inputSym,
+            amountWithSymbolB: outputSym,
+          })
+        } else {
+          descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+        }
+      } else {
+        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+      }
+    } catch (error) {
+      // Fallback: if we have symbols, show them without amounts
+      if (inputSymbol && outputSymbol) {
+        descriptor = t('activity.transaction.swap.descriptor', {
+          amountWithSymbolA: inputSymbol,
+          amountWithSymbolB: outputSymbol,
+        })
+      } else {
+        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
+      }
+    }
   }
 
   return {
