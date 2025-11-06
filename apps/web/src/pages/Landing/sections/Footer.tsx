@@ -122,7 +122,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 FlowSwap</Text>
+        <Text variant="body3">2025 Flow Aggregator</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

@@ -1,37 +1,37 @@
 import { useAtom } from 'jotai'
-import { getExploreDescription, getExploreTitle } from 'pages/getExploreTitle'
-import { getAddLiquidityPageTitle, getPositionPageDescription, getPositionPageTitle } from 'pages/getPositionPageTitle'
+// import { getExploreDescription, getExploreTitle } from 'pages/getExploreTitle'
+// import { getAddLiquidityPageTitle, getPositionPageDescription, getPositionPageTitle } from 'pages/getPositionPageTitle'
 import { ReactNode, Suspense, lazy, useMemo } from 'react'
-import { Navigate, Route, Routes, matchPath, useLocation } from 'react-router-dom'
+import { Navigate, matchPath, useLocation } from 'react-router-dom'
 import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
 import { t } from 'uniswap/src/i18n'
 import { isBrowserRouterEnabled } from 'utils/env'
 // High-traffic pages (index and /swap) should not be lazy-loaded.
 import Landing from 'pages/Landing'
-import { NewPosition } from 'pages/LegacyPool/NewPosition'
-import Swap from 'pages/Swap'
+// import { NewPosition } from 'pages/LegacyPool/NewPosition'
+// import Swap from 'pages/Swap'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 
-const NftExplore = lazy(() => import('nft/pages/explore'))
-const Collection = lazy(() => import('nft/pages/collection'))
-const Profile = lazy(() => import('nft/pages/profile'))
-const Asset = lazy(() => import('nft/pages/asset/Asset'))
-const AddLiquidityWithTokenRedirects = lazy(() => import('pages/AddLiquidity/redirects'))
-const AddLiquidityV2WithTokenRedirects = lazy(() => import('pages/AddLiquidityV2/redirects'))
-const RedirectExplore = lazy(() => import('pages/Explore/redirects'))
-const MigrateV2 = lazy(() => import('pages/MigrateV2'))
-const MigrateV2Pair = lazy(() => import('pages/MigrateV2/MigrateV2Pair'))
+// const NftExplore = lazy(() => import('nft/pages/explore'))
+// const Collection = lazy(() => import('nft/pages/collection'))
+// const Profile = lazy(() => import('nft/pages/profile'))
+// const Asset = lazy(() => import('nft/pages/asset/Asset'))
+// const AddLiquidityWithTokenRedirects = lazy(() => import('pages/AddLiquidity/redirects'))
+// const AddLiquidityV2WithTokenRedirects = lazy(() => import('pages/AddLiquidityV2/redirects'))
+// const RedirectExplore = lazy(() => import('pages/Explore/redirects'))
+// const MigrateV2 = lazy(() => import('pages/MigrateV2'))
+// const MigrateV2Pair = lazy(() => import('pages/MigrateV2/MigrateV2Pair'))
 const NotFound = lazy(() => import('pages/NotFound'))
-const Pool = lazy(() => import('pages/Pool'))
-const LegacyPool = lazy(() => import('pages/LegacyPool'))
-const LegacyPositionPage = lazy(() => import('pages/LegacyPool/PositionPage'))
-const LegacyPoolV2 = lazy(() => import('pages/LegacyPool/v2'))
-const PoolDetails = lazy(() => import('pages/PoolDetails'))
-const PoolFinder = lazy(() => import('pages/PoolFinder'))
-const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
-const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
-const TokenDetails = lazy(() => import('pages/TokenDetails'))
+// const Pool = lazy(() => import('pages/Pool'))
+// const LegacyPool = lazy(() => import('pages/LegacyPool'))
+// const LegacyPositionPage = lazy(() => import('pages/LegacyPool/PositionPage'))
+// const LegacyPoolV2 = lazy(() => import('pages/LegacyPool/v2'))
+// const PoolDetails = lazy(() => import('pages/PoolDetails'))
+// const PoolFinder = lazy(() => import('pages/PoolFinder'))
+// const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
+// const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
+// const TokenDetails = lazy(() => import('pages/TokenDetails'))
 const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const Terms = lazy(() => import('pages/Terms'))
 const AggregatorPage = lazy(() => import('pages/Aggregator'))

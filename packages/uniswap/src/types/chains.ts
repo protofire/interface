@@ -90,37 +90,7 @@ export type InterfaceChainId = UniverseChainId
 
 export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
 [
-  // UniverseChainId.Mainnet,
-  // UniverseChainId.Goerli,
-  // UniverseChainId.Sepolia,
-  // UniverseChainId.Optimism,
-  // UniverseChainId.OptimismGoerli,
-  // UniverseChainId.ArbitrumOne,
-  // UniverseChainId.ArbitrumGoerli,
-  // UniverseChainId.Polygon,
-  // UniverseChainId.PolygonMumbai,
-  // UniverseChainId.Avalanche,
-  // UniverseChainId.Celo,
-  // UniverseChainId.CeloAlfajores,
-  // UniverseChainId.Bnb,
-  // UniverseChainId.Base,
-  // UniverseChainId.Blast,
-  // UniverseChainId.Zora,
-  // UniverseChainId.Zksync,
-  // UniverseChainId.AbstractTestnet,
-  // UniverseChainId.Zero,
-  // UniverseChainId.BOB,
-  // UniverseChainId.CYBER,
-  // UniverseChainId.SHAPE,
-  // UniverseChainId.INK,
-  // UniverseChainId.REDSTONE,
-  // UniverseChainId.REDSTONE_GARNET,
-  // UniverseChainId.AbstractMainnet,
-  // UniverseChainId.AnimeTestnet,
-  // UniverseChainId.Mode,
-  // UniverseChainId.Anime,
   UniverseChainId.FlowMainnet,
-  UniverseChainId.FlowTestnet,
 ]
 
 export enum RPCType {
