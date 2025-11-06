@@ -203,6 +203,8 @@ export function AggregatorSettings({
   
   // Track if we've initialized the DEX selection (to prevent re-initializing after user deselects)
   const [hasInitialized, setHasInitialized] = useState(false)
+  // Track if DEX selection expand is open
+  const [isDexSelectionOpen, setIsDexSelectionOpen] = useState(true)
 
   // Initialize selected DEXs when available DEXs are first loaded (preselect all)
   useEffect(() => {
@@ -269,8 +271,8 @@ export function AggregatorSettings({
           <Expand
             testId="aggregator-dex-settings"
             padding="6px 0px"
-            isOpen={true}
-            onToggle={() => {}}
+            isOpen={isDexSelectionOpen}
+            onToggle={() => setIsDexSelectionOpen(!isDexSelectionOpen)}
             header={
               <Row width="auto">
                 <ThemedText.BodyPrimary>
@@ -358,6 +360,7 @@ export function AggregatorSettings({
       dexsLoading,
       hasDexs,
       allSelected,
+      isDexSelectionOpen,
       onOrderChange,
       onSlippageChange,
       handleDexToggle,
