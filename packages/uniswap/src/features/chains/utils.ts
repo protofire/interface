@@ -45,6 +45,8 @@ export function toGraphQLChain(chainId: ChainId | number): Chain | undefined {
     case ChainId.FLOW_TESTNET:
     case ChainId.FLOW_MAINNET:
       return undefined // No GraphQL chain available for Flow testnet
+    case ChainId.BASE_SEPOLIA:
+      return undefined // No GraphQL chain available for Base Sepolia testnet
   }
   return undefined
 }

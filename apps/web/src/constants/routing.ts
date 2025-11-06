@@ -20,6 +20,7 @@ import {
   USDC_ARBITRUM_GOERLI,
   USDC_AVALANCHE,
   USDC_BASE,
+  USDC_BASE_SEPOLIA,
   USDC_BSC,
   USDC_CELO,
   USDC_CELO_ALFAJORES,
@@ -146,6 +147,11 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.Base),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Base] as Token,
     USDC_BASE,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.BaseSepolia]: [
+    nativeOnChain(UniverseChainId.BaseSepolia),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.BaseSepolia] as Token,
+    USDC_BASE_SEPOLIA,
   ].map(buildCurrencyInfo),
   [UniverseChainId.Blast]: [
     nativeOnChain(UniverseChainId.Blast),

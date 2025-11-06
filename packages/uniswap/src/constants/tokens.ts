@@ -60,6 +60,13 @@ export const USDC_BASE = new Token(
   'USDC',
   'USD Coin',
 )
+export const USDC_BASE_SEPOLIA = new Token(
+  UniverseChainId.BaseSepolia,
+  '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+  6,
+  'USDC',
+  'USD Coin',
+)
 
 export const USDC_BNB = new Token(UniverseChainId.Bnb, '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', 18, 'USDC', 'USDC')
 

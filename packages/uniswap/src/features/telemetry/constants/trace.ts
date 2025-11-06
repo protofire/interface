@@ -118,6 +118,7 @@ export const ElementName = {
   ChainBNB: 'chain-bnb',
   ChainAvalanche: 'chain-avalanche',
   ChainBase: 'chain-base',
+  ChainBaseSepolia: 'chain-base-sepolia',
   ChainBlast: 'chain-blast',
   ChainZora: 'chain-zora',
   ChainZkSync: 'chain-zksync',

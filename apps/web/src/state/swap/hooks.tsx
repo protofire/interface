@@ -228,6 +228,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.REDSTONE,
       UniverseChainId.REDSTONE_GARNET,
       UniverseChainId.AbstractMainnet,
+      UniverseChainId.BaseSepolia,
       UniverseChainId.AnimeTestnet,
       UniverseChainId.Anime,
       UniverseChainId.Mode,
@@ -418,7 +419,7 @@ export function useInitialCurrencyState(): {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.FlowMainnet
+  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.BaseSepolia
   const hasCurrencyQueryParams =
     parsedCurrencyState.inputCurrencyId || parsedCurrencyState.outputCurrencyId || parsedCurrencyState.chainId
 

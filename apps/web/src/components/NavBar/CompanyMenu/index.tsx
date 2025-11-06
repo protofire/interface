@@ -64,13 +64,13 @@ export function CompanyMenu() {
         <Trigger>
           <UniIcon onClick={handleLogoClick} data-testid="nav-uniswap-logo">
             {isMobile ? (
-              <img src={FlowLogo} alt="FlowSwap" style={{ height: '48px', width: '48px' }} />
+              <img src={FlowLogo} alt="Base Swap" style={{ height: '48px', width: '48px' }} />
             ) : (
               <NavIcon width="200" height="48" />
             )}
             {isLargeScreen && (
               <Text variant="subheading1" color="$accent1" userSelect="none">
-                FlowSwap
+                Base Swap
               </Text>
             )}
           </UniIcon>

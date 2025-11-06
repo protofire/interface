@@ -51,7 +51,7 @@ export default function NotFound() {
               <Trans i18nKey="common.pageNotFound" />
             </Paragraph>
           </Container>
-          <img src={FlowIcon} alt="FlowSwap" style={{ width: '100px', height: '100px' }} />
+          <img src={FlowIcon} alt="Base Swap" style={{ width: '100px', height: '100px' }} />
         </Header>
         <SmallButtonPrimary as={Link} to="/">
           <Trans i18nKey="notFound.oops" />

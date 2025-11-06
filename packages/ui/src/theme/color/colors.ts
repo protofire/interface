@@ -182,6 +182,10 @@ export const networkColors = {
     light: '#21C95E',
     dark: '#21C95E',
   },
+  baseSepolia: {
+    light: '#0052FF',
+    dark: '#0052FF',
+  },
 }
 
 const sporeLight = {
@@ -335,6 +339,7 @@ export const colorsLight = {
   chain_42161: networkColors.arbitrum.light,
   chain_80001: networkColors.polygon.light,
   chain_8453: networkColors.base.light,
+  chain_84532: networkColors.baseSepolia.light,
   chain_7777777: networkColors.zora.light,
   chain_81457: networkColors.blast.light,
   chain_56: networkColors.bnb.light,
@@ -428,6 +433,7 @@ export const colorsDark = {
   chain_42161: networkColors.arbitrum.dark,
   chain_80001: networkColors.polygon.dark,
   chain_8453: networkColors.base.dark,
+  chain_84532: networkColors.baseSepolia.dark,
   chain_7777777: networkColors.zora.dark,
   chain_81457: networkColors.blast.dark,
   chain_56: networkColors.bnb.dark,

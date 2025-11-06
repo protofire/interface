@@ -11,6 +11,7 @@ import {
 import { Pair, Route as V2Route } from '@uniswap/v2-sdk'
 import { FeeAmount, Pool, Route as V3Route } from '@uniswap/v3-sdk'
 import { BIPS_BASE } from 'constants/misc'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { isAnime, isAvalanche, isBsc, isFlowMainnet, isFlowTestnet, isPolygon, nativeOnChain } from 'constants/tokens'
 import { getApproveInfo, getWrapInfo } from 'state/routing/gas'
 import {
@@ -416,6 +417,10 @@ export function currencyAddressForSwapQuote(currency: Currency): string {
     }
     if (isFlowMainnet(currency.chainId)) {
       return SwapRouterNativeAssets.FLOW
+    }
+    // Base Sepolia uses ETH as native asset
+    if (currency.chainId === UniverseChainId.BaseSepolia) {
+      return SwapRouterNativeAssets.ETH
     }
     return SwapRouterNativeAssets.ETH
   }
