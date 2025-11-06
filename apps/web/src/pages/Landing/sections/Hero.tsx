@@ -38,7 +38,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       y={translateY}
       opacity={opacityY}
       minWidth="100%"
-      minHeight="100vh"
+      // minHeight="100vh"
       height="min-content"
       pt={NAV_HEIGHT}
       pointerEvents="none"
@@ -59,7 +59,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
           transition: transition ? 'shrinkAndFade 1s ease-in-out forwards' : undefined,
         }}
       >
-        {/* <Flex maxWidth={920} alignItems="center" pointerEvents="none">
+        <Flex maxWidth={920} alignItems="center" pointerEvents="none">
           <Text
             variant="heading1"
             fontSize={64}
@@ -84,7 +84,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
                 }
               })}
           </Text>
-        </Flex> */}
+        </Flex>
 
         <RiseIn delay={0.4}>
           <Flex
@@ -96,16 +96,16 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             maxWidth="100%"
           >
             <AggregatorContextProvider>
-              <AggregatorForm disableTokenInputs={false} />
+              <AggregatorForm disableTokenInputs={false} isLandingPage={true} />
             </AggregatorContextProvider>
           </Flex>
         </RiseIn>
 
-        <RiseIn delay={0.3}>
+        {/* <RiseIn delay={0.3}>
           <Text variant="body1" textAlign="center" maxWidth={430} color="$neutral2" $short={{ variant: 'body2' }}>
             <Trans i18nKey="hero.subtitle" />
           </Text>
-        </RiseIn>
+        </RiseIn> */}
       </Flex>
 
       <Flex flex={1} />

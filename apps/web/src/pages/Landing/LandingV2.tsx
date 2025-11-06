@@ -29,7 +29,14 @@ function LandingV2({ transition }: { transition?: boolean }) {
   }
 
   return (
-    <Flex position="relative" alignItems="center" mt={-NAV_HEIGHT} minWidth="100vw" data-testid="landing-page">
+    <Flex 
+      position="relative" 
+      alignItems="stretch" 
+      mt={-NAV_HEIGHT} 
+      minWidth="100vw" 
+      flexDirection="column"
+      data-testid="landing-page"
+    >
       <Grain />
       <Hero scrollToRef={scrollToRef} transition={transition} />
       <Suspense>

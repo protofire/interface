@@ -91,29 +91,26 @@ export function Footer() {
   }, [tabsContent])
   const sections = useMenuContent()
 
+  const theme = useTheme()
+  
   return (
-    <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
-      <Flex row $md={{ flexDirection: 'column' }} justifyContent="space-between" gap="$spacing32">
-        <Flex height="100%" gap="$spacing60">
-          <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
-            <Socials iconSize={SOCIAL_ICONS_SIZE} />
-          </Flex>
-        </Flex>
-        <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
-          <Flex row gap="$spacing16" justifyContent="space-between" $md={{ width: 'auto' }}>
-            <FooterSection title={t('common.app')} items={appSectionItems} />
-            {/* <FooterSection title={sections[0].title} items={[...sections[0].items, brandAssets]} /> */}
-            <FooterSection title={sections[0].title} items={sections[0].items} />
-          </Flex>
-          <Flex row gap="$spacing16" $md={{ width: 'auto' }}>
-            {/* <FooterSection title={sections[1].title} items={sections[1].items} /> */}
-            <FooterSection title={sections[2].title} items={sections[2].items} />
-          </Flex>
-        </Flex>
-        <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
-          <Socials iconSize={SOCIAL_ICONS_SIZE} />
-        </Flex>
-      </Flex>
+    <Flex 
+      maxWidth="100vw" 
+      width="100%" 
+      gap="$spacing24" 
+      pt="$none" 
+      px="$spacing48" 
+      pb={40} 
+      $lg={{ px: '$spacing40' }}
+      style={{ 
+        position: 'fixed', 
+        bottom: 0, 
+        left: 0, 
+        right: 0, 
+        zIndex: 10,
+        backgroundColor: theme.surface1
+      }}
+    >
       <Separator />
       <Flex
         row

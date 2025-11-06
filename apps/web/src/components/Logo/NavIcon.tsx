@@ -4,7 +4,7 @@ import { SVGProps } from 'components/Logo/UniIcon'
 import styled from 'lib/styled-components'
 
 function Logo({ onClick }: { onClick?: () => void }) {
-  return <FlowLogo width="40" height="40" onClick={onClick} />
+  return <FlowLogo  height="40" onClick={onClick} />
 }
 
 const Container = styled.div<{ clickable?: boolean }>`

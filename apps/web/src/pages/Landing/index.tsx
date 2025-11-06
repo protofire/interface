@@ -33,7 +33,7 @@ export default function Landing() {
     }
     const timeoutId = setTimeout(() => {
       if (redirectOnConnect.current) {
-        navigate('/swap')
+        navigate('/aggregator')
       } else if (account.address && queryParams.intro) {
         disconnect()
       }

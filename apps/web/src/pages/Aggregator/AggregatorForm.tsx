@@ -7,7 +7,7 @@ import { Field } from 'components/swap/constants'
 import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'components/swap/styled'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { ArrowDown } from 'react-feather'
 import { ThemedText } from 'theme/components'
 import { Trans } from 'uniswap/src/i18n'
@@ -15,6 +15,7 @@ import { CurrencyField } from 'uniswap/src/types/currency'
 import AggregatorSwapCurrencyInputPanel from './AggregatorSwapCurrencyInputPanel'
 import { useEisenQuote } from './useEisenQuote'
 import { FLOW_CHAIN_ID, FLOW_TESTNET_CHAIN_ID } from './mockTokenData'
+import { useEisenDexs } from './useEisenDexs'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { AggregatorQuoteDisplay } from './AggregatorQuoteDisplay'
 import { AggregatorSettings, OrderType } from './AggregatorSettings'
@@ -23,12 +24,20 @@ import { useEthersProvider } from 'hooks/useEthersProvider'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { ExactInputSwapTransactionInfo, TransactionType } from 'state/transactions/types'
 import { RowBetween, RowFixed } from 'components/Row'
-import { Text } from 'ui/src'
+import { Text, Flex } from 'ui/src'
 import styled from 'lib/styled-components'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { useCurrencyBalance } from 'state/connection/hooks'
 import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
+import { nativeOnChain } from 'constants/tokens'
+import { useIsTransactionPending, useIsTransactionConfirmed } from 'state/transactions/hooks'
+import TransactionConfirmationModal from 'components/TransactionConfirmationModal'
+import { ReactComponent as EisenLogo } from 'assets/svg/eisen.svg'
+import useSelectChain from 'hooks/useSelectChain'
+import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
+import { UniverseChainId } from 'uniswap/src/types/chains'
+import { useNavigate } from 'react-router-dom'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
@@ -42,14 +51,18 @@ const AggregatorHeader = styled(RowBetween)`
 
 interface AggregatorFormProps {
   disableTokenInputs?: boolean
+  isLandingPage?: boolean
 }
 
-export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormProps) {
+export function AggregatorForm({ disableTokenInputs = false, isLandingPage = false }: AggregatorFormProps) {
   const account = useAccount()
+  const selectChain = useSelectChain()
+  const navigate = useNavigate()
   
   // Settings state
   const [order, setOrder] = useState<OrderType>('CHEAPEST')
   const [slippage, setSlippage] = useState<number>(0.005)
+  const [selectedDexs, setSelectedDexs] = useState<string[]>([])
   
   // Auto-detect testnet based on connected wallet's chain ID
   const isTestnet = useMemo(() => {
@@ -61,6 +74,12 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   const currentChainId = useMemo(() => {
     if (!account.chainId) return FLOW_CHAIN_ID
     return account.chainId === FLOW_TESTNET_CHAIN_ID ? FLOW_TESTNET_CHAIN_ID : FLOW_CHAIN_ID
+  }, [account.chainId])
+  
+  // Check if connected chain is Flow (mainnet or testnet)
+  const isCorrectChain = useMemo(() => {
+    if (!account.chainId) return false
+    return account.chainId === FLOW_CHAIN_ID || account.chainId === FLOW_TESTNET_CHAIN_ID
   }, [account.chainId])
   
   // Simple state management for aggregator (no backend interaction)
@@ -81,6 +100,41 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   })
   
   const [executing, setExecuting] = useState(false)
+  const [txHash, setTxHash] = useState<string | undefined>(undefined)
+  const [showTransactionModal, setShowTransactionModal] = useState(false)
+  const [transactionError, setTransactionError] = useState<Error | null>(null)
+  
+  // Set default input currency to native currency on mount
+  useEffect(() => {
+    if (!currencyState.inputCurrency && currentChainId) {
+      setCurrencyState((prev) => ({
+        ...prev,
+        inputCurrency: nativeOnChain(currentChainId),
+      }))
+    }
+  }, [currentChainId, currencyState.inputCurrency])
+  
+  // Check transaction status
+  const isTransactionPending = useIsTransactionPending(txHash)
+  const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
+  
+  // Reset form state after transaction modal is dismissed and transaction is confirmed
+  const handleTransactionModalDismiss = useCallback(() => {
+    setShowTransactionModal(false)
+    setTransactionError(null)
+    // Only reset if transaction is confirmed
+    if (isTransactionConfirmed) {
+      setTxHash(undefined)
+      setSwapState({
+        typedValue: '',
+        independentField: Field.INPUT,
+      })
+      setCurrencyState({
+        inputCurrency: nativeOnChain(currentChainId),
+        outputCurrency: null,
+      })
+    }
+  }, [currentChainId, isTransactionConfirmed])
   
   const { typedValue, independentField } = swapState
   const inputRef = useRef<HTMLInputElement>(null)
@@ -132,6 +186,9 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
   const inputFiatValue = undefined
   const outputFiatValue = undefined
   
+  // Fetch available DEXs for the current chain
+  const { dexs: availableDexs } = useEisenDexs(currentChainId)
+  
   // Prepare Eisen quote parameters
   const quoteParams = useMemo(() => {
     if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
@@ -179,7 +236,26 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
       ? NATIVE_TOKEN_ADDRESS
       : currencies[Field.OUTPUT]?.address || ''
     
-    return {
+    // Build includedDex param
+    // If all available DEXs are selected, don't include the param
+    // Otherwise, include selected DEXs + WRAPPED_NATIVE
+    let includedDex: string | undefined = undefined
+    
+    // Check if all available DEXs are selected
+    const allDexsSelected = availableDexs.length > 0 && 
+      selectedDexs.length === availableDexs.length &&
+      availableDexs.every(dex => selectedDexs.includes(dex))
+    
+    // Only include includedDex param if not all DEXs are selected
+    if (!allDexsSelected && selectedDexs.length > 0) {
+      // Always include WRAPPED_NATIVE if not already in the list
+      const dexsWithWrapped = selectedDexs.includes('WRAPPED_NATIVE')
+        ? selectedDexs
+        : [...selectedDexs, 'WRAPPED_NATIVE']
+      includedDex = dexsWithWrapped.join(',')
+    }
+
+    const params: any = {
       fromAddress: account.address,
       fromChain: currentChainId,
       toChain: currentChainId,
@@ -190,7 +266,14 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
       order: order,
       slippage: slippage.toString(),
     }
-  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage])
+
+    // Only add includedDex if we have a value (not all DEXs selected)
+    if (includedDex) {
+      params.includedDex = includedDex
+    }
+
+    return params
+  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs])
   
   // Fetch quote from Eisen API
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
@@ -320,6 +403,8 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
     }
 
     setExecuting(true)
+    setTransactionError(null)
+    
     try {
       const signer = provider.getSigner()
       
@@ -349,6 +434,10 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
 
       console.log('Transaction sent:', tx.hash)
       
+      // Store transaction hash to track status and show modal
+      setTxHash(tx.hash)
+      setShowTransactionModal(true)
+      
       // Add transaction to the app's transaction list
       const action = quote?.result?.action
       const estimate = quote?.result?.estimate
@@ -368,6 +457,8 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
       addTransaction(tx, transactionInfo)
     } catch (err) {
       console.error('Transaction failed:', err)
+      setTransactionError(err instanceof Error ? err : new Error('Transaction failed'))
+      setShowTransactionModal(false)
     } finally {
       setExecuting(false)
     }
@@ -400,8 +491,11 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           <AggregatorSettings
             order={order}
             slippage={slippage}
+            selectedDexs={selectedDexs}
+            chainId={currentChainId}
             onOrderChange={setOrder}
             onSlippageChange={setSlippage}
+            onDexsChange={setSelectedDexs}
             compact={false}
           />
         </RowFixed>
@@ -468,6 +562,29 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           <ButtonLight onClick={accountDrawer.open} fontWeight={535} $borderRadius="16px">
             <Trans i18nKey="common.connectWallet.button" />
           </ButtonLight>
+        ) : account.isConnected && !isCorrectChain ? (
+          <ButtonPrimary 
+            $borderRadius="16px" 
+            onClick={async () => await selectChain(currentChainId as UniverseChainId)}
+            style={{ width: '100%', fontWeight: 535 }}
+          >
+            <Trans
+              i18nKey="common.connectToChain.button"
+              values={{ 
+                chainName: currentChainId 
+                  ? (UNIVERSE_CHAIN_INFO[currentChainId as UniverseChainId]?.label || (currentChainId === FLOW_CHAIN_ID ? 'Flow Mainnet' : 'Flow EVM Testnet'))
+                  : 'Flow'
+              }}
+            />
+          </ButtonPrimary>
+        ) : isLandingPage && account.isConnected && isCorrectChain ? (
+          <ButtonPrimary 
+            $borderRadius="16px" 
+            onClick={() => navigate('/aggregator')}
+            style={{ width: '100%', fontWeight: 535 }}
+          >
+            Get Started
+          </ButtonPrimary>
         ) : !hasBothTokens ? (
           <ButtonError disabled={true} $borderRadius="16px">
             <Text fontSize={20} color="neutralContrast">
@@ -506,7 +623,7 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           </ButtonError>
         ) : needsApproval ? (
           <ButtonPrimary
-            disabled={isApproving}
+            disabled={isApproving || isTransactionPending}
             onClick={approve}
             $borderRadius="16px"
             style={{ width: '100%', fontWeight: 535 }}
@@ -515,13 +632,13 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           </ButtonPrimary>
         ) : (
           <ButtonError
-            disabled={executing}
+            disabled={executing || isTransactionPending}
             onClick={handleExecute}
             $borderRadius="16px"
             style={{ width: '100%' }}
           >
             <Text fontSize={20} color="neutralContrast">
-              {executing ? 'Processing...' : 'Execute Swap'}
+              {executing || isTransactionPending ? 'Processing...' : 'Execute Swap'}
             </Text>
           </ButtonError>
         )}
@@ -535,9 +652,62 @@ export function AggregatorForm({ disableTokenInputs = false }: AggregatorFormPro
           }}>
             Approval failed: {approvalError}
           </div>
+          )}
+        </div>
+        
+        {/* Transaction Modal - Shows pending, then success/failure automatically */}
+        <TransactionConfirmationModal
+          isOpen={showTransactionModal && !!txHash}
+          onDismiss={handleTransactionModalDismiss}
+          hash={txHash}
+          attemptingTxn={executing && !txHash}
+          pendingText={<Trans i18nKey="common.transactionSubmitted" />}
+          reviewContent={() => null}
+        />
+        
+        {/* Show error if transaction failed before getting hash */}
+        {transactionError && !showTransactionModal && (
+          <div style={{
+            marginTop: '16px',
+            padding: '12px',
+            borderRadius: '12px',
+            backgroundColor: theme.surface2,
+            border: `1px solid ${theme.critical}`,
+            color: theme.critical,
+            textAlign: 'center',
+          }}>
+            <Text fontSize={14} color="critical">
+              Transaction failed: {transactionError.message}
+            </Text>
+            <ButtonLight
+              onClick={() => setTransactionError(null)}
+              style={{ marginTop: '8px', width: '100%' }}
+            >
+              <Trans i18nKey="common.close" />
+            </ButtonLight>
+          </div>
         )}
-      </div>
-    </>
-  )
-}
+        
+        {/* Powered by Eisen */}
+        <a
+          href="https://eisenfinance.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px', paddingTop: '8px', marginTop: '16px' }}
+        >
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            gap="$gap4"
+            row
+          >
+            <Text variant="body3" color="$neutral2">
+              Powered by
+            </Text>
+            <EisenLogo style={{ height: '20px', width: 'auto' }} />
+          </Flex>
+        </a>
+      </>
+    )
+  }
 

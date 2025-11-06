@@ -39,11 +39,11 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
   const { chainId: universeChainId } = useSwapAndLimitContext()
   const chainId = universeChainId ? universeChainId : UniverseChainId.FlowMainnet
   return [
-    {
-      title: t('common.trade'),
-      href: '/aggregator',
-      isActive: pathname.startsWith('/swap') || pathname.startsWith('/limit') || pathname.startsWith('/send')
-    },
+    // {
+    //   title: t('common.trade'),
+    //   href: '/aggregator',
+    //   isActive: pathname.startsWith('/swap') || pathname.startsWith('/limit') || pathname.startsWith('/send')
+    // },
 
   ]
 }

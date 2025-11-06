@@ -7,7 +7,7 @@ import useDisableScrolling from 'hooks/useDisableScrolling'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import styled from 'lib/styled-components'
 import { Portal } from 'nft/components/common/Portal'
-import { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef, useEffect, useState } from 'react'
 import { X } from 'react-feather'
 import { useCloseModal, useModalIsOpen, useToggleSettingsMenu } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/reducer'
@@ -16,6 +16,10 @@ import { Z_INDEX } from 'theme/zIndex'
 import { Trans } from 'uniswap/src/i18n'
 import QuestionHelper from 'components/QuestionHelper'
 import { AggregatorSlippageSettings } from './AggregatorSlippageSettings'
+import { useEisenDexs } from './useEisenDexs'
+import Expand from 'components/Expand'
+import { ReactComponent as EisenLogo } from 'assets/svg/eisen.svg'
+import { Flex, Text } from 'ui/src'
 
 const CloseButton = styled.button`
   background: transparent;
@@ -105,21 +109,78 @@ const Switch = styled(Row)`
   border-radius: 16px;
 `
 
+const DexCheckbox = styled.div<{ disabled?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+`
+
+const CheckboxInput = styled.input`
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: ${({ theme }) => theme.accent1};
+  
+  &:checked {
+    accent-color: ${({ theme }) => theme.accent1};
+  }
+`
+
+const DexList = styled(AutoColumn)`
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px 0;
+  
+  /* Remove scrollbar background */
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) => theme.surface3} transparent;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.surface3};
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${({ theme }) => theme.surface4};
+    background-clip: content-box;
+  }
+`
+
 export type OrderType = 'CHEAPEST' | 'FASTEST'
 
 interface AggregatorSettingsProps {
   order: OrderType
   slippage: number
+  selectedDexs: string[]
+  chainId: number
   onOrderChange: (order: OrderType) => void
   onSlippageChange: (slippage: number) => void
+  onDexsChange: (dexs: string[]) => void
   compact?: boolean
 }
 
 export function AggregatorSettings({
   order,
   slippage,
+  selectedDexs,
+  chainId,
   onOrderChange,
   onSlippageChange,
+  onDexsChange,
   compact = false,
 }: AggregatorSettingsProps) {
   const toggleButtonNode = useRef<HTMLDivElement | null>(null)
@@ -136,6 +197,47 @@ export function AggregatorSettings({
 
   useOnClickOutside(menuNode, isOpenDesktop ? closeMenu : undefined, [toggleButtonNode])
   useDisableScrolling(isOpen)
+
+  // Fetch available DEXs
+  const { dexs, loading: dexsLoading } = useEisenDexs(chainId)
+  
+  // Track if we've initialized the DEX selection (to prevent re-initializing after user deselects)
+  const [hasInitialized, setHasInitialized] = useState(false)
+
+  // Initialize selected DEXs when available DEXs are first loaded (preselect all)
+  useEffect(() => {
+    if (dexs.length > 0 && !hasInitialized) {
+      onDexsChange([...dexs])
+      setHasInitialized(true)
+    }
+  }, [dexs, hasInitialized, onDexsChange])
+
+  const handleDexToggle = useCallback(
+    (dex: string) => {
+      const isSelected = selectedDexs.includes(dex)
+      if (isSelected) {
+        // Remove DEX from selection
+        onDexsChange(selectedDexs.filter((d) => d !== dex))
+      } else {
+        // Add DEX to selection
+        onDexsChange([...selectedDexs, dex])
+      }
+    },
+    [selectedDexs, onDexsChange]
+  )
+
+  const handleSelectAll = useCallback(() => {
+    if (dexs.length > 0) {
+      onDexsChange([...dexs])
+    }
+  }, [dexs, onDexsChange])
+
+  const handleDeselectAll = useCallback(() => {
+    onDexsChange([])
+  }, [onDexsChange])
+
+  const allSelected = dexs.length > 0 && selectedDexs.length === dexs.length
+  const hasDexs = dexs.length > 0
 
   const Settings = useMemo(
     () => (
@@ -163,10 +265,105 @@ export function AggregatorSettings({
               </Option>
             </Switch>
           </RowBetween>
+          <Divider />
+          <Expand
+            testId="aggregator-dex-settings"
+            padding="6px 0px"
+            isOpen={true}
+            onToggle={() => {}}
+            header={
+              <Row width="auto">
+                <ThemedText.BodyPrimary>
+                  DEX Selection
+                </ThemedText.BodyPrimary>
+                <QuestionHelper text="Select which DEXs to include in the swap search. WRAPPED_NATIVE will always be included for native token swaps." />
+              </Row>
+            }
+            button={
+              <ThemedText.BodyPrimary>
+                {dexsLoading
+                  ? 'Loading...'
+                  : hasDexs
+                  ? `${selectedDexs.length} of ${dexs.length} selected`
+                  : 'No DEXs available'}
+              </ThemedText.BodyPrimary>
+            }
+          >
+            {hasDexs && (
+              <>
+                <RowBetween gap="md" style={{ marginBottom: '8px' }}>
+                  <ThemedText.BodySmall
+                    style={{ cursor: 'pointer', color: 'var(--accent1)' }}
+                    onClick={allSelected ? handleDeselectAll : handleSelectAll}
+                  >
+                    {allSelected ? 'Deselect All' : 'Select All'}
+                  </ThemedText.BodySmall>
+                </RowBetween>
+                <DexList gap="4px">
+                  {dexs.map((dex) => {
+                    const isSelected = selectedDexs.includes(dex)
+                    return (
+                      <DexCheckbox
+                        key={dex}
+                        onClick={() => handleDexToggle(dex)}
+                        disabled={false}
+                      >
+                        <CheckboxInput
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleDexToggle(dex)}
+                          disabled={false}
+                        />
+                        <ThemedText.BodySmall>{dex}</ThemedText.BodySmall>
+                      </DexCheckbox>
+                    )
+                  })}
+                </DexList>
+              </>
+            )}
+            {!hasDexs && !dexsLoading && (
+              <ThemedText.BodySmall color="neutral2">
+                No DEXs available for this chain
+              </ThemedText.BodySmall>
+            )}
+          </Expand>
+          <Divider />
+          {/* Powered by Eisen */}
+          <a
+            href="https://eisenfinance.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px', paddingTop: '8px' }}
+          >
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              gap="$gap4"
+              row
+            >
+              <Text variant="body3" color="$neutral2">
+                Powered by
+              </Text>
+              <EisenLogo style={{ height: '16px', width: 'auto' }} />
+            </Flex>
+          </a>
         </AutoColumn>
       </>
     ),
-    [order, slippage, onOrderChange, onSlippageChange],
+    [
+      order,
+      slippage,
+      selectedDexs,
+      dexs,
+      dexsLoading,
+      hasDexs,
+      allSelected,
+      onOrderChange,
+      onSlippageChange,
+      handleDexToggle,
+      handleSelectAll,
+      handleDeselectAll,
+    ],
   )
 
   return (

@@ -3,7 +3,7 @@ import { GitVersionRow } from 'components/AccountDrawer/GitVersionRow'
 import { SlideOutMenu } from 'components/AccountDrawer/SlideOutMenu'
 import { SmallBalanceToggle } from 'components/AccountDrawer/SmallBalanceToggle'
 import { SpamToggle } from 'components/AccountDrawer/SpamToggle'
-import { TestnetsToggle } from 'components/AccountDrawer/TestnetsToggle'
+// import { TestnetsToggle } from 'components/AccountDrawer/TestnetsToggle'
 import Column from 'components/Column'
 import Row from 'components/Row'
 import { LOCALE_LABEL } from 'constants/locales'
@@ -87,7 +87,7 @@ export default function SettingsMenu({
               </>
             )}
             <ThemeToggle />
-            <TestnetsToggle />
+            {/* <TestnetsToggle /> */}
           </ToggleWrapper>
 
           {forkConfig.uniSpecificFeaturesEnabled && (
