@@ -79,7 +79,7 @@ const Tab = ({
   path,
   items,
   internal = true,
-  icon
+  icon,
 }: {
   label: string
   isActive?: boolean
@@ -170,8 +170,16 @@ export function Tabs() {
   const tabsContent: TabsSection[] = useTabsContent()
   return (
     <>
-      {tabsContent.map(({ title, isActive, href, items, internal, icon}, index) => (
-        <Tab icon={icon} key={`${title}_${index}`} label={title} isActive={isActive} path={href} items={items} internal={internal} />
+      {tabsContent.map(({ title, isActive, href, items, internal, icon }, index) => (
+        <Tab
+          icon={icon}
+          key={`${title}_${index}`}
+          label={title}
+          isActive={isActive}
+          path={href}
+          items={items}
+          internal={internal}
+        />
       ))}
     </>
   )
