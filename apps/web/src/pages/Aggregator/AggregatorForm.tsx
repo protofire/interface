@@ -38,6 +38,9 @@ import useSelectChain from 'hooks/useSelectChain'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { useNavigate } from 'react-router-dom'
+import { serializeSwapStateToURLParameters, queryParametersToCurrencyState } from 'state/swap/hooks'
+import useParsedQueryString from 'hooks/useParsedQueryString'
+import { useCurrency } from 'hooks/Tokens'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
@@ -59,6 +62,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const selectChain = useSelectChain()
   const navigate = useNavigate()
 
+  // Parse URL query params
+  const parsedQs = useParsedQueryString()
+  const parsedCurrencyState = useMemo(() => {
+    return queryParametersToCurrencyState(parsedQs)
+  }, [parsedQs])
+
   // Settings state
   const [order, setOrder] = useState<OrderType>('CHEAPEST')
   const [slippage, setSlippage] = useState<number>(0.005)
@@ -70,17 +79,28 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     return account.chainId === FLOW_TESTNET_CHAIN_ID
   }, [account.chainId])
 
-  // Get current chain ID based on wallet's chain or default to mainnet
+  // Get current chain ID based on wallet's chain or URL params
   const currentChainId = useMemo(() => {
+    // Use URL param chain if available and is a Flow chain
+    if (parsedCurrencyState.chainId) {
+      if (parsedCurrencyState.chainId === FLOW_CHAIN_ID || parsedCurrencyState.chainId === FLOW_TESTNET_CHAIN_ID) {
+        return parsedCurrencyState.chainId
+      }
+    }
+    // Otherwise use wallet's chain or default to mainnet
     if (!account.chainId) return FLOW_CHAIN_ID
     return account.chainId === FLOW_TESTNET_CHAIN_ID ? FLOW_TESTNET_CHAIN_ID : FLOW_CHAIN_ID
-  }, [account.chainId])
+  }, [account.chainId, parsedCurrencyState.chainId])
 
   // Check if connected chain is Flow (mainnet or testnet)
   const isCorrectChain = useMemo(() => {
     if (!account.chainId) return false
     return account.chainId === FLOW_CHAIN_ID || account.chainId === FLOW_TESTNET_CHAIN_ID
   }, [account.chainId])
+
+  // Load currencies from URL params
+  const urlInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, currentChainId)
+  const urlOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, currentChainId)
 
   // Simple state management for aggregator (no backend interaction)
   const [currencyState, setCurrencyState] = useState<{
@@ -99,20 +119,49 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     independentField: Field.INPUT,
   })
 
+  // Initialize currencies from URL params
+  useEffect(() => {
+    if (urlInputCurrency && !currencyState.inputCurrency) {
+      setCurrencyState((prev) => ({
+        ...prev,
+        inputCurrency: urlInputCurrency,
+      }))
+    }
+  }, [urlInputCurrency, currencyState.inputCurrency])
+
+  useEffect(() => {
+    if (urlOutputCurrency && !currencyState.outputCurrency) {
+      setCurrencyState((prev) => ({
+        ...prev,
+        outputCurrency: urlOutputCurrency,
+      }))
+    }
+  }, [urlOutputCurrency, currencyState.outputCurrency])
+
+  // Initialize swap state from URL params
+  useEffect(() => {
+    if (parsedCurrencyState.value && swapState.typedValue === '') {
+      setSwapState({
+        typedValue: parsedCurrencyState.value,
+        independentField: parsedCurrencyState.field === 'OUTPUT' ? Field.OUTPUT : Field.INPUT,
+      })
+    }
+  }, [parsedCurrencyState.value, parsedCurrencyState.field, swapState.typedValue])
+
   const [executing, setExecuting] = useState(false)
   const [txHash, setTxHash] = useState<string | undefined>(undefined)
   const [showTransactionModal, setShowTransactionModal] = useState(false)
   const [transactionError, setTransactionError] = useState<Error | null>(null)
 
-  // Set default input currency to native currency on mount
+  // Set default input currency to native currency on mount (only if no URL params)
   useEffect(() => {
-    if (!currencyState.inputCurrency && currentChainId) {
+    if (!currencyState.inputCurrency && !urlInputCurrency && !urlOutputCurrency && currentChainId) {
       setCurrencyState((prev) => ({
         ...prev,
         inputCurrency: nativeOnChain(currentChainId),
       }))
     }
-  }, [currentChainId, currencyState.inputCurrency])
+  }, [currentChainId, currencyState.inputCurrency, urlInputCurrency, urlOutputCurrency])
 
   // Check transaction status
   const isTransactionPending = useIsTransactionPending(txHash)
@@ -404,6 +453,16 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
     setExecuting(true)
     setTransactionError(null)
+
+    // Update URL with current swap state
+    const serializedSwapState = serializeSwapStateToURLParameters({
+      inputCurrency: currencyState.inputCurrency ?? undefined,
+      outputCurrency: currencyState.outputCurrency ?? undefined,
+      typedValue: swapState.typedValue,
+      independentField: swapState.independentField,
+      chainId: currentChainId ?? UniverseChainId.FlowMainnet,
+    })
+    navigate('/aggregator' + serializedSwapState, { replace: true })
 
     try {
       const signer = provider.getSigner()
