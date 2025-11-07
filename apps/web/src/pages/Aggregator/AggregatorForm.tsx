@@ -101,6 +101,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   // Load currencies from URL params
   const urlInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, currentChainId)
   const urlOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, currentChainId)
+  const [hasInitializedFromUrl, setHasInitializedFromUrl] = useState(false)
 
   // Simple state management for aggregator (no backend interaction)
   const [currencyState, setCurrencyState] = useState<{
@@ -119,34 +120,66 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     independentField: Field.INPUT,
   })
 
-  // Initialize currencies from URL params
+  // Initialize currencies and swap state from URL params (only once on mount)
   useEffect(() => {
-    if (urlInputCurrency && !currencyState.inputCurrency) {
-      setCurrencyState((prev) => ({
-        ...prev,
-        inputCurrency: urlInputCurrency,
-      }))
-    }
-  }, [urlInputCurrency, currencyState.inputCurrency])
+    if (!hasInitializedFromUrl) {
+      let updated = false
 
-  useEffect(() => {
-    if (urlOutputCurrency && !currencyState.outputCurrency) {
-      setCurrencyState((prev) => ({
-        ...prev,
-        outputCurrency: urlOutputCurrency,
-      }))
-    }
-  }, [urlOutputCurrency, currencyState.outputCurrency])
+      if (urlInputCurrency && !currencyState.inputCurrency) {
+        setCurrencyState((prev) => ({
+          ...prev,
+          inputCurrency: urlInputCurrency,
+        }))
+        updated = true
+      }
 
-  // Initialize swap state from URL params
+      if (urlOutputCurrency && !currencyState.outputCurrency) {
+        setCurrencyState((prev) => ({
+          ...prev,
+          outputCurrency: urlOutputCurrency,
+        }))
+        updated = true
+      }
+
+      if (parsedCurrencyState.value && swapState.typedValue === '') {
+        setSwapState({
+          typedValue: parsedCurrencyState.value,
+          independentField: parsedCurrencyState.field === 'OUTPUT' ? Field.OUTPUT : Field.INPUT,
+        })
+        updated = true
+      }
+
+      // Mark as initialized after first attempt, even if nothing was loaded
+      // This prevents URL params from overwriting user input
+      if (updated || urlInputCurrency || urlOutputCurrency || parsedCurrencyState.value) {
+        setHasInitializedFromUrl(true)
+      }
+    }
+  }, [
+    hasInitializedFromUrl,
+    urlInputCurrency,
+    urlOutputCurrency,
+    parsedCurrencyState.value,
+    parsedCurrencyState.field,
+    currencyState.inputCurrency,
+    currencyState.outputCurrency,
+    swapState.typedValue,
+  ])
+
+  // Update URL on every input change
   useEffect(() => {
-    if (parsedCurrencyState.value && swapState.typedValue === '') {
-      setSwapState({
-        typedValue: parsedCurrencyState.value,
-        independentField: parsedCurrencyState.field === 'OUTPUT' ? Field.OUTPUT : Field.INPUT,
+    // Only update URL if we have at least one currency selected
+    if (currencyState.inputCurrency || currencyState.outputCurrency) {
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency ?? undefined,
+        outputCurrency: currencyState.outputCurrency ?? undefined,
+        typedValue: swapState.typedValue,
+        independentField: swapState.independentField,
+        chainId: currentChainId ?? UniverseChainId.FlowMainnet,
       })
+      navigate('/aggregator' + serializedSwapState, { replace: true })
     }
-  }, [parsedCurrencyState.value, parsedCurrencyState.field, swapState.typedValue])
+  }, [currencyState.inputCurrency, currencyState.outputCurrency, swapState.typedValue, swapState.independentField, currentChainId, navigate])
 
   const [executing, setExecuting] = useState(false)
   const [txHash, setTxHash] = useState<string | undefined>(undefined)
@@ -453,16 +486,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
     setExecuting(true)
     setTransactionError(null)
-
-    // Update URL with current swap state
-    const serializedSwapState = serializeSwapStateToURLParameters({
-      inputCurrency: currencyState.inputCurrency ?? undefined,
-      outputCurrency: currencyState.outputCurrency ?? undefined,
-      typedValue: swapState.typedValue,
-      independentField: swapState.independentField,
-      chainId: currentChainId ?? UniverseChainId.FlowMainnet,
-    })
-    navigate('/aggregator' + serializedSwapState, { replace: true })
 
     try {
       const signer = provider.getSigner()
