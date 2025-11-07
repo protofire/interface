@@ -119,12 +119,19 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             />
           </Flex>
         </RiseIn>
-        {/* 
+        
         <RiseIn delay={0.3}>
-          <Text variant="body1" textAlign="center" maxWidth={430} color="$neutral2" $short={{ variant: 'body2' }}>
+          <Text 
+            variant="body1" 
+            textAlign="center" 
+            maxWidth={430} 
+            color="$neutral2" 
+            $short={{ variant: 'body2' }}
+            style={{ fontFamily: "'Dosis', sans-serif", fontWeight: 600 }}
+          >
             <Trans i18nKey="hero.subtitle" />
           </Text>
-        </RiseIn> */}
+        </RiseIn>
       </Flex>
 
       <Flex flex={1} />
