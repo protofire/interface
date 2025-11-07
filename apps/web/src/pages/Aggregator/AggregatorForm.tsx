@@ -58,30 +58,30 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const account = useAccount()
   const selectChain = useSelectChain()
   const navigate = useNavigate()
-  
+
   // Settings state
   const [order, setOrder] = useState<OrderType>('CHEAPEST')
   const [slippage, setSlippage] = useState<number>(0.005)
   const [selectedDexs, setSelectedDexs] = useState<string[]>([])
-  
+
   // Auto-detect testnet based on connected wallet's chain ID
   const isTestnet = useMemo(() => {
     if (!account.chainId) return false
     return account.chainId === FLOW_TESTNET_CHAIN_ID
   }, [account.chainId])
-  
+
   // Get current chain ID based on wallet's chain or default to mainnet
   const currentChainId = useMemo(() => {
     if (!account.chainId) return FLOW_CHAIN_ID
     return account.chainId === FLOW_TESTNET_CHAIN_ID ? FLOW_TESTNET_CHAIN_ID : FLOW_CHAIN_ID
   }, [account.chainId])
-  
+
   // Check if connected chain is Flow (mainnet or testnet)
   const isCorrectChain = useMemo(() => {
     if (!account.chainId) return false
     return account.chainId === FLOW_CHAIN_ID || account.chainId === FLOW_TESTNET_CHAIN_ID
   }, [account.chainId])
-  
+
   // Simple state management for aggregator (no backend interaction)
   const [currencyState, setCurrencyState] = useState<{
     inputCurrency: Currency | null
@@ -90,7 +90,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     inputCurrency: null,
     outputCurrency: null,
   })
-  
+
   const [swapState, setSwapState] = useState<{
     typedValue: string
     independentField: Field
@@ -98,12 +98,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     typedValue: '',
     independentField: Field.INPUT,
   })
-  
+
   const [executing, setExecuting] = useState(false)
   const [txHash, setTxHash] = useState<string | undefined>(undefined)
   const [showTransactionModal, setShowTransactionModal] = useState(false)
   const [transactionError, setTransactionError] = useState<Error | null>(null)
-  
+
   // Set default input currency to native currency on mount
   useEffect(() => {
     if (!currencyState.inputCurrency && currentChainId) {
@@ -113,11 +113,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       }))
     }
   }, [currentChainId, currencyState.inputCurrency])
-  
+
   // Check transaction status
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
-  
+
   // Reset form state after transaction modal is dismissed and transaction is confirmed
   const handleTransactionModalDismiss = useCallback(() => {
     setShowTransactionModal(false)
@@ -135,11 +135,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       })
     }
   }, [currentChainId, isTransactionConfirmed])
-  
+
   const { typedValue, independentField } = swapState
   const inputRef = useRef<HTMLInputElement>(null)
   const outputRef = useRef<HTMLInputElement>(null)
-  
+
   // Get selected currencies
   const currencies = useMemo(
     () => ({
@@ -148,10 +148,10 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }),
     [currencyState]
   )
-  
+
   // Get currency balances
   const inputCurrencyBalance = useCurrencyBalance(account.address, currencies[Field.INPUT] ?? undefined)
-  
+
   // Parse typed value to CurrencyAmount
   const parsedAmount = useMemo(() => {
     if (!typedValue || !currencies[Field.INPUT]) {
@@ -159,19 +159,19 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }
     return tryParseCurrencyAmount(typedValue, currencies[Field.INPUT])
   }, [typedValue, currencies[Field.INPUT]])
-  
+
   // Calculate max input amount (reserving gas for native tokens)
   const maxInputAmount = useMemo(
     () => maxAmountSpend(inputCurrencyBalance),
     [inputCurrencyBalance]
   )
-  
+
   // Show max button if balance > 0 and not already at max
   const showMaxButton = Boolean(
-    maxInputAmount?.greaterThan(0) && 
+    maxInputAmount?.greaterThan(0) &&
     (!parsedAmount || !parsedAmount.equalTo(maxInputAmount))
   )
-  
+
   // Check for insufficient balance
   const hasInsufficientFunds = useMemo(() => {
     if (!parsedAmount || !inputCurrencyBalance) {
@@ -179,34 +179,34 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }
     return inputCurrencyBalance.lessThan(parsedAmount)
   }, [parsedAmount, inputCurrencyBalance])
-  
+
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
-  
+
   // Mock fiat values - not using real hooks
   const inputFiatValue = undefined
   const outputFiatValue = undefined
-  
+
   // Fetch available DEXs for the current chain
   const { dexs: availableDexs } = useEisenDexs(currentChainId)
-  
+
   // Prepare Eisen quote parameters
   const quoteParams = useMemo(() => {
     if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
       return null
     }
-    
+
     // Don't fetch quote if amount is empty, zero, or invalid
     if (!typedValue || typedValue.trim() === '') {
       return null
     }
-    
+
     // Check if the parsed value is actually greater than 0
     // This handles cases like "0", "0.", "0.0", "0.00000", etc.
     const parsedValue = parseFloat(typedValue)
     if (isNaN(parsedValue) || parsedValue <= 0) {
       return null
     }
-    
+
     // Calculate fromAmount in wei (smallest unit)
     // Convert the input amount to wei based on token decimals
     // Use parseUnits to avoid scientific notation for large numbers
@@ -216,7 +216,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     try {
       // parseUnits converts human-readable amount to wei, always returns integer string
       fromAmountWei = parseUnits(typedValue, decimals).toString()
-      
+
       // Double check: if the wei amount is 0, don't fetch quote
       if (fromAmountWei === '0') {
         return null
@@ -226,26 +226,26 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       console.error('Error parsing amount:', error)
       return null
     }
-    
+
     // For native currency, use the zero address
     const NATIVE_TOKEN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-    const fromToken = inputCurrency?.isNative 
+    const fromToken = inputCurrency?.isNative
       ? NATIVE_TOKEN_ADDRESS
       : inputCurrency?.address || ''
-    const toToken = currencies[Field.OUTPUT]?.isNative 
+    const toToken = currencies[Field.OUTPUT]?.isNative
       ? NATIVE_TOKEN_ADDRESS
       : currencies[Field.OUTPUT]?.address || ''
-    
+
     // Build includedDex param
     // If all available DEXs are selected, don't include the param
     // Otherwise, include selected DEXs + WRAPPED_NATIVE
     let includedDex: string | undefined = undefined
-    
+
     // Check if all available DEXs are selected
-    const allDexsSelected = availableDexs.length > 0 && 
+    const allDexsSelected = availableDexs.length > 0 &&
       selectedDexs.length === availableDexs.length &&
       availableDexs.every(dex => selectedDexs.includes(dex))
-    
+
     // Only include includedDex param if not all DEXs are selected
     if (!allDexsSelected && selectedDexs.length > 0) {
       // Always include WRAPPED_NATIVE if not already in the list
@@ -274,17 +274,17 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
     return params
   }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs])
-  
+
   // Fetch quote from Eisen API
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
-  
+
   // Calculate estimated output amount from quote
   const estimatedOutput = useMemo(() => {
     if (quote?.result?.estimate && currencies[Field.OUTPUT]) {
       // Extract the estimated output amount from quote response
       const outputCurrency = currencies[Field.OUTPUT]
       const decimals = outputCurrency?.decimals || 6
-      
+
       // Convert from smallest unit (wei) to human readable format with proper decimals
       const expectedOutputWei = quote.result.estimate.toAmount
       const formatAmount = (amount: string, decimals: number): string => {
@@ -293,32 +293,32 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         const divisor = BigInt(10 ** decimals)
         const quotient = amountBigInt / divisor
         const remainder = amountBigInt % divisor
-        
+
         if (remainder === BigInt(0)) {
           return quotient.toString()
         }
-        
+
         // Format with proper decimal places
         const remainderStr = remainder.toString().padStart(decimals, '0')
         const trimmedRemainder = remainderStr.replace(/0+$/, '')
         return `${quotient}.${trimmedRemainder}`
       }
-      
+
       const expectedOutput = formatAmount(expectedOutputWei, decimals)
       return expectedOutput
     }
     return ''
   }, [quote, currencies])
-  
+
   // Handle user input
   const handleTypeInput = useCallback((value: string) => {
     setSwapState((prev) => ({ ...prev, typedValue: value, independentField: Field.INPUT }))
   }, [])
-  
+
   const handleTypeOutput = useCallback((value: string) => {
     setSwapState((prev) => ({ ...prev, typedValue: value, independentField: Field.OUTPUT }))
   }, [])
-  
+
   // Handle currency selection with mock data
   const handleCurrencySelect = useCallback(
     (field: Field, currency: Currency) => {
@@ -329,21 +329,21 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     },
     []
   )
-  
+
   const handleInputSelect = useCallback(
     (inputCurrency: Currency) => {
       handleCurrencySelect(Field.INPUT, inputCurrency)
     },
     [handleCurrencySelect]
   )
-  
+
   const handleOutputSelect = useCallback(
     (outputCurrency: Currency) => {
       handleCurrencySelect(Field.OUTPUT, outputCurrency)
     },
     [handleCurrencySelect]
   )
-  
+
   // Switch tokens
   const handleSwitchTokens = useCallback(() => {
     setCurrencyState((prev) => ({
@@ -351,7 +351,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       outputCurrency: prev.inputCurrency,
     }))
   }, [])
-  
+
   // Format amounts for display
   const formattedAmounts = useMemo(
     () => ({
@@ -360,13 +360,13 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }),
     [independentField, dependentField, typedValue, quoteLoading, estimatedOutput]
   )
-  
+
   const handleMaxInput = useCallback(() => {
     if (maxInputAmount) {
       handleTypeInput(maxInputAmount.toExact())
     }
   }, [maxInputAmount, handleTypeInput])
-  
+
   const accountDrawer = useAccountDrawer()
   const isDisconnected = !account.address
   const theme = useTheme()
@@ -404,10 +404,10 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
     setExecuting(true)
     setTransactionError(null)
-    
+
     try {
       const signer = provider.getSigner()
-      
+
       // Prepare base transaction
       const txRequest = {
         to: txnRequest.to,
@@ -415,7 +415,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         data: txnRequest.data as `0x${string}`,
         gasPrice: txnRequest.gasPrice,
       }
-      
+
       // Estimate gas ourselves (with fallback to quote's gasLimit)
       let gasLimit: BigNumber
       try {
@@ -426,28 +426,28 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         // Fallback to quote's gasLimit if estimation fails
         gasLimit = BigNumber.from(txnRequest.gasLimit)
       }
-      
+
       const tx = await signer.sendTransaction({
         ...txRequest,
         gasLimit,
       })
 
       console.log('Transaction sent:', tx.hash)
-      
+
       // Store transaction hash to track status and show modal
       setTxHash(tx.hash)
       setShowTransactionModal(true)
-      
+
       // Add transaction to the app's transaction list
       const action = quote?.result?.action
       const estimate = quote?.result?.estimate
-      
+
       // Store token symbols and decimals directly to avoid GraphQL dependency
       const inputCurrencySymbol = action?.fromToken?.symbol || currencies[Field.INPUT]?.symbol || ''
       const outputCurrencySymbol = action?.toToken?.symbol || currencies[Field.OUTPUT]?.symbol || ''
       const inputCurrencyDecimals = action?.fromToken?.decimals || currencies[Field.INPUT]?.decimals || 18
       const outputCurrencyDecimals = action?.toToken?.decimals || currencies[Field.OUTPUT]?.decimals || 18
-      
+
       const transactionInfo: ExactInputSwapTransactionInfo = {
         type: TransactionType.SWAP,
         tradeType: 'EXACT_INPUT' as any,
@@ -462,7 +462,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         inputCurrencyDecimals,
         outputCurrencyDecimals,
       }
-      
+
       // @ts-ignore - TransactionResponse type
       addTransaction(tx, transactionInfo)
     } catch (err) {
@@ -483,9 +483,9 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const buttonError = useMemo(() => {
     if (hasInsufficientFunds && currencies[Field.INPUT]) {
       return (
-        <Trans 
-          i18nKey="common.insufficientTokenBalance.error" 
-          values={{ tokenSymbol: currencies[Field.INPUT].symbol }} 
+        <Trans
+          i18nKey="common.insufficientTokenBalance.error"
+          values={{ tokenSymbol: currencies[Field.INPUT].symbol }}
         />
       )
     }
@@ -573,23 +573,23 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
             <Trans i18nKey="common.connectWallet.button" />
           </ButtonLight>
         ) : account.isConnected && !isCorrectChain ? (
-          <ButtonPrimary 
-            $borderRadius="16px" 
+          <ButtonPrimary
+            $borderRadius="16px"
             onClick={async () => await selectChain(currentChainId as UniverseChainId)}
             style={{ width: '100%', fontWeight: 535 }}
           >
             <Trans
               i18nKey="common.connectToChain.button"
-              values={{ 
-                chainName: currentChainId 
+              values={{
+                chainName: currentChainId
                   ? (UNIVERSE_CHAIN_INFO[currentChainId as UniverseChainId]?.label || (currentChainId === FLOW_CHAIN_ID ? 'Flow Mainnet' : 'Flow EVM Testnet'))
                   : 'Flow'
               }}
             />
           </ButtonPrimary>
         ) : isLandingPage && account.isConnected && isCorrectChain ? (
-          <ButtonPrimary 
-            $borderRadius="16px" 
+          <ButtonPrimary
+            $borderRadius="16px"
             onClick={() => navigate('/aggregator')}
             style={{ width: '100%', fontWeight: 535 }}
           >
@@ -652,19 +652,19 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
             </Text>
           </ButtonError>
         )}
-        
+
         {approvalError && (
-          <div style={{ 
-            color: theme.critical, 
-            fontSize: '12px', 
-            marginTop: '8px', 
-            textAlign: 'center' 
+          <div style={{
+            color: theme.critical,
+            fontSize: '12px',
+            marginTop: '8px',
+            textAlign: 'center'
           }}>
             Approval failed: {approvalError}
           </div>
           )}
         </div>
-        
+
         {/* Transaction Modal - Shows pending, then success/failure automatically */}
         <TransactionConfirmationModal
           isOpen={showTransactionModal && !!txHash}
@@ -674,7 +674,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           pendingText={<Trans i18nKey="common.transactionSubmitted" />}
           reviewContent={() => null}
         />
-        
+
         {/* Show error if transaction failed before getting hash */}
         {transactionError && !showTransactionModal && (
           <div style={{
@@ -697,7 +697,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
             </ButtonLight>
           </div>
         )}
-        
+
         {/* Powered by Eisen */}
         <a
           href="https://eisenfinance.com/"
