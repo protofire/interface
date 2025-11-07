@@ -102,7 +102,7 @@ export function Footer() {
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
-            <Anchor>
+            <Anchor href="https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876" target="_blank">
               <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
             </Anchor>
           </Flex>
@@ -120,7 +120,7 @@ export function Footer() {
         </Flex>
         <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
-          <Anchor>
+          <Anchor href="https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876" target="_blank">
             <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
           </Anchor>
         </Flex>
