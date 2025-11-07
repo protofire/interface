@@ -21,7 +21,10 @@ export const useMenuContent = (): MenuSection[] => {
     // TODO: add translations once content is confirmed
     {
       title: 'Help',
-      items: [{ label: 'Contact Support', href: 'https://swap-support.protofire.io/' }],
+      items: [
+        { label: 'Deployed Contracts', href: '/deployments' },
+        { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
+      ],
     },
     {
       title: 'Company',
