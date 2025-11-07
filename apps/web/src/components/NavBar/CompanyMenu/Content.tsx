@@ -22,7 +22,7 @@ export const useMenuContent = (): MenuSection[] => {
     {
       title: 'Help',
       items: [
-        { label: 'Deployed Contracts', href: '/deployments' },
+        { label: 'Deployed Contracts', href: '/deployments', internal: true },
         { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
       ],
     },
@@ -33,8 +33,8 @@ export const useMenuContent = (): MenuSection[] => {
     {
       title: 'Terms',
       items: [
-        { label: 'Terms and Conditions', href: '/terms' },
-        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms and Conditions', href: '/terms', internal: true },
+        { label: 'Privacy Policy', href: '/privacy', internal: true },
       ],
     },
     // {
