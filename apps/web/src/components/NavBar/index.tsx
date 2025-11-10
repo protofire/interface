@@ -137,7 +137,7 @@ export default function Navbar() {
             !isSmallScreen &&
             forkConfig.signUpOptionEnabled && <NewUserCTAButton />}
           {!account.isConnected && !account.isConnecting && <PreferenceMenu />}
-          {!hideChainSelector && <ChainSelector isNavSelector />}
+          {!hideChainSelector && <ChainSelector isNavSelector showAddNewChain />}
           <Web3Status />
           {!isSignInExperimentControl &&
             !isSignInExperimentControlLoading &&
