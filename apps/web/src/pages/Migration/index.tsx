@@ -150,7 +150,7 @@ function ChainCard({
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: titleColor }}>{title}</h2>
       </div>
       {description && (
-        <p style={{ fontSize: '1rem', color: theme.neutral2, marginBottom: '16px', lineHeight: '1.5' }}>
+        <p style={{ fontSize: '1rem', color: theme.neutral1, marginBottom: '16px', lineHeight: '1.5' }}>
           {description}
         </p>
       )}
@@ -183,7 +183,8 @@ export default function MigrationPage() {
           }}
         >
           With a focus on building a cross-chain payments system, Relay (former Reservoir) has officially wound down
-          Reservoir Swap - <span style={{ fontWeight: 'bold', color: theme.neutral2 }}>https://swap.reservoir.tools</span>, handing over
+          Reservoir Swap -{' '}
+          <span style={{ fontWeight: 'bold', color: theme.neutral2 }}>https://swap.reservoir.tools</span>, handing over
           support for most chains to Protofire.
         </p>
 
@@ -219,7 +220,7 @@ export default function MigrationPage() {
           />
 
           <ChainCard
-            title="Standalone"
+            title="Whitelabel"
             titleColor="#4C82FB"
             backgroundColor="#4C82FB15"
             chains={StandaloneChains}
@@ -228,7 +229,7 @@ export default function MigrationPage() {
 
           <ChainCard
             title="Don't see your chain?"
-            titleColor={theme.neutral2}
+            titleColor={theme.neutral1}
             backgroundColor={`${theme.neutral3}15`}
             chains={SupportChains}
             showExternalIcon
@@ -240,7 +241,7 @@ export default function MigrationPage() {
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1, marginBottom: '0.5rem' }}>
             Previous Standalone Deployments
           </h2>
-          <p style={{ fontSize: '1rem', color: theme.neutral2, marginBottom: '1.5rem' }}>
+          <p style={{ fontSize: '1rem', color: theme.neutral1, marginBottom: '1.5rem' }}>
             Chains that have been migrated to external interfaces
           </p>
         </div>

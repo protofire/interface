@@ -51,8 +51,9 @@ function useWalletSupportedChains(): InterfaceChainId[] {
 type ChainSelectorProps = {
   isNavSelector?: boolean
   hideArrow?: boolean
+  showAddNewChain?: boolean
 }
-export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) => {
+export const ChainSelector = ({ isNavSelector, hideArrow, showAddNewChain }: ChainSelectorProps) => {
   const account = useAccount()
   const { chainId, setSelectedChainId, multichainUXEnabled } = useSwapAndLimitContext()
   // multichainFlagEnabled is different from multichainUXEnabled, multichainUXEnabled applies to swap
@@ -155,67 +156,68 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
           {unsupportedChains.map((selectorChain) => (
             <ChainSelectorRow disabled targetChain={selectorChain} key={selectorChain} isPending={false} />
           ))}
-          {/* Add Chain Button - styled like network options */}
-          <button
-            style={{
-              border: `1px solid ${theme.accent1}`,
-              borderRadius: '12px',
-              margin: '4px 0',
-              cursor: 'pointer',
-              display: 'grid',
-              gridTemplateColumns: 'min-content 1fr min-content',
-              justifyContent: 'space-between',
-              lineHeight: '20px',
-              padding: '10px 8px',
-              textAlign: 'left',
-              outline: 'none',
-              backgroundColor: 'transparent',
-              transition: `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`,
-              width: '100%',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = theme.surface3
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent'
-            }}
-            onClick={() => {
-              window.open(ADD_NEW_CHAIN_URL, '_blank')
-              setIsOpen(false)
-            }}
-          >
-            <LogoChain
-              width="20"
-              height="20"
+          {showAddNewChain && (
+            <button
               style={{
-                marginRight: '12px',
-                display: 'block',
-                flexShrink: 0,
+                border: `1px solid ${theme.accent1}`,
+                borderRadius: '12px',
+                margin: '4px 0',
+                cursor: 'pointer',
+                display: 'grid',
+                gridTemplateColumns: 'min-content 1fr min-content',
+                justifyContent: 'space-between',
+                lineHeight: '20px',
+                padding: '10px 8px',
+                textAlign: 'left',
+                outline: 'none',
+                backgroundColor: 'transparent',
+                transition: `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`,
+                width: '100%',
               }}
-            />
-            <div
-              style={{
-                gridColumn: '2',
-                gridRow: '1',
-                fontSize: '16px',
-                fontWeight: '485',
-                color: theme.accent1,
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.surface3
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+              onClick={() => {
+                window.open(ADD_NEW_CHAIN_URL, '_blank')
+                setIsOpen(false)
               }}
             >
-              Add my chain
-            </div>
-            <div
-              style={{
-                gridColumn: '3',
-                gridRow: '1',
-                display: 'flex',
-                alignItems: 'center',
-                width: '20px',
-              }}
-            >
-              <Plus size={20} color={theme.accent1} />
-            </div>
-          </button>
+              <LogoChain
+                width="20"
+                height="20"
+                style={{
+                  marginRight: '12px',
+                  display: 'block',
+                  flexShrink: 0,
+                }}
+              />
+              <div
+                style={{
+                  gridColumn: '2',
+                  gridRow: '1',
+                  fontSize: '16px',
+                  fontWeight: '485',
+                  color: theme.accent1,
+                }}
+              >
+                Add my chain
+              </div>
+              <div
+                style={{
+                  gridColumn: '3',
+                  gridRow: '1',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '20px',
+                }}
+              >
+                <Plus size={20} color={theme.accent1} />
+              </div>
+            </button>
+          )}
         </Flex>
       </NavDropdown>
     </Popover>
