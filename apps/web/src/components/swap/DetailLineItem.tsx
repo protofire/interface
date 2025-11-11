@@ -18,11 +18,13 @@ export type LineItemData = {
 const LabelText = styled(ThemedText.BodySmall)<{ hasTooltip?: boolean }>`
   cursor: ${({ hasTooltip }) => (hasTooltip ? 'help' : 'auto')};
   color: ${({ theme }) => theme.neutral2};
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `
 
 const DetailRowValue = styled(ThemedText.BodySmall)`
   text-align: right;
   overflow-wrap: break-word;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `
 
 type ValueWrapperProps = PropsWithChildren<{

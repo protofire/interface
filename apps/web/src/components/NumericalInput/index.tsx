@@ -11,6 +11,7 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   width: 0;
   position: relative;
   font-weight: 485;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   outline: none;
   border: none;
   flex: 1 1 auto;
@@ -39,6 +40,7 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
 
   ::placeholder {
     color: ${({ theme }) => theme.neutral3};
+    font-family: 'Dosis', sans-serif;
   }
 `
 
@@ -135,5 +137,6 @@ export const StyledNumericalInput = styled(MemoizedInput)<{ $loading: boolean }>
   text-align: left;
   font-size: 36px;
   font-weight: 485;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   max-height: 44px;
 `

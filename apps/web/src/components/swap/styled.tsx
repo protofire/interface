@@ -185,6 +185,7 @@ export const SwapHeaderTabButton = styled(ButtonText)<{ $isActive: boolean }>`
   border-radius: 20px;
   gap: 4px;
   font-weight: 485;
+  font-family: 'Dosis', sans-serif;
   &:focus {
     text-decoration: none;
   }

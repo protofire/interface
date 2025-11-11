@@ -68,11 +68,15 @@ export function SwapModalHeaderAmount({
           <ResponsiveHeadline
             data-testid={`${field}-amount`}
             color={isLoading ? 'neutral2' : undefined}
+            style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}
             {...headerTextProps}
           >
             {formatReviewSwapCurrencyAmount(amount)} {currency?.symbol}
           </ResponsiveHeadline>
-          <ThemedText.BodySmall color="neutral2">
+          <ThemedText.BodySmall 
+            color="neutral2"
+            style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}
+          >
             {formatNumber({
               input: usdAmount,
               type: NumberType.FiatTokenQuantity,

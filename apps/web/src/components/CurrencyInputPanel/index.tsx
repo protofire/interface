@@ -302,7 +302,7 @@ export default function CurrencyInputPanel({
                         color={theme.neutral3}
                         fontWeight={535}
                         fontSize={14}
-                        style={{ display: 'inline', cursor: 'pointer' }}
+                        style={{ display: 'inline', cursor: 'pointer', fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}
                       >
                         {Boolean(!hideBalance && currency && selectedCurrencyBalance) &&
                           (renderBalance?.(selectedCurrencyBalance as CurrencyAmount<Currency>) || (
