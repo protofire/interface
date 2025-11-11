@@ -84,11 +84,6 @@ interface BaseSwapTransactionInfo extends BaseTransactionInfo {
   inputCurrencyId: string
   outputCurrencyId: string
   isUniswapXOrder: boolean
-  // Optional: store symbols and decimals directly to avoid GraphQL dependency
-  inputCurrencySymbol?: string
-  outputCurrencySymbol?: string
-  inputCurrencyDecimals?: number
-  outputCurrencyDecimals?: number
 }
 
 export interface ExactInputSwapTransactionInfo extends BaseSwapTransactionInfo {

@@ -48,7 +48,7 @@ export const Header = memo(function Header() {
       <Banners>
         {extensionEligible && <MobileAppPromoBanner />}
         {renderUkBanner && <UkBanner />}
-        {(isAppUniswapStagingOrg(window.location) || isLocalhost(window.location)) && <InDevelopmentBanner />}
+        {/* {(isAppUniswapStagingOrg(window.location) || isLocalhost(window.location)) && <InDevelopmentBanner />} */}
       </Banners>
       <NavOnScroll
         $hide={isTouchDevice && !isExplorePage && scrollDirection === ScrollDirection.DOWN}

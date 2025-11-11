@@ -32,7 +32,7 @@ import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { nativeOnChain } from 'constants/tokens'
 import { useIsTransactionPending, useIsTransactionConfirmed } from 'state/transactions/hooks'
-import TransactionConfirmationModal from 'components/TransactionConfirmationModal'
+import { AggregatorSwapModal } from './AggregatorSwapModal'
 import { ReactComponent as EisenLogo } from 'assets/svg/eisen.svg'
 import useSelectChain from 'hooks/useSelectChain'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
@@ -41,6 +41,7 @@ import { useNavigate } from 'react-router-dom'
 import { serializeSwapStateToURLParameters, queryParametersToCurrencyState } from 'state/swap/hooks'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useCurrency } from 'hooks/Tokens'
+import { currencyId } from 'utils/currencyId'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
@@ -72,6 +73,9 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const [order, setOrder] = useState<OrderType>('CHEAPEST')
   const [slippage, setSlippage] = useState<number>(0.005)
   const [selectedDexs, setSelectedDexs] = useState<string[]>([])
+  const [maxsplit, setMaxsplit] = useState<number>(5)
+  const [maxedge, setMaxedge] = useState<number>(4)
+  const [quoteResetKey, setQuoteResetKey] = useState<number>(0)
 
   // Auto-detect testnet based on connected wallet's chain ID
   const isTestnet = useMemo(() => {
@@ -200,23 +204,27 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
 
-  // Reset form state after transaction modal is dismissed and transaction is confirmed
+  // Reset form state when transaction modal is dismissed
   const handleTransactionModalDismiss = useCallback(() => {
     setShowTransactionModal(false)
     setTransactionError(null)
-    // Only reset if transaction is confirmed
-    if (isTransactionConfirmed) {
+    setExecuting(false)
+    // Reset swap panel (amounts and currencies) when modal is dismissed
+    setSwapState({
+      typedValue: '',
+      independentField: Field.INPUT,
+    })
+    setCurrencyState({
+      inputCurrency: nativeOnChain(currentChainId),
+      outputCurrency: null,
+    })
+    // Force quote display to reset by incrementing reset key
+    setQuoteResetKey(prev => prev + 1)
+    // Only clear txHash if transaction is confirmed or failed (keep it if pending for tracking)
+    if (isTransactionConfirmed || transactionError) {
       setTxHash(undefined)
-      setSwapState({
-        typedValue: '',
-        independentField: Field.INPUT,
-      })
-      setCurrencyState({
-        inputCurrency: nativeOnChain(currentChainId),
-        outputCurrency: null,
-      })
     }
-  }, [currentChainId, isTransactionConfirmed])
+  }, [currentChainId, isTransactionConfirmed, transactionError])
 
   const { typedValue, independentField } = swapState
   const inputRef = useRef<HTMLInputElement>(null)
@@ -347,6 +355,9 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       toAddress: account.address,
       order: order,
       slippage: slippage.toString(),
+      fee: '0', // Must specify fee, default to 0
+      maxSplit: maxsplit,
+      maxEdge: maxedge,
     }
 
     // Only add includedDex if we have a value (not all DEXs selected)
@@ -355,7 +366,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }
 
     return params
-  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs])
+  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs, maxsplit, maxedge])
 
   // Fetch quote from Eisen API
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
@@ -472,10 +483,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   ) : null
 
   // Check if user has approved the router contract to spend their tokens
-  const { needsApproval, isApproving, approve, error: approvalError } = useTokenApproval(
+  const { needsApproval, isApproving, approvalPending, approve, error: approvalError } = useTokenApproval(
     tokenForApproval,
     routerAddress || null,
-    fromAmount || null
+    fromAmount || null,
+    inputToken?.logoURI // Pass logoURI from quote response
   )
 
   const handleExecute = async () => {
@@ -486,6 +498,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
     setExecuting(true)
     setTransactionError(null)
+    setShowTransactionModal(true)
 
     try {
       const signer = provider.getSigner()
@@ -514,8 +527,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         gasLimit,
       })
 
-      console.log('Transaction sent:', tx.hash)
-
       // Store transaction hash to track status and show modal
       setTxHash(tx.hash)
       setShowTransactionModal(true)
@@ -524,25 +535,30 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       const action = quote?.result?.action
       const estimate = quote?.result?.estimate
 
-      // Store token symbols and decimals directly to avoid GraphQL dependency
-      const inputCurrencySymbol = action?.fromToken?.symbol || currencies[Field.INPUT]?.symbol || ''
-      const outputCurrencySymbol = action?.toToken?.symbol || currencies[Field.OUTPUT]?.symbol || ''
-      const inputCurrencyDecimals = action?.fromToken?.decimals || currencies[Field.INPUT]?.decimals || 18
-      const outputCurrencyDecimals = action?.toToken?.decimals || currencies[Field.OUTPUT]?.decimals || 18
+      // Get proper currency IDs - use currencyId utility to format native tokens correctly
+      // The API returns 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE for native tokens,
+      // but getCurrency expects 'ETH' for native tokens
+      const NATIVE_TOKEN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+      const inputCurrencyId = currencies[Field.INPUT] 
+        ? currencyId(currencies[Field.INPUT])
+        : (action?.fromToken?.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase() 
+            ? 'ETH' 
+            : action?.fromToken?.address || '')
+      const outputCurrencyId = currencies[Field.OUTPUT]
+        ? currencyId(currencies[Field.OUTPUT])
+        : (action?.toToken?.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase()
+            ? 'ETH'
+            : action?.toToken?.address || '')
 
       const transactionInfo: ExactInputSwapTransactionInfo = {
         type: TransactionType.SWAP,
         tradeType: 'EXACT_INPUT' as any,
-        inputCurrencyId: action?.fromToken?.address || '',
-        outputCurrencyId: action?.toToken?.address || '',
+        inputCurrencyId,
+        outputCurrencyId,
         inputCurrencyAmountRaw: action?.fromAmount || '0',
         expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
         minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
         isUniswapXOrder: false,
-        inputCurrencySymbol,
-        outputCurrencySymbol,
-        inputCurrencyDecimals,
-        outputCurrencyDecimals,
       }
 
       // @ts-ignore - TransactionResponse type
@@ -550,7 +566,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     } catch (err) {
       console.error('Transaction failed:', err)
       setTransactionError(err instanceof Error ? err : new Error('Transaction failed'))
-      setShowTransactionModal(false)
+      setShowTransactionModal(true)
     } finally {
       setExecuting(false)
     }
@@ -585,9 +601,13 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
             slippage={slippage}
             selectedDexs={selectedDexs}
             chainId={currentChainId}
+            maxsplit={maxsplit}
+            maxedge={maxedge}
             onOrderChange={setOrder}
             onSlippageChange={setSlippage}
             onDexsChange={setSelectedDexs}
+            onMaxsplitChange={setMaxsplit}
+            onMaxedgeChange={setMaxedge}
             compact={false}
           />
         </RowFixed>
@@ -646,7 +666,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         />
       </OutputSwapSection>
 
-      <AggregatorQuoteDisplay quote={quote} loading={quoteLoading} error={quoteError} />
+      <AggregatorQuoteDisplay 
+        key={`quote-${quoteResetKey}-${typedValue}-${currencies[Field.INPUT]?.symbol}-${currencies[Field.OUTPUT]?.symbol}`}
+        quote={quote} 
+        loading={quoteLoading} 
+        error={quoteError} 
+      />
 
       {/* Swap Button */}
       <div style={{ marginTop: '16px' }}>
@@ -715,12 +740,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           </ButtonError>
         ) : needsApproval ? (
           <ButtonPrimary
-            disabled={isApproving || isTransactionPending}
+            disabled={isApproving || approvalPending || isTransactionPending}
             onClick={approve}
             $borderRadius="16px"
             style={{ width: '100%', fontWeight: 535 }}
           >
-            {isApproving ? 'Approving...' : `Approve ${inputToken?.symbol || 'Token'}`}
+            {isApproving ? 'Approving...' : approvalPending ? 'Approval pending...' : `Approve ${inputToken?.symbol || 'Token'}`}
           </ButtonPrimary>
         ) : (
           <ButtonError
@@ -747,38 +772,21 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           )}
         </div>
 
-        {/* Transaction Modal - Shows pending, then success/failure automatically */}
-        <TransactionConfirmationModal
-          isOpen={showTransactionModal && !!txHash}
+        {/* Swap Confirmation Modal */}
+        <AggregatorSwapModal
+          key={`swap-modal-${quoteResetKey}`}
+          isOpen={(executing || showTransactionModal) && !!(currencies[Field.INPUT] && currencies[Field.OUTPUT])}
           onDismiss={handleTransactionModalDismiss}
-          hash={txHash}
-          attemptingTxn={executing && !txHash}
-          pendingText={<Trans i18nKey="common.transactionSubmitted" />}
-          reviewContent={() => null}
+          inputCurrency={currencies[Field.INPUT]}
+          outputCurrency={currencies[Field.OUTPUT]}
+          inputAmount={quote?.result?.action?.fromAmount || '0'}
+          outputAmount={quote?.result?.estimate?.toAmount || '0'}
+          inputLogoURI={quote?.result?.action?.fromToken?.logoURI}
+          outputLogoURI={quote?.result?.action?.toToken?.logoURI}
+          txHash={txHash}
+          error={transactionError}
+          attemptingTxn={executing && !txHash && !transactionError}
         />
-
-        {/* Show error if transaction failed before getting hash */}
-        {transactionError && !showTransactionModal && (
-          <div style={{
-            marginTop: '16px',
-            padding: '12px',
-            borderRadius: '12px',
-            backgroundColor: theme.surface2,
-            border: `1px solid ${theme.critical}`,
-            color: theme.critical,
-            textAlign: 'center',
-          }}>
-            <Text fontSize={14} color="critical">
-              Transaction failed: {transactionError.message}
-            </Text>
-            <ButtonLight
-              onClick={() => setTransactionError(null)}
-              style={{ marginTop: '8px', width: '100%' }}
-            >
-              <Trans i18nKey="common.close" />
-            </ButtonLight>
-          </div>
-        )}
 
         {/* Powered by Eisen */}
         <a

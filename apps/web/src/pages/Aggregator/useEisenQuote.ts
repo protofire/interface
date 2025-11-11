@@ -135,7 +135,8 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
         if (params.integrator) {
           queryParts.push(`integrator=${encodeURIComponent(params.integrator)}`)
         }
-        if (params.fee) {
+        // Fee must always be specified (default to 0)
+        if (params.fee !== undefined) {
           queryParts.push(`fee=${params.fee}`)
         }
         if (params.slippage) {
@@ -188,6 +189,9 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
     params?.toAddress,
     params?.order,
     params?.slippage,
+    params?.fee,
+    params?.maxSplit,
+    params?.maxEdge,
   ])
 
   return {

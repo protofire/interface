@@ -106,89 +106,15 @@ async function parseSwap(
   const safeInputRaw = inputRaw || '0'
   const safeOutputRaw = outputRaw || '0'
   
-  // Create a custom descriptor if we have symbols but no currency objects
+  // Always show just currency symbols without amounts for swaps
   let descriptor: string
-  if ((!tokenIn || !tokenOut) && inputSymbol && outputSymbol && safeInputRaw && safeOutputRaw) {
-    try {
-      // Use stored symbols when currency objects aren't available
-      // Create temporary Token objects with stored decimals for proper formatting
-      const tempInputToken = tokenIn || new Token(chainId, swap.inputCurrencyId || '0x0', inputDecimals, inputSymbol, inputSymbol)
-      const tempOutputToken = tokenOut || new Token(chainId, swap.outputCurrencyId || '0x0', outputDecimals, outputSymbol, outputSymbol)
-      
-      const inputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempInputToken, safeInputRaw).toSignificant())
-      const outputAmount = parseFloat(CurrencyAmount.fromRawAmount(tempOutputToken, safeOutputRaw).toSignificant())
-      
-      // Check if amounts are effectively 0 or invalid - if so, hide amounts
-      const isInputZero = isNaN(inputAmount) || inputAmount === 0 || inputAmount < 0.000001
-      const isOutputZero = isNaN(outputAmount) || outputAmount === 0 || outputAmount < 0.000001
-      
-      if (isInputZero || isOutputZero) {
-        // Hide amounts, just show symbols
-        descriptor = t('activity.transaction.swap.descriptor', {
-          amountWithSymbolA: inputSymbol,
-          amountWithSymbolB: outputSymbol,
-        })
-      } else {
-        const formattedA = formatNumber({
-          input: inputAmount,
-          type: NumberType.TokenNonTx,
-        })
-        const formattedB = formatNumber({
-          input: outputAmount,
-          type: NumberType.TokenNonTx,
-        })
-        descriptor = t('activity.transaction.swap.descriptor', {
-          amountWithSymbolA: `${formattedA} ${inputSymbol}`,
-          amountWithSymbolB: `${formattedB} ${outputSymbol}`,
-        })
-      }
-    } catch (error) {
-      // Fallback: if we have symbols, show them without amounts
-      if (inputSymbol && outputSymbol) {
-        descriptor = t('activity.transaction.swap.descriptor', {
-          amountWithSymbolA: inputSymbol,
-          amountWithSymbolB: outputSymbol,
-        })
-      } else {
-        // Fallback to buildCurrencyDescriptor if there's an error
-        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
-      }
-    }
-  } else {
-    // Check if amounts are effectively 0 before building descriptor
-    try {
-      if (tokenIn && tokenOut && safeInputRaw !== '0' && safeOutputRaw !== '0') {
-        const inputAmount = parseFloat(CurrencyAmount.fromRawAmount(tokenIn, safeInputRaw).toSignificant())
-        const outputAmount = parseFloat(CurrencyAmount.fromRawAmount(tokenOut, safeOutputRaw).toSignificant())
-        const isInputZero = isNaN(inputAmount) || inputAmount === 0 || inputAmount < 0.000001
-        const isOutputZero = isNaN(outputAmount) || outputAmount === 0 || outputAmount < 0.000001
-        
-        if (isInputZero || isOutputZero) {
-          // Hide amounts, just show symbols
-          const inputSym = tokenIn.symbol || inputSymbol || 'Unknown'
-          const outputSym = tokenOut.symbol || outputSymbol || 'Unknown'
-          descriptor = t('activity.transaction.swap.descriptor', {
-            amountWithSymbolA: inputSym,
-            amountWithSymbolB: outputSym,
-          })
-        } else {
-          descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
-        }
-      } else {
-        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
-      }
-    } catch (error) {
-      // Fallback: if we have symbols, show them without amounts
-      if (inputSymbol && outputSymbol) {
-        descriptor = t('activity.transaction.swap.descriptor', {
-          amountWithSymbolA: inputSymbol,
-          amountWithSymbolB: outputSymbol,
-        })
-      } else {
-        descriptor = buildCurrencyDescriptor(tokenIn, safeInputRaw, tokenOut, safeOutputRaw, formatNumber, true)
-      }
-    }
-  }
+  const inputSym = tokenIn?.symbol || inputSymbol || 'Unknown'
+  const outputSym = tokenOut?.symbol || outputSymbol || 'Unknown'
+  
+  descriptor = t('activity.transaction.swap.descriptor', {
+    amountWithSymbolA: inputSym,
+    amountWithSymbolB: outputSym,
+  })
 
   return {
     descriptor,
@@ -227,8 +153,48 @@ async function parseApproval(
   status: TransactionStatus,
   tokens?: ChainTokenMap,
 ): Promise<Partial<Activity>> {
-  const currency = await getCurrency(approval.tokenAddress, chainId, tokens)
-  const descriptor = currency?.symbol ?? currency?.name ?? t('common.unknown')
+  // Check if we have stored symbol/logoURI from the approval transaction
+  const extendedApproval = approval as any
+  const storedSymbol = extendedApproval.tokenSymbol
+  const storedLogoURI = extendedApproval.tokenLogoURI
+  
+  let currency = await getCurrency(approval.tokenAddress, chainId, tokens)
+  
+  // If currency couldn't be resolved but we have stored symbol, create a Token object
+  if (!currency && storedSymbol && approval.tokenAddress && approval.tokenAddress !== '0x0') {
+    try {
+      // Create a Token object with stored symbol for display
+      currency = new Token(chainId, approval.tokenAddress, 18, storedSymbol, storedSymbol)
+    } catch (error) {
+      console.warn('Failed to create Token for approval:', error)
+    }
+  }
+  
+  // Determine descriptor: use stored symbol, then currency symbol, then name, then truncated address
+  let descriptor: string
+  if (storedSymbol) {
+    descriptor = storedSymbol
+  } else if (currency?.symbol) {
+    descriptor = currency.symbol
+  } else if (currency?.name) {
+    descriptor = currency.name
+  } else if (approval.tokenAddress && approval.tokenAddress !== '0x0') {
+    // Show truncated address as fallback: 0x1234...5678
+    const addr = approval.tokenAddress
+    descriptor = `${addr.slice(0, 6)}...${addr.slice(-4)}`
+  } else {
+    descriptor = t('common.unknown')
+  }
+  
+  // If we have stored logoURI but currency doesn't have it, add it to the currency
+  if (storedLogoURI && currency && !(currency as any).logoURI) {
+    (currency as any).logoURI = storedLogoURI
+  }
+  
+  // Return logoURI in logos array for proper icon display
+  // PortfolioLogo will use logos array if provided, otherwise fall back to currencies
+  const logos = storedLogoURI ? [storedLogoURI] : undefined
+  
   return {
     title: getActivityTitle(
       TransactionType.APPROVAL,
@@ -237,6 +203,7 @@ async function parseApproval(
     ),
     descriptor,
     currencies: [currency],
+    logos,
   }
 }
 

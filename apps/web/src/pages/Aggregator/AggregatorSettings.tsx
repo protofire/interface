@@ -2,6 +2,7 @@ import { Scrim } from 'components/AccountDrawer'
 import Column, { AutoColumn } from 'components/Column'
 import Row, { RowBetween } from 'components/Row'
 import MenuButton from 'components/Settings/MenuButton'
+import { Input, InputContainer } from 'components/Settings/Input'
 import { useIsMobile } from 'hooks/screenSize'
 import useDisableScrolling from 'hooks/useDisableScrolling'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
@@ -167,9 +168,13 @@ interface AggregatorSettingsProps {
   slippage: number
   selectedDexs: string[]
   chainId: number
+  maxsplit: number
+  maxedge: number
   onOrderChange: (order: OrderType) => void
   onSlippageChange: (slippage: number) => void
   onDexsChange: (dexs: string[]) => void
+  onMaxsplitChange: (maxsplit: number) => void
+  onMaxedgeChange: (maxedge: number) => void
   compact?: boolean
 }
 
@@ -178,9 +183,13 @@ export function AggregatorSettings({
   slippage,
   selectedDexs,
   chainId,
+  maxsplit,
+  maxedge,
   onOrderChange,
   onSlippageChange,
   onDexsChange,
+  onMaxsplitChange,
+  onMaxedgeChange,
   compact = false,
 }: AggregatorSettingsProps) {
   const toggleButtonNode = useRef<HTMLDivElement | null>(null)
@@ -203,8 +212,8 @@ export function AggregatorSettings({
   
   // Track if we've initialized the DEX selection (to prevent re-initializing after user deselects)
   const [hasInitialized, setHasInitialized] = useState(false)
-  // Track if DEX selection expand is open
-  const [isDexSelectionOpen, setIsDexSelectionOpen] = useState(true)
+  // Track if DEX selection expand is open (collapsed by default)
+  const [isDexSelectionOpen, setIsDexSelectionOpen] = useState(false)
 
   // Initialize selected DEXs when available DEXs are first loaded (preselect all)
   useEffect(() => {
@@ -330,6 +339,54 @@ export function AggregatorSettings({
             )}
           </Expand>
           <Divider />
+          <RowBetween gap="md">
+            <Row width="auto" gap="xs">
+              <ThemedText.BodyPrimary>
+                Max Split
+              </ThemedText.BodyPrimary>
+              <QuestionHelper text="Divisions for selling tokens across multiple DEXes" />
+            </Row>
+            <InputContainer gap="md" style={{ width: '120px' }}>
+              <Input
+                type="number"
+                min="1"
+                step="1"
+                value={maxsplit}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value, 10)
+                  if (!isNaN(value) && value > 0) {
+                    onMaxsplitChange(value)
+                  }
+                }}
+                style={{ textAlign: 'right' }}
+              />
+            </InputContainer>
+          </RowBetween>
+          <Divider />
+          <RowBetween gap="md">
+            <Row width="auto" gap="xs">
+              <ThemedText.BodyPrimary>
+                Max Edge
+              </ThemedText.BodyPrimary>
+              <QuestionHelper text="Maximum number of hops that a swap path can pass through" />
+            </Row>
+            <InputContainer gap="md" style={{ width: '120px' }}>
+              <Input
+                type="number"
+                min="1"
+                step="1"
+                value={maxedge}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value, 10)
+                  if (!isNaN(value) && value > 0) {
+                    onMaxedgeChange(value)
+                  }
+                }}
+                style={{ textAlign: 'right' }}
+              />
+            </InputContainer>
+          </RowBetween>
+          <Divider />
           {/* Powered by Eisen */}
           <a
             href="https://eisenfinance.com/"
@@ -361,8 +418,12 @@ export function AggregatorSettings({
       hasDexs,
       allSelected,
       isDexSelectionOpen,
+      maxsplit,
+      maxedge,
       onOrderChange,
       onSlippageChange,
+      onMaxsplitChange,
+      onMaxedgeChange,
       handleDexToggle,
       handleSelectAll,
       handleDeselectAll,

@@ -314,10 +314,10 @@ function AppOuter(): JSX.Element | null {
           <LocalizationContextProvider>
             <GestureHandlerRootView style={flexStyles.fill}>
               <WalletContextProvider>
-                <UnitagUpdaterContextProvider>
-                  <BiometricContextProvider>
+                {/* <UnitagUpdaterContextProvider> */}
+                  {/* <BiometricContextProvider> */}
                     <LockScreenContextProvider>
-                      <Sentry.TouchEventBoundary>
+                      {/* <Sentry.TouchEventBoundary> */}
                         <DataUpdaters />
                         <NavigationContainer
                           onReady={(navigationRef): void => {
@@ -325,7 +325,7 @@ function AppOuter(): JSX.Element | null {
                           }}
                         >
                           <MobileWalletNavigationProvider>
-                            <OpenAIContextProvider>
+                            {/* <OpenAIContextProvider> */}
                               <WalletUniswapProvider>
                                 <BottomSheetModalProvider>
                                   <AppModals />
@@ -335,13 +335,13 @@ function AppOuter(): JSX.Element | null {
                                 </BottomSheetModalProvider>
                               </WalletUniswapProvider>
                               <NotificationToastWrapper />
-                            </OpenAIContextProvider>
+                            {/* </OpenAIContextProvider> */}
                           </MobileWalletNavigationProvider>
                         </NavigationContainer>
-                      </Sentry.TouchEventBoundary>
+                      {/* </Sentry.TouchEventBoundary> */}
                     </LockScreenContextProvider>
-                  </BiometricContextProvider>
-                </UnitagUpdaterContextProvider>
+                  {/* </BiometricContextProvider> */}
+                {/* </UnitagUpdaterContextProvider> */}
               </WalletContextProvider>
             </GestureHandlerRootView>
           </LocalizationContextProvider>
