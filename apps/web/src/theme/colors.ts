@@ -108,8 +108,8 @@ export const colors = {
   networkAnime: '#222',
   //NEW COLORS FOR SPORE - need to define light/dark here cause they are root colors now (different system)
   neutral1_dark: '#FFFFFF',
-  neutral2_dark: '#9B9B9B',
-  neutral3_dark: '#5E5E5E',
+  neutral2_dark: '#7E6468',
+  neutral3_dark: '#A18D90',
   surface1_dark: '#131313',
   surface1_hovered_dark: '#181818',
   surface2_dark: '#1B1B1B',
@@ -122,8 +122,8 @@ export const colors = {
   accent2_dark: '#FFDDE3',
   accent3_dark: '#C9485F',
   neutral1_light: '#222222',
-  neutral2_light: '#7D7D7D',
-  neutral3_light: '#CECECE',
+  neutral2_light: '#7E6468', // Updated for swap panel
+  neutral3_light: '#A18D90', // Updated for swap panel
   surface1_light: '#FFFFFF',
   surface1_hovered_light: '#F5F5F5',
   surface2_light: '#F9F9F9',

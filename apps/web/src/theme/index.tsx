@@ -69,7 +69,7 @@ const blurs = {
 
 const fonts = {
   code: 'courier, courier new, serif',
-  body: 'Dosis, sans-serif',
+  body: 'Basel, sans-serif',
 }
 
 const gapValues = {
@@ -104,7 +104,7 @@ function getSettings(darkMode: boolean) {
     opacity: opacities,
     text: {
       heading: {
-        fontFamily: 'Dosis, sans-serif',
+        fontFamily: 'Basel, sans-serif',
         fontWeight: 700,
       },
     },

@@ -7,6 +7,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Flex, Popover, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
+import { useIsDarkMode } from 'theme/components/ThemeToggle'
 
 const ItemContainer = styled.div`
   display: flex;
@@ -21,14 +22,20 @@ const ItemContainer = styled.div`
     background: ${({ theme }) => theme.surface3};
   }
 `
-const TabText = styled(Text)`
+const TabText = styled(Text)<{ $isDarkMode: boolean; $isActive: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Dosis' !important;
+  color: ${({ $isDarkMode, $isActive }) => {
+    if ($isActive) {
+      return $isDarkMode ? '#FFDDE3' : '#6B3841'
+    }
+    return $isDarkMode ? '#FFDDE3' : '#6B3841'
+  }} !important;
   &:hover {
-    color: ${({ theme }) => theme.neutral1} !important;
+    color: ${({ $isDarkMode }) => ($isDarkMode ? '#FFDDE3' : '#6B3841')} !important;
   }
 `
 
@@ -102,6 +109,7 @@ const Tab = ({
   const popoverRef = useRef<Popover>(null)
   const location = useLocation()
   const navHotkeysEnabled = useFeatureFlag(FeatureFlags.NavigationHotkeys)
+  const isDarkMode = useIsDarkMode()
 
   const closeMenu = useCallback(() => {
     popoverRef.current?.close()
@@ -113,7 +121,8 @@ const Tab = ({
       <Flex alignItems="center" gap="$spacing4" m="8px" flexDirection="row">
         <TabText
           variant="subheading1"
-          color={isActive || isOpen ? '$neutral1' : '$neutral2'}
+          $isDarkMode={isDarkMode}
+          $isActive={isActive || isOpen}
           cursor="pointer"
           userSelect="none"
         >

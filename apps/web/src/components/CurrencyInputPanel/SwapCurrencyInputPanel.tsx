@@ -11,6 +11,7 @@ import { LoadingOpacityContainer } from 'components/Loader/styled'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
 import { StyledNumericalInput } from 'components/NumericalInput'
 import { RowBetween, RowFixed } from 'components/Row'
+import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { CurrencySearchFilters } from 'components/SearchModal/DeprecatedCurrencySearch'
 import Tooltip from 'components/Tooltip'
@@ -192,6 +193,7 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size: 20px;
   font-weight: 535;
+  font-family: 'Basel', sans-serif;
 `
 
 const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
@@ -212,6 +214,11 @@ const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   :focus {
     outline: none;
   }
+`
+
+// Swap panel specific input with custom colors
+const SwapPanelNumericalInput = styled(StyledNumericalInput)<{ $isDarkMode: boolean }>`
+  color: ${({ $isDarkMode }) => ($isDarkMode ? '#FFDDE3' : '#6B3841')} !important;
 `
 
 interface SwapCurrencyInputPanelProps {
@@ -278,6 +285,7 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
     const chainAllowed = useIsSupportedChainId(chainId)
     const selectedCurrencyBalance = useCurrencyBalance(account.address, currency ?? undefined)
     const theme = useTheme()
+    const isDarkMode = useIsDarkMode()
     const { formatCurrencyAmount } = useFormatter()
 
     const handleDismissSearch = useCallback(() => {
@@ -319,12 +327,13 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
           <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}}>
             {!hideInput && (
               <div style={{ display: 'flex', flexGrow: 1 }} onClick={handleDisabledNumericalInputClick}>
-                <StyledNumericalInput
+                <SwapPanelNumericalInput
                   className="token-amount-input"
                   value={value}
                   onUserInput={onUserInput}
                   disabled={!chainAllowed || disabled || numericalInputSettings?.disabled}
                   $loading={loading}
+                  $isDarkMode={isDarkMode}
                   id={id}
                   ref={ref}
                   maxDecimals={currency?.decimals}

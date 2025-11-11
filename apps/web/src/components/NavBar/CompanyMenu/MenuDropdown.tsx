@@ -12,6 +12,10 @@ import { ExternalLink, Separator, ThemedText } from 'theme/components'
 import { Flex } from 'ui/src'
 import { t } from 'uniswap/src/i18n'
 
+const StyledSubHeader = styled(ThemedText.SubHeader)`
+  font-family: 'Dosis', sans-serif !important;
+`
+
 const Container = styled.div`
   width: 295px;
   padding: 24px;
@@ -23,6 +27,7 @@ const Container = styled.div`
 `
 const LinkStyles = css<{ $hoverColor?: string; $color?: string }>`
   font-size: 16px;
+  font-family: 'Dosis', sans-serif;
   text-decoration: none;
   color: ${({ theme, $color }) => $color || theme.neutral2};
   transition: color ${({ theme }) => theme.transition.duration.fast};
@@ -62,7 +67,7 @@ export function MenuLink({
 function Section({ title, items, closeMenu }: MenuSection) {
   return (
     <Flex gap="$spacing8">
-      <ThemedText.SubHeader>{title}</ThemedText.SubHeader>
+      <StyledSubHeader>{title}</StyledSubHeader>
       {items.map((item, index) => (
         <MenuLink
           key={`${title}_${index}}`}

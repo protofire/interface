@@ -40,7 +40,7 @@ function MenuSection({
         <Accordion.Trigger flexDirection="row" p="0" gap="4px">
           {({ open }: { open: boolean }) => (
             <>
-              <Text variant="body1" color="$neutral1">
+              <Text variant="body1" color="$neutral1" style={{ fontFamily: "'Dosis', sans-serif" }}>
                 {title}
               </Text>
               {collapsible && (

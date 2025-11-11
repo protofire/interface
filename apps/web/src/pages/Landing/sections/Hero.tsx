@@ -3,7 +3,7 @@ import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsMobile } from 'hooks/screenSize'
 import { useScroll } from 'hooks/useScroll'
-import { useTheme } from 'lib/styled-components'
+import styled, { useTheme } from 'lib/styled-components'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
 import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
@@ -16,6 +16,14 @@ import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
+
+const DosisText = styled(Text)`
+  font-family: 'Dosis', sans-serif !important;
+  
+  * {
+    font-family: 'Dosis', sans-serif !important;
+  }
+`
 
 interface HeroProps {
   scrollToRef: () => void
@@ -68,7 +76,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
         }}
       >
         <Flex maxWidth={920} alignItems="center" pointerEvents="none">
-          <Text
+          <DosisText
             variant="heading1"
             fontSize={64}
             lineHeight={76}
@@ -85,10 +93,10 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
               const isSwap = word === 'Swap'
               const isSakura = word === 'Sakura'
               const style = isSakura
-                ? { fontWeight: 700 as const, color: theme.accent1 }
+                ? { fontWeight: 700 as const, color: theme.accent1, fontFamily: "'Dosis', sans-serif" }
                 : isSwap
-                  ? { fontWeight: 700 as const }
-                  : undefined
+                  ? { fontWeight: 700 as const, fontFamily: "'Dosis', sans-serif" }
+                  : { fontFamily: "'Dosis', sans-serif" }
               return (
                 <Fragment key={`${word}_${index}`}>
                   <RiseInText delay={index * 0.1}>
@@ -97,7 +105,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
                 </Fragment>
               )
             })}
-          </Text>
+          </DosisText>
         </Flex>
 
         <RiseIn delay={0.4}>

@@ -718,9 +718,9 @@ export function SwapForm({
                 id="swap-button"
                 data-testid="swap-button"
                 disabled={isUsingBlockedExtension || !getIsReviewableQuote(trade, tradeState, swapInputError)}
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 10, fontFamily: "'Dosis', sans-serif" }}
               >
-                <Text fontSize={20} color="neutralContrast">
+                <Text fontSize={20} color="neutralContrast" style={{ fontFamily: "'Dosis', sans-serif" }}>
                   {swapInputError ?? <Trans i18nKey="common.swap" />}
                 </Text>
               </ButtonError>

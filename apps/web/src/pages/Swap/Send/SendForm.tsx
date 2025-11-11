@@ -213,6 +213,7 @@ function SendFormInner({ disableTokenInputs = false, onCurrencyChange }: SendFor
               fontWeight={535}
               disabled={!!inputError || loadingSmartContractAddress || transfersLoading || sendButtonState.disabled}
               onClick={() => handleSendButton()}
+              style={{ fontFamily: "'Dosis', sans-serif" }}
             >
               {sendButtonState.label}
             </ButtonPrimary>

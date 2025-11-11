@@ -86,7 +86,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      icon: <ExternalLink size="$icon.16" color="#6B3841" />,
       internal: false,
       href: `${getInfoV3Domain()}/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),

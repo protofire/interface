@@ -133,6 +133,7 @@ const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
 const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size: 20px;
+  font-family: 'Basel', sans-serif;
   white-space: nowrap;
 
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {

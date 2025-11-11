@@ -59,7 +59,7 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
   const theme = useTheme()
   return (
     <Flex width={130} $md={{ width: '100%' }} flexGrow={0} flexShrink={1} flexBasis="auto" gap={10}>
-      <Text variant="body1" color={theme.socials}>
+      <Text variant="body1" color={theme.socials} style={{ fontFamily: "'Dosis', sans-serif" }}>
         {title}
       </Text>
       {items.map((item, index) => (
@@ -95,7 +95,7 @@ export function Footer() {
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }}>
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
-            <span style={{ marginTop: 16, color: theme.socials }}>
+            <span style={{ marginTop: 16, color: theme.socials, fontFamily: "'Dosis', sans-serif" }}>
               Powered by Uniswap V3 & Approved by Uniswap DAO{' '}
             </span>
           </Flex>
@@ -119,7 +119,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
+        <span style={{ color: theme.socials, fontFamily: "'Dosis', sans-serif" }}>2025 Sakura Swap</span>
 
         <Anchor href={ADD_NEW_CHAIN_URL} target="_blank" style={{ textDecoration: 'none' }}>
           <AddChainButton
@@ -132,7 +132,7 @@ export function Footer() {
         </Anchor>
 
         <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://protofire.io" target="_blank">
-          <span style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ display: 'flex', alignItems: 'center', fontFamily: "'Dosis', sans-serif" }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
           </span>
         </Anchor>
