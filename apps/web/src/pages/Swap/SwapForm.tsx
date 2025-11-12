@@ -363,7 +363,7 @@ export function SwapForm({
       showConfirm: true,
       swapResult: undefined,
     })
-  }, [trade, currencyState, swapState, connectedChainId])
+  }, [trade, currencyState, swapState, connectedChainId, navigate])
 
   const clearSwapState = useCallback(() => {
     setSwapFormState((currentState) => ({
