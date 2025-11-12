@@ -19,6 +19,7 @@ import { isClassicTrade, isSubmittableTrade, isUniswapXTrade } from 'state/routi
 import { CurrencyState, SerializedCurrencyState, SwapInfo, SwapState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
 import { useUserSlippageToleranceWithDefault } from 'state/user/hooks'
+import { USDC_FLOW_MAINNET } from 'uniswap/src/constants/tokens'
 import { useTokenProjects } from 'uniswap/src/features/dataApi/tokenProjects'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -443,6 +444,14 @@ export function useInitialCurrencyState(): {
         initialChainId: supportedChainId,
       }
     }
+
+    if (supportedChainId === UniverseChainId.FlowMainnet) {
+      return {
+        initialInputCurrencyAddress: USDC_FLOW_MAINNET.address,
+        initialChainId: supportedChainId,
+      }
+    }
+
     // return ETH or parsedCurrencyState
     return {
       initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : 'ETH',
@@ -460,8 +469,8 @@ export function useInitialCurrencyState(): {
     () =>
       initialInputCurrencyAddress === parsedCurrencyState.outputCurrencyId // clear output if identical
         ? undefined
-        : parsedCurrencyState.outputCurrencyId,
-    [initialInputCurrencyAddress, parsedCurrencyState.outputCurrencyId],
+        : parsedCurrencyState.outputCurrencyId ?? (supportedChainId === UniverseChainId.FlowMainnet ? 'ETH' : undefined),
+    [initialInputCurrencyAddress, parsedCurrencyState.outputCurrencyId, supportedChainId],
   )
   const initialInputCurrency = useCurrency(initialInputCurrencyAddress, initialChainId)
   const initialOutputCurrency = useCurrency(initialOutputCurrencyAddress, initialChainId)
