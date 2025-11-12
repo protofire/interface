@@ -11,7 +11,15 @@ if (forkConfig.uniSpecificFeaturesEnabled && (!API_URL || !REALTIME_URL || !REAL
   throw new Error('AWS CONFIG MISSING FROM ENVIRONMENT')
 }
 
-const httpLink = new HttpLink({ uri: API_URL })
+// TODO: Remove Apollo implementation
+const httpLink = API_URL 
+  ? new HttpLink({ uri: API_URL })
+  : new HttpLink({ 
+      uri: 'http://localhost:3000/graphql',
+      fetch: () => {
+        return Promise.reject(new Error('GraphQL API URL not configured'))
+      }
+    })
 
 export const apolloClient = new ApolloClient({
   connectToDevTools: true,

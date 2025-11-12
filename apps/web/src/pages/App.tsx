@@ -1,5 +1,4 @@
 import ErrorBoundary from 'components/ErrorBoundary'
-import { useFeatureFlagURLOverrides } from 'featureFlags'
 import useSyncChainQuery from 'hooks/useSyncChainQuery'
 import { useAtom } from 'jotai'
 import { AppLayout } from 'pages/App/Layout'
@@ -32,8 +31,6 @@ export default function App() {
       setShouldDisableNFTRoutes(false)
     }
   }, [searchParams, setShouldDisableNFTRoutes])
-
-  useFeatureFlagURLOverrides()
 
   const chainIdRef = useRef<number | undefined>(undefined)
   useSyncChainQuery(chainIdRef)

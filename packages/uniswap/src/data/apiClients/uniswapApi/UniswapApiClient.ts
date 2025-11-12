@@ -27,8 +27,7 @@ export type ScreenRequest = {
   address: string
 }
 
+// TODO: Remove Statsig implementation
 export async function fetchTrmScreen(params: ScreenRequest): Promise<ScreenResponse> {
-  return await UniswapApiClient.post<ScreenResponse>(uniswapUrls.trmPath, {
-    body: JSON.stringify(params),
-  })
+  return { block: false }
 }

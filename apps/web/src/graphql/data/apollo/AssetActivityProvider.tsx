@@ -59,32 +59,11 @@ export function AssetActivityProvider({ children }: PropsWithChildren) {
 
   const fiatOnRampTransactions = useFiatOnRampTransactions()
 
+  // TODO: Remove Apollo implementation
   const [lazyFetch, query] = useActivityWebLazyQuery()
-  const fetch = useCallback(
-    () =>
-      lazyFetch({
-        variables: {
-          account: account.address ?? '',
-          chains: GQL_MAINNET_CHAINS_MUTABLE,
-          // Include the externalsessionIDs of all fiat on-ramp transactions in the local store,
-          // so that the backend can find the transactions without signature authentication.
-          onRampTransactionIDs: Object.values(fiatOnRampTransactions).map(
-            (transaction) => transaction.externalSessionId,
-          ),
-        },
-      }),
-    [account.address, fiatOnRampTransactions, lazyFetch],
-  )
-
-  useInterval(async () => {
-    if (
-      Object.values(fiatOnRampTransactions).some(
-        (transaction) => !transaction.syncedWithBackend && transaction.forceFetched,
-      )
-    ) {
-      fetch()
-    }
-  }, ms('15s'))
+  const fetch = useCallback(() => {
+    return Promise.resolve()
+  }, [])
 
   return (
     <SubscriptionContext.Provider value={result}>

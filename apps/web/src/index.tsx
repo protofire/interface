@@ -82,21 +82,9 @@ function StatsigProvider({ children }: PropsWithChildren) {
     }),
     [account.address],
   )
-  return (
-    <BaseStatsigProvider
-      user={statsigUser}
-      sdkKey={DUMMY_STATSIG_SDK_KEY}
-      waitForInitialization={false}
-      options={{
-        environment: { tier: getEnvName() },
-        api: process.env.REACT_APP_STATSIG_PROXY_URL,
-        disableAutoMetricsLogging: true,
-        disableErrorLogging: true,
-      }}
-    >
-      {children}
-    </BaseStatsigProvider>
-  )
+  
+  // TODO: Remove Statsig implementation
+  return <>{children}</>
 }
 
 const container = document.getElementById('root') as HTMLElement
