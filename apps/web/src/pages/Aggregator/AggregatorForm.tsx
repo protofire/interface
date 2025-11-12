@@ -42,6 +42,7 @@ import { serializeSwapStateToURLParameters, queryParametersToCurrencyState } fro
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useCurrency } from 'hooks/Tokens'
 import { currencyId } from 'utils/currencyId'
+import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 
 const AggregatorHeader = styled(RowBetween)`
   margin-bottom: 12px;
@@ -167,6 +168,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const [txHash, setTxHash] = useState<string | undefined>(undefined)
   const [showTransactionModal, setShowTransactionModal] = useState(false)
   const [transactionError, setTransactionError] = useState<Error | null>(null)
+  const [wasCancelled, setWasCancelled] = useState(false)
 
   useEffect(() => {
     if (!currencyState.inputCurrency && !urlInputCurrency && !urlOutputCurrency && currentChainId) {
@@ -184,17 +186,25 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     setShowTransactionModal(false)
     setTransactionError(null)
     setExecuting(false)
-    setSwapState({
-      typedValue: '',
-      independentField: Field.INPUT,
-    })
-    setCurrencyState({
-      inputCurrency: nativeOnChain(currentChainId),
-      outputCurrency: null,
-    })
-    setQuoteResetKey(prev => prev + 1)
     setTxHash(undefined)
-  }, [currentChainId])
+    
+    // Only reset swap state if transaction was confirmed or failed (not cancelled)
+    // If cancelled, keep the state so user can try again
+    if (!wasCancelled) {
+      setSwapState({
+        typedValue: '',
+        independentField: Field.INPUT,
+      })
+      setCurrencyState({
+        inputCurrency: nativeOnChain(currentChainId),
+        outputCurrency: null,
+      })
+      setQuoteResetKey(prev => prev + 1)
+    }
+    
+    // Reset cancellation flag after handling dismissal
+    setWasCancelled(false)
+  }, [currentChainId, wasCancelled])
 
   const { typedValue, independentField } = swapState
 
@@ -241,6 +251,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const quoteParams = useMemo(() => {
     if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
+      return null
+    }
+
+   // Eisen allows only input (fromAmount)
+    if (independentField !== Field.INPUT) {
       return null
     }
 
@@ -377,7 +392,13 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       inputCurrency: prev.outputCurrency,
       outputCurrency: prev.inputCurrency,
     }))
-  }, [])
+    // Use estimated output amount as new input amount if available, otherwise clear
+    setSwapState((prev) => ({
+      ...prev,
+      typedValue: estimatedOutput || '',
+      independentField: Field.INPUT,
+    }))
+  }, [estimatedOutput])
 
   const formattedAmounts = useMemo(
     () => ({
@@ -428,6 +449,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     setExecuting(true)
     setTransactionError(null)
     setTxHash(undefined)
+    setWasCancelled(false)
     setShowTransactionModal(true)
 
     try {
@@ -492,6 +514,18 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       addTransaction(tx, transactionInfo)
     } catch (err) {
       console.error('Transaction failed:', err)
+      
+      // If user rejected/cancelled, don't show error - just close modal and allow retry
+      if (didUserReject(err)) {
+        setWasCancelled(true)
+        setShowTransactionModal(false)
+        setTransactionError(null)
+        setExecuting(false)
+        setTxHash(undefined)
+        return
+      }
+      
+      // For actual errors, show error state
       setTransactionError(err instanceof Error ? err : new Error('Transaction failed'))
       setShowTransactionModal(true)
     } finally {
@@ -574,6 +608,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         <AggregatorSwapCurrencyInputPanel
           value={formattedAmounts[Field.OUTPUT]}
           disabled={disableTokenInputs}
+          readonly={true}
           onUserInput={handleTypeOutput}
           label={<Trans i18nKey="common.buy.label" />}
           showMaxButton={false}
@@ -592,7 +627,8 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         key={`quote-${quoteResetKey}-${typedValue}-${currencies[Field.INPUT]?.symbol}-${currencies[Field.OUTPUT]?.symbol}`}
         quote={quote} 
         loading={quoteLoading} 
-        error={quoteError} 
+        error={quoteError}
+        slippage={slippage}
       />
 
       <div style={{ marginTop: '16px' }}>

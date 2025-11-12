@@ -18,6 +18,19 @@ interface EisenQuoteParams {
   maxEdge?: number
 }
 
+async function parseQuoteError(response: Response): Promise<string> {
+  try {
+    const errorData = await response.json()
+    const message = errorData?.message?.toLowerCase() || ''
+    if (message.includes('no swap path found')) {
+      return 'No swap path found'
+    }
+  } catch (parseError) {
+    console.warn('Quote error response:', parseError)
+  }
+  return 'Failed to fetch quote'
+}
+
 interface EisenQuoteResponse {
   result: {
     type: string
@@ -164,7 +177,8 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
         })
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch quote: ${response.statusText}`)
+          const errorMessage = await parseQuoteError(response)
+          throw new Error(errorMessage)
         }
 
         const data = await response.json()

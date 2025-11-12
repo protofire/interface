@@ -38,9 +38,10 @@ interface AggregatorQuoteDisplayProps {
   quote: any
   loading: boolean
   error: string | null
+  slippage?: number
 }
 
-export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuoteDisplayProps) {
+export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: AggregatorQuoteDisplayProps) {
   const account = useAccount()
   const theme = useTheme()
 
@@ -81,15 +82,29 @@ export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuot
   const outputTokenSymbol = toToken?.symbol ?? 'tokens'
   
   const formatAmount = (amount: string, decimals: number): string => {
-    if (!amount) return '0.000000'
+    if (!amount || amount === '0') return '0'
     try {
       const amountBN = BigNumber.from(amount)
+      
+      if (amountBN.isZero()) {
+        return '0'
+      }
+      
       const divisor = BigNumber.from(10).pow(decimals)
+      
+      if (decimals >= 6) {
+        const thresholdWei = BigNumber.from(10).pow(decimals - 6)
+        if (amountBN.lt(thresholdWei)) {
+          return '<0.000001'
+        }
+      }
+      
       const amountDecimal = amountBN.mul(BigNumber.from(10).pow(6)).div(divisor)
       const decimalValue = amountDecimal.toNumber() / 1e6
+      
       return decimalValue.toFixed(6)
     } catch {
-      return '0.000000'
+      return '0'
     }
   }
   
@@ -115,6 +130,12 @@ export function AggregatorQuoteDisplay({ quote, loading, error }: AggregatorQuot
         <Label>Min Output:</Label>
         <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
       </QuoteRow>
+      {slippage !== undefined && (
+        <QuoteRow>
+          <Label>Slippage:</Label>
+          <Value>{(slippage * 100).toFixed(2)}%</Value>
+        </QuoteRow>
+      )}
       {estimate.toAmountUSD && (
         <QuoteRow>
           <Label>USD Value:</Label>

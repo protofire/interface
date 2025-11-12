@@ -232,6 +232,7 @@ interface AggregatorSwapCurrencyInputPanelProps {
   locked?: boolean
   loading?: boolean
   disabled?: boolean
+  readonly?: boolean
   initialCurrencyLoading?: boolean
 }
 
@@ -255,6 +256,7 @@ const AggregatorSwapCurrencyInputPanel = forwardRef<HTMLInputElement, Aggregator
       locked = false,
       loading = false,
       disabled = false,
+      readonly = false,
       initialCurrencyLoading = false,
       currencyField,
       label,
@@ -334,7 +336,7 @@ const AggregatorSwapCurrencyInputPanel = forwardRef<HTMLInputElement, Aggregator
                   className="token-amount-input"
                   value={value}
                   onUserInput={onUserInput}
-                  disabled={!chainAllowed || disabled}
+                  disabled={!chainAllowed || disabled || readonly}
                   $loading={loading}
                   id={id}
                   ref={ref}
