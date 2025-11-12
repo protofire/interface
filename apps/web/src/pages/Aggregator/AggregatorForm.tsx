@@ -1,6 +1,7 @@
 import { Currency, Token } from '@uniswap/sdk-core'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { useAccountDrawer } from 'components/AccountDrawer/MiniPortfolio/hooks'
 import { ButtonError, ButtonLight, ButtonPrimary } from 'components/Button'
 import { Field } from 'components/swap/constants'
@@ -297,6 +298,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       order: order,
       slippage: slippage.toString(),
       fee: '0',
+      integrator: 'flow-swap',
       maxSplit: maxsplit,
       maxEdge: maxedge,
     }
@@ -431,11 +433,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     try {
       const signer = provider.getSigner()
 
-      const txRequest = {
+      const txRequest: TransactionRequest = {
+        from: account.address,
         to: txnRequest.to,
-        value: txnRequest.value,
         data: txnRequest.data as `0x${string}`,
         gasPrice: txnRequest.gasPrice,
+        value: txnRequest.value,
       }
 
       let gasLimit: BigNumber

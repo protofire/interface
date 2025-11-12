@@ -190,6 +190,7 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
     params?.order,
     params?.slippage,
     params?.fee,
+    params?.integrator,
     params?.maxSplit,
     params?.maxEdge,
   ])
