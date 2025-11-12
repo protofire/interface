@@ -3,16 +3,14 @@ import { Dispatch, SetStateAction, PropsWithChildren, useState, useMemo } from '
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { SwapAndLimitContext, CurrencyState, SwapContext, SwapState, initialSwapState, EMPTY_DERIVED_SWAP_INFO } from 'state/swap/types'
 import { SwapTab } from 'uniswap/src/types/screens/interface'
-import { FLOW_CHAIN_ID, FLOW_TESTNET_CHAIN_ID } from './mockTokenData'
+import { FLOW_CHAIN_ID } from './mockTokenData'
 
 export function AggregatorContextProvider({ children }: PropsWithChildren) {
   const [chainId, setSelectedChainId] = useState<UniverseChainId | undefined>(FLOW_CHAIN_ID as UniverseChainId)
-  const [isTestnet, setIsTestnet] = useState(false)
 
-  // Update chainId when testnet mode changes
   const currentChainId = useMemo(() => {
-    return isTestnet ? FLOW_TESTNET_CHAIN_ID : FLOW_CHAIN_ID
-  }, [isTestnet])
+    return FLOW_CHAIN_ID
+  }, [])
   const [isUserSelectedToken, setIsUserSelectedToken] = useState(false)
   const [currentTab, setCurrentTab] = useState<SwapTab>(SwapTab.Swap)
   const [currencyState, setCurrencyState] = useState<CurrencyState>({
@@ -40,10 +38,8 @@ export function AggregatorContextProvider({ children }: PropsWithChildren) {
       initialChainId: currentChainId,
       multichainUXEnabled: false,
       isSwapAndLimitContext: false,
-      isTestnet,
-      setIsTestnet,
     }),
-    [currentChainId, isUserSelectedToken, currentTab, currencyState, isTestnet]
+    [currentChainId, isUserSelectedToken, currentTab, currencyState]
   )
   
   const swapValue = useMemo(

@@ -4,7 +4,6 @@ import { CompanyMenu } from 'components/NavBar/CompanyMenu'
 import { NewUserCTAButton } from 'components/NavBar/DownloadApp/NewUserCTAButton'
 import { PreferenceMenu } from 'components/NavBar/PreferencesMenu'
 import { useTabsVisible } from 'components/NavBar/ScreenSizes'
-import { SearchBar } from 'components/NavBar/SearchBar'
 import { Tabs } from 'components/NavBar/Tabs/Tabs'
 import { useIsAccountCTAExperimentControl } from 'components/NavBar/accountCTAsExperimentUtils'
 import Row from 'components/Row'
@@ -59,15 +58,6 @@ const Right = styled(Row)`
   justify-content: flex-end;
   ${NavItems}
 `
-const SearchContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-shrink: 1;
-  justify-content: center;
-  align-self: center;
-  align-items: flex-start;
-  height: 42px;
-`
 
 function useShouldHideChainSelector() {
   const isNftPage = useIsNftPage()
@@ -105,9 +95,7 @@ export default function Navbar() {
   const isSmallScreen = !useScreenSize()['sm']
   const isMediumScreen = !useScreenSize()['md']
   const areTabsVisible = useTabsVisible()
-  const collapseSearchBar = !useScreenSize()['lg']
   const account = useAccount()
-  const NAV_SEARCH_MAX_HEIGHT = 'calc(100vh - 30px)'
 
   const hideChainSelector = useShouldHideChainSelector()
 
@@ -122,14 +110,7 @@ export default function Navbar() {
           {areTabsVisible && <Tabs />}
         </Left>
 
-        <SearchContainer>
-          {forkConfig.exploreEnabled && !collapseSearchBar && (
-            <SearchBar maxHeight={NAV_SEARCH_MAX_HEIGHT} fullScreen={isSmallScreen} />
-          )}
-        </SearchContainer>
-
         <Right>
-          {collapseSearchBar && <SearchBar maxHeight={NAV_SEARCH_MAX_HEIGHT} fullScreen={isSmallScreen} />}
           {isNftPage && sellPageState !== ProfilePageStateType.LISTING && <Bag />}
           {isSignInExperimentControl &&
             !isSignInExperimentControlLoading &&
