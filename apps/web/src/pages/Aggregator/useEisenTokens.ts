@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { mockTokenToToken, MockToken } from './mockTokenData'
 import { Token } from '@uniswap/sdk-core'
@@ -10,18 +11,12 @@ interface EisenTokenResponse {
 }
 
 /**
- * Fetches tokens from Eisen API
+ * Fetches tokens from Eisen API with caching
  */
 export function useEisenTokens(chainId: number = FLOW_CHAIN_ID) {
-  const [tokens, setTokens] = useState<MockToken[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchTokens = async () => {
-      setLoading(true)
-      setError(null)
-      
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['eisenTokens', chainId],
+    queryFn: async () => {
       try {
         const response = await fetch(`https://hiker.hetz-01.eisenfinance.com/public/v1/tokens?chainId=${chainId}`, {
           headers: {
@@ -36,23 +31,20 @@ export function useEisenTokens(chainId: number = FLOW_CHAIN_ID) {
         const data: EisenTokenResponse = await response.json()
         
         // Extract tokens from the nested result structure
-        const chainTokens = data.result?.[chainId] || []
-        setTokens(chainTokens)
+        return data.result?.[chainId] || []
       } catch (err) {
         console.error('Error fetching tokens from Eisen API:', err)
-        setError(err instanceof Error ? err.message : 'Failed to load tokens')
         
         // Fallback to mock tokens on error
         const { getMockTokensForChain } = await import('./mockTokenData')
-        const mockTokens = getMockTokensForChain(chainId)
-        setTokens(mockTokens)
-      } finally {
-        setLoading(false)
+        return getMockTokensForChain(chainId)
       }
-    }
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+  })
 
-    fetchTokens()
-  }, [chainId])
+  const tokens = data || []
 
   // Convert to Uniswap Token format
   const tokenList = useMemo(() => {
@@ -62,8 +54,8 @@ export function useEisenTokens(chainId: number = FLOW_CHAIN_ID) {
   return {
     tokens,
     tokenList,
-    loading,
-    error,
+    loading: isLoading,
+    error: error ? (error instanceof Error ? error.message : 'Failed to load tokens') : null,
   }
 }
 

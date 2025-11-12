@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 interface EisenDexsResponse {
   result: {
@@ -7,53 +7,37 @@ interface EisenDexsResponse {
 }
 
 /**
- * Fetches supported DEXs from Eisen API
+ * Fetches supported DEXs from Eisen API with caching
  */
 export function useEisenDexs(chainId: number) {
-  const [dexs, setDexs] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchDexs = async () => {
-      setLoading(true)
-      setError(null)
-
-      try {
-        const response = await fetch(
-          `https://hiker.hetz-01.eisenfinance.com/public/v1/dexs?chainId=${chainId}`,
-          {
-            headers: {
-              'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
-            },
-          }
-        )
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch DEXs: ${response.statusText}`)
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['eisenDexs', chainId],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://hiker.hetz-01.eisenfinance.com/public/v1/dexs?chainId=${chainId}`,
+        {
+          headers: {
+            'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
+          },
         }
+      )
 
-        const data: EisenDexsResponse = await response.json()
-        const chainDexs = data.result?.[chainId.toString()] || []
-        setDexs(chainDexs)
-      } catch (err) {
-        console.error('Error fetching DEXs from Eisen API:', err)
-        setError(err instanceof Error ? err.message : 'Failed to fetch DEXs')
-        setDexs([])
-      } finally {
-        setLoading(false)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch DEXs: ${response.statusText}`)
       }
-    }
 
-    if (chainId) {
-      fetchDexs()
-    }
-  }, [chainId])
+      const data: EisenDexsResponse = await response.json()
+      return data.result?.[chainId.toString()] || []
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    enabled: !!chainId,
+  })
 
   return {
-    dexs,
-    loading,
-    error,
+    dexs: data || [],
+    loading: isLoading,
+    error: error ? (error instanceof Error ? error.message : 'Failed to fetch DEXs') : null,
   }
 }
 
