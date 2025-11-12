@@ -9,7 +9,7 @@ import { UniverseChainId, WEB_SUPPORTED_CHAIN_IDS } from 'uniswap/src/types/chai
 import { createClient } from 'viem'
 import { createConfig, http } from 'wagmi'
 import { connect } from 'wagmi/actions'
-import { coinbaseWallet, injected, safe, walletConnect } from 'wagmi/connectors'
+import { injected, safe, walletConnect } from 'wagmi/connectors'
 
 declare module 'wagmi' {
   interface Register {
@@ -25,14 +25,6 @@ export const wagmiConfig = createConfig({
   connectors: [
     injectedWithFallback(),
     walletConnect(WC_PARAMS),
-    coinbaseWallet({
-      appName: 'Swap',
-      // CB SDK doesn't pass the parent origin context to their passkey site
-      // Flagged to CB team and can remove UNISWAP_WEB_URL once fixed
-      appLogoUrl: ``,
-      reloadOnDisconnect: false,
-      enableMobileWalletLink: false,
-    }),
     ...(forkConfig.uniSpecificFeaturesEnabled ? [uniswapWalletConnect()] : []),
     safe(),
   ],

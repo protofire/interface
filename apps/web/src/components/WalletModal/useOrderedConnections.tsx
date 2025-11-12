@@ -39,13 +39,9 @@ export function useConnectorWithId(id: ConnectorID, options?: { shouldThrow: tru
 }
 
 function getInjectedConnectors(connectors: readonly Connector[], excludeUniswapConnections?: boolean) {
-  let isCoinbaseWalletBrowser = false
   const injectedConnectors = connectors.filter((c) => {
-    // Special-case: Ignore coinbase eip6963-injected connector; coinbase connection is handled via the SDK connector.
+    // Special-case: Ignore coinbase eip6963-injected connector (Coinbase Wallet support removed)
     if (c.id === CONNECTION.COINBASE_RDNS) {
-      if (isMobileWeb) {
-        isCoinbaseWalletBrowser = true
-      }
       return false
     }
 
@@ -60,10 +56,10 @@ function getInjectedConnectors(connectors: readonly Connector[], excludeUniswapC
   // Special-case: Return deprecated window.ethereum connector when no eip6963 injectors are present.
   const fallbackInjector = getConnectorWithId(connectors, CONNECTION.INJECTED_CONNECTOR_ID, { shouldThrow: true })
   if (!injectedConnectors.length && Boolean(window.ethereum)) {
-    return { injectedConnectors: [fallbackInjector], isCoinbaseWalletBrowser }
+    return { injectedConnectors: [fallbackInjector] }
   }
 
-  return { injectedConnectors, isCoinbaseWalletBrowser }
+  return { injectedConnectors }
 }
 
 type InjectableConnector = Connector & { isInjected?: boolean }
@@ -115,7 +111,7 @@ export function useOrderedConnections(excludeUniswapConnections?: boolean): Inje
     // Injected connectors should appear next in the list, as the user intentionally installed/uses them.
     orderedConnectors.push(...injectedConnectors)
 
-    // WalletConnect and Coinbase are added last in the list.
+    // WalletConnect is added last in the list.
     orderedConnectors.push(walletConnectConnector)
 
     // Place the most recent connector at the top of the list.

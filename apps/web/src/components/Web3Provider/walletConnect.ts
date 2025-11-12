@@ -18,9 +18,6 @@ export const walletTypeToAmplitudeWalletType = (connectionType?: string) => {
     case 'walletConnect': {
       return 'Wallet Connect'
     }
-    case 'coinbaseWallet': {
-      return 'Coinbase Wallet'
-    }
     case 'uniswapWalletConnect': {
       return 'Wallet Connect'
     }
