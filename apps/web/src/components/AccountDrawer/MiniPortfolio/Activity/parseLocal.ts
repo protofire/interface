@@ -4,6 +4,7 @@ import { Currency, CurrencyAmount, TradeType, Token } from '@uniswap/sdk-core'
 import UniswapXBolt from 'assets/svg/bolt.svg'
 import { getCurrency } from 'components/AccountDrawer/MiniPortfolio/Activity/getCurrency'
 import { Activity, ActivityMap } from 'components/AccountDrawer/MiniPortfolio/Activity/types'
+import { getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
   CancelledTransactionTitleTable,
   LimitOrderTextTable,
@@ -96,29 +97,41 @@ async function parseSwap(
       ? [swap.inputCurrencyAmountRaw, swap.settledOutputCurrencyAmountRaw ?? swap.expectedOutputCurrencyAmountRaw]
       : [swap.expectedInputCurrencyAmountRaw, swap.outputCurrencyAmountRaw]
 
-  // If currencies couldn't be resolved and we have symbols stored, use them
-  const inputSymbol = tokenIn?.symbol || (swap as any).inputCurrencySymbol || undefined
-  const outputSymbol = tokenOut?.symbol || (swap as any).outputCurrencySymbol || undefined
-  const inputDecimals = (swap as any).inputCurrencyDecimals || tokenIn?.decimals || 18
-  const outputDecimals = (swap as any).outputCurrencyDecimals || tokenOut?.decimals || 18
+  // Get stored symbols and logos from transaction info
+  const extendedSwap = swap as any
+  const storedInputSymbol = extendedSwap.inputCurrencySymbol
+  const storedOutputSymbol = extendedSwap.outputCurrencySymbol
   
-  // Ensure raw amounts are valid strings (not undefined)
-  const safeInputRaw = inputRaw || '0'
-  const safeOutputRaw = outputRaw || '0'
+  // Prioritize resolved currency symbol, then stored symbol, then fallback to 'Unknown'
+  const inputSym = tokenIn?.symbol || storedInputSymbol || 'Unknown'
+  const outputSym = tokenOut?.symbol || storedOutputSymbol || 'Unknown'
   
   // Always show just currency symbols without amounts for swaps
   let descriptor: string
-  const inputSym = tokenIn?.symbol || inputSymbol || 'Unknown'
-  const outputSym = tokenOut?.symbol || outputSymbol || 'Unknown'
-  
   descriptor = t('activity.transaction.swap.descriptor', {
     amountWithSymbolA: inputSym,
     amountWithSymbolB: outputSym,
   })
 
+  // Get logos from transaction info (stored when transaction was created)
+  let inputLogoURI = extendedSwap.inputLogoURI
+  let outputLogoURI = extendedSwap.outputLogoURI
+  
+  if (!inputLogoURI && tokenIn?.isNative) {
+    inputLogoURI = getNativeLogoURI(chainId)
+  }
+  if (!outputLogoURI && tokenOut?.isNative) {
+    outputLogoURI = getNativeLogoURI(chainId)
+  }
+  
+  const logos = inputLogoURI && outputLogoURI
+    ? [inputLogoURI, outputLogoURI]
+    : undefined
+
   return {
     descriptor,
     currencies: [tokenIn, tokenOut],
+    logos,
     prefixIconSrc: swap.isUniswapXOrder ? UniswapXBolt : undefined,
   }
 }

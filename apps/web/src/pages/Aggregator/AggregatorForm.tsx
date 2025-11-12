@@ -559,7 +559,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
         minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
         isUniswapXOrder: false,
-      }
+        // Store token symbols and logos for display when currency resolution fails
+        inputCurrencySymbol: action?.fromToken?.symbol || currencies[Field.INPUT]?.symbol,
+        outputCurrencySymbol: action?.toToken?.symbol || currencies[Field.OUTPUT]?.symbol,
+        inputLogoURI: action?.fromToken?.logoURI,
+        outputLogoURI: action?.toToken?.logoURI,
+      } as any
 
       // @ts-ignore - TransactionResponse type
       addTransaction(tx, transactionInfo)
