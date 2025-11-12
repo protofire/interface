@@ -92,18 +92,10 @@ export function TokenBalancesProvider({ children }: PropsWithChildren) {
   const prevValueModifiers = usePrevious(valueModifiers)
 
   const fetch = useCallback(() => {
-    if (!account.address) {
-      return
-    }
-    lazyFetch({
-      variables: {
-        ownerAddress: account.address,
-        chains: GQL_MAINNET_CHAINS_MUTABLE,
-        includeSpamTokens: valueModifiers.includeSpamTokens,
-        includeSmallBalances: valueModifiers.includeSmallBalances,
-      },
-    })
-  }, [account.address, lazyFetch, valueModifiers])
+    // TODO: Remove Apollo implementation
+    // Disabled GraphQL API calls
+    return
+  }, [])
 
   return (
     <AdaptiveTokenBalancesProvider

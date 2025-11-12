@@ -40,12 +40,13 @@ export function AssetActivityProvider({ children }: PropsWithChildren) {
   const account = useAccount()
   const previousAccount = usePrevious(account.address)
 
-  const isRealtimeEnabled = useFeatureFlag(FeatureFlags.Realtime)
+  // TODO: Remove Apollo implementation
+  const isRealtimeEnabled = false // Disabled to prevent GraphQL subscription calls
   const [attempt, incrementAttempt] = useReducer((attempt) => attempt + 1, 1)
   const subscriptionId = useMemo(uuidV4, [account, attempt])
   const result = useOnAssetActivitySubscription({
     variables: { account: account.address ?? '', subscriptionId },
-    skip: !account || !isRealtimeEnabled,
+    skip: true, // Always skip to prevent GraphQL subscription calls
     onError: (error) => {
       logger.error(error, {
         tags: {

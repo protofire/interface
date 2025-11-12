@@ -16,15 +16,18 @@ const UnitagsApiClient = createApiClient({
 })
 
 export async function fetchUsername(params: UnitagUsernameRequest): Promise<UnitagUsernameResponse> {
-  return await UnitagsApiClient.get<UnitagUsernameResponse>('/username', { params })
+  // TODO: Remove Unitags implementation
+  return Promise.resolve({ available: false, requiresEnsMatch: false })
 }
 
 export async function fetchAddress(params: UnitagAddressRequest): Promise<UnitagAddressResponse> {
-  return await UnitagsApiClient.get<UnitagAddressResponse>('/address', { params })
+  // TODO: Remove Unitags implementation
+  return Promise.resolve({})
 }
 
 export async function fetchClaimEligibility(
   params: UnitagClaimEligibilityRequest,
 ): Promise<UnitagClaimEligibilityResponse> {
-  return await UnitagsApiClient.get<UnitagClaimEligibilityResponse>('/claim/eligibility', { params })
+  // TODO: Remove Unitags implementation
+  return Promise.resolve({ canClaim: false })
 }
