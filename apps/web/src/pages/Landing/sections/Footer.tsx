@@ -38,18 +38,18 @@ const DAOLogo = deprecatedStyled.img`
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
-      <SocialIcon $hoverColor="#DE6579">
+      <SocialIcon >
         <Anchor href="https://x.com/flow_blockchain" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      <SocialIcon $hoverColor="#DE6579">
+      <SocialIcon >
         <Anchor href="https://github.com/onflow" target="_blank">
           <Github size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
 
-      <SocialIcon $hoverColor="#DE6579">
+      <SocialIcon>
         <Anchor href="https://discord.com/invite/J6fFnh2xx6" target="_blank">
           <Discord size={iconSize} fill="inherit" />
         </Anchor>
