@@ -1,16 +1,18 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
-const GRAPHQL_ENDPOINT = 'https://interface.gateway.uniswap.org/v1/graphql'
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 
-//TODO: Figure out how to make ApolloClient global variable
+// TODO: Remove Apollo implementation
+// Disabled GraphQL client - no longer making calls to interface.gateway.uniswap.org
+const noOpLink = new HttpLink({
+  uri: '/graphql',
+  fetch: () => {
+    // No-op: prevent any GraphQL calls
+    return Promise.reject(new Error('GraphQL client disabled'))
+  },
+})
+
 export default new ApolloClient({
   connectToDevTools: false,
-  uri: GRAPHQL_ENDPOINT,
-  headers: {
-    'Content-Type': 'application/json',
-    Origin: 'https://app.uniswap.org',
-    'User-Agent':
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36',
-  },
+  link: noOpLink,
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

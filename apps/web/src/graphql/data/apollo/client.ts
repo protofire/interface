@@ -15,7 +15,7 @@ if (forkConfig.uniSpecificFeaturesEnabled && (!API_URL || !REALTIME_URL || !REAL
 const httpLink = API_URL 
   ? new HttpLink({ uri: API_URL })
   : new HttpLink({ 
-      uri: 'http://localhost:3000/graphql',
+      uri: '/graphql',
       fetch: () => {
         return Promise.reject(new Error('GraphQL API URL not configured'))
       }

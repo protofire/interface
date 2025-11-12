@@ -114,6 +114,11 @@ fs.readFile('./public/nfts-sitemap.xml', 'utf8', async (err, data) => {
       })
     }
 
+    // TODO: Remove Apollo implementation - GraphQL calls disabled
+    // Disabled NFT collections fetch from GraphQL
+    const nftJSON = { data: { topCollections: { edges: [] } } }
+    const collectionAddresses = []
+    /*
     const nftResponse = await fetch('https://interface.gateway.uniswap.org/v1/graphql', {
       method: 'POST',
       headers: {
@@ -124,6 +129,7 @@ fs.readFile('./public/nfts-sitemap.xml', 'utf8', async (err, data) => {
     })
     const nftJSON = await nftResponse.json()
     const collectionAddresses = nftJSON.data.topCollections.edges.map((edge) => edge.node.nftContracts[0].address)
+    */
     collectionAddresses.forEach((address) => {
       const collectionURL = `https://app.uniswap.org/nfts/collection/${address}`
       if (!(collectionURL in collectionURLs)) {
