@@ -167,6 +167,18 @@ export const ThemedGlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.background} !important;
   }
 
+  body {
+    background: ${({ theme }) =>
+      theme.darkMode
+        ? `radial-gradient(circle at top left, #004c37 0%, transparent 50%),
+           radial-gradient(circle at bottom right, #001e31 0%, transparent 50%),
+           #001e31`
+        : `radial-gradient(circle at top left, #fce9fe 0%, transparent 50%),
+           radial-gradient(circle at bottom right, #fce9fe 0%, transparent 50%),
+           #bff6f7`} !important;
+    background-attachment: fixed;
+  }
+
  summary::-webkit-details-marker {
     display:none;
   }
