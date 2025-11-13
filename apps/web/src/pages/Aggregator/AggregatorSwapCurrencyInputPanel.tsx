@@ -28,7 +28,7 @@ import { AnimatePresence, Flex, Text } from 'ui/src'
 import { Trans } from 'uniswap/src/i18n'
 import { CurrencyField } from 'uniswap/src/types/currency'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
-import { MockTokenSelectModal } from './MockTokenSelectModal'
+import { AggregatorTokenSelectModal } from './AggregatorTokenSelectModal'
 import { useEisenTokens } from './useEisenTokens'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 
@@ -467,7 +467,7 @@ const AggregatorSwapCurrencyInputPanel = forwardRef<HTMLInputElement, Aggregator
           )}
         </Container>
         {onCurrencySelect && (
-          <MockTokenSelectModal
+          <AggregatorTokenSelectModal
             isOpen={modalOpen}
             onDismiss={handleDismissSearch}
             onCurrencySelect={onCurrencySelect}

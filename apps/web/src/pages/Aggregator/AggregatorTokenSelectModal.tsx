@@ -147,7 +147,7 @@ const ScrollableContainer = styled.div`
   }
 `
 
-interface MockTokenSelectModalProps {
+interface AggregatorTokenSelectModalProps {
   isOpen: boolean
   onDismiss: () => void
   onCurrencySelect: (currency: Currency) => void
@@ -155,13 +155,13 @@ interface MockTokenSelectModalProps {
   otherCurrency?: Currency | null
 }
 
-export function MockTokenSelectModal({
+export function AggregatorTokenSelectModal({
   isOpen,
   onDismiss,
   onCurrencySelect,
   selectedCurrency,
   otherCurrency,
-}: MockTokenSelectModalProps) {
+}: AggregatorTokenSelectModalProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const context = useSwapAndLimitContext() as any
   const chainId = context?.chainId || FLOW_CHAIN_ID
