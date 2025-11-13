@@ -126,16 +126,16 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
         <Label>Output Amount:</Label>
         <Value>{toAmountFormatted} {outputTokenSymbol}</Value>
       </QuoteRow>
-      <QuoteRow>
-        <Label>Min Output:</Label>
-        <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
-      </QuoteRow>
       {slippage !== undefined && (
         <QuoteRow>
-          <Label>Slippage:</Label>
+          <Label>Max. Slippage:</Label>
           <Value>{(slippage * 100).toFixed(2)}%</Value>
         </QuoteRow>
       )}
+      <QuoteRow>
+        <Label>Receive at least:</Label>
+        <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
+      </QuoteRow>
       {estimate.toAmountUSD && (
         <QuoteRow>
           <Label>USD Value:</Label>

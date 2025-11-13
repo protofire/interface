@@ -170,14 +170,18 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const [transactionError, setTransactionError] = useState<Error | null>(null)
   const [wasCancelled, setWasCancelled] = useState(false)
 
+  // USDC
+  const DEFAULT_INPUT_TOKEN_ADDRESS = '0xF1815bd50389c46847f0Bda824eC8da914045D14'
+  const defaultInputCurrency = useCurrency(DEFAULT_INPUT_TOKEN_ADDRESS, currentChainId)
+
   useEffect(() => {
-    if (!currencyState.inputCurrency && !urlInputCurrency && !urlOutputCurrency && currentChainId) {
-      setCurrencyState((prev) => ({
-        ...prev,
-        inputCurrency: nativeOnChain(currentChainId),
-      }))
+    if (!currencyState.inputCurrency && !currencyState.outputCurrency && !urlInputCurrency && !urlOutputCurrency && currentChainId) {
+      setCurrencyState({
+        inputCurrency: defaultInputCurrency || null,
+        outputCurrency: nativeOnChain(currentChainId),
+      })
     }
-  }, [currentChainId, currencyState.inputCurrency, urlInputCurrency, urlOutputCurrency])
+  }, [currentChainId, currencyState.inputCurrency, currencyState.outputCurrency, urlInputCurrency, urlOutputCurrency, defaultInputCurrency])
 
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
@@ -196,15 +200,15 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         independentField: Field.INPUT,
       })
       setCurrencyState({
-        inputCurrency: nativeOnChain(currentChainId),
-        outputCurrency: null,
+        inputCurrency: defaultInputCurrency || null,
+        outputCurrency: nativeOnChain(currentChainId),
       })
       setQuoteResetKey(prev => prev + 1)
     }
     
     // Reset cancellation flag after handling dismissal
     setWasCancelled(false)
-  }, [currentChainId, wasCancelled])
+  }, [currentChainId, wasCancelled, defaultInputCurrency])
 
   const { typedValue, independentField } = swapState
 
@@ -403,7 +407,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const formattedAmounts = useMemo(
     () => ({
       [independentField]: typedValue || '',
-      [dependentField]: quoteLoading ? '...' : (estimatedOutput || '0'),
+      [dependentField]: quoteLoading ? '...' : (estimatedOutput || ''),
     }),
     [independentField, dependentField, typedValue, quoteLoading, estimatedOutput]
   )
