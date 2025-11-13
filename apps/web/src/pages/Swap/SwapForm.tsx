@@ -20,7 +20,7 @@ import SwapDetailsDropdown from 'components/swap/SwapDetailsDropdown'
 import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee'
 import { Field } from 'components/swap/constants'
 import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'components/swap/styled'
-import { useIsSupportedChainId, useSupportedChainId } from 'constants/chains'
+import { CHAIN_IDS_TO_NAMES, useIsSupportedChainId, useSupportedChainId } from 'constants/chains'
 import { useCurrencyInfo } from 'hooks/Tokens'
 import { useAccount } from 'hooks/useAccount'
 import { useIsLandingPage } from 'hooks/useIsLandingPage'
@@ -212,23 +212,43 @@ export function SwapForm({
 
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+  const navigate = useNavigate()
 
   const handleTypeInput = useCallback(
     (value: string) => {
       onUserInput(Field.INPUT, value)
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new input value
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: value,
+        independentField: Field.INPUT,
+        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onUserInput, trace],
+    [onUserInput, trace, currencyState.inputCurrency, currencyState.outputCurrency, navigate, supportedChainId],
   )
   const handleTypeOutput = useCallback(
     (value: string) => {
       onUserInput(Field.OUTPUT, value)
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new output value
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: value,
+        independentField: Field.OUTPUT,
+        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onUserInput, trace],
+    [onUserInput, trace, currencyState.inputCurrency, currencyState.outputCurrency, navigate, supportedChainId],
   )
 
-  const navigate = useNavigate()
   const swapIsUnsupported = useIsSwapUnsupported(currencies[Field.INPUT], currencies[Field.OUTPUT])
   const isLandingPage = useIsLandingPage()
 
@@ -349,14 +369,14 @@ export function SwapForm({
   )
 
   const handleContinueToReview = useCallback(() => {
-    const swapParams = serializeSwapStateToURLParameters({
-      inputCurrency: currencyState.inputCurrency,
-      outputCurrency: currencyState.outputCurrency,
-      typedValue: swapState.typedValue,
-      independentField: swapState.independentField,
-      chainId: connectedChainId ?? UniverseChainId.FlowMainnet,
-    })
-    navigate('/swap' + swapParams, { replace: true })
+    // Only update chainId in URL when reviewing swap
+    // Token and value parameters are already updated via input handlers
+    if (connectedChainId && connectedChainId !== supportedChainId) {
+      const params = new URLSearchParams(window.location.search)
+      params.set('chain', CHAIN_IDS_TO_NAMES[connectedChainId] || CHAIN_IDS_TO_NAMES[UniverseChainId.FlowMainnet])
+      navigate('/swap?' + params.toString(), { replace: true })
+    }
+
     setSwapFormState({
       tradeToConfirm: trade,
       swapError: undefined,
@@ -470,8 +490,18 @@ export function SwapForm({
         outputCurrency: currencyState.outputCurrency,
       })
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new input currency
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: swapState.typedValue,
+        independentField: swapState.independentField,
+        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace],
+    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
   )
   const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
 
@@ -488,8 +518,18 @@ export function SwapForm({
         outputCurrency,
       })
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new output currency
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency,
+        typedValue: swapState.typedValue,
+        independentField: swapState.independentField,
+        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace],
+    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
   )
 
   const showPriceImpactWarning = isClassicTrade(trade) && largerPriceImpact && priceImpactSeverity > 3
