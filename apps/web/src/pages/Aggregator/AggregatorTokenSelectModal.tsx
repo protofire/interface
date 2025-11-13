@@ -1,11 +1,12 @@
-import { Currency, Token } from '@uniswap/sdk-core'
+import { Currency } from '@uniswap/sdk-core'
+import { getTokenNameOverride, getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 import Modal from 'components/Modal'
-import { useState } from 'react'
 import { SearchInput } from 'components/SearchModal/styled'
 import styled from 'lib/styled-components'
-import { useEisenTokens } from './useEisenTokens'
-import { FLOW_CHAIN_ID } from './mockTokenData'
+import { useState } from 'react'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { FLOW_CHAIN_ID } from './mockTokenData'
+import { useEisenTokens } from './useEisenTokens'
 
 const ModalContentWrapper = styled.div`
   display: flex;
@@ -55,9 +56,11 @@ const TokenItem = styled.button<{ $selected: boolean; $disabled: boolean }>`
   opacity: ${({ $disabled }) => ($disabled ? 0.4 : 1)};
   height: 60px;
   box-sizing: border-box;
-  
+
   &:hover {
-    ${({ $disabled, theme }) => !$disabled && `
+    ${({ $disabled, theme }) =>
+      !$disabled &&
+      `
       background-color: ${theme.deprecated_hoverDefault};
     `}
   }
@@ -67,7 +70,7 @@ const TokenIcon = styled.div<{ $logoUrl?: string }>`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: ${({ theme, $logoUrl }) => $logoUrl ? 'transparent' : theme.accent1};
+  background: ${({ theme, $logoUrl }) => ($logoUrl ? 'transparent' : theme.accent1)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +79,9 @@ const TokenIcon = styled.div<{ $logoUrl?: string }>`
   font-size: 16px;
   font-weight: 535;
   overflow: hidden;
-  ${({ $logoUrl }) => $logoUrl && `
+  ${({ $logoUrl }) =>
+    $logoUrl &&
+    `
     background-image: url(${$logoUrl});
     background-size: cover;
     background-position: center;
@@ -127,20 +132,20 @@ const ScrollableContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
-  
+
   /* Thin scrollbar styling - overlay mode */
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) => theme.surface3} transparent;
-  
+
   &::-webkit-scrollbar {
     width: 4px;
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: ${({ theme }) => theme.surface3};
     border-radius: 8px;
@@ -165,10 +170,10 @@ export function AggregatorTokenSelectModal({
   const [searchQuery, setSearchQuery] = useState('')
   const context = useSwapAndLimitContext() as any
   const chainId = context?.chainId || FLOW_CHAIN_ID
-  
+
   // Fetch tokens from Eisen API
   const { tokens: allTokens, loading } = useEisenTokens(chainId)
-  
+
   // Filter tokens based on search query
   const filteredTokens = allTokens.filter((token) => {
     if (!searchQuery) return true
@@ -180,7 +185,7 @@ export function AggregatorTokenSelectModal({
       token.address.toLowerCase().includes(query)
     )
   })
-  
+
   const handleSelectToken = (token: any) => {
     // Import the function dynamically to avoid circular dependencies
     import('./mockTokenData').then(({ mockTokenToToken }) => {
@@ -189,24 +194,27 @@ export function AggregatorTokenSelectModal({
       onDismiss()
     })
   }
-  
+
   const handleDismiss = () => {
     setSearchQuery('')
     onDismiss()
   }
-  
+
   return (
     <Modal isOpen={isOpen} onDismiss={handleDismiss} height="90vh" maxHeight={650} maxWidth={420}>
       <ModalContentWrapper>
         <HeaderSection>
           <ModalTitle>
             Select a token
-            <button onClick={handleDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '24px', color: 'inherit' }}>
+            <button
+              onClick={handleDismiss}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '24px', color: 'inherit' }}
+            >
               ×
             </button>
           </ModalTitle>
         </HeaderSection>
-        
+
         <SearchSection>
           <SearchInput
             type="text"
@@ -216,16 +224,12 @@ export function AggregatorTokenSelectModal({
             autoComplete="off"
           />
         </SearchSection>
-        
+
         <ScrollableContainer>
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-              Loading tokens...
-            </div>
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>Loading tokens...</div>
           ) : filteredTokens.length === 0 ? (
-            <NoResults style={{ textAlign: 'center', padding: '40px 20px' }}>
-              No tokens found
-            </NoResults>
+            <NoResults style={{ textAlign: 'center', padding: '40px 20px' }}>No tokens found</NoResults>
           ) : (
             <>
               <div style={{ padding: '8px 20px', marginBottom: '8px' }}>
@@ -252,12 +256,10 @@ export function AggregatorTokenSelectModal({
                       $selected={isSelected}
                       $disabled={!!disabled}
                     >
-                      <TokenIcon $logoUrl={token.icon}>
-                        {iconContent}
-                      </TokenIcon>
+                      <TokenIcon $logoUrl={token.icon}>{iconContent}</TokenIcon>
                       <TokenInfo>
-                        <TokenName>{token.name}</TokenName>
-                        <TokenSymbol>{token.symbol}</TokenSymbol>
+                        <TokenName>{getTokenNameOverride(token.address, token.name)}</TokenName>
+                        <TokenSymbol>{getTokenSymbolOverride(token.address, token.symbol)}</TokenSymbol>
                       </TokenInfo>
                     </TokenItem>
                   )
@@ -270,4 +272,3 @@ export function AggregatorTokenSelectModal({
     </Modal>
   )
 }
-

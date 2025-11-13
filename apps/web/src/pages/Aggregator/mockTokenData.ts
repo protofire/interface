@@ -1,6 +1,6 @@
 import { Currency, Token } from '@uniswap/sdk-core'
+import { getTokenNameOverride, getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 import { nativeOnChain } from 'constants/tokens'
-import { UniverseChainId } from 'uniswap/src/types/chains'
 
 // Flow Mainnet chain ID
 export const FLOW_CHAIN_ID = 747
@@ -45,8 +45,11 @@ export function mockTokenToToken(mockToken: MockToken): Currency {
     // Return the proper NativeCurrency object for the chain
     return nativeOnChain(mockToken.chainId)
   }
-  // Return a Token object for ERC20 tokens
-  return new Token(mockToken.chainId, mockToken.address, mockToken.decimals, mockToken.symbol, mockToken.name)
+  // Apply token overrides for aggregator - use overridden symbol/name if available
+  const symbol = getTokenSymbolOverride(mockToken.address, mockToken.symbol)
+  const name = getTokenNameOverride(mockToken.address, mockToken.name)
+  // Return a Token object for ERC20 tokens with overridden values
+  return new Token(mockToken.chainId, mockToken.address, mockToken.decimals, symbol, name)
 }
 
 /**
@@ -67,4 +70,3 @@ export function getMockTokenResult(chainId: number) {
     },
   }
 }
-

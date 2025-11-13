@@ -1,19 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { queryOptions, useQuery } from '@tanstack/react-query'
-import { Currency, CurrencyAmount, TradeType, Token } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
 import UniswapXBolt from 'assets/svg/bolt.svg'
 import { getCurrency } from 'components/AccountDrawer/MiniPortfolio/Activity/getCurrency'
 import { Activity, ActivityMap } from 'components/AccountDrawer/MiniPortfolio/Activity/types'
-import { getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
   CancelledTransactionTitleTable,
   LimitOrderTextTable,
   OrderTextTable,
   getActivityTitle,
 } from 'components/AccountDrawer/MiniPortfolio/constants'
+import { getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 import { SupportedInterfaceChainId } from 'constants/chains'
-import { nativeOnChain } from 'constants/tokens'
+import { NATIVE_CHAIN_ID, nativeOnChain } from 'constants/tokens'
 import { ChainTokenMap, useAllTokensMultichain } from 'hooks/TokensLegacy'
+import { getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import { isOnChainOrder, useAllSignatures } from 'state/signatures/hooks'
 import { SignatureDetails, SignatureType } from 'state/signatures/types'
 import { isConfirmedTx, useMultichainTransactions } from 'state/transactions/hooks'
@@ -52,21 +53,32 @@ function buildCurrencyDescriptor(
   // Ensure amounts are valid strings (not undefined)
   const safeAmtA = amtA || '0'
   const safeAmtB = amtB || '0'
-  
-  const formattedA = currencyA && safeAmtA
-    ? formatNumber({
-        input: parseFloat(CurrencyAmount.fromRawAmount(currencyA, safeAmtA).toSignificant()),
-        type: NumberType.TokenNonTx,
-      })
-    : t('common.unknown')
-  const symbolA = currencyA?.symbol ? ` ${currencyA?.symbol}` : ''
-  const formattedB = currencyB && safeAmtB
-    ? formatNumber({
-        input: parseFloat(CurrencyAmount.fromRawAmount(currencyB, safeAmtB).toSignificant()),
-        type: NumberType.TokenNonTx,
-      })
-    : t('common.unknown')
-  const symbolB = currencyB?.symbol ? ` ${currencyB?.symbol}` : ''
+
+  const formattedA =
+    currencyA && safeAmtA
+      ? formatNumber({
+          input: parseFloat(CurrencyAmount.fromRawAmount(currencyA, safeAmtA).toSignificant()),
+          type: NumberType.TokenNonTx,
+        })
+      : t('common.unknown')
+  // Apply token overrides for symbols
+  const symbolA = currencyA?.isToken
+    ? ` ${getTokenSymbolOverride(currencyA.address, currencyA.symbol || '')}`
+    : currencyA?.symbol
+      ? ` ${currencyA.symbol}`
+      : ''
+  const formattedB =
+    currencyB && safeAmtB
+      ? formatNumber({
+          input: parseFloat(CurrencyAmount.fromRawAmount(currencyB, safeAmtB).toSignificant()),
+          type: NumberType.TokenNonTx,
+        })
+      : t('common.unknown')
+  const symbolB = currencyB?.isToken
+    ? ` ${getTokenSymbolOverride(currencyB.address, currencyB.symbol || '')}`
+    : currencyB?.symbol
+      ? ` ${currencyB.symbol}`
+      : ''
 
   const amountWithSymbolA = `${formattedA}${symbolA}`
   const amountWithSymbolB = `${formattedB}${symbolB}`
@@ -101,11 +113,33 @@ async function parseSwap(
   const extendedSwap = swap as any
   const storedInputSymbol = extendedSwap.inputCurrencySymbol
   const storedOutputSymbol = extendedSwap.outputCurrencySymbol
-  
-  // Prioritize resolved currency symbol, then stored symbol, then fallback to 'Unknown'
-  const inputSym = tokenIn?.symbol || storedInputSymbol || 'Unknown'
-  const outputSym = tokenOut?.symbol || storedOutputSymbol || 'Unknown'
-  
+
+  // Extract addresses for override lookup
+  // Use currency address if available (most reliable), otherwise try to extract from currencyId
+  // currencyId can be: address, "chainId-address", or "NATIVE"
+  const inputAddress = tokenIn?.isToken
+    ? tokenIn.address
+    : swap.inputCurrencyId &&
+        swap.inputCurrencyId !== NATIVE_CHAIN_ID &&
+        swap.inputCurrencyId.toLowerCase() !== 'native'
+      ? swap.inputCurrencyId.includes('-')
+        ? swap.inputCurrencyId.split('-')[1]
+        : swap.inputCurrencyId
+      : undefined
+  const outputAddress = tokenOut?.isToken
+    ? tokenOut.address
+    : swap.outputCurrencyId &&
+        swap.outputCurrencyId !== NATIVE_CHAIN_ID &&
+        swap.outputCurrencyId.toLowerCase() !== 'native'
+      ? swap.outputCurrencyId.includes('-')
+        ? swap.outputCurrencyId.split('-')[1]
+        : swap.outputCurrencyId
+      : undefined
+
+  // Apply token overrides: prioritize resolved currency symbol with override, then stored symbol with override, then fallback
+  const inputSym = getTokenSymbolOverride(inputAddress, tokenIn?.symbol || storedInputSymbol || 'Unknown')
+  const outputSym = getTokenSymbolOverride(outputAddress, tokenOut?.symbol || storedOutputSymbol || 'Unknown')
+
   // Always show just currency symbols without amounts for swaps
   let descriptor: string
   descriptor = t('activity.transaction.swap.descriptor', {
@@ -116,17 +150,15 @@ async function parseSwap(
   // Get logos from transaction info (stored when transaction was created)
   let inputLogoURI = extendedSwap.inputLogoURI
   let outputLogoURI = extendedSwap.outputLogoURI
-  
+
   if (!inputLogoURI && tokenIn?.isNative) {
     inputLogoURI = getNativeLogoURI(chainId)
   }
   if (!outputLogoURI && tokenOut?.isNative) {
     outputLogoURI = getNativeLogoURI(chainId)
   }
-  
-  const logos = inputLogoURI && outputLogoURI
-    ? [inputLogoURI, outputLogoURI]
-    : undefined
+
+  const logos = inputLogoURI && outputLogoURI ? [inputLogoURI, outputLogoURI] : undefined
 
   return {
     descriptor,
@@ -170,9 +202,9 @@ async function parseApproval(
   const extendedApproval = approval as any
   const storedSymbol = extendedApproval.tokenSymbol
   const storedLogoURI = extendedApproval.tokenLogoURI
-  
+
   let currency = await getCurrency(approval.tokenAddress, chainId, tokens)
-  
+
   // If currency couldn't be resolved but we have stored symbol, create a Token object
   if (!currency && storedSymbol && approval.tokenAddress && approval.tokenAddress !== '0x0') {
     try {
@@ -182,7 +214,7 @@ async function parseApproval(
       console.warn('Failed to create Token for approval:', error)
     }
   }
-  
+
   // Determine descriptor: use stored symbol, then currency symbol, then name, then truncated address
   let descriptor: string
   if (storedSymbol) {
@@ -198,16 +230,16 @@ async function parseApproval(
   } else {
     descriptor = t('common.unknown')
   }
-  
+
   // If we have stored logoURI but currency doesn't have it, add it to the currency
   if (storedLogoURI && currency && !(currency as any).logoURI) {
-    (currency as any).logoURI = storedLogoURI
+    ;(currency as any).logoURI = storedLogoURI
   }
-  
+
   // Return logoURI in logos array for proper icon display
   // PortfolioLogo will use logos array if provided, otherwise fall back to currencies
   const logos = storedLogoURI ? [storedLogoURI] : undefined
-  
+
   return {
     title: getActivityTitle(
       TransactionType.APPROVAL,
