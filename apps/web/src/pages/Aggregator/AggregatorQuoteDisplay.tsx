@@ -3,6 +3,7 @@ import { Trans } from 'uniswap/src/i18n'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { BigNumber } from '@ethersproject/bignumber'
+import { NumberType, useFormatter } from 'utils/formatNumbers'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -44,6 +45,7 @@ interface AggregatorQuoteDisplayProps {
 export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: AggregatorQuoteDisplayProps) {
   const account = useAccount()
   const theme = useTheme()
+  const { formatNumber } = useFormatter()
 
   if (loading) {
     return (
@@ -92,6 +94,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
       
       const divisor = BigNumber.from(10).pow(decimals)
       
+      // Check for very small amounts (< 0.000001)
       if (decimals >= 6) {
         const thresholdWei = BigNumber.from(10).pow(decimals - 6)
         if (amountBN.lt(thresholdWei)) {
@@ -99,10 +102,12 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
         }
       }
       
+      // Convert to decimal number
       const amountDecimal = amountBN.mul(BigNumber.from(10).pow(6)).div(divisor)
       const decimalValue = amountDecimal.toNumber() / 1e6
       
-      return decimalValue.toFixed(6)
+      // Use formatNumber with SwapDetailsAmount to get proper formatting (removes trailing zeros, uses significant figures)
+      return formatNumber({ input: decimalValue, type: NumberType.SwapDetailsAmount })
     } catch {
       return '0'
     }
@@ -129,7 +134,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
       {slippage !== undefined && (
         <QuoteRow>
           <Label>Max. Slippage:</Label>
-          <Value>{(slippage * 100).toFixed(2)}%</Value>
+          <Value>{Number((slippage * 100).toFixed(2))}%</Value>
         </QuoteRow>
       )}
       <QuoteRow>
@@ -139,7 +144,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
       {estimate.toAmountUSD && (
         <QuoteRow>
           <Label>USD Value:</Label>
-          <Value>${parseFloat(estimate.toAmountUSD).toFixed(4)}</Value>
+          <Value>{formatNumber({ input: parseFloat(estimate.toAmountUSD), type: NumberType.FiatTokenDetails })}</Value>
         </QuoteRow>
       )}
       
@@ -153,7 +158,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
           </QuoteRow>
           <QuoteRow>
             <Label>Gas Cost USD:</Label>
-            <Value>${parseFloat(gasCost.amountUSD).toFixed(6)}</Value>
+            <Value>{formatNumber({ input: parseFloat(gasCost.amountUSD), type: NumberType.FiatGasPrice })}</Value>
           </QuoteRow>
         </GasInfo>
       )}
