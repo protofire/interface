@@ -99,7 +99,7 @@ const Option = styled(Row)<{ isActive: boolean }>`
   text-align: center;
   gap: 4px;
   border-radius: 12px;
-  background: ${({ isActive, theme }) => (isActive ? theme.surface3 : 'transparent')};
+  background: ${({ isActive, theme }) => (isActive ? (theme.darkMode ? theme.accent2 : theme.surface3) : 'transparent')};
   pointer-events: ${({ isActive }) => isActive && 'none'};
 `
 
