@@ -16,6 +16,8 @@ import AggregatorSwapCurrencyInputPanel from './AggregatorSwapCurrencyInputPanel
 import { useEisenQuote } from './useEisenQuote'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { useEisenDexs } from './useEisenDexs'
+import { useEisenTokens } from './useEisenTokens'
+import { mockTokenToToken } from './mockTokenData'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { AggregatorQuoteDisplay } from './AggregatorQuoteDisplay'
 import { AggregatorSettings, OrderType } from './AggregatorSettings'
@@ -43,6 +45,8 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useCurrency } from 'hooks/Tokens'
 import { currencyId } from 'utils/currencyId'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { isAddress } from 'utilities/src/addresses'
+import { NATIVE_CHAIN_ID } from 'constants/tokens'
 
 const AggregatorHeader = styled(RowBetween)`
   margin-bottom: 12px;
@@ -86,6 +90,47 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const urlInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, currentChainId)
   const urlOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, currentChainId)
+  
+  const { tokens: eisenTokens, loading: eisenTokensLoading } = useEisenTokens(currentChainId)
+  
+  const isTokenAddress = useCallback((currencyId: string | undefined): boolean => {
+    if (!currencyId) return false
+    const lowerId = currencyId.toLowerCase()
+    if ([NATIVE_CHAIN_ID, 'native', 'eth'].includes(lowerId)) {
+      return false
+    }
+    return isAddress(currencyId) !== false
+  }, [])
+  
+  const inputCurrencyIdIsAddress = useMemo(() => {
+    return isTokenAddress(parsedCurrencyState.inputCurrencyId)
+  }, [parsedCurrencyState.inputCurrencyId, isTokenAddress])
+  
+  const outputCurrencyIdIsAddress = useMemo(() => {
+    return isTokenAddress(parsedCurrencyState.outputCurrencyId)
+  }, [parsedCurrencyState.outputCurrencyId, isTokenAddress])
+  
+  const eisenInputCurrency = useMemo(() => {
+    if (!inputCurrencyIdIsAddress || !parsedCurrencyState.inputCurrencyId || eisenTokensLoading) {
+      return null
+    }
+    const address = parsedCurrencyState.inputCurrencyId.toLowerCase()
+    const token = eisenTokens.find(t => t.address.toLowerCase() === address)
+    return token ? mockTokenToToken(token) : null
+  }, [inputCurrencyIdIsAddress, parsedCurrencyState.inputCurrencyId, eisenTokens, eisenTokensLoading])
+  
+  const eisenOutputCurrency = useMemo(() => {
+    if (!outputCurrencyIdIsAddress || !parsedCurrencyState.outputCurrencyId || eisenTokensLoading) {
+      return null
+    }
+    const address = parsedCurrencyState.outputCurrencyId.toLowerCase()
+    const token = eisenTokens.find(t => t.address.toLowerCase() === address)
+    return token ? mockTokenToToken(token) : null
+  }, [outputCurrencyIdIsAddress, parsedCurrencyState.outputCurrencyId, eisenTokens, eisenTokensLoading])
+  
+  const resolvedInputCurrency = eisenInputCurrency || urlInputCurrency
+  const resolvedOutputCurrency = eisenOutputCurrency || urlOutputCurrency
+  
   const [hasInitializedFromUrl, setHasInitializedFromUrl] = useState(false)
 
   const [currencyState, setCurrencyState] = useState<{
@@ -106,20 +151,24 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   useEffect(() => {
     if (!hasInitializedFromUrl) {
+      if ((inputCurrencyIdIsAddress || outputCurrencyIdIsAddress) && eisenTokensLoading) {
+        return
+      }
+      
       let updated = false
 
-      if (urlInputCurrency && !currencyState.inputCurrency) {
+      if (resolvedInputCurrency && !currencyState.inputCurrency) {
         setCurrencyState((prev) => ({
           ...prev,
-          inputCurrency: urlInputCurrency,
+          inputCurrency: resolvedInputCurrency,
         }))
         updated = true
       }
 
-      if (urlOutputCurrency && !currencyState.outputCurrency) {
+      if (resolvedOutputCurrency && !currencyState.outputCurrency) {
         setCurrencyState((prev) => ({
           ...prev,
-          outputCurrency: urlOutputCurrency,
+          outputCurrency: resolvedOutputCurrency,
         }))
         updated = true
       }
@@ -132,19 +181,22 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         updated = true
       }
 
-      if (updated || urlInputCurrency || urlOutputCurrency || parsedCurrencyState.value) {
+      if (updated || resolvedInputCurrency || resolvedOutputCurrency || parsedCurrencyState.value || (!eisenTokensLoading && (inputCurrencyIdIsAddress || outputCurrencyIdIsAddress))) {
         setHasInitializedFromUrl(true)
       }
     }
   }, [
     hasInitializedFromUrl,
-    urlInputCurrency,
-    urlOutputCurrency,
+    resolvedInputCurrency,
+    resolvedOutputCurrency,
     parsedCurrencyState.value,
     parsedCurrencyState.field,
     currencyState.inputCurrency,
     currencyState.outputCurrency,
     swapState.typedValue,
+    inputCurrencyIdIsAddress,
+    outputCurrencyIdIsAddress,
+    eisenTokensLoading,
   ])
 
   useEffect(() => {
@@ -170,18 +222,20 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const [transactionError, setTransactionError] = useState<Error | null>(null)
   const [wasCancelled, setWasCancelled] = useState(false)
 
-  // USDC
   const DEFAULT_INPUT_TOKEN_ADDRESS = '0xF1815bd50389c46847f0Bda824eC8da914045D14'
   const defaultInputCurrency = useCurrency(DEFAULT_INPUT_TOKEN_ADDRESS, currentChainId)
 
   useEffect(() => {
-    if (!currencyState.inputCurrency && !currencyState.outputCurrency && !urlInputCurrency && !urlOutputCurrency && currentChainId) {
+    const needsTokenResolution = inputCurrencyIdIsAddress || outputCurrencyIdIsAddress
+    const shouldWait = needsTokenResolution && eisenTokensLoading
+    
+    if (!currencyState.inputCurrency && !currencyState.outputCurrency && !resolvedInputCurrency && !resolvedOutputCurrency && currentChainId && !shouldWait) {
       setCurrencyState({
         inputCurrency: defaultInputCurrency || null,
         outputCurrency: nativeOnChain(currentChainId),
       })
     }
-  }, [currentChainId, currencyState.inputCurrency, currencyState.outputCurrency, urlInputCurrency, urlOutputCurrency, defaultInputCurrency])
+  }, [currentChainId, currencyState.inputCurrency, currencyState.outputCurrency, resolvedInputCurrency, resolvedOutputCurrency, defaultInputCurrency, inputCurrencyIdIsAddress, outputCurrencyIdIsAddress, eisenTokensLoading])
 
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
@@ -192,8 +246,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     setExecuting(false)
     setTxHash(undefined)
     
-    // Only reset swap state if transaction was confirmed or failed (not cancelled)
-    // If cancelled, keep the state so user can try again
     if (!wasCancelled) {
       setSwapState({
         typedValue: '',
@@ -206,7 +258,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       setQuoteResetKey(prev => prev + 1)
     }
     
-    // Reset cancellation flag after handling dismissal
     setWasCancelled(false)
   }, [currentChainId, wasCancelled, defaultInputCurrency])
 
@@ -258,7 +309,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       return null
     }
 
-   // Eisen allows only input (fromAmount)
+    // Eisen API only accepts input amounts (fromAmount)
     if (independentField !== Field.INPUT) {
       return null
     }
@@ -396,7 +447,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       inputCurrency: prev.outputCurrency,
       outputCurrency: prev.inputCurrency,
     }))
-    // Use estimated output amount as new input amount if available, otherwise clear
     setSwapState((prev) => ({
       ...prev,
       typedValue: estimatedOutput || '',
@@ -519,7 +569,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     } catch (err) {
       console.error('Transaction failed:', err)
       
-      // If user rejected/cancelled, don't show error - just close modal and allow retry
       if (didUserReject(err)) {
         setWasCancelled(true)
         setShowTransactionModal(false)
@@ -529,7 +578,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         return
       }
       
-      // For actual errors, show error state
       setTransactionError(err instanceof Error ? err : new Error('Transaction failed'))
       setShowTransactionModal(true)
     } finally {
@@ -591,6 +639,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
             otherCurrency={currencies[Field.OUTPUT]}
             id="aggregator-currency-input"
             loading={independentField === Field.OUTPUT && quoteLoading}
+            initialCurrencyLoading={inputCurrencyIdIsAddress && eisenTokensLoading}
           />
         </SwapSection>
         <ArrowWrapper clickable={!!chainId}>
@@ -624,6 +673,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           otherCurrency={currencies[Field.INPUT]}
             id="aggregator-currency-output"
             loading={independentField === Field.INPUT && quoteLoading}
+            initialCurrencyLoading={outputCurrencyIdIsAddress && eisenTokensLoading}
         />
       </OutputSwapSection>
 

@@ -279,7 +279,7 @@ const AggregatorSwapCurrencyInputPanel = forwardRef<HTMLInputElement, Aggregator
     const [tooltipVisible, setTooltipVisible] = useState(false)
 
     const showCurrencyLoadingSpinner =
-      initialCurrencyLoading && !otherCurrency && !isUserSelectedToken && currencyField === CurrencyField.INPUT
+      initialCurrencyLoading && !currency && !isUserSelectedToken
 
     // Get Eisen API token icon
     const currentChainId = chainId || FLOW_CHAIN_ID
