@@ -223,19 +223,26 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const [wasCancelled, setWasCancelled] = useState(false)
 
   const DEFAULT_INPUT_TOKEN_ADDRESS = '0xF1815bd50389c46847f0Bda824eC8da914045D14'
-  const defaultInputCurrency = useCurrency(DEFAULT_INPUT_TOKEN_ADDRESS, currentChainId)
+  const defaultInputCurrencyFromHook = useCurrency(DEFAULT_INPUT_TOKEN_ADDRESS, currentChainId)
+  
+  const defaultInputCurrencyFromEisen = useMemo(() => {
+    if (eisenTokensLoading) return null
+    const token = eisenTokens.find(t => t.address.toLowerCase() === DEFAULT_INPUT_TOKEN_ADDRESS.toLowerCase())
+    return token ? mockTokenToToken(token) : null
+  }, [eisenTokens, eisenTokensLoading])
+  
+  const defaultInputCurrency = defaultInputCurrencyFromEisen || defaultInputCurrencyFromHook
 
   useEffect(() => {
-    const needsTokenResolution = inputCurrencyIdIsAddress || outputCurrencyIdIsAddress
-    const shouldWait = needsTokenResolution && eisenTokensLoading
+    const hasUrlParams = parsedCurrencyState.inputCurrencyId || parsedCurrencyState.outputCurrencyId
     
-    if (!currencyState.inputCurrency && !currencyState.outputCurrency && !resolvedInputCurrency && !resolvedOutputCurrency && currentChainId && !shouldWait) {
+    if (!hasUrlParams && !currencyState.inputCurrency && !currencyState.outputCurrency && currentChainId && !eisenTokensLoading) {
       setCurrencyState({
         inputCurrency: defaultInputCurrency || null,
         outputCurrency: nativeOnChain(currentChainId),
       })
     }
-  }, [currentChainId, currencyState.inputCurrency, currencyState.outputCurrency, resolvedInputCurrency, resolvedOutputCurrency, defaultInputCurrency, inputCurrencyIdIsAddress, outputCurrencyIdIsAddress, eisenTokensLoading])
+  }, [currentChainId, currencyState.inputCurrency, currencyState.outputCurrency, defaultInputCurrency, parsedCurrencyState.inputCurrencyId, parsedCurrencyState.outputCurrencyId, eisenTokensLoading])
 
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)

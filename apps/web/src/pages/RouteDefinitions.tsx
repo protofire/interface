@@ -6,12 +6,10 @@ import { Navigate, matchPath, useLocation } from 'react-router-dom'
 import { shouldDisableNFTRoutesAtom } from 'state/application/atoms'
 import { t } from 'uniswap/src/i18n'
 import { isBrowserRouterEnabled } from 'utils/env'
-// High-traffic pages (index and /swap) should not be lazy-loaded.
-import Landing from 'pages/Landing'
-// import { NewPosition } from 'pages/LegacyPool/NewPosition'
-// import Swap from 'pages/Swap'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
+
+import AggregatorPage from 'pages/Aggregator'
 
 // const NftExplore = lazy(() => import('nft/pages/explore'))
 // const Collection = lazy(() => import('nft/pages/collection'))
@@ -34,7 +32,6 @@ const NotFound = lazy(() => import('pages/NotFound'))
 // const TokenDetails = lazy(() => import('pages/TokenDetails'))
 const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const Terms = lazy(() => import('pages/Terms'))
-const AggregatorPage = lazy(() => import('pages/Aggregator'))
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -111,7 +108,7 @@ export const routes: RouteDefinition[] = [
     getTitle: () => StaticTitlesAndDescriptions.UniswapTitle,
     getDescription: () => StaticTitlesAndDescriptions.SwapDescription,
     getElement: (args) => {
-      return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Landing />
+      return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Navigate to="/aggregator" replace />
     },
   }),
   // createRouteDefinition({
@@ -211,11 +208,7 @@ export const routes: RouteDefinition[] = [
   // }),
   createRouteDefinition({
     path: '/aggregator',
-    getElement: () => (
-      <Suspense fallback={null}>
-        <AggregatorPage />
-      </Suspense>
-    ),
+    getElement: () => <AggregatorPage />,
     getTitle: () => StaticTitlesAndDescriptions.SwapTitle,
   }),
   // createRouteDefinition({
