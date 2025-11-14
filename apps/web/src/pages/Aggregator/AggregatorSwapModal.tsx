@@ -12,7 +12,8 @@ import { ThemedText } from 'theme/components'
 import { Trans, t } from 'uniswap/src/i18n'
 import styled from 'lib/styled-components'
 import { CurrencyAmount } from '@uniswap/sdk-core'
-import { useIsTransactionPending, useIsTransactionConfirmed } from 'state/transactions/hooks'
+import { useIsTransactionPending, useIsTransactionConfirmed, useTransaction } from 'state/transactions/hooks'
+import { TransactionStatus } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { useFormatter } from 'utils/formatNumbers'
 import { useAccount } from 'hooks/useAccount'
 import { UniverseChainId } from 'uniswap/src/types/chains'
@@ -68,8 +69,10 @@ export function AggregatorSwapModal({
   attemptingTxn,
 }: AggregatorSwapModalProps) {
   const { chainId } = useAccount()
+  const transaction = useTransaction(txHash)
   const isTransactionPending = useIsTransactionPending(txHash)
   const isTransactionConfirmed = useIsTransactionConfirmed(txHash)
+  const isTransactionFailed = transaction?.status === TransactionStatus.Failed
 
   // Create CurrencyAmount objects for display
   const inputAmountObj = inputCurrency && inputAmount
@@ -82,11 +85,11 @@ export function AggregatorSwapModal({
   const { formatReviewSwapCurrencyAmount } = useFormatter()
 
   // Determine modal state
-  const hasError = Boolean(error)
+  const hasError = Boolean(error) || isTransactionFailed
   const swapPending = isTransactionPending && !isTransactionConfirmed
-  const swapConfirmed = isTransactionConfirmed
-  const showSuccess = swapConfirmed || (chainId !== UniverseChainId.Mainnet && swapPending)
-  const showSubmitted = swapPending && !swapConfirmed && chainId === UniverseChainId.Mainnet
+  const swapConfirmed = isTransactionConfirmed && !isTransactionFailed
+  const showSuccess = swapConfirmed || (chainId !== UniverseChainId.Mainnet && swapPending && !isTransactionFailed)
+  const showSubmitted = swapPending && !swapConfirmed && chainId === UniverseChainId.Mainnet && !isTransactionFailed
 
   // Determine title
   const getTitle = () => {
