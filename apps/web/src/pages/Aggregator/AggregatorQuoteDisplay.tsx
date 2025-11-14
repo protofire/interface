@@ -6,6 +6,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { Price } from '@uniswap/sdk-core'
 import TradePrice from 'components/swap/TradePrice'
+import { getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -84,7 +85,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
   // Parse output amounts with proper decimals - get decimals from the quote's toToken
   const toToken = quote?.result?.action?.toToken
   const outputDecimals = toToken?.decimals ?? 18 // Default to 18 if not available
-  const outputTokenSymbol = toToken?.symbol ?? 'tokens'
+  const outputTokenSymbol = getTokenSymbolOverride(toToken?.address, toToken?.symbol ?? 'tokens')
   
   const formatAmount = (amount: string, decimals: number): string => {
     if (!amount || amount === '0') return '0'
@@ -164,7 +165,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
           <QuoteRow>
             <Label>Gas Cost:</Label>
             <Value>
-              {gasCostFormatted} {gasCost.token.symbol}
+              {gasCostFormatted} {getTokenSymbolOverride(gasCost.token.address, gasCost.token.symbol)}
             </Value>
           </QuoteRow>
           <QuoteRow>
