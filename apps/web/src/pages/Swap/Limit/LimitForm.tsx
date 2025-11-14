@@ -488,7 +488,7 @@ function SubmitOrderButton({
   if (hasInsufficientFunds) {
     return (
       <ButtonError disabled>
-        <Text fontSize={20}>
+        <Text fontSize={20} style={{ fontFamily: "'Dosis', sans-serif" }}>
           {inputCurrency ? (
             <Trans i18nKey="common.insufficientTokenBalance.error" values={{ tokenSymbol: inputCurrency.symbol }} />
           ) : (
@@ -507,7 +507,7 @@ function SubmitOrderButton({
         data-testid="submit-order-button"
         disabled={!trade || !!limitPriceError}
       >
-        <Text color={validColor(colors.white)} fontSize={20}>
+        <Text color={validColor(colors.white)} fontSize={20} style={{ fontFamily: "'Dosis', sans-serif" }}>
           <Trans i18nKey="common.confirm" />
         </Text>
       </ButtonError>

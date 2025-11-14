@@ -80,6 +80,7 @@ export const CurrencySelect = styled(ButtonGray)<CurrencySelectProps>`
   border: 1px solid ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent1)};
   font-size: 24px;
   font-weight: 485;
+  font-family: 'Dosis', sans-serif;
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   padding: ${({ selected }) => (selected ? '4px 8px 4px 4px' : '6px 6px 6px 8px')};
   gap: 8px;
@@ -192,6 +193,7 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size: 20px;
   font-weight: 535;
+  font-family: 'Dosis', sans-serif;
 `
 
 const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
@@ -414,7 +416,7 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                       color={theme.neutral2}
                       fontWeight={485}
                       fontSize={14}
-                      style={{ display: 'inline' }}
+                      style={{ display: 'inline', fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}
                     >
                       {!hideBalance && currency && selectedCurrencyBalance ? (
                         renderBalance ? (

@@ -47,9 +47,11 @@ export function FiatValue({
     return <FiatLoadingBubble />
   }
 
+  const interFont = { fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }
+  
   return (
     <Row gap="sm">
-      <ThemedText.BodySmall color="neutral2" data-testid={testId}>
+      <ThemedText.BodySmall color="neutral2" data-testid={testId} style={interFont}>
         {fiatValue.data ? (
           formatNumber({
             input: fiatValue.data,
@@ -60,7 +62,7 @@ export function FiatValue({
         )}
       </ThemedText.BodySmall>
       {priceImpact && (
-        <ThemedText.BodySmall color={priceImpactColor}>
+        <ThemedText.BodySmall color={priceImpactColor} style={interFont}>
           <MouseoverTooltip placement="right" text={<Trans i18nKey="swap.estimatedDifference.label" />}>
             ({formatPercent(priceImpact.multiply(-1))})
           </MouseoverTooltip>

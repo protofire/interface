@@ -24,6 +24,7 @@ const StyledPriceContainer = styled.button`
   text-align: left;
   flex-wrap: wrap;
   user-select: text;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `
 
 export default function TradePrice({ price }: TradePriceProps) {
@@ -46,7 +47,7 @@ export default function TradePrice({ price }: TradePriceProps) {
   const labelInverted = showInverted ? `${price.baseCurrency?.symbol} ` : `${price.quoteCurrency?.symbol}`
   const flipPrice = useCallback(() => setShowInverted(!showInverted), [setShowInverted, showInverted])
 
-  const text = `${'1 ' + labelInverted + ' = ' + formattedPrice ?? '-'} ${label}`
+  const text = `1 ${labelInverted} = ${formattedPrice} ${label}`
 
   return (
     <StyledPriceContainer
@@ -56,9 +57,9 @@ export default function TradePrice({ price }: TradePriceProps) {
       }}
       title={text}
     >
-      <ThemedText.BodySmall>{text}</ThemedText.BodySmall>{' '}
+      <ThemedText.BodySmall style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>{text}</ThemedText.BodySmall>{' '}
       {usdPrice && (
-        <ThemedText.BodySmall color="neutral2">
+        <ThemedText.BodySmall color="neutral2" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>
           (
           {formatNumber({
             input: usdPrice,

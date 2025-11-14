@@ -40,6 +40,7 @@ export enum SwapLineItemType {
 
 const ColorWrapper = styled.span<{ textColor?: keyof DefaultTheme }>`
   ${({ textColor, theme }) => textColor && `color: ${theme[textColor]};`}
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `
 
 const AutoBadge = styled(ThemedText.LabelMicro).attrs({ fontWeight: 535 })`
@@ -50,6 +51,7 @@ const AutoBadge = styled(ThemedText.LabelMicro).attrs({ fontWeight: 535 })`
   height: 20px;
   padding: 0 6px;
   align-items: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `
 
 function BaseTooltipContent({ children, url }: { children: ReactNode; url: string }) {
@@ -116,7 +118,7 @@ function ColoredPercentRow({ percent }: { percent: Percent }) {
 function CurrencyAmountRow({ amount }: { amount: CurrencyAmount<Currency> }) {
   const { formatCurrencyAmount } = useFormatter()
   const formattedAmount = formatCurrencyAmount({ amount, type: NumberType.SwapDetailsAmount })
-  return <>{`${formattedAmount} ${amount.currency.symbol}`}</>
+  return <span style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>{`${formattedAmount} ${amount.currency.symbol}`}</span>
 }
 
 function FeeRow({ trade: { swapFee, outputAmount } }: { trade: SubmittableTrade }) {
@@ -130,7 +132,7 @@ function FeeRow({ trade: { swapFee, outputAmount } }: { trade: SubmittableTrade 
     return <CurrencyAmountRow amount={feeCurrencyAmount} />
   }
 
-  return <>{formatNumber({ input: outputFeeFiatValue, type: NumberType.FiatGasPrice })}</>
+  return <span style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>{formatNumber({ input: outputFeeFiatValue, type: NumberType.FiatGasPrice })}</span>
 }
 
 function useLineItem(props: SwapLineItemProps): LineItemData | undefined {
@@ -187,8 +189,8 @@ function useLineItem(props: SwapLineItemProps): LineItemData | undefined {
         Label: () => <Trans i18nKey="settings.maxSlippage" />,
         TooltipBody: () => <SlippageTooltipContent />,
         Value: () => (
-          <Row gap="8px">
-            {isAutoSlippage && <AutoBadge>{t(`common.automatic`)}</AutoBadge>} {formatPercent(allowedSlippage)}
+          <Row gap="8px" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>
+            {isAutoSlippage && <AutoBadge>{t(`common.automatic`)}</AutoBadge>} <span style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif" }}>{formatPercent(allowedSlippage)}</span>
           </Row>
         ),
       }

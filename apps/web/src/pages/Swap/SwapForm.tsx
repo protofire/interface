@@ -650,7 +650,7 @@ export function SwapForm({
               data-testid="wrap-button"
               style={{ marginTop: 10 }}
             >
-              <Text variant="buttonLabel1" color="neutralContrast">
+              <Text variant="buttonLabel1" color="neutralContrast" style={{ fontFamily: "'Dosis', sans-serif" }}>
                 <Trans i18nKey="common.getStarted" />
               </Text>
             </ButtonPrimary>
@@ -720,7 +720,7 @@ export function SwapForm({
                 disabled={isUsingBlockedExtension || !getIsReviewableQuote(trade, tradeState, swapInputError)}
                 style={{ marginTop: 10 }}
               >
-                <Text fontSize={20} color="neutralContrast">
+                <Text fontSize={20} color="neutralContrast" style={{ fontFamily: "'Dosis', sans-serif" }}>
                   {swapInputError ?? <Trans i18nKey="common.swap" />}
                 </Text>
               </ButtonError>

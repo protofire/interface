@@ -70,6 +70,7 @@ export const ButtonPrimary = styled(BaseButton)`
   background-color: ${({ theme }) => theme.accent1};
   font-size: 20px;
   font-weight: 535;
+  font-family: 'Dosis', sans-serif;
   padding: 16px;
   color: ${({ theme }) => theme.neutralContrast};
   &:focus {
@@ -108,6 +109,7 @@ const BaseButtonLight = styled(BaseButton)`
   color: ${({ theme }) => theme.accent1};
   font-size: 20px;
   font-weight: 535;
+  font-family: 'Dosis', sans-serif;
 
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
@@ -265,6 +267,7 @@ const ButtonConfirmedStyle = styled(BaseButton)`
 const ButtonErrorStyle = styled(BaseButton)`
   background-color: ${({ theme }) => theme.critical};
   border: 1px solid ${({ theme }) => theme.critical};
+  font-family: 'Dosis', sans-serif;
 
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.critical)};
