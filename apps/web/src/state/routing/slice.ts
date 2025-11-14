@@ -103,6 +103,12 @@ export const routingApi = createApi({
     getQuote: build.query<TradeResult, GetQuoteArgs>({
       queryFn(args, _api, _extraOptions, fetch) {
         return trace({ name: 'Quote', op: 'quote', data: { ...args } }, async (trace) => {
+          if (forkConfig.routingDisabled) {
+            return {
+              data: { state: QuoteState.NOT_FOUND, latencyMs: trace.now() },
+            }
+          }
+
           logSwapQuoteRequest(args.tokenInChainId, args.routerPreference, false)
           const {
             tokenInAddress: tokenIn,
