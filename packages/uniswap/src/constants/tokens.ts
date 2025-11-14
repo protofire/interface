@@ -285,8 +285,8 @@ export const USDC_FLOW_MAINNET = new Token(
   UniverseChainId.FlowMainnet,
   '0xF1815bd50389c46847f0Bda824eC8da914045D14',
   6,
-  'stgUSDC',
-  'stgUSDC',
+  'USDC',
+  'USDC',
 )
 
 export const USDC_FLOW_TESTNET = new Token(
