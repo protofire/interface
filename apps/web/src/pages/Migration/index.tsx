@@ -1,5 +1,5 @@
 import { SmallButtonPrimary } from 'components/Button'
-import { LightCard } from 'components/Card'
+import { LightCard, YellowCard } from 'components/Card'
 import styled, { useTheme } from 'lib/styled-components'
 import { ExternalLink as ExternalLinkIcon } from 'react-feather'
 import { ExternalLink } from 'theme/components'
@@ -236,6 +236,39 @@ export default function MigrationPage() {
             description="Request deployment for your EVM Network!"
           />
         </div>
+
+        <YellowCard
+          padding="20px 24px"
+          $borderRadius="16px"
+          style={{
+            marginBottom: '2rem',
+            marginTop: '1rem',
+            maxWidth: '1000px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          <p
+            style={{
+              fontSize: '1rem',
+              lineHeight: '1.6',
+              color: theme.neutral1,
+              margin: 0,
+              textAlign: 'center',
+            }}
+          >
+            <strong style={{ color: theme.accent1 }}>Note:</strong> If you previously used chains that were not
+            migrated, you can access and remove your liquidity through{' '}
+            <ExternalLink
+              href="https://staging.reservoir.w3us.site/"
+              style={{ color: theme.accent1, textDecoration: 'underline', fontWeight: 'bold' }}
+            >
+              this website
+            </ExternalLink>.
+            <br></br>
+            It is going to be available until the end of November 2025.
+          </p>
+        </YellowCard>
 
         <div style={{ marginBottom: '2rem', paddingTop: '2rem', borderTop: `1px solid ${theme.surface2}` }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1, marginBottom: '0.5rem' }}>
