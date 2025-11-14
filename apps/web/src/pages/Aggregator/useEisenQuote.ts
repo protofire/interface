@@ -207,6 +207,7 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
     params?.integrator,
     params?.maxSplit,
     params?.maxEdge,
+    params?.includedDex,
   ])
 
   return {

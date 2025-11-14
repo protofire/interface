@@ -4,6 +4,8 @@ import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { Price } from '@uniswap/sdk-core'
+import TradePrice from 'components/swap/TradePrice'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -40,9 +42,10 @@ interface AggregatorQuoteDisplayProps {
   loading: boolean
   error: string | null
   slippage?: number
+  exchangeRate?: Price<any, any> | null
 }
 
-export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: AggregatorQuoteDisplayProps) {
+export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchangeRate }: AggregatorQuoteDisplayProps) {
   const account = useAccount()
   const theme = useTheme()
   const { formatNumber } = useFormatter()
@@ -127,6 +130,14 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage }: Aggr
         Quote Details
       </div>
       
+      {exchangeRate && (
+        <QuoteRow>
+          <Label>Exchange Rate:</Label>
+          <Value>
+            <TradePrice price={exchangeRate} />
+          </Value>
+        </QuoteRow>
+      )}
       <QuoteRow>
         <Label>Output Amount:</Label>
         <Value>{toAmountFormatted} {outputTokenSymbol}</Value>

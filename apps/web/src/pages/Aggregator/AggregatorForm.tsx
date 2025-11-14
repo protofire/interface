@@ -1,4 +1,4 @@
-import { Currency, Token } from '@uniswap/sdk-core'
+import { Currency, Token, Price, CurrencyAmount } from '@uniswap/sdk-core'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
@@ -306,9 +306,6 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
-  const inputFiatValue = undefined
-  const outputFiatValue = undefined
-
   const { dexs: availableDexs } = useEisenDexs(currentChainId)
 
   const quoteParams = useMemo(() => {
@@ -389,30 +386,67 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
 
+  const inputFiatValue = useMemo(() => {
+    if (!quote?.result?.estimate?.fromAmountUSD) {
+      return { data: undefined, isLoading: quoteLoading }
+    }
+    const usdValue = parseFloat(quote.result.estimate.fromAmountUSD)
+    return {
+      data: isNaN(usdValue) ? undefined : usdValue,
+      isLoading: quoteLoading,
+    }
+  }, [quote?.result?.estimate?.fromAmountUSD, quoteLoading])
+
+  const outputFiatValue = useMemo(() => {
+    if (!quote?.result?.estimate?.toAmountUSD) {
+      return { data: undefined, isLoading: quoteLoading }
+    }
+    const usdValue = parseFloat(quote.result.estimate.toAmountUSD)
+    return {
+      data: isNaN(usdValue) ? undefined : usdValue,
+      isLoading: quoteLoading,
+    }
+  }, [quote?.result?.estimate?.toAmountUSD, quoteLoading])
+
+  const exchangeRate = useMemo(() => {
+    if (!quote?.result?.estimate || !currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
+      return null
+    }
+
+    try {
+      const inputCurrency = currencies[Field.INPUT]
+      const outputCurrency = currencies[Field.OUTPUT]
+      const fromAmount = quote.result.action.fromAmount
+      const toAmount = quote.result.estimate.toAmount
+
+      if (!fromAmount || !toAmount) {
+        return null
+      }
+
+      // Create CurrencyAmount objects from the raw amounts
+      const inputAmount = CurrencyAmount.fromRawAmount(inputCurrency, fromAmount)
+      const outputAmount = CurrencyAmount.fromRawAmount(outputCurrency, toAmount)
+
+      // Create Price: baseCurrency (input) / quoteCurrency (output)
+      // This represents: 1 inputCurrency = X outputCurrency
+      const price = new Price(inputCurrency, outputCurrency, inputAmount.quotient, outputAmount.quotient)
+      
+      return price
+    } catch (error) {
+      console.error('Error calculating exchange rate:', error)
+      return null
+    }
+  }, [quote, currencies])
+
   const estimatedOutput = useMemo(() => {
     if (quote?.result?.estimate && currencies[Field.OUTPUT]) {
       const outputCurrency = currencies[Field.OUTPUT]
-      const decimals = outputCurrency?.decimals || 6
-
-      const expectedOutputWei = quote.result.estimate.toAmount
-      const formatAmount = (amount: string, decimals: number): string => {
-        if (!amount) return '0'
-        const amountBigInt = BigInt(amount)
-        const divisor = BigInt(10 ** decimals)
-        const quotient = amountBigInt / divisor
-        const remainder = amountBigInt % divisor
-
-        if (remainder === BigInt(0)) {
-          return quotient.toString()
-        }
-
-        const remainderStr = remainder.toString().padStart(decimals, '0')
-        const trimmedRemainder = remainderStr.replace(/0+$/, '')
-        return `${quotient}.${trimmedRemainder}`
+      try {
+        const amount = CurrencyAmount.fromRawAmount(outputCurrency, quote.result.estimate.toAmount)
+        return amount.toExact()
+      } catch {
+        return ''
       }
-
-      const expectedOutput = formatAmount(expectedOutputWei, decimals)
-      return expectedOutput
     }
     return ''
   }, [quote, currencies])
@@ -690,6 +724,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         loading={quoteLoading} 
         error={quoteError}
         slippage={slippage}
+        exchangeRate={exchangeRate}
       />
 
       <div style={{ marginTop: '16px' }}>
