@@ -38,8 +38,8 @@ export const WC_PARAMS = {
   metadata: {
     name: 'Swap',
     description: 'Swap',
-    url: 'https://swap.replace.domain',
-    icons: ['https://swap.replace.domain/favicon.png'],
+    url: 'https://swap.flow.com',
+    icons: ['https://swap.flow.com/favicon.png'],
   },
   qrModalOptions: {
     themeVariables: {
