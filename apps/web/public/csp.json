@@ -75,7 +75,7 @@
     "https://mainnet.evm.nodes.onflow.org",
     "https://evm.flowscan.io",
     "https://raw.githubusercontent.com/onflow/assets/main/tokens/*",
-    "https://cyan-legislative-leech-117.mypinata.cloud"
+    "https://assets.swap.w3us.site/networks/flow.json"
   ],
   "workerSrc": [
     "'self'",
