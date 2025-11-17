@@ -260,7 +260,7 @@ export default function MigrationPage() {
             <strong style={{ color: theme.accent1 }}>Note:</strong> If you previously used chains that were not
             migrated, you can access and remove your liquidity through{' '}
             <ExternalLink
-              href="https://staging.reservoir.w3us.site/"
+              href="https://ink.reservoir.tools/#/swap?chain=ink"
               style={{ color: theme.accent1, textDecoration: 'underline', fontWeight: 'bold' }}
             >
               this website
