@@ -56,6 +56,7 @@ import {
   USDF_FLOW_MAINNET,
   USDC_FLOW_MAINNET,
   USDC_FLOW_TESTNET,
+  WBTC_FLOW_MAINNET,
   USDC_INK,
   USDC_MODE,
   USDC_REDSTONE,
@@ -280,6 +281,7 @@ export const COMMON_BASES: ChainCurrencyList = {
     USDC_FLOW_MAINNET,
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowMainnet] as Token,
     USDF_FLOW_MAINNET,
+    WBTC_FLOW_MAINNET,
   ].map(buildCurrencyInfo),
   [UniverseChainId.FlowTestnet]: [
     nativeOnChain(UniverseChainId.FlowTestnet),
@@ -314,7 +316,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
-  [UniverseChainId.FlowMainnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowMainnet], USDF_FLOW_MAINNET],
+  [UniverseChainId.FlowMainnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowMainnet], USDF_FLOW_MAINNET, WBTC_FLOW_MAINNET],
   [UniverseChainId.FlowTestnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet], USDC_FLOW_TESTNET],
 }
 
