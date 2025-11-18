@@ -4,7 +4,7 @@ import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
-import { Price } from '@uniswap/sdk-core'
+import { Price, Percent } from '@uniswap/sdk-core'
 import TradePrice from 'components/swap/TradePrice'
 import { getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 
@@ -44,12 +44,13 @@ interface AggregatorQuoteDisplayProps {
   error: string | null
   slippage?: number
   exchangeRate?: Price<any, any> | null
+  priceImpact?: Percent | undefined
 }
 
-export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchangeRate }: AggregatorQuoteDisplayProps) {
+export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchangeRate, priceImpact }: AggregatorQuoteDisplayProps) {
   const account = useAccount()
   const theme = useTheme()
-  const { formatNumber } = useFormatter()
+  const { formatNumber, formatPercent } = useFormatter()
 
   if (loading) {
     return (
@@ -147,6 +148,22 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
         <QuoteRow>
           <Label>Max. Slippage:</Label>
           <Value>{Number((slippage * 100).toFixed(2))}%</Value>
+        </QuoteRow>
+      )}
+      {priceImpact && (
+        <QuoteRow>
+          <Label>Price Impact:</Label>
+          <Value>
+            {(() => {
+              // Show "<1%" if price impact is less than 1%
+              const onePercent = new Percent(1, 100)
+              const absPriceImpact = priceImpact.lessThan(0) ? priceImpact.multiply(-1) : priceImpact
+              if (absPriceImpact.lessThan(onePercent)) {
+                return '<1%'
+              }
+              return formatPercent(priceImpact)
+            })()}
+          </Value>
         </QuoteRow>
       )}
       <QuoteRow>

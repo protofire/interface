@@ -9,11 +9,13 @@ import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'co
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { useState, useCallback, useMemo, useEffect } from 'react'
+import useDebounce from 'hooks/useDebounce'
 import { ArrowDown } from 'react-feather'
 import { Trans } from 'uniswap/src/i18n'
 import { CurrencyField } from 'uniswap/src/types/currency'
 import AggregatorSwapCurrencyInputPanel from './AggregatorSwapCurrencyInputPanel'
 import { useEisenQuote } from './useEisenQuote'
+import { usePriceImpact } from './usePriceImpact'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { useEisenDexs } from './useEisenDexs'
 import { useEisenTokens } from './useEisenTokens'
@@ -308,6 +310,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const { dexs: availableDexs } = useEisenDexs(currentChainId)
 
+  // Debounce typedValue to prevent excessive quote requests while user is typing
+  const DEBOUNCE_TIME = 350
+  const debouncedTypedValue = useDebounce(typedValue, DEBOUNCE_TIME)
+  const isDebouncing = typedValue !== debouncedTypedValue
+
   const quoteParams = useMemo(() => {
     if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
       return null
@@ -318,11 +325,16 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       return null
     }
 
-    if (!typedValue || typedValue.trim() === '') {
+    // Use debounced value for quote params, but skip if still debouncing
+    if (isDebouncing) {
       return null
     }
 
-    const parsedValue = parseFloat(typedValue)
+    if (!debouncedTypedValue || debouncedTypedValue.trim() === '') {
+      return null
+    }
+
+    const parsedValue = parseFloat(debouncedTypedValue)
     if (isNaN(parsedValue) || parsedValue <= 0) {
       return null
     }
@@ -331,7 +343,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     const decimals = inputCurrency?.decimals || 18
     let fromAmountWei: string
     try {
-      fromAmountWei = parseUnits(typedValue, decimals).toString()
+      fromAmountWei = parseUnits(debouncedTypedValue, decimals).toString()
       if (fromAmountWei === '0') {
         return null
       }
@@ -382,7 +394,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }
 
     return params
-  }, [currencies, typedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs, maxsplit, maxedge])
+  }, [currencies, debouncedTypedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs, maxsplit, maxedge, isDebouncing])
 
   const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
 
@@ -407,6 +419,8 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       isLoading: quoteLoading,
     }
   }, [quote?.result?.estimate?.toAmountUSD, quoteLoading])
+
+  const priceImpact = usePriceImpact(quote, currentChainId)
 
   const exchangeRate = useMemo(() => {
     if (!quote?.result?.estimate || !currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
@@ -725,6 +739,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         error={quoteError}
         slippage={slippage}
         exchangeRate={exchangeRate}
+        priceImpact={priceImpact}
       />
 
       <div style={{ marginTop: '16px' }}>
