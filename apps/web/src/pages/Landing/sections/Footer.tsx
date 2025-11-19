@@ -38,18 +38,13 @@ const DAOLogo = deprecatedStyled.img`
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
-      <SocialIcon $hoverColor="#00C32B">
-        <Anchor href="https://github.com/shape-network" target="_blank">
-          <Github size={iconSize} fill="inherit" />
-        </Anchor>
-      </SocialIcon>
-      <SocialIcon $hoverColor="#20BAFF">
-        <Anchor href="https://x.com/Shape_L2" target="_blank">
+      <SocialIcon $hoverColor="#5c7f7a">
+        <Anchor href="https://x.com/stable" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      <SocialIcon $hoverColor="#5F51FF">
-        <Anchor href="https://discord.com/invite/shape-l2" target="_blank">
+      <SocialIcon $hoverColor="#5c7f7a">
+        <Anchor href="https://discord.com/invite/stablexyz" target="_blank">
           <Discord size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>

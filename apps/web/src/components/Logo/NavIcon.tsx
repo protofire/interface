@@ -1,23 +1,8 @@
-import HolidayUniIcon from 'components/Logo/HolidayUniIcon'
 import { SVGProps } from 'components/Logo/UniIcon'
 import styled from 'lib/styled-components'
-
-function Logo({ onClick }: { onClick?: () => void }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 37 37"
-      fill="none"
-      onClick={onClick}
-      cursor="pointer"
-    >
-      <defs></defs>
-      <circle fill="#000" stroke="#fff" strokeMiterlimit="10" strokeWidth="3" cx="18" cy="18" r="16.5" />
-    </svg>
-  )
-}
+import { ReactComponent as StableLogo } from 'assets/svg/stable.svg'
+import { ReactComponent as StableLogoDark } from 'assets/svg/stable-dark.svg'
+import { useIsDarkMode } from 'theme/components/ThemeToggle'
 
 const Container = styled.div<{ clickable?: boolean }>`
   position: relative;
@@ -32,8 +17,9 @@ type NavIconProps = SVGProps & {
   onClick?: () => void
 }
 
-export const NavIcon = ({ clickable, onClick, ...props }: NavIconProps) => (
-  <Container clickable={clickable}>
-    {HolidayUniIcon(props) !== null ? <HolidayUniIcon {...props} /> : <Logo onClick={onClick} />}
+export const NavIcon = ({ clickable, onClick }: NavIconProps) => {
+  const darkmode = useIsDarkMode()
+  return <Container clickable={clickable}>
+    {darkmode ? <StableLogo width={20} height={20} onClick={onClick} /> : <StableLogoDark width={20} height={20} onClick={onClick} />}
   </Container>
-)
+}
