@@ -215,18 +215,22 @@ async function parseApproval(
     }
   }
 
-  // Determine descriptor: use stored symbol, then currency symbol, then name, then truncated address
   let descriptor: string
-  if (storedSymbol) {
+  const tokenAddress = approval.tokenAddress && approval.tokenAddress !== '0x0' ? approval.tokenAddress : undefined
+  
+  if (tokenAddress) {
+    const fallbackSymbol = storedSymbol || currency?.symbol || currency?.name
+    descriptor = getTokenSymbolOverride(tokenAddress, fallbackSymbol)
+    
+    if (!descriptor || descriptor === 'UNK') {
+      descriptor = `${tokenAddress.slice(0, 6)}...${tokenAddress.slice(-4)}`
+    }
+  } else if (storedSymbol) {
     descriptor = storedSymbol
   } else if (currency?.symbol) {
     descriptor = currency.symbol
   } else if (currency?.name) {
     descriptor = currency.name
-  } else if (approval.tokenAddress && approval.tokenAddress !== '0x0') {
-    // Show truncated address as fallback: 0x1234...5678
-    const addr = approval.tokenAddress
-    descriptor = `${addr.slice(0, 6)}...${addr.slice(-4)}`
   } else {
     descriptor = t('common.unknown')
   }

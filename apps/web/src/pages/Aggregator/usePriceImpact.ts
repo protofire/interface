@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { Percent } from '@uniswap/sdk-core';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useEisenPrices } from './useEisenPrices';
@@ -10,9 +10,17 @@ const NATIVE_TOKEN_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 // TODO: fix impact calculation
 export function usePriceImpact(
   quote: any,
+  quoteLoading: boolean,
   chainId: number = FLOW_CHAIN_ID
 ): Percent | undefined {
-  const { pricesMap, loading } = useEisenPrices(chainId);
+  const { pricesMap, loading, refetch } = useEisenPrices(chainId);
+
+  // Refetch prices when quote finishes loading
+  useEffect(() => {
+    if (!quoteLoading && quote?.result?.estimate) {
+      refetch()
+    }
+  }, [quoteLoading, quote?.result?.estimate, refetch])
 
   return useMemo(() => {
     if (!quote?.result?.estimate || loading) return undefined;
@@ -55,5 +63,5 @@ export function usePriceImpact(
     const numerator = Math.floor(priceImpactRatio * BIPS_BASE);
     return new Percent(numerator, BIPS_BASE);
 
-  }, [quote, pricesMap, loading, chainId]);
+  }, [quote, pricesMap, loading, chainId, quoteLoading]);
 }

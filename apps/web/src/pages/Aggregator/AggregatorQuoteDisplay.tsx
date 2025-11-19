@@ -150,22 +150,21 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
           <Value>{Number((slippage * 100).toFixed(2))}%</Value>
         </QuoteRow>
       )}
-      {priceImpact && (
+      {/* TODO: reenable */}
+      {/* {priceImpact && (
         <QuoteRow>
           <Label>Price Impact:</Label>
           <Value>
             {(() => {
-              // Show "<1%" if price impact is less than 1%
-              const onePercent = new Percent(1, 100)
               const absPriceImpact = priceImpact.lessThan(0) ? priceImpact.multiply(-1) : priceImpact
-              if (absPriceImpact.lessThan(onePercent)) {
+              if (absPriceImpact.lessThan(new Percent(1, 100))) {
                 return '<1%'
               }
               return formatPercent(priceImpact)
             })()}
           </Value>
         </QuoteRow>
-      )}
+      )} */}
       <QuoteRow>
         <Label>Receive at least:</Label>
         <Value>{minAmountFormatted} {outputTokenSymbol}</Value>

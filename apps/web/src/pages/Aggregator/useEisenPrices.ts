@@ -20,7 +20,7 @@ interface EisenPricesResponse {
  * @param chainId - Chain ID to filter prices (defaults to Flow Mainnet)
  */
 export function useEisenPrices(chainId: number = FLOW_CHAIN_ID) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['eisenPrices', chainId],
     queryFn: async () => {
       try {
@@ -47,7 +47,7 @@ export function useEisenPrices(chainId: number = FLOW_CHAIN_ID) {
     staleTime: 30 * 1000,
     gcTime: 2 * 60 * 1000,
     enabled: !!chainId,
-    refetchInterval: 60 * 1000,
+    refetchInterval: false,
   })
 
   const pricesMap = useMemo(() => {
@@ -64,6 +64,7 @@ export function useEisenPrices(chainId: number = FLOW_CHAIN_ID) {
     pricesMap,
     loading: isLoading,
     error: error ? (error instanceof Error ? error.message : 'Failed to fetch prices') : null,
+    refetch,
   }
 }
 

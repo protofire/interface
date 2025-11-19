@@ -420,7 +420,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     }
   }, [quote?.result?.estimate?.toAmountUSD, quoteLoading])
 
-  const priceImpact = usePriceImpact(quote, currentChainId)
+  const priceImpact = usePriceImpact(quote, quoteLoading, currentChainId)
 
   const exchangeRate = useMemo(() => {
     if (!quote?.result?.estimate || !currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
