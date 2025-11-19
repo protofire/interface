@@ -273,12 +273,28 @@ export const USDC_MODE = new Token(
   'USDC',
 )
 
-export const USDC_FLOW_MAINNET = new Token(
+export const USDF_FLOW_MAINNET = new Token(
   UniverseChainId.FlowMainnet,
   '0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED',
   6,
   'USDF',
   'USDF',
+)
+
+export const USDC_FLOW_MAINNET = new Token(
+  UniverseChainId.FlowMainnet,
+  '0xF1815bd50389c46847f0Bda824eC8da914045D14',
+  6,
+  'USDC',
+  'USDC',
+)
+
+export const WBTC_FLOW_MAINNET = new Token(
+  UniverseChainId.FlowMainnet,
+  '0x717DAE2BaF7656BE9a9B01deE31d571a9d4c9579',
+  8,
+  'WBTC',
+  'Wrapped BTC',
 )
 
 export const USDC_FLOW_TESTNET = new Token(

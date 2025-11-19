@@ -63,6 +63,8 @@ import {
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDF_FLOW_MAINNET,
+  WBTC_FLOW_MAINNET,
 } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
@@ -278,6 +280,8 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.FlowMainnet),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowMainnet] as Token,
     USDC_FLOW_MAINNET,
+    USDF_FLOW_MAINNET,
+    WBTC_FLOW_MAINNET,
   ].map(buildCurrencyInfo),
   [UniverseChainId.FlowTestnet]: [
     nativeOnChain(UniverseChainId.FlowTestnet),
@@ -312,7 +316,6 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
-  [UniverseChainId.FlowMainnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowMainnet], USDC_FLOW_MAINNET],
   [UniverseChainId.FlowTestnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet], USDC_FLOW_TESTNET],
 }
 

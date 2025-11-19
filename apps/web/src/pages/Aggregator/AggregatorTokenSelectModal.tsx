@@ -1,10 +1,12 @@
 import { Currency } from '@uniswap/sdk-core'
 import { getTokenNameOverride, getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
 import Modal from 'components/Modal'
+import CommonBases from 'components/SearchModal/CommonBases'
 import { SearchInput } from 'components/SearchModal/styled'
 import styled from 'lib/styled-components'
 import { useState } from 'react'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { useEisenTokens } from './useEisenTokens'
 
@@ -38,6 +40,12 @@ const SearchSection = styled.div`
   flex-shrink: 0;
   width: 100%;
   box-sizing: border-box;
+`
+
+const CommonBasesSection = styled.div`
+  padding: 12px 20px;
+  border-top: 1px solid ${({ theme }) => theme.surface3};
+  flex-shrink: 0;
 `
 
 const TokenItem = styled.button<{ $selected: boolean; $disabled: boolean }>`
@@ -187,12 +195,16 @@ export function AggregatorTokenSelectModal({
   })
 
   const handleSelectToken = (token: any) => {
-    // Import the function dynamically to avoid circular dependencies
     import('./mockTokenData').then(({ mockTokenToToken }) => {
       const currency = mockTokenToToken(token)
       onCurrencySelect(currency)
       onDismiss()
     })
+  }
+
+  const handleCommonBaseSelect = (currency: Currency) => {
+    onCurrencySelect(currency)
+    handleDismiss()
   }
 
   const handleDismiss = () => {
@@ -224,6 +236,19 @@ export function AggregatorTokenSelectModal({
             autoComplete="off"
           />
         </SearchSection>
+
+        {!searchQuery && (
+          <CommonBasesSection>
+            <CommonBases
+              chainId={UniverseChainId.FlowMainnet}
+              onSelect={handleCommonBaseSelect}
+              closeModal={handleDismiss}
+              selectedCurrency={selectedCurrency}
+              searchQuery={searchQuery}
+              isAddressSearch={false}
+            />
+          </CommonBasesSection>
+        )}
 
         <ScrollableContainer>
           {loading ? (
