@@ -61,8 +61,16 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
       return FlowLogo
     }
     // USDC
+    if (isSameAddress(address, '0xf1815bd50389c46847f0bda824ec8da914045d14')) {
+      return 'https://assets.swap.w3us.site/assets/USDC.png'
+    }
+    // USDF
     if (isSameAddress(address, '0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED')) {
-      return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
+      return 'https://assets.swap.w3us.site/assets/USDCf.png'
+    }
+    // WBTC
+    if (isSameAddress(address, '0x717dae2baf7656be9a9b01dee31d571a9d4c9579')) {
+      return 'https://assets.swap.w3us.site/assets/WBTC.png'
     }
   }
 
