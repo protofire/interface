@@ -150,8 +150,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
           <Value>{Number((slippage * 100).toFixed(2))}%</Value>
         </QuoteRow>
       )}
-      {/* TODO: reenable */}
-      {/* {priceImpact && (
+      {priceImpact && (
         <QuoteRow>
           <Label>Price Impact:</Label>
           <Value>
@@ -164,7 +163,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
             })()}
           </Value>
         </QuoteRow>
-      )} */}
+      )}
       <QuoteRow>
         <Label>Receive at least:</Label>
         <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
