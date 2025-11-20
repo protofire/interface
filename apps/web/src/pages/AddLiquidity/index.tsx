@@ -864,12 +864,12 @@ function AddLiquidity() {
 
                     {invalidRange && (
                       <YellowCard padding="8px 12px" $borderRadius="12px">
-                        <RowBetween>
+                        <Row>
                           <AlertTriangle stroke={theme.deprecated_yellow3} size="16px" />
                           <Text color="$yellow600" ml="12px" fontSize="12px">
                             <Trans i18nKey="migrate.invalidRange" />
                           </Text>
-                        </RowBetween>
+                        </Row>
                       </YellowCard>
                     )}
                   </DynamicSection>

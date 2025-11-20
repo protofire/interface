@@ -13,7 +13,7 @@ import FormattedCurrencyAmount from 'components/FormattedCurrencyAmount'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
 import RangeSelector from 'components/RangeSelector'
 import RateToggle from 'components/RateToggle'
-import { AutoRow, RowBetween, RowFixed } from 'components/Row'
+import Row, { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import SettingsTab from 'components/Settings'
 import { V2Unsupported } from 'components/V2Unsupported'
 import { Dots } from 'components/swap/styled'
@@ -610,12 +610,12 @@ function V2PairMigration({
 
           {invalidRange ? (
             <YellowCard padding="8px 12px" $borderRadius="12px">
-              <RowBetween>
+              <Row>
                 <AlertTriangle stroke={theme.deprecated_yellow3} size="16px" />
                 <Text color="$" ml={12} fontSize={12}>
                   <Trans i18nKey="migrate.invalidRange" />
                 </Text>
-              </RowBetween>
+              </Row>
             </YellowCard>
           ) : null}
 

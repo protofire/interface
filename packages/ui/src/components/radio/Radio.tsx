@@ -1,5 +1,6 @@
+import { use } from "i18next"
 import { PropsWithChildren, ReactElement, createContext, useContext, useState } from 'react'
-import { AnimatePresence, GetThemeValueForKey, RadioGroup, RadioGroupItemProps, RadioGroupProps } from 'tamagui'
+import { AnimatePresence, GetThemeValueForKey, RadioGroup, RadioGroupItemProps, RadioGroupProps, useMedia } from 'tamagui'
 import { Flex } from 'ui/src/components/layout'
 import { SporeComponentVariant } from 'ui/src/components/types'
 
@@ -15,11 +16,18 @@ type RadioButtonGroupProps = PropsWithChildren<RadioGroupProps>
  */
 export function RadioButtonGroup(props: RadioButtonGroupProps): ReactElement {
   const [selectedValue, setSelectedValue] = useState<string | undefined>(props.defaultValue)
+  const media = useMedia()
   return (
     <RadioButtonGroupContext.Provider value={selectedValue}>
       <RadioGroup
         {...props}
         flexDirection={props.orientation === 'horizontal' ? 'row' : 'column'}
+        {...media.md && {
+          flexWrap: "wrap",
+          gap: "$spacing12",
+          alignItems: props.orientation === 'horizontal' ? 'center' : 'flex-start',
+          justifyContent: "center"
+        }}
         onValueChange={(selected) => {
           props.onValueChange?.(selected)
           setSelectedValue(selected)
