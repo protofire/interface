@@ -37,6 +37,9 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
   if (isCelo(chainId) && isSameAddress(address, PORTAL_ETH_CELO.address)) {
     return EthereumLogo
   }
+  if (isSameAddress(address, '0x78Cf24370174180738C5B8E352B6D14c83a6c9A9')) {
+    return 'https://assets.swap.w3us.site/assets/USDT.png'
+  }
 
   if (networkName) {
     return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${address}/logo.png`
