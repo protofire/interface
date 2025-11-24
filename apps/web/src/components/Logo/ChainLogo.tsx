@@ -22,6 +22,7 @@ import {
   REDSTONE_GARNET_LOGO,
   REDSTONE_LOGO,
   SHAPE_LOGO,
+  STABLE_LOGO,
   ZERO_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
@@ -252,9 +253,9 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
           }
     case UniverseChainId.StableTestnet:
       return {
-        symbol: GOERLI_LOGO,
-        bgColor: '#6B8AFF33',
-        textColor: '#6B8AFF',
+        symbol: STABLE_LOGO,
+        bgColor: '#011e1e',
+        textColor: '#ffffffff',
       }
     default:
       return undefined

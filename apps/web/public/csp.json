@@ -65,7 +65,8 @@
     "https://*.swap.w3us.site",
     "https://*.shape-swap.w3us.site",
     "https://shapeswap.xyz",
-    "https://*.shapeswap.xyz"
+    "https://*.shapeswap.xyz",
+    "https://*.stable-temp.w3us.site"
   ],
   "workerSrc": [
     "'self'",

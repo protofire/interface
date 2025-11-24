@@ -13,7 +13,6 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
-  GOERLI_LOGO,
   INK_LOGO,
   MODE_LOGO,
   MUMBAI_LOGO,
@@ -22,6 +21,7 @@ import {
   REDSTONE_GARNET_LOGO,
   REDSTONE_LOGO,
   SHAPE_LOGO,
+  STABLE_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
 } from 'ui/src/assets'
@@ -1749,7 +1749,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     infuraPrefix: undefined,
     interfaceName: 'stable_testnet',
     label: 'STABLE Testnet',
-    logo: GOERLI_LOGO,
+    logo: STABLE_LOGO,
     nativeCurrency: {
       name: 'gUSDT',
       symbol: 'gUSDT',

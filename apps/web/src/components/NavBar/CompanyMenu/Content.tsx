@@ -28,7 +28,7 @@ export const useMenuContent = (): MenuSection[] => {
     },
     {
       title: t('common.company'),
-      items: [{ label: 'Shape', href: 'https://shape.network/' }],
+      items: [{ label: 'Stable', href: '/swap' }],
     },
     {
       title: 'Terms',
