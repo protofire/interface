@@ -101,9 +101,9 @@ export function Footer() {
         <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
-            <Anchor href="https://gov.uniswap.org/t/rfc-deploy-uniswap-v3-on-shape/25163" target="_blank">
+            {/* <Anchor href="https://gov.uniswap.org/t/rfc-deploy-uniswap-v3-on-shape/25163" target="_blank">
               <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
-            </Anchor>
+            </Anchor> */}
           </Flex>
         </Flex>
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
@@ -117,12 +117,12 @@ export function Footer() {
             <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
         </Flex>
-        <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
+        {/* <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
           <Anchor href="https://gov.uniswap.org/t/rfc-deploy-uniswap-v3-on-shape/25163" target="_blank">
             <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
           </Anchor>
-        </Flex>
+        </Flex> */}
       </Flex>
       <Separator />
       <Flex
@@ -132,7 +132,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 ShapeSwap</Text>
+        <Text variant="body3">2025 StableSwap</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

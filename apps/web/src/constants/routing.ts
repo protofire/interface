@@ -58,7 +58,7 @@ import {
   USDC_REDSTONE,
   USDC_REDSTONE_GARNET,
   USDC_SHAPE,
-  USDC_STABLE_TESTNET,
+  USDT0_STABLE_TESTNET,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
@@ -274,9 +274,7 @@ export const COMMON_BASES: ChainCurrencyList = {
     USDC_MODE,
   ].map(buildCurrencyInfo),
   [UniverseChainId.StableTestnet]: [
-    nativeOnChain(UniverseChainId.StableTestnet),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.StableTestnet] as Token,
-    USDC_STABLE_TESTNET,
+    USDT0_STABLE_TESTNET,
   ].map(buildCurrencyInfo),
 }
 

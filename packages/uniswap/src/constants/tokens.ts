@@ -273,12 +273,12 @@ export const USDC_MODE = new Token(
   'USDC',
 )
 
-export const USDC_STABLE_TESTNET = new Token(
+export const USDT0_STABLE_TESTNET = new Token(
   UniverseChainId.StableTestnet,
-  '0x0000000000000000000000000000000000000000',
+  '0x78Cf24370174180738C5B8E352B6D14c83a6c9A9',
   6,
-  'USDC',
-  'USDC',
+  'USD₮0',
+  'USD₮0',
 )
 
 export const WBTC = new Token(
