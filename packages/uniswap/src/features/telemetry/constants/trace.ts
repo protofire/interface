@@ -131,6 +131,7 @@ export const ElementName = {
   ChainAnimeTestnet: 'chain-anime-testnet',
   ChainAnime: 'chain-anime',
   ChainMode: 'chain-mode',
+  ChainStableTestnet: 'chain-stable-testnet',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',

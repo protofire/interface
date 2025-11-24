@@ -37,6 +37,7 @@ export enum UniverseChainId {
   AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
   Mode = UniswapSDKChainId.MODE,
   Anime = UniswapSDKChainId.ANIME,
+  StableTestnet = UniswapSDKChainId.STABLE_TESTNET,
 }
 
 export type WalletChainId =
@@ -86,7 +87,7 @@ export type InterfaceChainId = UniverseChainId
 
 export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
 [
-  UniverseChainId.SHAPE,
+  UniverseChainId.StableTestnet,
 ]
 
 export enum RPCType {

@@ -12,6 +12,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.BOB]: 'https://graph-node.replace.domain/subgraphs/name/bob/v3-subgraph',
   [UniverseChainId.CYBER]: 'https://graph-node.replace.domain/subgraphs/name/cyber/v3-subgraph',
   [UniverseChainId.SHAPE]: 'https://graph.swap.w3us.site/subgraphs/name/shape/uniswap-v3',
+  [UniverseChainId.StableTestnet]: 'https://graph.swap.w3us.site/subgraphs/name/stable-testnet/uniswap-v3',
   [UniverseChainId.INK]: 'https://graph-node.replace.domain/subgraphs/name/ink/v3-subgraph',
   [UniverseChainId.REDSTONE]: 'https://graph-node.replace.domain/subgraphs/name/redstone/v3-subgraph',
   [UniverseChainId.REDSTONE_GARNET]: 'https://graph-node.replace.domain/subgraphs/name/redstone-garnet/v3-subgraph',
@@ -21,7 +22,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.Mode]: 'https://graph-node.replace.domain/subgraphs/name/mode/v3-subgraph',
 }
 
-const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.SHAPE] })
+const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.StableTestnet] })
 
 // This middleware will allow us to dynamically update the uri for the requests based off chainId
 // For more information: https://www.apollographql.com/docs/react/networking/advanced-http-networking/
@@ -30,7 +31,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   const chainId = store.getState().application.chainId
 
   operation.setContext(() => ({
-    uri: chainId && (CHAIN_SUBGRAPH_URL[chainId] ?? CHAIN_SUBGRAPH_URL[UniverseChainId.SHAPE]),
+    uri: chainId && (CHAIN_SUBGRAPH_URL[chainId] ?? CHAIN_SUBGRAPH_URL[UniverseChainId.StableTestnet]),
   }))
 
   return forward(operation)

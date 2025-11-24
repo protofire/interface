@@ -187,4 +187,10 @@ export const UNIVERSE_CHAIN_LOGO = {
       logoDark: BlockExplorer,
     },
   } as const satisfies UniverseChainLogoInfo,
+  [UniverseChainId.StableTestnet]: {
+    explorer: {
+      logoLight: EtherscanLogoLight,
+      logoDark: EtherscanLogoDark,
+    },
+  } as const satisfies UniverseChainLogoInfo,
 }

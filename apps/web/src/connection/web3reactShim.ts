@@ -11,7 +11,7 @@ export function useWeb3React() {
   return useMemo(
     () => ({
       account: account.address,
-      chainId: account.chainId ?? UniverseChainId.SHAPE,
+      chainId: account.chainId ?? UniverseChainId.StableTestnet,
       provider,
     }),
     [account.address, account.chainId, provider],

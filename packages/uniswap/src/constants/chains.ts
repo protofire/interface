@@ -13,6 +13,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  GOERLI_LOGO,
   INK_LOGO,
   MODE_LOGO,
   MUMBAI_LOGO,
@@ -35,6 +36,7 @@ import { ink } from 'uniswap/src/constants/chainDefinitions/ink'
 import { redstone } from 'uniswap/src/constants/chainDefinitions/redstone'
 import { redstoneGarnet } from 'uniswap/src/constants/chainDefinitions/redstoneGarnet'
 import { shape } from 'uniswap/src/constants/chainDefinitions/shape'
+import { stableTestnet } from 'uniswap/src/constants/chainDefinitions/stableTestnet'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
   CUSD_CELO,
@@ -69,6 +71,7 @@ import {
   USDC_REDSTONE_GARNET,
   USDC_SEPOLIA,
   USDC_SHAPE,
+  USDC_STABLE_TESTNET,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
@@ -1717,6 +1720,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WETH',
       decimals: 18,
       address: '0x4200000000000000000000000000000000000006',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.STABLE_TESTNET]: {
+    ...stableTestnet,
+    id: UniverseChainId.StableTestnet,
+    sdkId: UniswapSDKChainId.STABLE_TESTNET,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: undefined,
+    chainPriority: 0,
+    docs: '', // TODO: Add docs URL
+    elementName: ElementName.ChainStableTestnet,
+    explorer: {
+      name: 'STABLE Testnet Explorer',
+      url: '', // TODO: Add explorer URL
+      apiURL: '',
+    },
+    helpCenterUrl: undefined,
+    infoLink: '', // TODO: Add info link
+    infuraPrefix: undefined,
+    interfaceName: 'stable_testnet',
+    label: 'STABLE Testnet',
+    logo: GOERLI_LOGO,
+    nativeCurrency: {
+      name: 'gUSDT',
+      symbol: 'gUSDT',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: [''] }, // TODO: Add RPC URL
+      default: { http: [''] }, // TODO: Add RPC URL
+      appOnly: { http: [''] }, // TODO: Add RPC URL
+    },
+    urlParam: 'stable_testnet',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_STABLE_TESTNET, 10_000e6),
+    stablecoins: [USDC_STABLE_TESTNET],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped gUSDT',
+      symbol: 'WgUSDT',
+      decimals: 18,
+      address: '0x5574c55b7002A900CE7c0f197F5dcc8126bA8501',
     },
   } as const satisfies UniverseChainInfo,
 }

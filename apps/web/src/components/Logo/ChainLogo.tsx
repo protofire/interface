@@ -14,6 +14,7 @@ import {
   CELO_LOGO,
   CYBER_LOGO,
   ETHEREUM_LOGO,
+  GOERLI_LOGO,
   INK_LOGO,
   MODE_LOGO,
   OPTIMISM_LOGO,
@@ -249,6 +250,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             bgColor: '#FCFF5299',
             textColor: '#655947',
           }
+    case UniverseChainId.StableTestnet:
+      return {
+        symbol: GOERLI_LOGO,
+        bgColor: '#6B8AFF33',
+        textColor: '#6B8AFF',
+      }
     default:
       return undefined
   }
