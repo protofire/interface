@@ -19,7 +19,7 @@ export const stableTestnet = /*#__PURE__*/ defineChain({
   blockExplorers: {
     default: {
       name: 'STABLE Testnet Explorer',
-      url: '', // TODO: Add explorer URL
+      url: 'https://testnet.stablescan.xyz/'
     },
   },
   testnet: true,

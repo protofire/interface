@@ -540,8 +540,8 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     UniverseChainId.StableTestnet,
     '0x5574c55b7002A900CE7c0f197F5dcc8126bA8501',
     18,
-    'UP',
-    'Unsupported Protocol',
+    'USD₮0',
+    'USD₮0',
   ),
 }
 
@@ -664,6 +664,32 @@ class AnimeNativeCurrency extends NativeCurrency {
   }
 }
 
+export function isStableTestnet(chainId: number): chainId is UniverseChainId.StableTestnet {
+  return chainId === UniverseChainId.StableTestnet
+}
+
+class StableNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    if (!isStableTestnet(this.chainId)) {
+      throw new Error('Not Stable Testnet')
+    }
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
+  }
+
+  public constructor(chainId: number) {
+    if (!isStableTestnet(chainId)) {
+      throw new Error('Not Stable Testnet')
+    }
+    super(chainId, 18, 'gUSDT', 'gUSDT')
+  }
+}
+
 class ExtendedEther extends NativeCurrency {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -704,6 +730,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
     nativeCurrency = new AvaxNativeCurrency(chainId)
   } else if (isAnime(chainId)) {
     nativeCurrency = new AnimeNativeCurrency(chainId)
+  } else if (isStableTestnet(chainId)) {
+    nativeCurrency = new StableNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
   }

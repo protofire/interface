@@ -15,6 +15,7 @@ export const paths = [
   '/create-proposal',
   '/send',
   '/swap',
+  '/wrap',
   '/buy',
   '/limit',
   '/limits',

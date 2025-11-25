@@ -19,6 +19,7 @@ import { isClassicTrade, isSubmittableTrade, isUniswapXTrade } from 'state/routi
 import { CurrencyState, SerializedCurrencyState, SwapInfo, SwapState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
 import { useUserSlippageToleranceWithDefault } from 'state/user/hooks'
+import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { useTokenProjects } from 'uniswap/src/features/dataApi/tokenProjects'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -427,10 +428,16 @@ export function useInitialCurrencyState(): {
   }, [parsedCurrencyState.inputCurrencyId, parsedCurrencyState.outputCurrencyId, setIsUserSelectedToken])
 
   const { initialInputCurrencyAddress, initialChainId } = useMemo(() => {
+    // Default to USDT0 for StableTestnet, ETH otherwise
+    const defaultInputCurrency =
+      supportedChainId === UniverseChainId.StableTestnet
+        ? USDT0_STABLE_TESTNET.address
+        : 'ETH'
+    
     // Default to ETH if multichain
     if (multichainUXEnabled && !hasCurrencyQueryParams) {
       return {
-        initialInputCurrencyAddress: 'ETH',
+        initialInputCurrencyAddress: defaultInputCurrency,
         initialChainId: UniverseChainId.StableTestnet,
       }
     }
@@ -441,9 +448,9 @@ export function useInitialCurrencyState(): {
         initialChainId: supportedChainId,
       }
     }
-    // return ETH or parsedCurrencyState
+    // return default currency or parsedCurrencyState
     return {
-      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : 'ETH',
+      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : defaultInputCurrency,
       initialChainId: supportedChainId,
     }
   }, [

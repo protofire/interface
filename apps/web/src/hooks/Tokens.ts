@@ -2,10 +2,11 @@ import { Currency, Token } from '@uniswap/sdk-core'
 import { SupportedInterfaceChainId, useSupportedChainId } from 'constants/chains'
 import { DEFAULT_ACTIVE_LIST_URLS } from 'constants/lists'
 import { COMMON_BASES } from 'constants/routing'
-import { NATIVE_CHAIN_ID } from 'constants/tokens'
+import { NATIVE_CHAIN_ID, nativeOnChain } from 'constants/tokens'
 import forkConfig from 'forkConfig'
 import { useTokenListCurrency, useTokenListToken } from 'hooks/TokensLegacy'
 import { useAccount } from 'hooks/useAccount'
+import { getNativeLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import { TokenAddressMap } from 'lib/hooks/useTokenList/utils'
 import { useMemo } from 'react'
 import { useCombinedInactiveLists, useCombinedTokenMapFromUrls } from 'state/lists/hooks'
@@ -105,6 +106,21 @@ export function useCurrencyInfo(
       return commonBase
     }
 
+    // Handle native currencies that aren't in COMMON_BASES
+    if (isNative && chainIdWithFallback && supportedChainId) {
+      const nativeCurrency =
+        typeof addressOrCurrency === 'object' && addressOrCurrency?.isNative
+          ? addressOrCurrency
+          : nativeOnChain(supportedChainId)
+      return {
+        currency: nativeCurrency,
+        currencyId,
+        logoUrl: getNativeLogoURI(supportedChainId),
+        safetyLevel: SafetyLevel.Verified,
+        isSpam: false,
+      } as CurrencyInfo
+    }
+
     //TODO: assign safety level and logo if found in token list
     if (tokenListCurrency) {
       return {
@@ -120,7 +136,17 @@ export function useCurrencyInfo(
     }
 
     return currencyInfo
-  }, [addressOrCurrency, currencyInfo, chainIdWithFallback, isNative, address, skip, tokenListCurrency, currencyId])
+  }, [
+    addressOrCurrency,
+    currencyInfo,
+    chainIdWithFallback,
+    isNative,
+    address,
+    skip,
+    tokenListCurrency,
+    currencyId,
+    supportedChainId,
+  ])
 }
 
 const checkIsNative = (addressOrCurrency?: string | Currency): boolean => {

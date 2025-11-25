@@ -1,0 +1,264 @@
+import { Currency } from '@uniswap/sdk-core'
+import { ButtonPrimary } from 'components/Button'
+import { AutoColumn } from 'components/Column'
+import SwapCurrencyInputPanel from 'components/CurrencyInputPanel/SwapCurrencyInputPanel'
+import { Field } from 'components/swap/constants'
+import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'components/swap/styled'
+import { useSupportedChainId } from 'constants/chains'
+import { useAccount } from 'hooks/useAccount'
+import useSelectChain from 'hooks/useSelectChain'
+import useStableWrapCallback, { StableWrapErrorText } from 'hooks/useStableWrapCallback'
+import { useTheme } from 'lib/styled-components'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ArrowDown } from 'react-feather'
+import { useSwapActionHandlers } from 'state/swap/hooks'
+import { CurrencyState } from 'state/swap/types'
+import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
+import { ThemedText } from 'theme/components'
+import { Text } from 'ui/src'
+import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
+import { InterfaceSectionName } from '@uniswap/analytics-events'
+import { Trans } from 'uniswap/src/i18n'
+import { UniverseChainId } from 'uniswap/src/types/chains'
+import { CurrencyField } from 'uniswap/src/types/currency'
+import useNativeCurrency from 'lib/hooks/useNativeCurrency'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
+import { useCurrencyBalance } from 'state/connection/hooks'
+import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { logger } from 'utilities/src/logger/logger'
+import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
+
+interface WrapFormProps {
+  disableTokenInputs?: boolean
+  onCurrencyChange?: (selected: CurrencyState) => void
+}
+
+export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapFormProps) {
+  const { chainId } = useSwapAndLimitContext()
+  const supportedChainId = useSupportedChainId(chainId)
+  const { swapState } = useSwapContext()
+  const { typedValue, independentField } = swapState
+  const { isDisconnected, chainId: connectedChainId } = useAccount()
+  const theme = useTheme()
+  const account = useAccount()
+
+  const native = useNativeCurrency(chainId)
+  const usdt0 = USDT0_STABLE_TESTNET
+
+  const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
+
+  const [inputCurrency, setInputCurrency] = useState<Currency | undefined>(native)
+  const [outputCurrency, setOutputCurrency] = useState<Currency | undefined>(usdt0)
+
+  useEffect(() => {
+    if (chainId !== UniverseChainId.StableTestnet) {
+      return
+    }
+    if (!inputCurrency || !outputCurrency) {
+      setInputCurrency(native)
+      setOutputCurrency(usdt0)
+    }
+  }, [chainId, native, usdt0, inputCurrency, outputCurrency])
+
+  const inputBalance = useCurrencyBalance(account.address, inputCurrency ?? undefined)
+  const maxInputAmount = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
+  const showMaxButton = Boolean(maxInputAmount?.greaterThan(0))
+
+  const { wrapType, execute: onWrap, inputError: wrapInputError, needsApproval, approve } = useStableWrapCallback(
+    inputCurrency,
+    outputCurrency,
+    typedValue,
+  )
+  const showWrap: boolean = wrapType !== WrapType.NotApplicable
+
+  const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+
+  const handleTypeInput = useCallback(
+    (value: string) => {
+      onUserInput(Field.INPUT, value)
+    },
+    [onUserInput],
+  )
+
+  const handleTypeOutput = useCallback(
+    (value: string) => {
+      onUserInput(Field.OUTPUT, value)
+    },
+    [onUserInput],
+  )
+
+
+  const handleSwitchTokens = useCallback(() => {
+    if (!inputCurrency || !outputCurrency) {
+      return
+    }
+    const newInput = outputCurrency
+    const newOutput = inputCurrency
+    setInputCurrency(newInput)
+    setOutputCurrency(newOutput)
+    onSwitchTokens({
+      newOutputHasTax: false,
+      previouslyEstimatedOutput: '',
+    })
+    onCurrencySelection(Field.INPUT, newInput)
+    onCurrencySelection(Field.OUTPUT, newOutput)
+    onCurrencyChange?.({
+      inputCurrency: newInput,
+      outputCurrency: newOutput,
+    })
+  }, [inputCurrency, outputCurrency, onSwitchTokens, onCurrencyChange, onCurrencySelection])
+
+  const handleMaxInput = useCallback(() => {
+    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
+  }, [maxInputAmount, onUserInput])
+
+  const selectChain = useSelectChain()
+
+  const handleApprove = useCallback(async () => {
+    if (!approve) {
+      return
+    }
+
+    try {
+      if (supportedChainId && connectedChainId !== chainId) {
+        const correctChain = await selectChain(supportedChainId)
+        if (!correctChain) {
+          return
+        }
+      }
+      await approve()
+    } catch (error) {
+      if (!didUserReject(error)) {
+        logger.warn('WrapForm', 'handleApprove', 'Failed to approve', error)
+      }
+    }
+  }, [approve, connectedChainId, chainId, supportedChainId, selectChain])
+
+  const handleOnWrap = useCallback(async () => {
+    if (!onWrap) {
+      return
+    }
+
+    try {
+      if (supportedChainId && connectedChainId !== chainId) {
+        const correctChain = await selectChain(supportedChainId)
+        if (!correctChain) {
+          return
+        }
+      }
+      await onWrap()
+      onUserInput(Field.INPUT, '')
+    } catch (error) {
+      if (!didUserReject(error)) {
+        logger.warn('WrapForm', 'handleOnWrap', 'Failed to wrap', error)
+      }
+    }
+  }, [onWrap, connectedChainId, chainId, supportedChainId, selectChain, onUserInput])
+
+  const formattedAmounts = useMemo(
+    () => ({
+      [independentField]: typedValue,
+      [dependentField]: typedValue,
+    }),
+    [dependentField, independentField, typedValue],
+  )
+
+
+  const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
+
+  if (chainId !== UniverseChainId.StableTestnet) {
+    return (
+      <AutoColumn gap="md" style={{ padding: '1rem' }}>
+        <ThemedText.DeprecatedMain mb="4px">
+          <Trans i18nKey="common.unsupportedAsset_one" />
+        </ThemedText.DeprecatedMain>
+      </AutoColumn>
+    )
+  }
+
+  return (
+    <>
+      <div style={{ display: 'relative' }}>
+        <SwapSection>
+          <SwapCurrencyInputPanel
+            label={<Trans i18nKey="common.sell.label" />}
+            disabled={disableTokenInputs}
+            value={formattedAmounts[Field.INPUT]}
+            showMaxButton={showMaxButton}
+            currency={inputCurrency ?? null}
+            currencyField={CurrencyField.INPUT}
+            onUserInput={handleTypeInput}
+            onMax={handleMaxInput}
+            otherCurrency={outputCurrency}
+            id={InterfaceSectionName.CURRENCY_INPUT_PANEL}
+            ref={inputCurrencyNumericalInputRef}
+          />
+        </SwapSection>
+        <ArrowWrapper clickable={!!supportedChainId}>
+          <ArrowContainer
+            data-testid="wrap-currency-button"
+            onClick={() => {
+              if (disableTokenInputs) {
+                return
+              }
+              handleSwitchTokens()
+            }}
+            color={theme.neutral1}
+          >
+            <ArrowDown size="16" color={theme.neutral1} />
+          </ArrowContainer>
+        </ArrowWrapper>
+      </div>
+      <AutoColumn gap="xs">
+        <div>
+          <OutputSwapSection>
+            <SwapCurrencyInputPanel
+              value={formattedAmounts[Field.OUTPUT]}
+              disabled={disableTokenInputs}
+              onUserInput={handleTypeOutput}
+              label={<Trans i18nKey="common.buy.label" />}
+              showMaxButton={false}
+              hideBalance={false}
+              currency={outputCurrency ?? null}
+              currencyField={CurrencyField.OUTPUT}
+              otherCurrency={inputCurrency}
+              id={InterfaceSectionName.CURRENCY_OUTPUT_PANEL}
+            />
+          </OutputSwapSection>
+        </div>
+
+        <div>
+          {showWrap ? (
+            needsApproval ? (
+              <ButtonPrimary
+                $borderRadius="16px"
+                disabled={!approve}
+                onClick={handleApprove}
+                fontWeight={535}
+                data-testid="approve-button"
+              >
+                <Trans i18nKey="common.approve" />
+              </ButtonPrimary>
+            ) : (
+              <ButtonPrimary
+                $borderRadius="16px"
+                disabled={Boolean(wrapInputError)}
+                onClick={handleOnWrap}
+                fontWeight={535}
+                data-testid="wrap-button"
+              >
+                {wrapInputError ? (
+                  <StableWrapErrorText wrapInputError={wrapInputError} />
+                ) : wrapType === WrapType.Wrap ? (
+                  <Trans i18nKey="common.wrap.button" />
+                ) : wrapType === WrapType.Unwrap ? (
+                  <Trans i18nKey="common.unwrap.button" />
+                ) : null}
+              </ButtonPrimary>
+            )
+          ) : null}
+        </div>
+      </AutoColumn>
+    </>
+  )
+}

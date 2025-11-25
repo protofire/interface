@@ -1740,9 +1740,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     docs: '', // TODO: Add docs URL
     elementName: ElementName.ChainStableTestnet,
     explorer: {
-      name: 'STABLE Testnet Explorer',
-      url: '', // TODO: Add explorer URL
-      apiURL: '',
+      name: 'Stable Testnet Explorer',
+      url: 'https://testnet.stablescan.xyz/', 
+      apiURL: 'https://testnet.stablescan.xyz/api',
     },
     helpCenterUrl: undefined,
     infoLink: '', // TODO: Add info link

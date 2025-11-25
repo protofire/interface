@@ -34,6 +34,7 @@ const PathnameToTab: { [key: string]: SwapTab } = {
   '/send': SwapTab.Send,
   '/limit': SwapTab.Limit,
   '/buy': SwapTab.Buy,
+  '/wrap': SwapTab.Wrap,
 }
 
 export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean; syncTabToUrl: boolean }) {
@@ -97,7 +98,7 @@ export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean
             <Trans i18nKey="swap.limit" />
           </SwapHeaderTabButton>
         )}
-        {!isIFramed() && (
+        {/* {!isIFramed() && (
           <SwapHeaderTabButton
             $isActive={currentTab === SwapTab.Send}
             onClick={() => {
@@ -106,7 +107,15 @@ export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean
           >
             <Trans i18nKey="common.send.button" />
           </SwapHeaderTabButton>
-        )}
+        )} */}
+        <SwapHeaderTabButton
+          $isActive={currentTab === SwapTab.Wrap}
+          onClick={() => {
+            onTabClick(SwapTab.Wrap)
+          }}
+        >
+          <Trans i18nKey="common.wrap.button" />
+        </SwapHeaderTabButton>
         {forkConfig.uniSpecificFeaturesEnabled &&
           (forAggregatorEnabled ? (
             <SwapHeaderTabButton

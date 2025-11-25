@@ -7,6 +7,7 @@ import { Swap } from 'pages/Swap'
 import { Fragment } from 'react'
 import { NAV_HEIGHT } from 'theme'
 import { Flex, Text } from 'ui/src'
+import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { Trans, useTranslation } from 'uniswap/src/i18n'
@@ -21,7 +22,7 @@ export function Hero({ transition }: HeroProps) {
   const multichainUXEnabled = useFeatureFlag(FeatureFlags.MultichainUX)
 
   const { height: scrollPosition } = useScroll()
-  const initialInputCurrency = useCurrency('ETH')
+  const initialInputCurrency = useCurrency(USDT0_STABLE_TESTNET.address)
   const { t } = useTranslation()
 
   const translateY = -scrollPosition / 7
@@ -99,6 +100,7 @@ export function Hero({ transition }: HeroProps) {
               multichainUXEnabled={multichainUXEnabled}
             />
           </Flex>
+
         </RiseIn>
 
         <RiseIn delay={0.3}>
@@ -107,6 +109,7 @@ export function Hero({ transition }: HeroProps) {
           </Text>
         </RiseIn>
       </Flex>
+      <Flex flex={0.5} />
     </Flex>
   )
 }
