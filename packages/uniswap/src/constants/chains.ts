@@ -1759,9 +1759,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: [''] }, // TODO: Add RPC URL
-      default: { http: [''] }, // TODO: Add RPC URL
-      appOnly: { http: [''] }, // TODO: Add RPC URL
+      [RPCType.Public]: { http: ['https://rpc.testnet.stable.xyz'] },
+      default: { http: ['https://rpc.testnet.stable.xyz'] },
+      appOnly: { http: ['https://rpc.testnet.stable.xyz'] },
     },
     urlParam: 'stable_testnet',
     statusPage: undefined,

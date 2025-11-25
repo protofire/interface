@@ -14,7 +14,7 @@ export const stableTestnet = /*#__PURE__*/ defineChain({
     symbol: 'gUSDT',
   },
   rpcUrls: {
-    default: { http: [''] }, // TODO: Add RPC URL
+    default: { http: ['https://rpc.testnet.stable.xyz'] },
   },
   blockExplorers: {
     default: {
