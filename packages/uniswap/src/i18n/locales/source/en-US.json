@@ -1657,6 +1657,7 @@
   "swap.form.header": "Swap",
   "swap.form.insufficientLiquidity": "Insufficient liquidity for this trade.",
   "swap.form.pocketUniverseExtension.warning": "The Pocket Universe extension violates our <termsLink /> by modifying our product in a way that is misleading and could harm users. Please disable the extension and reload the page.",
+  "swap.gasUSDT.detected": "Gas token balance: {{symbol}} ({{balance}}) - <wrapLink>Wrap</wrapLink> to USD₮0 to swap in Stable!",
   "swap.form.slippage": "{{slippageTolerancePercent}} slippage",
   "swap.form.warning.output.fotFees": "Due to the token fee of {{fotCurrencySymbol}}, swap amounts can only be entered using the input field",
   "swap.form.warning.output.fotFees.fallback": "Due to token fees, swap amounts can only be entered using the input field",
