@@ -46,6 +46,10 @@ export function useSwapActionHandlers(): {
 
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
+      if (currency.isNative) {
+        return
+      }
+      
       const [currentCurrencyKey, otherCurrencyKey]: (keyof CurrencyState)[] =
         field === Field.INPUT ? ['inputCurrency', 'outputCurrency'] : ['outputCurrency', 'inputCurrency']
       const otherCurrency = currencyState[otherCurrencyKey]
@@ -91,6 +95,11 @@ export function useSwapActionHandlers(): {
       newOutputHasTax: boolean
       previouslyEstimatedOutput: string
     }) => {
+      // Prevent switching if the current input currency is native (native tokens should only be used in wrap panel)
+      if (currencyState.inputCurrency?.isNative) {
+        return
+      }
+      
       // To prevent swaps with FOT tokens as exact-outputs, we leave it as an exact-in swap and use the previously estimated output amount as the new exact-in amount.
       if (newOutputHasTax && swapState.independentField === Field.INPUT) {
         setSwapState((swapState) => ({
@@ -109,7 +118,7 @@ export function useSwapActionHandlers(): {
         outputCurrency: prev.inputCurrency,
       }))
     },
-    [setCurrencyState, setSwapState, swapState.independentField],
+    [setCurrencyState, setSwapState, swapState.independentField, currencyState.inputCurrency],
   )
 
   const onUserInput = useCallback(
