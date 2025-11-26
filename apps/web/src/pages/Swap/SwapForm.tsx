@@ -70,6 +70,7 @@ import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
+  disableNonToken: true,
 }
 
 interface SwapFormProps {
@@ -457,6 +458,10 @@ export function SwapForm({
 
   const handleInputSelect = useCallback(
     (inputCurrency: Currency) => {
+      // Prevent native tokens from being selected in swap panel
+      if (inputCurrency.isNative) {
+        return
+      }
       onCurrencySelection(Field.INPUT, inputCurrency)
       onCurrencyChange?.({
         inputCurrency,
@@ -475,6 +480,10 @@ export function SwapForm({
 
   const handleOutputSelect = useCallback(
     (outputCurrency: Currency) => {
+      // Prevent native tokens from being selected as output in swap panel
+      if (outputCurrency.isNative) {
+        return
+      }
       onCurrencySelection(Field.OUTPUT, outputCurrency)
       onCurrencyChange?.({
         inputCurrency: currencyState.inputCurrency,

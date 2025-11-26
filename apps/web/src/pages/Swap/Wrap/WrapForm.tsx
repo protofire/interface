@@ -1,13 +1,14 @@
-import { Currency } from '@uniswap/sdk-core'
+import { Currency, Token } from '@uniswap/sdk-core'
 import { ButtonPrimary } from 'components/Button'
 import { AutoColumn } from 'components/Column'
 import SwapCurrencyInputPanel from 'components/CurrencyInputPanel/SwapCurrencyInputPanel'
 import { Field } from 'components/swap/constants'
-import { ArrowContainer, ArrowWrapper, OutputSwapSection, SwapSection } from 'components/swap/styled'
+import { ArrowContainer, ArrowWrapper, Dots, OutputSwapSection, SwapSection } from 'components/swap/styled'
 import { useSupportedChainId } from 'constants/chains'
 import { useAccount } from 'hooks/useAccount'
 import useSelectChain from 'hooks/useSelectChain'
 import useStableWrapCallback, { StableWrapErrorText } from 'hooks/useStableWrapCallback'
+import { ApprovalState, useApproval } from 'lib/hooks/useApproval'
 import { useTheme } from 'lib/styled-components'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowDown } from 'react-feather'
@@ -27,6 +28,8 @@ import { useCurrencyBalance } from 'state/connection/hooks'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 import { logger } from 'utilities/src/logger/logger'
 import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
+import { useHasPendingApproval } from 'state/transactions/hooks'
+import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
 
 interface WrapFormProps {
   disableTokenInputs?: boolean
@@ -70,6 +73,38 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
     typedValue,
   )
   const showWrap: boolean = wrapType !== WrapType.NotApplicable
+
+  const WRAP_CONTRACT_ADDRESS = '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90'
+  const tokenForApproval: Token | undefined = inputCurrency && usdt0.equals(inputCurrency) ? usdt0 : undefined
+  const inputAmount = useMemo(
+    () => tryParseCurrencyAmount(typedValue, inputCurrency ?? undefined),
+    [inputCurrency, typedValue],
+  )
+  const tokenAmountForApproval = useMemo(() => {
+    if (!tokenForApproval || !inputAmount) {
+      return undefined
+    }
+    if (inputAmount.currency.isToken) {
+      return inputAmount as import('@uniswap/sdk-core').CurrencyAmount<Token>
+    }
+    return undefined
+  }, [tokenForApproval, inputAmount])
+
+  const [approvalState] = useApproval(
+    tokenAmountForApproval,
+    needsApproval ? WRAP_CONTRACT_ADDRESS : undefined,
+    useHasPendingApproval,
+  )
+  
+  const [isApproving, setIsApproving] = useState(false)
+  
+  const isApprovalPending = useHasPendingApproval(tokenForApproval, WRAP_CONTRACT_ADDRESS)
+  
+  useEffect(() => {
+    if (approvalState === ApprovalState.APPROVED || isApprovalPending) {
+      setIsApproving(false)
+    }
+  }, [approvalState, isApprovalPending])
 
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
@@ -115,24 +150,27 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const selectChain = useSelectChain()
 
   const handleApprove = useCallback(async () => {
-    if (!approve) {
+    if (!approve || isApproving) {
       return
     }
 
+    setIsApproving(true)
     try {
       if (supportedChainId && connectedChainId !== chainId) {
         const correctChain = await selectChain(supportedChainId)
         if (!correctChain) {
+          setIsApproving(false)
           return
         }
       }
       await approve()
     } catch (error) {
+      setIsApproving(false)
       if (!didUserReject(error)) {
         logger.warn('WrapForm', 'handleApprove', 'Failed to approve', error)
       }
     }
-  }, [approve, connectedChainId, chainId, supportedChainId, selectChain])
+  }, [approve, connectedChainId, chainId, supportedChainId, selectChain, isApproving])
 
   const handleOnWrap = useCallback(async () => {
     if (!onWrap) {
@@ -229,15 +267,24 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
 
         <div>
           {showWrap ? (
-            needsApproval ? (
+            needsApproval && approvalState !== ApprovalState.APPROVED ? (
               <ButtonPrimary
                 $borderRadius="16px"
-                disabled={!approve}
+                disabled={!approve || approvalState === ApprovalState.PENDING || isApproving || isApprovalPending}
                 onClick={handleApprove}
                 fontWeight={535}
                 data-testid="approve-button"
               >
-                <Trans i18nKey="common.approve" />
+                {approvalState === ApprovalState.PENDING || isApproving || isApprovalPending ? (
+                  <Dots>
+                    <Trans
+                      i18nKey="pools.approving.amount"
+                      values={{ amount: tokenForApproval?.symbol ?? inputCurrency?.symbol }}
+                    />
+                  </Dots>
+                ) : (
+                  <Trans i18nKey="common.approve" />
+                )}
               </ButtonPrimary>
             ) : (
               <ButtonPrimary
