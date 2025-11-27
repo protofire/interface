@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { EISEN_API_ENDPOINTS, EISEN_API_HEADERS } from './eisenApiConfig'
 
 interface EisenDexsResponse {
   result: {
@@ -13,14 +14,9 @@ export function useEisenDexs(chainId: number) {
   const { data, isLoading, error } = useQuery({
     queryKey: ['eisenDexs', chainId],
     queryFn: async () => {
-      const response = await fetch(
-        `https://hiker.hetz-01.eisenfinance.com/public/v1/dexs?chainId=${chainId}`,
-        {
-          headers: {
-            'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
-          },
-        }
-      )
+      const response = await fetch(`${EISEN_API_ENDPOINTS.DEXS}?chainId=${chainId}`, {
+        headers: EISEN_API_HEADERS,
+      })
 
       if (!response.ok) {
         throw new Error(`Failed to fetch DEXs: ${response.statusText}`)
