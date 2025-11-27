@@ -75,7 +75,8 @@
     "https://mainnet.evm.nodes.onflow.org",
     "https://evm.flowscan.io",
     "https://raw.githubusercontent.com/onflow/assets/main/tokens/*",
-    "https://assets.swap.w3us.site"
+    "https://assets.swap.w3us.site",
+    "https://api.nordstern.finance"
   ],
   "workerSrc": [
     "'self'",

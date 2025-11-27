@@ -7,6 +7,7 @@ import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { Price, Percent } from '@uniswap/sdk-core'
 import TradePrice from 'components/swap/TradePrice'
 import { getTokenSymbolOverride } from 'components/CurrencyInputPanel/utils'
+import { UnifiedQuote } from './aggregatorTypes'
 
 const QuoteContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -39,7 +40,7 @@ const GasInfo = styled.div`
 `
 
 interface AggregatorQuoteDisplayProps {
-  quote: any
+  quote: UnifiedQuote | null
   loading: boolean
   error: string | null
   slippage?: number
@@ -56,7 +57,7 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
     return (
       <QuoteContainer>
         <div style={{ textAlign: 'center', padding: '20px', color: theme.neutral2 }}>
-          Fetching quote...
+          Fetching quotes...
         </div>
       </QuoteContainer>
     )
@@ -76,17 +77,9 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
     return null
   }
 
-  const estimate = quote?.result?.estimate
-  const gasCost = estimate?.gasCosts?.[0]
-
-  if (!estimate) {
-    return null
-  }
-
-  // Parse output amounts with proper decimals - get decimals from the quote's toToken
-  const toToken = quote?.result?.action?.toToken
-  const outputDecimals = toToken?.decimals ?? 18 // Default to 18 if not available
-  const outputTokenSymbol = getTokenSymbolOverride(toToken?.address, toToken?.symbol ?? 'tokens')
+  const gasCost = quote.gasCost
+  const outputDecimals = quote.toToken.decimals ?? 18
+  const outputTokenSymbol = getTokenSymbolOverride(quote.toToken.address, quote.toToken.symbol ?? 'tokens')
   
   const formatAmount = (amount: string, decimals: number): string => {
     if (!amount || amount === '0') return '0'
@@ -118,10 +111,9 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
     }
   }
   
-  const toAmountFormatted = formatAmount(estimate.toAmount, outputDecimals)
-  const minAmountFormatted = formatAmount(estimate.toAmountMin, outputDecimals)
+  const toAmountFormatted = formatAmount(quote.toAmount, outputDecimals)
+  const minAmountFormatted = formatAmount(quote.toAmountMin, outputDecimals)
 
-  // Format gas cost with proper decimals
   const gasCostFormatted = gasCost 
     ? formatAmount(gasCost.amount, gasCost.token.decimals)
     : '0'
@@ -168,10 +160,10 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
         <Label>Receive at least:</Label>
         <Value>{minAmountFormatted} {outputTokenSymbol}</Value>
       </QuoteRow>
-      {estimate.toAmountUSD && (
+      {quote.toAmountUSD && (
         <QuoteRow>
           <Label>USD Value:</Label>
-          <Value>{formatNumber({ input: parseFloat(estimate.toAmountUSD), type: NumberType.FiatTokenDetails })}</Value>
+          <Value>{formatNumber({ input: parseFloat(quote.toAmountUSD), type: NumberType.FiatTokenDetails })}</Value>
         </QuoteRow>
       )}
       
@@ -183,10 +175,12 @@ export function AggregatorQuoteDisplay({ quote, loading, error, slippage, exchan
               {gasCostFormatted} {getTokenSymbolOverride(gasCost.token.address, gasCost.token.symbol)}
             </Value>
           </QuoteRow>
-          <QuoteRow>
-            <Label>Gas Cost USD:</Label>
-            <Value>{formatNumber({ input: parseFloat(gasCost.amountUSD), type: NumberType.FiatGasPrice })}</Value>
-          </QuoteRow>
+          {gasCost.amountUSD && parseFloat(gasCost.amountUSD) > 0 && (
+            <QuoteRow>
+              <Label>Gas Cost USD:</Label>
+              <Value>{formatNumber({ input: parseFloat(gasCost.amountUSD), type: NumberType.FiatGasPrice })}</Value>
+            </QuoteRow>
+          )}
         </GasInfo>
       )}
     </QuoteContainer>

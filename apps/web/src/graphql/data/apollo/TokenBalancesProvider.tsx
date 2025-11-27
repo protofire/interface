@@ -94,7 +94,7 @@ export function TokenBalancesProvider({ children }: PropsWithChildren) {
   const fetch = useCallback(() => {
     // TODO: Remove Apollo implementation
     // Disabled GraphQL API calls
-    return
+      return
   }, [])
 
   return (

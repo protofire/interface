@@ -14,7 +14,9 @@ import { ArrowDown } from 'react-feather'
 import { Trans } from 'uniswap/src/i18n'
 import { CurrencyField } from 'uniswap/src/types/currency'
 import AggregatorSwapCurrencyInputPanel from './AggregatorSwapCurrencyInputPanel'
-import { useEisenQuote } from './useEisenQuote'
+import { useUnifiedAggregatorQuote } from './useUnifiedAggregatorQuote'
+import { AggregatorType } from './aggregatorTypes'
+import { AggregatorSelector } from './AggregatorSelector'
 import { usePriceImpact } from './usePriceImpact'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { useEisenDexs } from './useEisenDexs'
@@ -80,8 +82,8 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const currentChainId = useMemo(() => {
     if (parsedCurrencyState.chainId === FLOW_CHAIN_ID) {
-      return parsedCurrencyState.chainId
-    }
+        return parsedCurrencyState.chainId
+      }
     return FLOW_CHAIN_ID
   }, [parsedCurrencyState.chainId])
 
@@ -253,7 +255,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     setShowTransactionModal(false)
     setTransactionError(null)
     setExecuting(false)
-    setTxHash(undefined)
+      setTxHash(undefined)
     
     if (!wasCancelled) {
       setSwapState({
@@ -396,53 +398,83 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     return params
   }, [currencies, debouncedTypedValue, independentField, account.address, currentChainId, order, slippage, selectedDexs, availableDexs, maxsplit, maxedge, isDebouncing])
 
-  const { quote, loading: quoteLoading, error: quoteError } = useEisenQuote(quoteParams)
+  const unifiedQuoteParams = useMemo(() => {
+    if (!quoteParams) return null
+    if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT] || !account.address) {
+      return null
+    }
+
+    return {
+      fromToken: currencies[Field.INPUT],
+      toToken: currencies[Field.OUTPUT],
+      fromAmount: quoteParams.fromAmount,
+      fromAddress: account.address,
+      chainId: currentChainId,
+      slippage,
+      order,
+      includedDex: quoteParams.includedDex,
+      maxSplit: maxsplit,
+      maxEdge: maxedge,
+    }
+  }, [quoteParams, currencies, account.address, currentChainId, slippage, order, maxsplit, maxedge])
+
+  const {
+    bestQuote,
+    currentQuote,
+    quotes,
+    loading: quoteLoading,
+    errors,
+    selectedAggregator,
+    setSelectedAggregator,
+  } = useUnifiedAggregatorQuote(unifiedQuoteParams)
+
+  const displayQuote = currentQuote || bestQuote
+
+  const quote = displayQuote?.rawQuote || null
+  const quoteError = selectedAggregator ? errors.get(selectedAggregator) || null : null
 
   const inputFiatValue = useMemo(() => {
-    if (!quote?.result?.estimate?.fromAmountUSD) {
+    if (!displayQuote?.fromAmountUSD) {
       return { data: undefined, isLoading: quoteLoading }
     }
-    const usdValue = parseFloat(quote.result.estimate.fromAmountUSD)
+    const usdValue = parseFloat(displayQuote.fromAmountUSD)
     return {
       data: isNaN(usdValue) ? undefined : usdValue,
       isLoading: quoteLoading,
     }
-  }, [quote?.result?.estimate?.fromAmountUSD, quoteLoading])
+  }, [displayQuote?.fromAmountUSD, quoteLoading])
 
   const outputFiatValue = useMemo(() => {
-    if (!quote?.result?.estimate?.toAmountUSD) {
+    if (!displayQuote?.toAmountUSD) {
       return { data: undefined, isLoading: quoteLoading }
     }
-    const usdValue = parseFloat(quote.result.estimate.toAmountUSD)
+    const usdValue = parseFloat(displayQuote.toAmountUSD)
     return {
       data: isNaN(usdValue) ? undefined : usdValue,
       isLoading: quoteLoading,
     }
-  }, [quote?.result?.estimate?.toAmountUSD, quoteLoading])
+  }, [displayQuote?.toAmountUSD, quoteLoading])
 
-  const priceImpact = usePriceImpact(quote, quoteLoading, currentChainId)
+  const priceImpact = usePriceImpact(displayQuote, quoteLoading, currentChainId)
 
   const exchangeRate = useMemo(() => {
-    if (!quote?.result?.estimate || !currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
+    if (!displayQuote || !currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
       return null
     }
 
     try {
       const inputCurrency = currencies[Field.INPUT]
       const outputCurrency = currencies[Field.OUTPUT]
-      const fromAmount = quote.result.action.fromAmount
-      const toAmount = quote.result.estimate.toAmount
+      const fromAmount = displayQuote.fromAmount
+      const toAmount = displayQuote.toAmount
 
       if (!fromAmount || !toAmount) {
         return null
       }
 
-      // Create CurrencyAmount objects from the raw amounts
       const inputAmount = CurrencyAmount.fromRawAmount(inputCurrency, fromAmount)
       const outputAmount = CurrencyAmount.fromRawAmount(outputCurrency, toAmount)
 
-      // Create Price: baseCurrency (input) / quoteCurrency (output)
-      // This represents: 1 inputCurrency = X outputCurrency
       const price = new Price(inputCurrency, outputCurrency, inputAmount.quotient, outputAmount.quotient)
       
       return price
@@ -450,20 +482,20 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       console.error('Error calculating exchange rate:', error)
       return null
     }
-  }, [quote, currencies])
+  }, [displayQuote, currencies])
 
   const estimatedOutput = useMemo(() => {
-    if (quote?.result?.estimate && currencies[Field.OUTPUT]) {
+    if (displayQuote && currencies[Field.OUTPUT]) {
       const outputCurrency = currencies[Field.OUTPUT]
       try {
-        const amount = CurrencyAmount.fromRawAmount(outputCurrency, quote.result.estimate.toAmount)
+        const amount = CurrencyAmount.fromRawAmount(outputCurrency, displayQuote.toAmount)
         return amount.toExact()
       } catch {
         return ''
       }
     }
     return ''
-  }, [quote, currencies])
+  }, [displayQuote, currencies])
 
   const handleTypeInput = useCallback((value: string) => {
     setSwapState((prev) => ({ ...prev, typedValue: value, independentField: Field.INPUT }))
@@ -530,12 +562,12 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
   const provider = useEthersProvider({ chainId: account.chainId })
   const addTransaction = useTransactionAdder()
 
-  const inputToken = quote?.result?.action?.fromToken
-  const routerAddress = quote?.result?.transactionRequest?.to
-  const fromAmount = quote?.result?.action?.fromAmount
+  const inputToken = displayQuote?.fromToken
+  const routerAddress = displayQuote?.routerAddress
+  const fromAmount = displayQuote?.fromAmount
 
-  const tokenForApproval = inputToken && !inputToken.address.toLowerCase().includes('eeee') ? new Token(
-    inputToken.chainId,
+  const tokenForApproval = inputToken && !inputToken.address.toLowerCase().includes('eeee') && !inputToken.address.toLowerCase().includes('native') ? new Token(
+    currentChainId,
     inputToken.address,
     inputToken.decimals,
     inputToken.symbol,
@@ -549,9 +581,23 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
     inputToken?.logoURI
   )
 
+  const availableAggregators = useMemo(() => {
+    return Array.from(quotes.keys()).filter((type) => quotes.get(type) !== null)
+  }, [quotes])
+
+  const bestAggregator = useMemo(() => {
+    return bestQuote?.aggregator || null
+  }, [bestQuote])
+
+  const displayQuoteError = useMemo(() => {
+    if (selectedAggregator) {
+      return errors.get(selectedAggregator) || null
+    }
+    return null
+  }, [selectedAggregator, errors])
+
   const handleExecute = async () => {
-    const txnRequest = quote?.result?.transactionRequest
-    if (!txnRequest || !account.address || !provider) {
+    if (!displayQuote || !account.address || !provider) {
       return
     }
 
@@ -566,10 +612,10 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
       const txRequest: TransactionRequest = {
         from: account.address,
-        to: txnRequest.to,
-        data: txnRequest.data as `0x${string}`,
-        gasPrice: txnRequest.gasPrice,
-        value: txnRequest.value,
+        to: displayQuote.transactionRequest.to,
+        data: displayQuote.transactionRequest.data as `0x${string}`,
+        gasPrice: displayQuote.transactionRequest.gasPrice,
+        value: displayQuote.transactionRequest.value,
       }
 
       let gasLimit: BigNumber
@@ -578,7 +624,11 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
         gasLimit = calculateGasMargin(gasEstimate)
       } catch (gasError) {
         console.warn('Failed to estimate gas, using quote gasLimit:', gasError)
-        gasLimit = BigNumber.from(txnRequest.gasLimit)
+        if (displayQuote.transactionRequest.gasLimit) {
+          gasLimit = BigNumber.from(displayQuote.transactionRequest.gasLimit)
+        } else {
+          throw gasError
+        }
       }
 
       const tx = await signer.sendTransaction({
@@ -589,34 +639,31 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       setTxHash(tx.hash)
       setShowTransactionModal(true)
 
-      const action = quote?.result?.action
-      const estimate = quote?.result?.estimate
-
       const NATIVE_TOKEN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
       const inputCurrencyId = currencies[Field.INPUT] 
         ? currencyId(currencies[Field.INPUT])
-        : (action?.fromToken?.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase() 
-            ? 'ETH' 
-            : action?.fromToken?.address || '')
+        : (displayQuote.fromToken.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase() 
+            ? 'FLOW' 
+            : displayQuote.fromToken.address || '')
       const outputCurrencyId = currencies[Field.OUTPUT]
         ? currencyId(currencies[Field.OUTPUT])
-        : (action?.toToken?.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase()
-            ? 'ETH'
-            : action?.toToken?.address || '')
+        : (displayQuote.toToken.address?.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase()
+            ? 'FLOW'
+            : displayQuote.toToken.address || '')
 
       const transactionInfo: ExactInputSwapTransactionInfo = {
         type: TransactionType.SWAP,
         tradeType: 'EXACT_INPUT' as any,
         inputCurrencyId,
         outputCurrencyId,
-        inputCurrencyAmountRaw: action?.fromAmount || '0',
-        expectedOutputCurrencyAmountRaw: estimate?.toAmount || '0',
-        minimumOutputCurrencyAmountRaw: estimate?.toAmountMin || '0',
+        inputCurrencyAmountRaw: displayQuote.fromAmount || '0',
+        expectedOutputCurrencyAmountRaw: displayQuote.toAmount || '0',
+        minimumOutputCurrencyAmountRaw: displayQuote.toAmountMin || '0',
         isUniswapXOrder: false,
-        inputCurrencySymbol: action?.fromToken?.symbol || currencies[Field.INPUT]?.symbol,
-        outputCurrencySymbol: action?.toToken?.symbol || currencies[Field.OUTPUT]?.symbol,
-        inputLogoURI: action?.fromToken?.logoURI,
-        outputLogoURI: action?.toToken?.logoURI,
+        inputCurrencySymbol: displayQuote.fromToken.symbol || currencies[Field.INPUT]?.symbol,
+        outputCurrencySymbol: displayQuote.toToken.symbol || currencies[Field.OUTPUT]?.symbol,
+        inputLogoURI: displayQuote.fromToken.logoURI,
+        outputLogoURI: displayQuote.toToken.logoURI,
       } as any
 
       // @ts-ignore - TransactionResponse type
@@ -642,7 +689,7 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
 
   const hasBothTokens = currencies[Field.INPUT] && currencies[Field.OUTPUT]
   const hasAmount = typedValue && parseFloat(typedValue) > 0
-  const hasQuote = quote && quote.result?.transactionRequest
+  const hasQuote = displayQuote && displayQuote.transactionRequest
 
   const buttonError = useMemo(() => {
     if (hasInsufficientFunds && currencies[Field.INPUT]) {
@@ -726,17 +773,26 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           currencyField={CurrencyField.OUTPUT}
           onCurrencySelect={handleOutputSelect}
           otherCurrency={currencies[Field.INPUT]}
-            id="aggregator-currency-output"
-            loading={independentField === Field.INPUT && quoteLoading}
+          id="aggregator-currency-output"
+          loading={independentField === Field.INPUT && quoteLoading}
             initialCurrencyLoading={outputCurrencyIdIsAddress && eisenTokensLoading}
         />
       </OutputSwapSection>
 
+      {availableAggregators.length > 0 && (
+        <AggregatorSelector
+          selectedAggregator={selectedAggregator}
+          availableAggregators={availableAggregators}
+          bestAggregator={bestAggregator}
+          onSelect={setSelectedAggregator}
+        />
+      )}
+
       <AggregatorQuoteDisplay 
-        key={`quote-${quoteResetKey}-${typedValue}-${currencies[Field.INPUT]?.symbol}-${currencies[Field.OUTPUT]?.symbol}`}
-        quote={quote} 
+        key={`quote-${quoteResetKey}-${typedValue}-${currencies[Field.INPUT]?.symbol}-${currencies[Field.OUTPUT]?.symbol}-${selectedAggregator}`}
+        quote={displayQuote} 
         loading={quoteLoading} 
-        error={quoteError}
+        error={displayQuoteError}
         slippage={slippage}
         exchangeRate={exchangeRate}
         priceImpact={priceImpact}
