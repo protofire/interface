@@ -281,6 +281,14 @@ export const USDT0_STABLE_TESTNET = new Token(
   'USD₮0',
 )
 
+export const USDT0_STABLE = new Token(
+  UniverseChainId.Stable,
+  '0x779Ded0c9e1022225f8E0630b35a9b54bE713736',
+  6,
+  'USD₮0',
+  'USD₮0',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

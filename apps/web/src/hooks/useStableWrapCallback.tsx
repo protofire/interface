@@ -13,12 +13,16 @@ import { TransactionType } from 'state/transactions/types'
 import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
 import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
-import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import WETH_ABI from 'uniswap/src/abis/weth.json'
 import { logger } from 'utilities/src/logger/logger'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { isEitherStableChain } from 'constants/tokens'
 
-const WRAP_CONTRACT_ADDRESS = '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90'
+const WRAP_CONTRACT_ADDRESS: { [k: number]: string } = {
+  [UniverseChainId.StableTestnet]: '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90',
+  [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda'
+}
 
 const NOT_APPLICABLE = { wrapType: WrapType.NotApplicable }
 
@@ -64,9 +68,13 @@ export default function useStableWrapCallback(
   const account = useAccount()
   const { chainId } = useSwapAndLimitContext()
   const native = useNativeCurrency(chainId)
-  const usdt0 = USDT0_STABLE_TESTNET
+  const chainIdWithDefault = chainId ?? UniverseChainId.Stable;
+  const usdt0: { [k: number]: Token } = {
+    [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
+    [UniverseChainId.Stable]: USDT0_STABLE
+  }
 
-  const wrapContract = useContract(WRAP_CONTRACT_ADDRESS, WETH_ABI, true, chainId)
+  const wrapContract = useContract(WRAP_CONTRACT_ADDRESS[chainIdWithDefault], WETH_ABI, true, chainId)
   const wrapContractRef = useRef(wrapContract)
   wrapContractRef.current = wrapContract
 
@@ -76,11 +84,11 @@ export default function useStableWrapCallback(
     [inputCurrency, typedValue],
   )
 
-  const tokenForAllowance: Token | undefined = inputCurrency && usdt0.equals(inputCurrency) ? usdt0 : undefined
+  const tokenForAllowance: Token | undefined = inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
   const { tokenAllowance } = useTokenAllowance(
     tokenForAllowance,
     account.address,
-    WRAP_CONTRACT_ADDRESS,
+    WRAP_CONTRACT_ADDRESS[chainIdWithDefault],
   )
 
   const tokenAmountForAllowance = useMemo(() => {
@@ -95,7 +103,7 @@ export default function useStableWrapCallback(
 
   const updateTokenAllowance = useUpdateTokenAllowance(
     tokenAmountForAllowance,
-    WRAP_CONTRACT_ADDRESS,
+    WRAP_CONTRACT_ADDRESS[chainIdWithDefault],
   )
 
   const addTransaction = useTransactionAdder()
@@ -118,14 +126,14 @@ export default function useStableWrapCallback(
       return NOT_APPLICABLE
     }
 
-    if (chainId !== UniverseChainId.StableTestnet) {
+    if (!isEitherStableChain(chainId)) {
       return NOT_APPLICABLE
     }
 
     const hasInputAmount = Boolean(inputAmount?.greaterThan('0'))
     const sufficientBalance = inputAmount && balance && !balance.lessThan(inputAmount)
 
-    if (inputCurrency.isNative && usdt0.equals(outputCurrency)) {
+    if (inputCurrency.isNative && usdt0[chainIdWithDefault].equals(outputCurrency)) {
       return {
         wrapType: WrapType.Wrap,
         execute:
@@ -151,7 +159,7 @@ export default function useStableWrapCallback(
             ? WrapInputError.INSUFFICIENT_NATIVE_BALANCE
             : WrapInputError.ENTER_NATIVE_AMOUNT,
       }
-    } else if (usdt0.equals(inputCurrency) && outputCurrency.isNative) {
+    } else if (usdt0[chainIdWithDefault].equals(inputCurrency) && outputCurrency.isNative) {
       const needsApproval = inputAmount && tokenAllowance ? tokenAllowance.lessThan(inputAmount) : false
 
       return {

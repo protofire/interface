@@ -19,7 +19,7 @@ import { isClassicTrade, isSubmittableTrade, isUniswapXTrade } from 'state/routi
 import { CurrencyState, SerializedCurrencyState, SwapInfo, SwapState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
 import { useUserSlippageToleranceWithDefault } from 'state/user/hooks'
-import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { useTokenProjects } from 'uniswap/src/features/dataApi/tokenProjects'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -49,7 +49,7 @@ export function useSwapActionHandlers(): {
       if (currency.isNative) {
         return
       }
-      
+
       const [currentCurrencyKey, otherCurrencyKey]: (keyof CurrencyState)[] =
         field === Field.INPUT ? ['inputCurrency', 'outputCurrency'] : ['outputCurrency', 'inputCurrency']
       const otherCurrency = currencyState[otherCurrencyKey]
@@ -99,7 +99,7 @@ export function useSwapActionHandlers(): {
       if (currencyState.inputCurrency?.isNative) {
         return
       }
-      
+
       // To prevent swaps with FOT tokens as exact-outputs, we leave it as an exact-in swap and use the previously estimated output amount as the new exact-in amount.
       if (newOutputHasTax && swapState.independentField === Field.INPUT) {
         setSwapState((swapState) => ({
@@ -241,7 +241,8 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.AnimeTestnet,
       UniverseChainId.Anime,
       UniverseChainId.Mode,
-      UniverseChainId.StableTestnet
+      UniverseChainId.StableTestnet,
+      UniverseChainId.Stable
     ].includes(chainId)
       ? false
       : isClassicTrade(trade.trade) &&
@@ -427,7 +428,7 @@ export function useInitialCurrencyState(): {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.StableTestnet
+  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.Stable
   const hasCurrencyQueryParams =
     parsedCurrencyState.inputCurrencyId || parsedCurrencyState.outputCurrencyId || parsedCurrencyState.chainId
 
@@ -439,16 +440,16 @@ export function useInitialCurrencyState(): {
 
   const { initialInputCurrencyAddress, initialChainId } = useMemo(() => {
     // Default to USDT0 for StableTestnet, ETH otherwise
-    const defaultInputCurrency =
-      supportedChainId === UniverseChainId.StableTestnet
-        ? USDT0_STABLE_TESTNET.address
-        : 'ETH'
-    
+    const defaultInputCurrency: { [k:number]: string } = {
+      [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET.address,
+      [UniverseChainId.Stable]: USDT0_STABLE.address
+    }
+
     // Default to ETH if multichain
     if (multichainUXEnabled && !hasCurrencyQueryParams) {
       return {
-        initialInputCurrencyAddress: defaultInputCurrency,
-        initialChainId: UniverseChainId.StableTestnet,
+        initialInputCurrencyAddress: defaultInputCurrency[supportedChainId] ?? 'ETH',
+        initialChainId: UniverseChainId.Stable,
       }
     }
     // Handle query params or disconnected state
@@ -460,7 +461,7 @@ export function useInitialCurrencyState(): {
     }
     // return default currency or parsedCurrencyState
     return {
-      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : defaultInputCurrency,
+      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : defaultInputCurrency[supportedChainId] ?? 'ETH',
       initialChainId: supportedChainId,
     }
   }, [

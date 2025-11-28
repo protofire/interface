@@ -256,6 +256,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
         bgColor: '#011e1e',
         textColor: '#ffffffff',
       }
+    case UniverseChainId.Stable:
+      return {
+        symbol: STABLE_LOGO,
+        bgColor: '#011e1e',
+        textColor: '#ffffffff',
+      }
     default:
       return undefined
   }

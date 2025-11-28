@@ -132,6 +132,7 @@ export const ElementName = {
   ChainAnime: 'chain-anime',
   ChainMode: 'chain-mode',
   ChainStableTestnet: 'chain-stable-testnet',
+  ChainStable: 'chain-stable',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',

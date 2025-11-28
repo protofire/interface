@@ -68,7 +68,10 @@
     "https://*.stable-temp.w3us.site.xyz",
     "https://*.stable-temp.w3us.site",
     "https://staging.swap.stable.xyz",
-    "https://*.staging.swap.stable.xyz"
+    "https://*.staging.swap.stable.xyz",
+    "https://swap.stable.xyz",
+    "https://*.stable.xyz",
+    "https://stable-mainnet.g.alchemy.com"
   ],
   "workerSrc": [
     "'self'",

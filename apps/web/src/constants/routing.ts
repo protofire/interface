@@ -62,6 +62,7 @@ import {
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDT0_STABLE,
 } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
@@ -275,6 +276,9 @@ export const COMMON_BASES: ChainCurrencyList = {
   ].map(buildCurrencyInfo),
   [UniverseChainId.StableTestnet]: [
     USDT0_STABLE_TESTNET,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.Stable]: [
+    USDT0_STABLE,
   ].map(buildCurrencyInfo),
 }
 

@@ -36,6 +36,7 @@ import { ink } from 'uniswap/src/constants/chainDefinitions/ink'
 import { redstone } from 'uniswap/src/constants/chainDefinitions/redstone'
 import { redstoneGarnet } from 'uniswap/src/constants/chainDefinitions/redstoneGarnet'
 import { shape } from 'uniswap/src/constants/chainDefinitions/shape'
+import { stable } from 'uniswap/src/constants/chainDefinitions/stable'
 import { stableTestnet } from 'uniswap/src/constants/chainDefinitions/stableTestnet'
 import { zero } from 'uniswap/src/constants/chainDefinitions/zero'
 import {
@@ -76,6 +77,7 @@ import {
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT,
+  USDT0_STABLE,
 } from 'uniswap/src/constants/tokens'
 import { Chain as BackendChainId } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { FLASHBOTS_RPC_URL } from 'uniswap/src/features/providers/FlashbotsRpcProvider'
@@ -1737,15 +1739,15 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockWaitMsBeforeWarning: 600000,
     bridge: undefined,
     chainPriority: 0,
-    docs: '', // TODO: Add docs URL
+    docs: 'https://docs.stable.xyz',
     elementName: ElementName.ChainStableTestnet,
     explorer: {
       name: 'Stable Testnet Explorer',
-      url: 'https://testnet.stablescan.xyz/', 
+      url: 'https://testnet.stablescan.xyz',
       apiURL: 'https://testnet.stablescan.xyz/api',
     },
     helpCenterUrl: undefined,
-    infoLink: '', // TODO: Add info link
+    infoLink: 'https://www.stable.xyz',
     infuraPrefix: undefined,
     interfaceName: 'stable_testnet',
     label: 'STABLE Testnet',
@@ -1774,6 +1776,60 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       symbol: 'WgUSDT',
       decimals: 18,
       address: '0x5574c55b7002A900CE7c0f197F5dcc8126bA8501',
+    },
+  } as const satisfies UniverseChainInfo,
+  [UniswapSDKChainId.STABLE]: {
+    ...stable,
+    id: UniverseChainId.Stable,
+    sdkId: UniswapSDKChainId.STABLE,
+    assetRepoNetworkName: undefined,
+    backendChain: {
+      chain: BackendChainId.UnknownChain as InterfaceGqlChain,
+      backendSupported: false,
+      isSecondaryChain: true,
+      nativeTokenBackendAddress: undefined,
+    },
+    blockPerMainnetEpochForChainId: 12,
+    blockWaitMsBeforeWarning: 600000,
+    bridge: undefined,
+    chainPriority: 0,
+    docs: 'https://docs.stable.xyz',
+    elementName: ElementName.ChainStable,
+    explorer: {
+      name: 'Stable Explorer',
+      url: '',
+      apiURL: '',
+    },
+    helpCenterUrl: undefined,
+    infoLink: 'https://www.stable.xyz',
+    infuraPrefix: undefined,
+    interfaceName: 'stable',
+    label: 'STABLE',
+    logo: STABLE_LOGO,
+    nativeCurrency: {
+      name: 'gUSDT',
+      symbol: 'gUSDT',
+      decimals: 18,
+      address: DEFAULT_NATIVE_ADDRESS,
+    },
+    networkLayer: NetworkLayer.L2,
+    pendingTransactionsRetryOptions: undefined,
+    rpcUrls: {
+      [RPCType.Public]: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
+      default: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
+      appOnly: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
+    },
+    urlParam: 'stable',
+    statusPage: undefined,
+    spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDT0_STABLE, 10_000e6),
+    stablecoins: [USDT0_STABLE],
+    supportsClientSideRouting: false,
+    supportsGasEstimates: false,
+    wrappedNativeCurrency: {
+      name: 'Wrapped gUSDT',
+      symbol: 'WgUSDT',
+      decimals: 18,
+      address: '0x5d442b349590a6048Eb2dC0eC346cAA5F47A9ab5',
     },
   } as const satisfies UniverseChainInfo,
 }

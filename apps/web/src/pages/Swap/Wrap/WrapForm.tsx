@@ -16,8 +16,7 @@ import { useSwapActionHandlers } from 'state/swap/hooks'
 import { CurrencyState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
 import { ThemedText } from 'theme/components'
-import { Text } from 'ui/src'
-import { USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { InterfaceSectionName } from '@uniswap/analytics-events'
 import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
@@ -30,6 +29,7 @@ import { logger } from 'utilities/src/logger/logger'
 import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
 import { useHasPendingApproval } from 'state/transactions/hooks'
 import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
+import { isEitherStableChain } from 'constants/tokens'
 
 interface WrapFormProps {
   disableTokenInputs?: boolean
@@ -41,25 +41,32 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const supportedChainId = useSupportedChainId(chainId)
   const { swapState } = useSwapContext()
   const { typedValue, independentField } = swapState
-  const { isDisconnected, chainId: connectedChainId } = useAccount()
+  const { chainId: connectedChainId } = useAccount()
   const theme = useTheme()
   const account = useAccount()
-
   const native = useNativeCurrency(chainId)
-  const usdt0 = USDT0_STABLE_TESTNET
+  const chainIdWithDefault = chainId ?? UniverseChainId.Stable;
+  const usdt0: { [k: number]: Token } = {
+    [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
+    [UniverseChainId.Stable]: USDT0_STABLE
+  }
+  const WRAP_CONTRACT_ADDRESS: { [k: number]: string } = {
+    [UniverseChainId.StableTestnet]: '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90',
+    [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda'
+  }
 
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
 
   const [inputCurrency, setInputCurrency] = useState<Currency | undefined>(native)
-  const [outputCurrency, setOutputCurrency] = useState<Currency | undefined>(usdt0)
+  const [outputCurrency, setOutputCurrency] = useState<Currency | undefined>(usdt0[chainIdWithDefault])
 
   useEffect(() => {
-    if (chainId !== UniverseChainId.StableTestnet) {
+    if (chainId && isEitherStableChain(chainId)) {
       return
     }
     if (!inputCurrency || !outputCurrency) {
       setInputCurrency(native)
-      setOutputCurrency(usdt0)
+      setOutputCurrency(usdt0[chainIdWithDefault])
     }
   }, [chainId, native, usdt0, inputCurrency, outputCurrency])
 
@@ -74,8 +81,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   )
   const showWrap: boolean = wrapType !== WrapType.NotApplicable
 
-  const WRAP_CONTRACT_ADDRESS = '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90'
-  const tokenForApproval: Token | undefined = inputCurrency && usdt0.equals(inputCurrency) ? usdt0 : undefined
+  const tokenForApproval: Token | undefined = inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
   const inputAmount = useMemo(
     () => tryParseCurrencyAmount(typedValue, inputCurrency ?? undefined),
     [inputCurrency, typedValue],
@@ -92,14 +98,14 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
 
   const [approvalState] = useApproval(
     tokenAmountForApproval,
-    needsApproval ? WRAP_CONTRACT_ADDRESS : undefined,
+    needsApproval ? WRAP_CONTRACT_ADDRESS[chainIdWithDefault] : undefined,
     useHasPendingApproval,
   )
-  
+
   const [isApproving, setIsApproving] = useState(false)
-  
-  const isApprovalPending = useHasPendingApproval(tokenForApproval, WRAP_CONTRACT_ADDRESS)
-  
+
+  const isApprovalPending = useHasPendingApproval(tokenForApproval, WRAP_CONTRACT_ADDRESS[chainIdWithDefault])
+
   useEffect(() => {
     if (approvalState === ApprovalState.APPROVED || isApprovalPending) {
       setIsApproving(false)
@@ -204,7 +210,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
 
   const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
 
-  if (chainId !== UniverseChainId.StableTestnet) {
+  if (chainId && !isEitherStableChain(chainId)) {
     return (
       <AutoColumn gap="md" style={{ padding: '1rem' }}>
         <ThemedText.DeprecatedMain mb="4px">

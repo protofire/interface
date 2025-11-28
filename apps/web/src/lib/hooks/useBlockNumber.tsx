@@ -89,12 +89,12 @@ export function BlockNumberProvider({ children }: PropsWithChildren) {
   }, [provider, windowVisible, onChainBlock, multicallChainId])
   // Poll once for the mainnet block number using the network provider.
   useEffect(() => {
-    RPC_PROVIDERS[UniverseChainId.StableTestnet]
+    RPC_PROVIDERS[account.chainId ?? UniverseChainId.Stable]
       .getBlockNumber()
-      .then((block) => onChainBlock(UniverseChainId.StableTestnet, block))
+      .then((block) => onChainBlock(account.chainId ?? UniverseChainId.Stable, block))
       // swallow errors - it's ok if this fails, as we'll try again if we activate mainnet
       .catch(() => undefined)
-  }, [onChainBlock])
+  }, [onChainBlock, account])
   const value = useMemo(
     () => ({
       fastForward: (update: number) => {

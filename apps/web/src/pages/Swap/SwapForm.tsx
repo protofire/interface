@@ -214,23 +214,43 @@ export function SwapForm({
 
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+  const navigate = useNavigate()
 
   const handleTypeInput = useCallback(
     (value: string) => {
       onUserInput(Field.INPUT, value)
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new input value
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: value,
+        independentField: Field.INPUT,
+        chainId: supportedChainId ?? UniverseChainId.Stable,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onUserInput, trace],
+    [onUserInput, trace, currencyState.inputCurrency, currencyState.outputCurrency, navigate, supportedChainId],
   )
   const handleTypeOutput = useCallback(
     (value: string) => {
       onUserInput(Field.OUTPUT, value)
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new output value
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: value,
+        independentField: Field.OUTPUT,
+        chainId: supportedChainId ?? UniverseChainId.Stable,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onUserInput, trace],
+    [onUserInput, trace, currencyState.inputCurrency, currencyState.outputCurrency, navigate, supportedChainId],
   )
 
-  const navigate = useNavigate()
   const swapIsUnsupported = useIsSwapUnsupported(currencies[Field.INPUT], currencies[Field.OUTPUT])
   const isLandingPage = useIsLandingPage()
 
@@ -240,7 +260,7 @@ export function SwapForm({
       outputCurrency: currencyState.outputCurrency,
       typedValue: swapState.typedValue,
       independentField: swapState.independentField,
-      chainId: supportedChainId ?? UniverseChainId.StableTestnet,
+      chainId: supportedChainId ?? UniverseChainId.Stable,
     })
     navigate('/swap' + serializedSwapState)
   }, [
@@ -468,8 +488,18 @@ export function SwapForm({
         outputCurrency: currencyState.outputCurrency,
       })
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new input currency
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency,
+        outputCurrency: currencyState.outputCurrency,
+        typedValue: swapState.typedValue,
+        independentField: swapState.independentField,
+        chainId: supportedChainId ?? UniverseChainId.Stable,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace],
+    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
   )
   const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
 
@@ -490,8 +520,18 @@ export function SwapForm({
         outputCurrency,
       })
       maybeLogFirstSwapAction(trace)
+
+      // Update URL parameters with new output currency
+      const serializedSwapState = serializeSwapStateToURLParameters({
+        inputCurrency: currencyState.inputCurrency,
+        outputCurrency,
+        typedValue: swapState.typedValue,
+        independentField: swapState.independentField,
+        chainId: supportedChainId ?? UniverseChainId.Stable,
+      })
+      navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace],
+    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
   )
 
   const showPriceImpactWarning = isClassicTrade(trade) && largerPriceImpact && priceImpactSeverity > 3

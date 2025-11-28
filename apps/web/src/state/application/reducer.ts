@@ -65,7 +65,7 @@ export interface ApplicationState {
 
 const initialState: ApplicationState = {
   fiatOnramp: { available: false, availabilityChecked: false },
-  chainId: UniverseChainId.StableTestnet,
+  chainId: UniverseChainId.Stable,
   openModal: null,
   popupList: [],
   suppressedPopups: [],

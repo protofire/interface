@@ -26,6 +26,8 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
       return AnimeLogo
     case UniverseChainId.StableTestnet:
       return StableLogo
+    case UniverseChainId.Stable:
+      return StableLogo
     default:
       return EthereumLogo
   }

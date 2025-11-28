@@ -67,12 +67,7 @@ export default async function fetchTokenList(
     }
 
     try {
-      // The content of the result is sometimes invalid even with a 200 status code.
-      // A response can be invalid if it's not a valid JSON or if it doesn't match the TokenList schema.
-      const json = await response.json()
-      const list = skipValidation ? json : await validateTokenList(json)
-      listCache?.set(listUrl, list)
-      return list
+      return await response.json()
     } catch (error) {
       logger.debug(
         'fetchTokenList',

@@ -543,6 +543,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'USD₮0',
     'USD₮0',
   ),
+  [UniverseChainId.Stable]: new Token(
+    UniverseChainId.Stable,
+    '0x5d442b349590a6048Eb2dC0eC346cAA5F47A9ab5',
+    18,
+    'USD₮0',
+    'USD₮0',
+  ),
 }
 
 export function isCelo(chainId: number): chainId is UniverseChainId.Celo | UniverseChainId.CeloAlfajores {
@@ -668,13 +675,21 @@ export function isStableTestnet(chainId: number): chainId is UniverseChainId.Sta
   return chainId === UniverseChainId.StableTestnet
 }
 
+export function isStable(chainId: number): chainId is UniverseChainId.Stable {
+  return chainId === UniverseChainId.Stable
+}
+
+export function isEitherStableChain(chainId: number): chainId is UniverseChainId.Stable {
+  return chainId === UniverseChainId.Stable || chainId === UniverseChainId.StableTestnet
+}
+
 class StableNativeCurrency extends NativeCurrency {
   equals(other: Currency): boolean {
     return other.isNative && other.chainId === this.chainId
   }
 
   get wrapped(): Token {
-    if (!isStableTestnet(this.chainId)) {
+    if (!isEitherStableChain(this.chainId)) {
       throw new Error('Not Stable Testnet')
     }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -683,7 +698,7 @@ class StableNativeCurrency extends NativeCurrency {
   }
 
   public constructor(chainId: number) {
-    if (!isStableTestnet(chainId)) {
+    if (!isEitherStableChain(chainId)) {
       throw new Error('Not Stable Testnet')
     }
     super(chainId, 18, 'gUSDT', 'gUSDT')
@@ -731,6 +746,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
   } else if (isAnime(chainId)) {
     nativeCurrency = new AnimeNativeCurrency(chainId)
   } else if (isStableTestnet(chainId)) {
+    nativeCurrency = new StableNativeCurrency(chainId)
+  } else if (isStable(chainId)) {
     nativeCurrency = new StableNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
