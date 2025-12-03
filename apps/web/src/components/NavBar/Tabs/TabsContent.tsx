@@ -1,4 +1,5 @@
 import { CreditCardIcon } from 'components/Icons/CreditCard'
+import { Globe } from 'components/Icons/Globe'
 import { Limit } from 'components/Icons/Limit'
 import { Send } from 'components/Icons/Send'
 import { SwapV2 } from 'components/Icons/SwapV2'
@@ -51,6 +52,13 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
           href: '/swap',
           internal: true,
         },
+        {
+          label: t('common.wrap.button'),
+          icon: <Globe fill={theme.neutral2} width={25} height={24} />,
+          quickKey: 'U',
+          href: '/wrap',
+          internal: true,
+        },
         ...(forkConfig.uniSpecificFeaturesEnabled
           ? [
               {
@@ -84,7 +92,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.staging.swap.stable.xyz/home`,
+      href: `https://info.staging.swap.stable.xyz`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
