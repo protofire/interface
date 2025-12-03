@@ -9,6 +9,7 @@ import { getChain, isSupportedChainId } from 'constants/chains'
 import { PORTAL_ETH_CELO, isCelo, nativeOnChain } from 'constants/tokens'
 import { InterfaceChainId, UniverseChainId } from 'uniswap/src/types/chains'
 import { isSameAddress } from 'utilities/src/addresses'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 
 export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mainnet): string {
   switch (chainId) {
@@ -25,7 +26,6 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
     case UniverseChainId.Anime:
       return AnimeLogo
     case UniverseChainId.StableTestnet:
-      return StableLogo
     case UniverseChainId.Stable:
       return StableLogo
     default:
@@ -36,14 +36,20 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
 export function getTokenLogoURI(address: string, chainId: InterfaceChainId = UniverseChainId.Mainnet): string | void {
   const networkName = isSupportedChainId(chainId) ? getChain({ chainId }).assetRepoNetworkName : undefined
 
+  if (chainId === 988) console.log('tokenURI', address, chainId, networkName)
+
   if (isCelo(chainId) && isSameAddress(address, nativeOnChain(chainId).wrapped.address)) {
     return CeloLogo
   }
   if (isCelo(chainId) && isSameAddress(address, PORTAL_ETH_CELO.address)) {
     return EthereumLogo
   }
-  if (isSameAddress(address, '0x78Cf24370174180738C5B8E352B6D14c83a6c9A9')) {
-    return 'https://assets.swap.w3us.site/assets/USDT.png'
+  if (isSameAddress(address, USDT0_STABLE_TESTNET.address)) {
+    return 'https://assets.swap.w3us.site/assets/USDT0.png'
+  }
+
+  if (isSameAddress(address, USDT0_STABLE.address)) {
+    return 'https://assets.swap.w3us.site/assets/USDT0.png'
   }
 
   if (networkName) {

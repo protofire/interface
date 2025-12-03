@@ -22,13 +22,13 @@ export const useMenuContent = (): MenuSection[] => {
     {
       title: 'Help',
       items: [
-        { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
+        { label: 'Contact Support', href: 'https://swap-support.protofire.io' },
         { label: 'Deployed Contracts', href: '/deployments' },
       ],
     },
     {
       title: t('common.company'),
-      items: [{ label: 'Stable', href: '/swap' }],
+      items: [{ label: 'Stable', href: 'https://stable.xyz' }],
     },
     {
       title: 'Terms',
