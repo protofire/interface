@@ -40,6 +40,8 @@ import { nativeOnChain } from 'constants/tokens'
 import { useIsTransactionPending, useIsTransactionConfirmed } from 'state/transactions/hooks'
 import { AggregatorSwapModal } from './AggregatorSwapModal'
 import { ReactComponent as EisenLogo } from 'assets/svg/eisen.svg'
+import { ReactComponent as LiFiLogo } from 'assets/svg/lifi.svg'
+import nordsternLogo from 'assets/png/nordstern-finance.png'
 import useSelectChain from 'hooks/useSelectChain'
 import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { UniverseChainId } from 'uniswap/src/types/chains'
@@ -56,6 +58,47 @@ const AggregatorHeader = styled(RowBetween)`
   margin-bottom: 12px;
   padding-right: 4px;
   color: ${({ theme }) => theme.neutral2};
+`
+
+const PoweredByContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 20px;
+  margin-top: 16px;
+`
+
+const PoweredByLogos = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+`
+
+const LogoLink = styled.a`
+  display: flex;
+  align-items: center;
+  height: 20px;
+  transition: opacity 0.2s;
+  color: ${({ theme }) => theme.neutral1};
+  
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  img {
+    height: 20px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  svg {
+    height: 20px;
+    width: auto;
+  }
 `
 
 interface AggregatorFormProps {
@@ -415,6 +458,8 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
       includedDex: quoteParams.includedDex,
       maxSplit: maxsplit,
       maxEdge: maxedge,
+      integrator: 'flow-swap',
+      fee: 0,
     }
   }, [quoteParams, currencies, account.address, currentChainId, slippage, order, maxsplit, maxedge])
 
@@ -911,24 +956,37 @@ export function AggregatorForm({ disableTokenInputs = false, isLandingPage = fal
           attemptingTxn={executing && !txHash && !transactionError}
         />
 
-        <a
-          href="https://eisenfinance.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px', paddingTop: '8px', paddingBottom: '20px', marginTop: '16px' }}
-        >
-          <Flex
-            alignItems="center"
-            justifyContent="center"
-            gap="$gap4"
-            row
-          >
-            <Text variant="body3" color="$neutral2">
-              Powered by
-            </Text>
-            <EisenLogo style={{ height: '16px', width: 'auto' }} />
-          </Flex>
-        </a>
+        <PoweredByContainer>
+          <Text variant="body3" color="$neutral2">
+            Powered by
+          </Text>
+          <PoweredByLogos>
+            <LogoLink
+              href="https://eisenfinance.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Eisen Finance"
+            >
+              <EisenLogo />
+            </LogoLink>
+            <LogoLink
+              href="https://nordstern.finance/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Nordstern Finance"
+            >
+              <img src={nordsternLogo} alt="Nordstern Finance" />
+            </LogoLink>
+            <LogoLink
+              href="https://li.fi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="LiFi"
+            >
+              <LiFiLogo />
+            </LogoLink>
+          </PoweredByLogos>
+        </PoweredByContainer>
       </>
     )
   }

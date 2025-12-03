@@ -1,6 +1,7 @@
 export enum AggregatorType {
   EISEN = 'EISEN',
   NORDSTERN = 'NORDSTERN',
+  LIFI = 'LIFI',
 }
 
 export interface UnifiedQuote {

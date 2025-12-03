@@ -20,7 +20,11 @@ import { AggregatorSlippageSettings } from './AggregatorSlippageSettings'
 import { useEisenDexs } from './useEisenDexs'
 import Expand from 'components/Expand'
 import { ReactComponent as EisenLogo } from 'assets/svg/eisen.svg'
+import { ReactComponent as LiFiLogo } from 'assets/svg/lifi.svg'
+import nordsternLogo from 'assets/png/nordstern-finance.png'
 import { Flex, Text } from 'ui/src'
+import { AGGREGATOR_CONFIG } from './aggregatorConfig'
+import styled from 'lib/styled-components'
 
 const CloseButton = styled.button`
   background: transparent;
@@ -108,6 +112,45 @@ const Switch = styled(Row)`
   padding: 4px;
   border: 1px solid ${({ theme }) => theme.surface3};
   border-radius: 16px;
+`
+
+const PoweredByContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+`
+
+const PoweredByLogos = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+`
+
+const LogoLink = styled.a`
+  display: flex;
+  align-items: center;
+  height: 20px;
+  transition: opacity 0.2s;
+  color: ${({ theme }) => theme.neutral1};
+  
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  img {
+    height: 20px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  svg {
+    height: 20px;
+    width: auto;
+  }
 `
 
 const DexCheckbox = styled.div<{ disabled?: boolean }>`
@@ -261,11 +304,11 @@ export function AggregatorSettings({
           />
           <Divider />
           <RowBetween>
-            <Row width="auto">
+            <Row width="auto" gap="xs">
               <ThemedText.BodyPrimary>
                 Order Type
               </ThemedText.BodyPrimary>
-              <QuestionHelper text="How to prioritize the results - Cheapest for best price, Fastest for quickest execution." />
+              <QuestionHelper text="How to prioritize the results - Cheapest for best price, Fastest for quickest execution. Applies only to Eisen and LiFi." />
             </Row>
             <Switch>
               <Option onClick={() => onOrderChange('CHEAPEST')} isActive={order === 'CHEAPEST'}>
@@ -276,8 +319,13 @@ export function AggregatorSettings({
               </Option>
             </Switch>
           </RowBetween>
-          <Divider />
-          <Expand
+          <ThemedText.BodySmall color="neutral2" style={{ marginTop: '-12px', fontSize: '12px' }}>
+            Applies only to Eisen and LiFi
+          </ThemedText.BodySmall>
+          {AGGREGATOR_CONFIG.showDexSelection && (
+            <>
+              <Divider />
+              <Expand
             testId="aggregator-dex-settings"
             padding="6px 0px"
             isOpen={isDexSelectionOpen}
@@ -338,74 +386,96 @@ export function AggregatorSettings({
               </ThemedText.BodySmall>
             )}
           </Expand>
+            </>
+          )}
+          {AGGREGATOR_CONFIG.showMaxSplit && (
+            <>
+              <Divider />
+              <RowBetween gap="md">
+                <Row width="auto" gap="xs">
+                  <ThemedText.BodyPrimary>
+                    Max Split
+                  </ThemedText.BodyPrimary>
+                  <QuestionHelper text="Divisions for selling tokens across multiple DEXes" />
+                </Row>
+                <InputContainer gap="md" style={{ width: '120px' }}>
+                  <Input
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={maxsplit}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10)
+                      if (!isNaN(value) && value > 0) {
+                        onMaxsplitChange(value)
+                      }
+                    }}
+                    style={{ textAlign: 'right' }}
+                  />
+                </InputContainer>
+              </RowBetween>
+            </>
+          )}
+          {AGGREGATOR_CONFIG.showMaxEdge && (
+            <>
+              <Divider />
+              <RowBetween gap="md">
+                <Row width="auto" gap="xs">
+                  <ThemedText.BodyPrimary>
+                    Max Edge
+                  </ThemedText.BodyPrimary>
+                  <QuestionHelper text="Maximum number of hops that a swap path can pass through" />
+                </Row>
+                <InputContainer gap="md" style={{ width: '120px' }}>
+                  <Input
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={maxedge}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10)
+                      if (!isNaN(value) && value > 0) {
+                        onMaxedgeChange(value)
+                      }
+                    }}
+                    style={{ textAlign: 'right' }}
+                  />
+                </InputContainer>
+              </RowBetween>
+            </>
+          )}
           <Divider />
-          <RowBetween gap="md">
-            <Row width="auto" gap="xs">
-              <ThemedText.BodyPrimary>
-                Max Split
-              </ThemedText.BodyPrimary>
-              <QuestionHelper text="Divisions for selling tokens across multiple DEXes" />
-            </Row>
-            <InputContainer gap="md" style={{ width: '120px' }}>
-              <Input
-                type="number"
-                min="1"
-                step="1"
-                value={maxsplit}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value, 10)
-                  if (!isNaN(value) && value > 0) {
-                    onMaxsplitChange(value)
-                  }
-                }}
-                style={{ textAlign: 'right' }}
-              />
-            </InputContainer>
-          </RowBetween>
-          <Divider />
-          <RowBetween gap="md">
-            <Row width="auto" gap="xs">
-              <ThemedText.BodyPrimary>
-                Max Edge
-              </ThemedText.BodyPrimary>
-              <QuestionHelper text="Maximum number of hops that a swap path can pass through" />
-            </Row>
-            <InputContainer gap="md" style={{ width: '120px' }}>
-              <Input
-                type="number"
-                min="1"
-                step="1"
-                value={maxedge}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value, 10)
-                  if (!isNaN(value) && value > 0) {
-                    onMaxedgeChange(value)
-                  }
-                }}
-                style={{ textAlign: 'right' }}
-              />
-            </InputContainer>
-          </RowBetween>
-          <Divider />
-          {/* Powered by Eisen */}
-          <a
-            href="https://eisenfinance.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '4px', paddingTop: '8px' }}
-          >
-            <Flex
-              alignItems="center"
-              justifyContent="center"
-              gap="$gap4"
-              row
-            >
-              <Text variant="body3" color="$neutral2">
-                Powered by
-              </Text>
-              <EisenLogo style={{ height: '16px', width: 'auto' }} />
-            </Flex>
-          </a>
+          <PoweredByContainer>
+            <Text variant="body3" color="$neutral2">
+              Powered by
+            </Text>
+            <PoweredByLogos>
+              <LogoLink
+                href="https://eisenfinance.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Eisen Finance"
+              >
+                <EisenLogo />
+              </LogoLink>
+              <LogoLink
+                href="https://nordstern.finance/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Nordstern Finance"
+              >
+                <img src={nordsternLogo} alt="Nordstern Finance" />
+              </LogoLink>
+              <LogoLink
+                href="https://li.fi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LiFi"
+              >
+                <LiFiLogo />
+              </LogoLink>
+            </PoweredByLogos>
+          </PoweredByContainer>
         </AutoColumn>
       </>
     ),

@@ -18,11 +18,11 @@ export function useEisenDexs(chainId: number) {
         headers: EISEN_API_HEADERS,
       })
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch DEXs: ${response.statusText}`)
-      }
+        if (!response.ok) {
+          throw new Error(`Failed to fetch DEXs: ${response.statusText}`)
+        }
 
-      const data: EisenDexsResponse = await response.json()
+        const data: EisenDexsResponse = await response.json()
       return data.result?.[chainId.toString()] || []
     },
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes

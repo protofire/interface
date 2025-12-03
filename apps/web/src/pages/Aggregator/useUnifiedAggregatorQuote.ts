@@ -1,9 +1,12 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Currency } from '@uniswap/sdk-core'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useEisenQuote, EisenQuoteParams } from './useEisenQuote'
 import { useNordsternQuote, NordsternQuoteParams } from './useNordsternQuote'
+import { useLiFiQuote, LiFiQuoteParams } from './useLiFiQuote'
+import { useNordsternPrices } from './useNordsternPrices'
 import { AggregatorType, UnifiedQuote, AggregatorQuoteResult } from './aggregatorTypes'
-import { adaptEisenQuote, adaptNordsternQuote, compareQuotes } from './quoteAdapters'
+import { adaptEisenQuote, adaptNordsternQuote, adaptLiFiQuote, compareQuotes } from './quoteAdapters'
 import { getNordsternRouterAddress } from './nordsternApiConfig'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { NATIVE_CHAIN_ID } from 'constants/tokens'
@@ -23,6 +26,9 @@ interface UnifiedQuoteParams {
   includedDex?: string
   maxSplit?: number
   maxEdge?: number
+  integrator?: string
+  fee?: number
+  referrer?: string
 }
 
 export function useUnifiedAggregatorQuote(params: UnifiedQuoteParams | null) {
@@ -94,8 +100,40 @@ export function useUnifiedAggregatorQuote(params: UnifiedQuoteParams | null) {
     }
   }, [params])
 
+  const lifiParams: LiFiQuoteParams | null = useMemo(() => {
+    if (!params || !params.fromToken || !params.toToken) return null
+
+    const NATIVE_ADDRESS = '0x0000000000000000000000000000000000000000'
+    
+    const fromAddress = params.fromToken.isNative
+      ? NATIVE_ADDRESS
+      : params.fromToken.address.toLowerCase()
+    
+    const toAddress = params.toToken.isNative
+      ? NATIVE_ADDRESS
+      : params.toToken.address.toLowerCase()
+
+    const order = params.order === 'CHEAPEST' ? 'CHEAPEST' : 'FASTEST'
+
+    return {
+      fromChain: params.chainId,
+      toChain: params.chainId,
+      fromToken: fromAddress,
+      toToken: toAddress,
+      fromAmount: params.fromAmount,
+      fromAddress: params.fromAddress,
+      toAddress: params.fromAddress,
+      slippage: params.slippage,
+      order,
+      integrator: params.integrator,
+      fee: params.fee,
+      referrer: params.referrer,
+    }
+  }, [params])
+
   const eisenQuote = useEisenQuote(eisenParams)
   const nordsternQuote = useNordsternQuote(nordsternParams)
+  const lifiQuote = useLiFiQuote(lifiParams)
 
   const fromTokenInfo = useMemo(() => {
     if (!params?.fromToken) return null
@@ -175,6 +213,22 @@ export function useUnifiedAggregatorQuote(params: UnifiedQuoteParams | null) {
     return getNordsternRouterAddress(params?.chainId || FLOW_CHAIN_ID) || ''
   }, [params?.chainId])
 
+  const nordsternTokenAddresses = useMemo(() => {
+    if (!nordsternParams) return []
+    const addresses: string[] = []
+    // Always include native token address for gas cost calculation
+    const NATIVE_TOKEN_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    addresses.push(NATIVE_TOKEN_ADDRESS)
+    if (nordsternParams.src) addresses.push(nordsternParams.src)
+    if (nordsternParams.dst) addresses.push(nordsternParams.dst)
+    return addresses
+  }, [nordsternParams])
+
+  const nordsternPrices = useNordsternPrices(
+    params?.chainId || FLOW_CHAIN_ID,
+    nordsternTokenAddresses
+  )
+
   const unifiedQuotes = useMemo(() => {
     const quotes = new Map<AggregatorType, UnifiedQuote | null>()
     const errors = new Map<AggregatorType, string | null>()
@@ -192,15 +246,24 @@ export function useUnifiedAggregatorQuote(params: UnifiedQuoteParams | null) {
         fromTokenInfo,
         toTokenInfo,
         routerAddress,
-        params?.slippage
+        params?.slippage,
+        nordsternPrices.pricesMap,
+        params?.chainId
       )
       quotes.set(AggregatorType.NORDSTERN, adapted)
     } else if (nordsternQuote.error) {
       errors.set(AggregatorType.NORDSTERN, nordsternQuote.error)
     }
 
+    if (lifiQuote.quote && fromTokenInfo && toTokenInfo) {
+      const adapted = adaptLiFiQuote(lifiQuote.quote, fromTokenInfo, toTokenInfo)
+      quotes.set(AggregatorType.LIFI, adapted)
+    } else if (lifiQuote.error) {
+      errors.set(AggregatorType.LIFI, lifiQuote.error)
+    }
+
     return { quotes, errors }
-  }, [eisenQuote.quote, eisenQuote.error, nordsternQuote.quote, nordsternQuote.error, fromTokenInfo, toTokenInfo, routerAddress])
+  }, [eisenQuote.quote, eisenQuote.error, nordsternQuote.quote, nordsternQuote.error, lifiQuote.quote, lifiQuote.error, fromTokenInfo, toTokenInfo, routerAddress, params?.slippage, nordsternPrices.pricesMap])
 
   const bestQuote = useMemo(() => {
     const { quotes } = unifiedQuotes
@@ -212,7 +275,23 @@ export function useUnifiedAggregatorQuote(params: UnifiedQuoteParams | null) {
     return availableQuotes.reduce((best, current) => compareQuotes(best, current))
   }, [unifiedQuotes])
 
-  const loading = eisenQuote.loading || nordsternQuote.loading
+  const loading = eisenQuote.loading || nordsternQuote.loading || lifiQuote.loading
+
+  // Reset selected aggregator when params change (new swap)
+  useEffect(() => {
+    setSelectedAggregator(null)
+  }, [params?.fromToken, params?.toToken, params?.fromAmount])
+
+  // Reset selected aggregator if it doesn't have a valid quote after loading completes
+  useEffect(() => {
+    if (selectedAggregator && !loading) {
+      const hasQuote = unifiedQuotes.quotes.has(selectedAggregator) && unifiedQuotes.quotes.get(selectedAggregator) !== null
+      if (!hasQuote) {
+        // Selected aggregator failed or doesn't have a quote, reset to null to use best quote
+        setSelectedAggregator(null)
+      }
+    }
+  }, [selectedAggregator, unifiedQuotes.quotes, loading])
 
   const currentQuote = useMemo(() => {
     if (selectedAggregator) {
