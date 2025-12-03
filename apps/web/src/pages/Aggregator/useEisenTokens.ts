@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { FLOW_CHAIN_ID } from './mockTokenData'
 import { mockTokenToToken, MockToken } from './mockTokenData'
 import { Token } from '@uniswap/sdk-core'
+import { EISEN_API_ENDPOINTS, EISEN_API_HEADERS } from './eisenApiConfig'
 
 interface EisenTokenResponse {
   result: {
@@ -18,10 +19,8 @@ export function useEisenTokens(chainId: number = FLOW_CHAIN_ID) {
     queryKey: ['eisenTokens', chainId],
     queryFn: async () => {
       try {
-        const response = await fetch(`https://hiker.hetz-01.eisenfinance.com/public/v1/tokens?chainId=${chainId}`, {
-          headers: {
-            'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
-          },
+        const response = await fetch(`${EISEN_API_ENDPOINTS.TOKENS}?chainId=${chainId}`, {
+          headers: EISEN_API_HEADERS,
         })
 
         if (!response.ok) {

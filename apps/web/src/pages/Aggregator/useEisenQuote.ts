@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { EISEN_API_ENDPOINTS, EISEN_API_HEADERS } from './eisenApiConfig'
 
 interface EisenQuoteParams {
   fromAddress: string
@@ -170,10 +171,8 @@ export function useEisenQuote(params: EisenQuoteParams | null) {
 
         const queryString = queryParts.join('&')
 
-        const response = await fetch(`https://hiker.hetz-01.eisenfinance.com/public/v1/quote?${queryString}`, {
-          headers: {
-            'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
-          },
+        const response = await fetch(`${EISEN_API_ENDPOINTS.QUOTE}?${queryString}`, {
+          headers: EISEN_API_HEADERS,
         })
 
         if (!response.ok) {

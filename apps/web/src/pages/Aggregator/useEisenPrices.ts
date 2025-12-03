@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { FLOW_CHAIN_ID } from './mockTokenData'
+import { EISEN_API_ENDPOINTS, EISEN_API_HEADERS } from './eisenApiConfig'
 
 export interface TokenPrice {
   address: string
@@ -24,14 +25,9 @@ export function useEisenPrices(chainId: number = FLOW_CHAIN_ID) {
     queryKey: ['eisenPrices', chainId],
     queryFn: async () => {
       try {
-        const response = await fetch(
-          `https://hiker.hetz-01.eisenfinance.com/public/v1/prices?chainId=${chainId}`,
-          {
-            headers: {
-              'X-EISEN-KEY': process.env.REACT_APP_EISEN_API_KEY || '',
-            },
-          }
-        )
+        const response = await fetch(`${EISEN_API_ENDPOINTS.PRICES}?chainId=${chainId}`, {
+          headers: EISEN_API_HEADERS,
+        })
 
         if (!response.ok) {
           throw new Error(`Failed to fetch prices: ${response.statusText}`)

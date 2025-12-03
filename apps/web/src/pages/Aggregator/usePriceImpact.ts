@@ -7,30 +7,28 @@ import { BIPS_BASE } from 'constants/misc';
 
 const NATIVE_TOKEN_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
-// TODO: fix impact calculation
+import { UnifiedQuote } from './aggregatorTypes';
+
 export function usePriceImpact(
-  quote: any,
+  quote: UnifiedQuote | null,
   quoteLoading: boolean,
   chainId: number = FLOW_CHAIN_ID
 ): Percent | undefined {
   const { pricesMap, loading, refetch } = useEisenPrices(chainId);
 
-  // Refetch prices when quote finishes loading
   useEffect(() => {
-    if (!quoteLoading && quote?.result?.estimate) {
+    if (!quoteLoading && quote) {
       refetch()
     }
-  }, [quoteLoading, quote?.result?.estimate, refetch])
+  }, [quoteLoading, quote, refetch])
 
   return useMemo(() => {
-    if (!quote?.result?.estimate || loading) return undefined;
+    if (!quote || loading) return undefined;
 
-    const { estimate } = quote.result;
-    const { action } = quote.result;
-    const fromToken = action?.fromToken;
-    const toToken = action?.toToken;
+    const fromToken = quote.fromToken;
+    const toToken = quote.toToken;
 
-    if (!fromToken || !toToken || !estimate.fromAmount || !estimate.toAmount) {
+    if (!fromToken || !toToken || !quote.fromAmount || !quote.toAmount) {
       return undefined;
     }
 
@@ -46,8 +44,8 @@ export function usePriceImpact(
 
     const marginalRate = fromTokenPrice / toTokenPrice;
 
-    const fromAmountBN = BigNumber.from(estimate.fromAmount);
-    const toAmountBN = BigNumber.from(estimate.toAmount);
+    const fromAmountBN = BigNumber.from(quote.fromAmount);
+    const toAmountBN = BigNumber.from(quote.toAmount);
 
     const fromDecimals = fromToken.decimals || 18;
     const toDecimals = toToken.decimals || 18;
