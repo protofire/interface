@@ -14,7 +14,7 @@ export const stable = /*#__PURE__*/ defineChain({
     symbol: 'gUSDT',
   },
   rpcUrls: {
-    default: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
+    default: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
   },
   blockExplorers: {
     default: {

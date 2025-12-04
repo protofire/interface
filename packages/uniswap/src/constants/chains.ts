@@ -1815,9 +1815,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
-      default: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
-      appOnly: { http: ['https://stable-mainnet.g.alchemy.com/v2/Vh4pfLf7SxSZLoFlecyar'] },
+      [RPCType.Public]: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
+      default: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
+      appOnly: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
     },
     urlParam: 'stable',
     statusPage: undefined,
