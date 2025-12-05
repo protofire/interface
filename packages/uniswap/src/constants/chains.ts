@@ -1648,9 +1648,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
-      default: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
-      appOnly: { http: ['https://rpc-animechain-39xf6m45e3.t.conduit.xyz'] },
+      [RPCType.Public]: { http: [''] },
+      default: { http: [''] },
+      appOnly: { http: [''] },
     },
     urlParam: 'anime',
     statusPage: undefined,
