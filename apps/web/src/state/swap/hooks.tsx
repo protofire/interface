@@ -447,7 +447,7 @@ export function useInitialCurrencyState(): {
       initialInputCurrencyAddress === parsedCurrencyState.outputCurrencyId // clear output if identical
         ? undefined
         : parsedCurrencyState.outputCurrencyId ?? undefined,
-    [initialInputCurrencyAddress, parsedCurrencyState.outputCurrencyId, supportedChainId],
+    [initialInputCurrencyAddress, parsedCurrencyState.outputCurrencyId],
   )
   const initialInputCurrency = useCurrency(initialInputCurrencyAddress, initialChainId)
   const initialOutputCurrency = useCurrency(initialOutputCurrencyAddress, initialChainId)
