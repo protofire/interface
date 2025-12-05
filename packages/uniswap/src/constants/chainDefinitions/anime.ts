@@ -19,7 +19,7 @@ export const anime = /*#__PURE__*/ defineChain({
   blockExplorers: {
     default: {
       name: 'Animechain Explorer',
-      url: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz',
+      url: '',
     },
   },
   testnet: false,
