@@ -1,4 +1,4 @@
-import FlowLogo from 'assets/png/flow-logo.png'
+import PlaceholderLogo from 'assets/png/placeholder-logo.png'
 import { ArrowChangeDown } from 'components/Icons/ArrowChangeDown'
 import { NavIcon } from 'components/Logo/NavIcon'
 import { MenuDropdown } from 'components/NavBar/CompanyMenu/MenuDropdown'
@@ -64,13 +64,13 @@ export function CompanyMenu() {
         <Trigger>
           <UniIcon onClick={handleLogoClick} data-testid="nav-uniswap-logo">
             {isMobile ? (
-              <img src={FlowLogo} alt="FlowSwap" style={{ height: '48px', width: '48px' }} />
+              <img src={PlaceholderLogo} alt="ChainName" style={{ height: '48px', width: '48px' }} />
             ) : (
               <NavIcon width="200" height="48" />
             )}
             {isLargeScreen && (
               <Text variant="subheading1" color="$accent1" userSelect="none">
-                FlowSwap
+                ChainName
               </Text>
             )}
           </UniIcon>

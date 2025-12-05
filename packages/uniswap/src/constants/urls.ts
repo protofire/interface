@@ -63,7 +63,7 @@ export const uniswapUrls = {
   chromeExtension: 'http://uniswap.org/ext',
 
   // Core API Urls
-  apiOrigin: 'https://staging.flowswap.io',
+  apiOrigin: 'https://example.io',
   apiBaseUrl: getCloudflareApiBaseUrl(),
   apiBaseUrlV2: `${getCloudflareApiBaseUrl()}/v2`,
   graphQLUrl: `${getCloudflareApiBaseUrl(TrafficFlows.GraphQL)}/v1/graphql`,

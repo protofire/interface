@@ -99,14 +99,14 @@ export function Footer() {
   return (
     <Flex maxWidth="100vw" width="100%" gap="$spacing24" pt="$none" px="$spacing48" pb={40} $lg={{ px: '$spacing40' }}>
       <Flex row $md={{ flexDirection: 'column' }} justifyContent="space-between" gap="$spacing32">
-        <Flex height="100%" gap="$spacing60">
+        {/* <Flex height="100%" gap="$spacing60">
           <Flex $md={{ display: 'none' }} flexDirection="column" gap="$spacing16">
             <Socials iconSize={SOCIAL_ICONS_SIZE} />
             <Anchor href="https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876" target="_blank">
               <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
             </Anchor>
           </Flex>
-        </Flex>
+        </Flex> */}
         <Flex row $md={{ flexDirection: 'column' }} height="100%" gap="$spacing16">
           <Flex row gap="$spacing16" justifyContent="space-between" $md={{ width: 'auto' }}>
             <FooterSection title={t('common.app')} items={appSectionItems} />
@@ -118,12 +118,12 @@ export function Footer() {
             <FooterSection title={sections[2].title} items={sections[2].items} />
           </Flex>
         </Flex>
-        <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
+        {/* <Flex $md={{ display: 'flex' }} display="none" flexDirection="column" gap="$spacing16">
           <Socials iconSize={SOCIAL_ICONS_SIZE} />
           <Anchor href="https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876" target="_blank">
             <DAOLogo src={isDarkMode ? DAODarkMode : DAOLightMode} alt="DAO Logo" />
           </Anchor>
-        </Flex>
+        </Flex> */}
       </Flex>
       <Separator />
       <Flex
@@ -133,7 +133,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 FlowSwap</Text>
+        <Text variant="body3">2025 ChainName</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

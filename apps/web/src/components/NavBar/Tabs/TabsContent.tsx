@@ -84,7 +84,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.placeholder.url.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: `https://info.example.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
@@ -92,13 +92,13 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
         {
           label: 'V3 Analytics',
           quickKey: 'T',
-          href: `https://info.placeholder.url.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+          href: `https://info.example.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
           internal: false,
         },
         {
           label: 'V2 Analytics',
           quickKey: 'P',
-          href: `https://v2-info.placeholder.url.io`,
+          href: `https://v2-info.example.io`,
           internal: false,
         },
       ],
