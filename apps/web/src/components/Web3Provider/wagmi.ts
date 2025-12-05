@@ -19,7 +19,7 @@ declare module 'wagmi' {
 
 export const wagmiConfig = createConfig({
   chains: [
-    UNIVERSE_CHAIN_INFO[UniverseChainId.FlowMainnet],
+    UNIVERSE_CHAIN_INFO[UniverseChainId.Mainnet],
     ...WEB_SUPPORTED_CHAIN_IDS.map((chainId) => UNIVERSE_CHAIN_INFO[chainId]),
   ],
   connectors: [

@@ -1,5 +1,5 @@
 import { InterfacePageName } from '@uniswap/analytics-events'
-import FlowIcon from 'assets/png/flow-logo.png'
+import UniswapIcon from 'assets/svg/logo.svg'
 import { SmallButtonPrimary } from 'components/Button'
 import { useIsMobile } from 'hooks/screenSize'
 import styled from 'lib/styled-components'
@@ -51,7 +51,7 @@ export default function NotFound() {
               <Trans i18nKey="common.pageNotFound" />
             </Paragraph>
           </Container>
-          <img src={FlowIcon} alt="FlowSwap" style={{ width: '100px', height: '100px' }} />
+          <img src={UniswapIcon} alt="Swap" style={{ width: '100px', height: '100px' }} />
         </Header>
         <SmallButtonPrimary as={Link} to="/">
           <Trans i18nKey="notFound.oops" />

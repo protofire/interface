@@ -1,6 +1,4 @@
 import EthereumLogo from 'assets/images/ethereum-logo.png'
-import AnimeLogo from 'assets/png/anime-logo.png'
-import FlowLogo from 'assets/png/flow-logo.png'
 import AvaxLogo from 'assets/svg/avax_logo.svg'
 import BnbLogo from 'assets/svg/bnb-logo.svg'
 import CeloLogo from 'assets/svg/celo_logo.svg'
@@ -22,11 +20,6 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
       return CeloLogo
     case UniverseChainId.Avalanche:
       return AvaxLogo
-    case UniverseChainId.Anime:
-      return AnimeLogo
-    case UniverseChainId.FlowTestnet:
-    case UniverseChainId.FlowMainnet:
-      return FlowLogo
     default:
       return EthereumLogo
   }
@@ -42,29 +35,17 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
     return EthereumLogo
   }
 
-  // Flow Testnet specific tokens
-  if (chainId === UniverseChainId.FlowTestnet) {
-    // WFLOW
-    if (isSameAddress(address, '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e')) {
-      return FlowLogo
-    }
-    // USDC
-    if (isSameAddress(address, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73')) {
-      return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
-    }
-  }
-
-  // Flow Mainnet specific tokens
-  if (chainId === UniverseChainId.FlowMainnet) {
-    // WFLOW
-    if (isSameAddress(address, '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e')) {
-      return FlowLogo
-    }
-    // USDC
-    if (isSameAddress(address, '0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED')) {
-      return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
-    }
-  }
+  // Specific token logo example
+  // if (chainId === UniverseChainId.FlowTestnet) {
+  //   // WFLOW
+  //   if (isSameAddress(address, '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e')) {
+  //     return FlowLogo
+  //   }
+  //   // USDC
+  //   if (isSameAddress(address, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73')) {
+  //     return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
+  //   }
+  // }
 
   if (networkName) {
     return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${address}/logo.png`

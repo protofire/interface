@@ -24,21 +24,6 @@ export enum UniverseChainId {
   Blast = UniswapSDKChainId.BLAST,
   Zora = UniswapSDKChainId.ZORA,
   Zksync = UniswapSDKChainId.ZKSYNC,
-  AbstractTestnet = UniswapSDKChainId.ABSTRACT_TESTNET,
-  Zero = UniswapSDKChainId.ZERO,
-  BOB = UniswapSDKChainId.BOB,
-  CYBER = UniswapSDKChainId.CYBER,
-  SHAPE = UniswapSDKChainId.SHAPE,
-  INK = UniswapSDKChainId.INK,
-  REDSTONE = UniswapSDKChainId.REDSTONE,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  REDSTONE_GARNET = UniswapSDKChainId.REDSTONE_GARNET,
-  AbstractMainnet = UniswapSDKChainId.ABSTRACT_MAINNET,
-  AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
-  Mode = UniswapSDKChainId.MODE,
-  Anime = UniswapSDKChainId.ANIME,
-  FlowMainnet = UniswapSDKChainId.FLOW_MAINNET,
-  FlowTestnet = UniswapSDKChainId.FLOW_TESTNET,
 }
 
 export type WalletChainId =
@@ -55,20 +40,6 @@ export type WalletChainId =
   | UniverseChainId.Bnb
   | UniverseChainId.Zora
   | UniverseChainId.Zksync
-  | UniverseChainId.AbstractTestnet
-  | UniverseChainId.Zero
-  | UniverseChainId.BOB
-  | UniverseChainId.CYBER
-  | UniverseChainId.SHAPE
-  | UniverseChainId.INK
-  | UniverseChainId.REDSTONE
-  | UniverseChainId.REDSTONE_GARNET
-  | UniverseChainId.AbstractMainnet
-  | UniverseChainId.AnimeTestnet
-  | UniverseChainId.Mode
-  | UniverseChainId.Anime
-  | UniverseChainId.FlowMainnet
-  | UniverseChainId.FlowTestnet
 
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
@@ -90,37 +61,8 @@ export type InterfaceChainId = UniverseChainId
 
 export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
 [
-  // UniverseChainId.Mainnet,
-  // UniverseChainId.Goerli,
-  // UniverseChainId.Sepolia,
-  // UniverseChainId.Optimism,
-  // UniverseChainId.OptimismGoerli,
-  // UniverseChainId.ArbitrumOne,
-  // UniverseChainId.ArbitrumGoerli,
-  // UniverseChainId.Polygon,
-  // UniverseChainId.PolygonMumbai,
-  // UniverseChainId.Avalanche,
-  // UniverseChainId.Celo,
-  // UniverseChainId.CeloAlfajores,
-  // UniverseChainId.Bnb,
-  // UniverseChainId.Base,
-  // UniverseChainId.Blast,
-  // UniverseChainId.Zora,
-  // UniverseChainId.Zksync,
-  // UniverseChainId.AbstractTestnet,
-  // UniverseChainId.Zero,
-  // UniverseChainId.BOB,
-  // UniverseChainId.CYBER,
-  // UniverseChainId.SHAPE,
-  // UniverseChainId.INK,
-  // UniverseChainId.REDSTONE,
-  // UniverseChainId.REDSTONE_GARNET,
-  // UniverseChainId.AbstractMainnet,
-  // UniverseChainId.AnimeTestnet,
-  // UniverseChainId.Mode,
-  // UniverseChainId.Anime,
-  UniverseChainId.FlowMainnet,
-  UniverseChainId.FlowTestnet,
+  UniverseChainId.Mainnet,
+  UniverseChainId.Sepolia,
 ]
 
 export enum RPCType {

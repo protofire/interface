@@ -18,20 +18,6 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Blast]: 'https://blastscan.io',
   [UniverseChainId.Zora]: 'https://zora.superscan.network',
   [UniverseChainId.Zksync]: 'https://explorer.zksync.io',
-  [UniverseChainId.AbstractTestnet]: 'https://explorer.testnet.abs.xyz',
-  [UniverseChainId.Zero]: 'https://zero-network.calderaexplorer.xyz',
-  [UniverseChainId.BOB]: 'https://explorer.gobob.xyz',
-  [UniverseChainId.CYBER]: 'https://cyberscan.co',
-  [UniverseChainId.SHAPE]: 'https://shapescan.xyz',
-  [UniverseChainId.INK]: 'https://explorer.inkonchain.com',
-  [UniverseChainId.REDSTONE]: 'https://explorer.redstone.xyz',
-  [UniverseChainId.REDSTONE_GARNET]: 'https://explorer.garnetchain.com',
-  [UniverseChainId.AbstractMainnet]: '', // Temporary
-  [UniverseChainId.AnimeTestnet]: 'https://testnet-explorer.anime.xyz',
-  [UniverseChainId.Mode]: 'https://explorer.mode.network/',
-  [UniverseChainId.Anime]: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/',
-  [UniverseChainId.FlowTestnet]: 'https://evm-testnet.flowscan.io/',
-  [UniverseChainId.FlowMainnet]: 'https://evm.flowscan.io/',
 }
 
 export enum ExplorerDataType {

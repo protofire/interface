@@ -47,22 +47,6 @@ import {
 } from 'constants/tokens'
 import { getNativeLogoURI, getTokenLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
-  USDC_ABSTRACT_MAINNET,
-  USDC_ABSTRACT_TESTNET,
-  USDC_ANIME,
-  USDC_ANIME_TESTNET,
-  USDC_BOB,
-  USDC_CYBER,
-  USDF_FLOW_MAINNET,
-  USDC_FLOW_MAINNET,
-  USDC_FLOW_TESTNET,
-  WBTC_FLOW_MAINNET,
-  USDC_INK,
-  USDC_MODE,
-  USDC_REDSTONE,
-  USDC_REDSTONE_GARNET,
-  USDC_SHAPE,
-  USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
 } from 'uniswap/src/constants/tokens'
@@ -214,80 +198,6 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Zksync] as Token,
     USDC_ZKSYNC,
   ].map(buildCurrencyInfo),
-
-  [UniverseChainId.AbstractTestnet]: [
-    nativeOnChain(UniverseChainId.AbstractTestnet),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.AbstractTestnet] as Token,
-    USDC_ABSTRACT_TESTNET,
-  ].map(buildCurrencyInfo),
-
-  [UniverseChainId.Zero]: [
-    nativeOnChain(UniverseChainId.Zero),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Zero] as Token,
-    USDC_ZERO,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.BOB]: [
-    nativeOnChain(UniverseChainId.BOB),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.BOB] as Token,
-    USDC_BOB,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.CYBER]: [
-    nativeOnChain(UniverseChainId.CYBER),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.CYBER] as Token,
-    USDC_CYBER,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.SHAPE]: [
-    nativeOnChain(UniverseChainId.SHAPE),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.SHAPE] as Token,
-    USDC_SHAPE,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.INK]: [
-    nativeOnChain(UniverseChainId.INK),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.INK] as Token,
-    USDC_INK,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.REDSTONE]: [
-    nativeOnChain(UniverseChainId.REDSTONE),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.REDSTONE] as Token,
-    USDC_REDSTONE,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.REDSTONE_GARNET]: [
-    nativeOnChain(UniverseChainId.REDSTONE_GARNET),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.REDSTONE_GARNET] as Token,
-    USDC_REDSTONE_GARNET,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.AbstractMainnet]: [
-    nativeOnChain(UniverseChainId.AbstractMainnet),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.AbstractMainnet] as Token,
-    USDC_ABSTRACT_MAINNET,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.AnimeTestnet]: [
-    nativeOnChain(UniverseChainId.AnimeTestnet),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.AnimeTestnet] as Token,
-    USDC_ANIME_TESTNET,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.Anime]: [
-    nativeOnChain(UniverseChainId.Anime),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Anime] as Token,
-    USDC_ANIME,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.Mode]: [
-    nativeOnChain(UniverseChainId.Mode),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Mode] as Token,
-    USDC_MODE,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.FlowMainnet]: [
-    nativeOnChain(UniverseChainId.FlowMainnet),
-    USDC_FLOW_MAINNET,
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowMainnet] as Token,
-    USDF_FLOW_MAINNET,
-    WBTC_FLOW_MAINNET,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.FlowTestnet]: [
-    nativeOnChain(UniverseChainId.FlowTestnet),
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowTestnet] as Token,
-    USDC_FLOW_TESTNET,
-  ].map(buildCurrencyInfo),
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -316,8 +226,6 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
-  [UniverseChainId.FlowMainnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowMainnet], USDF_FLOW_MAINNET, WBTC_FLOW_MAINNET],
-  [UniverseChainId.FlowTestnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet], USDC_FLOW_TESTNET],
 }
 
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {

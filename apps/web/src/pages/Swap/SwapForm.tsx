@@ -225,7 +225,7 @@ export function SwapForm({
         outputCurrency: currencyState.outputCurrency,
         typedValue: value,
         independentField: Field.INPUT,
-        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+        chainId: supportedChainId ?? UniverseChainId.Mainnet,
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },
@@ -242,7 +242,7 @@ export function SwapForm({
         outputCurrency: currencyState.outputCurrency,
         typedValue: value,
         independentField: Field.OUTPUT,
-        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+        chainId: supportedChainId ?? UniverseChainId.Mainnet,
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },
@@ -258,7 +258,7 @@ export function SwapForm({
       outputCurrency: currencyState.outputCurrency,
       typedValue: swapState.typedValue,
       independentField: swapState.independentField,
-      chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+      chainId: supportedChainId ?? UniverseChainId.Mainnet,
     })
     navigate('/swap' + serializedSwapState)
   }, [
@@ -373,7 +373,7 @@ export function SwapForm({
     // Token and value parameters are already updated via input handlers
     if (connectedChainId && connectedChainId !== supportedChainId) {
       const params = new URLSearchParams(window.location.search)
-      params.set('chain', CHAIN_IDS_TO_NAMES[connectedChainId] || CHAIN_IDS_TO_NAMES[UniverseChainId.FlowMainnet])
+      params.set('chain', CHAIN_IDS_TO_NAMES[connectedChainId] || CHAIN_IDS_TO_NAMES[UniverseChainId.Mainnet])
       navigate('/swap?' + params.toString(), { replace: true })
     }
 
@@ -497,7 +497,7 @@ export function SwapForm({
         outputCurrency: currencyState.outputCurrency,
         typedValue: swapState.typedValue,
         independentField: swapState.independentField,
-        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+        chainId: supportedChainId ?? UniverseChainId.Mainnet,
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },
@@ -525,7 +525,7 @@ export function SwapForm({
         outputCurrency,
         typedValue: swapState.typedValue,
         independentField: swapState.independentField,
-        chainId: supportedChainId ?? UniverseChainId.FlowMainnet,
+        chainId: supportedChainId ?? UniverseChainId.Mainnet,
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },

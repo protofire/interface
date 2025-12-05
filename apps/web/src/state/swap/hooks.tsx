@@ -19,7 +19,6 @@ import { isClassicTrade, isSubmittableTrade, isUniswapXTrade } from 'state/routi
 import { CurrencyState, SerializedCurrencyState, SwapInfo, SwapState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
 import { useUserSlippageToleranceWithDefault } from 'state/user/hooks'
-import { USDC_FLOW_MAINNET } from 'uniswap/src/constants/tokens'
 import { useTokenProjects } from 'uniswap/src/features/dataApi/tokenProjects'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -219,22 +218,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
   // totalGasUseEstimateUSD is greater than native token balance
   // Temporary disable Zero gas checks due to timestamp mismatch
   const insufficientGas =
-    chainId &&
-    [
-      UniverseChainId.Zero,
-      UniverseChainId.BOB,
-      UniverseChainId.CYBER,
-      UniverseChainId.SHAPE,
-      UniverseChainId.INK,
-      UniverseChainId.REDSTONE,
-      UniverseChainId.REDSTONE_GARNET,
-      UniverseChainId.AbstractMainnet,
-      UniverseChainId.AnimeTestnet,
-      UniverseChainId.Anime,
-      UniverseChainId.Mode,
-      UniverseChainId.FlowTestnet,
-      UniverseChainId.FlowMainnet,
-    ].includes(chainId)
+    chainId
       ? false
       : isClassicTrade(trade.trade) &&
         (nativeCurrencyBalanceUSD ?? 0) < (trade.trade.totalGasUseEstimateUSDWithBuffer ?? 0)
@@ -419,7 +403,7 @@ export function useInitialCurrencyState(): {
     return queryParametersToCurrencyState(parsedQs)
   }, [parsedQs])
 
-  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.FlowMainnet
+  const supportedChainId = useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.Mainnet
   const hasCurrencyQueryParams =
     parsedCurrencyState.inputCurrencyId || parsedCurrencyState.outputCurrencyId || parsedCurrencyState.chainId
 
@@ -445,13 +429,6 @@ export function useInitialCurrencyState(): {
       }
     }
 
-    if (supportedChainId === UniverseChainId.FlowMainnet) {
-      return {
-        initialInputCurrencyAddress: USDC_FLOW_MAINNET.address,
-        initialChainId: supportedChainId,
-      }
-    }
-
     // return ETH or parsedCurrencyState
     return {
       initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : 'ETH',
@@ -469,7 +446,7 @@ export function useInitialCurrencyState(): {
     () =>
       initialInputCurrencyAddress === parsedCurrencyState.outputCurrencyId // clear output if identical
         ? undefined
-        : parsedCurrencyState.outputCurrencyId ?? (supportedChainId === UniverseChainId.FlowMainnet ? 'ETH' : undefined),
+        : parsedCurrencyState.outputCurrencyId ?? undefined,
     [initialInputCurrencyAddress, parsedCurrencyState.outputCurrencyId, supportedChainId],
   )
   const initialInputCurrency = useCurrency(initialInputCurrencyAddress, initialChainId)

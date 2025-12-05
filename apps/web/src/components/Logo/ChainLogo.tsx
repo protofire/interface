@@ -2,28 +2,15 @@ import { SupportedInterfaceChainId, getChain, useIsSupportedChainId } from 'cons
 import { CSSProperties } from 'react'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import {
-  ABSTRACT_LOGO,
-  ANIME_LOGO,
-  ANIME_TESTNET_LOGO,
   ARBITRUM_LOGO,
   AVALANCHE_LOGO,
   BASE_LOGO,
   BLAST_LOGO,
   BNB_LOGO,
-  BOB_LOGO,
   CELO_LOGO,
-  CYBER_LOGO,
   ETHEREUM_LOGO,
-  FLOW_LOGO,
-  FLOW_TESTNET_LOGO,
-  INK_LOGO,
-  MODE_LOGO,
   OPTIMISM_LOGO,
   POLYGON_LOGO,
-  REDSTONE_GARNET_LOGO,
-  REDSTONE_LOGO,
-  SHAPE_LOGO,
-  ZERO_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
 } from 'ui/src/assets'
@@ -130,139 +117,6 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
             bgColor: 'rgba(54, 103, 246, 0.12)',
             textColor: '#3667F6',
           }
-    case UniverseChainId.AbstractTestnet:
-    case UniverseChainId.AbstractMainnet:
-      return darkMode
-        ? {
-            symbol: ABSTRACT_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: ABSTRACT_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.Zero:
-      return darkMode
-        ? {
-            symbol: ZERO_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: ZERO_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.BOB:
-      return darkMode
-        ? {
-            symbol: BOB_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: BOB_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.CYBER:
-      return darkMode
-        ? {
-            symbol: CYBER_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: CYBER_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.SHAPE:
-      return darkMode
-        ? {
-            symbol: SHAPE_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: SHAPE_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.INK:
-      return darkMode
-        ? {
-            symbol: INK_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: INK_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.REDSTONE:
-      return {
-        symbol: REDSTONE_LOGO,
-        bgColor: '#FFDDE3',
-        textColor: '#6B3841',
-      }
-    case UniverseChainId.REDSTONE_GARNET:
-      return {
-        symbol: REDSTONE_GARNET_LOGO,
-        bgColor: '#FFDDE3',
-        textColor: '#6B3841',
-      }
-    case UniverseChainId.Anime:
-      return darkMode
-        ? {
-            symbol: ANIME_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: ANIME_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.AnimeTestnet:
-      return darkMode
-        ? {
-            symbol: ANIME_TESTNET_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: ANIME_TESTNET_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.Mode:
-      return darkMode
-        ? {
-            symbol: MODE_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-        : {
-            symbol: MODE_LOGO,
-            bgColor: '#FFDDE3',
-            textColor: '#6B3841',
-          }
-    case UniverseChainId.FlowMainnet:
-      return {
-        symbol: FLOW_LOGO,
-        bgColor: '#00EF8B33',
-        textColor: '#00EF8B',
-      }
-    case UniverseChainId.FlowTestnet:
-      return {
-        symbol: FLOW_TESTNET_LOGO,
-        bgColor: '#00EF8B33',
-        textColor: '#00EF8B',
-      }
     default:
       return undefined
   }

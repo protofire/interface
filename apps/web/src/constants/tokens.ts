@@ -459,95 +459,11 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WETH',
     'Wrapped Ether',
   ),
-  [UniverseChainId.AbstractTestnet]: new Token(
-    UniverseChainId.AbstractTestnet,
-    '0x9EDCde0257F2386Ce177C3a7FCdd97787F0D841d',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.Zero]: new Token(
-    UniverseChainId.Zero,
-    '0xAc98B49576B1C892ba6BFae08fE1BB0d80Cf599c',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.BOB]: new Token(
-    UniverseChainId.BOB,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.CYBER]: new Token(
-    UniverseChainId.CYBER,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.SHAPE]: new Token(
-    UniverseChainId.SHAPE,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.INK]: new Token(
-    UniverseChainId.INK,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.REDSTONE]: new Token(
-    UniverseChainId.REDSTONE,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.REDSTONE_GARNET]: new Token(
-    UniverseChainId.REDSTONE_GARNET,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.AbstractMainnet]: new Token(
-    UniverseChainId.AbstractMainnet,
-    '0x3439153EB7AF838Ad19d56E1571FBD09333C2809',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.AnimeTestnet]: new Token(
-    UniverseChainId.AnimeTestnet,
-    '0x8f3e2785985aa4005c63f97f7cc89ce91a948267',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
-  [UniverseChainId.Mode]: new Token(
-    UniverseChainId.Mode,
-    '0x4200000000000000000000000000000000000006',
-    18,
-    'WETH',
-    'Wrapped Ether',
-  ),
+
 }
 
 export function isCelo(chainId: number): chainId is UniverseChainId.Celo | UniverseChainId.CeloAlfajores {
   return chainId === UniverseChainId.CeloAlfajores || chainId === UniverseChainId.Celo
-}
-
-export function isFlowTestnet(chainId: number): chainId is UniverseChainId.FlowTestnet {
-  return chainId === UniverseChainId.FlowTestnet
-}
-
-export function isFlowMainnet(chainId: number): chainId is UniverseChainId.FlowMainnet {
-  return chainId === UniverseChainId.FlowMainnet
 }
 
 function getCeloNativeCurrency(chainId: number) {
@@ -639,48 +555,6 @@ class AvaxNativeCurrency extends NativeCurrency {
   }
 }
 
-export function isAnime(chainId: number): chainId is UniverseChainId.Anime {
-  return chainId === UniverseChainId.Anime
-}
-
-class AnimeNativeCurrency extends NativeCurrency {
-  equals(other: Currency): boolean {
-    return other.isNative && other.chainId === this.chainId
-  }
-
-  get wrapped(): Token {
-    if (!isAnime(this.chainId)) {
-      throw new Error('Not anime')
-    }
-    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
-    invariant(wrapped instanceof Token)
-    return wrapped
-  }
-
-  public constructor(chainId: number) {
-    if (!isAnime(chainId)) {
-      throw new Error('Not anime')
-    }
-    super(chainId, 18, 'ANIME', 'ANIME')
-  }
-}
-
-class FlowNativeCurrency extends NativeCurrency {
-  equals(other: Currency): boolean {
-    return other.isNative && other.chainId === this.chainId
-  }
-
-  get wrapped(): Token {
-    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
-    invariant(wrapped instanceof Token)
-    return wrapped
-  }
-
-  public constructor(chainId: number) {
-    super(chainId, 18, 'FLOW', 'FLOW')
-  }
-}
-
 class ExtendedEther extends NativeCurrency {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -719,12 +593,6 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
     nativeCurrency = new BscNativeCurrency(chainId)
   } else if (isAvalanche(chainId)) {
     nativeCurrency = new AvaxNativeCurrency(chainId)
-  } else if (isAnime(chainId)) {
-    nativeCurrency = new AnimeNativeCurrency(chainId)
-  } else if (isFlowTestnet(chainId)) {
-    nativeCurrency = new FlowNativeCurrency(chainId)
-  } else if (isFlowMainnet(chainId)) {
-    nativeCurrency = new FlowNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
   }
