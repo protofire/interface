@@ -1,5 +1,4 @@
 import Navbar from 'components/NavBar/index'
-import { InDevelopmentBanner } from 'components/TopLevelBanners/InDevelopmentBanner'
 import { MobileAppPromoBanner, useMobileAppPromoBannerEligible } from 'components/TopLevelBanners/MobileAppPromoBanner'
 import { UkBanner, useRenderUkBanner } from 'components/TopLevelBanners/UkBanner'
 // import forkConfig from 'forkConfig'
@@ -48,7 +47,6 @@ export const Header = memo(function Header() {
       <Banners>
         {extensionEligible && <MobileAppPromoBanner />}
         {renderUkBanner && <UkBanner />}
-        <InDevelopmentBanner />
       </Banners>
       <NavOnScroll
         $hide={isTouchDevice && !isExplorePage && scrollDirection === ScrollDirection.DOWN}

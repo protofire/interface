@@ -1,11 +1,9 @@
-import DAODarkMode from 'assets/png/DAO-dark-mode.png'
-import DAOLightMode from 'assets/png/DAO-light-mode.png'
 import { ReactComponent as CompanyIcon } from 'assets/svg/protofire.svg'
 import { MenuItem, useMenuContent } from 'components/NavBar/CompanyMenu/Content'
 import { MenuLink } from 'components/NavBar/CompanyMenu/MenuDropdown'
 import { useTabsContent } from 'components/NavBar/Tabs/TabsContent'
 import deprecatedStyled, { useTheme } from 'lib/styled-components'
-import { Discord, Github, Twitter } from 'pages/Landing/components/Icons'
+import { Discord, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
 import { Anchor, Flex, Separator, Text, useIsDarkMode } from 'ui/src'
@@ -127,7 +125,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 StableSwap</Text>
+        <Text variant="body3">2025 Stable</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
