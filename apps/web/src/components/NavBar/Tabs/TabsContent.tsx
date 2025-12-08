@@ -92,7 +92,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.staging.swap.stable.xyz`,
+      href: `https://info.swap.stable.xyz`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
@@ -126,7 +126,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `https://info.staging.swap.stable.xyz/home`,
+              href: `https://info.swap.stable.xyz`,
               internal: false,
               blank: true,
             },
@@ -135,7 +135,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
                   {
                     label: 'V2 Analytics',
                     quickKey: 'P',
-                    href: `https://v2-info.staging.swap.stable.xyz`,
+                    href: `https://v2-info.swap.stable.xyz`,
                     internal: false,
                     blank: true,
                   },
