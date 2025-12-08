@@ -72,12 +72,12 @@ import {
   USDC_REDSTONE_GARNET,
   USDC_SEPOLIA,
   USDC_SHAPE,
-  USDT0_STABLE_TESTNET,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT,
   USDT0_STABLE,
+  USDT0_STABLE_TESTNET,
 } from 'uniswap/src/constants/tokens'
 import { Chain as BackendChainId } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { FLASHBOTS_RPC_URL } from 'uniswap/src/features/providers/FlashbotsRpcProvider'
@@ -1797,8 +1797,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     elementName: ElementName.ChainStable,
     explorer: {
       name: 'Stable Explorer',
-      url: '',
-      apiURL: '',
+      url: 'https://stablescan.xyz',
+      apiURL: 'https://stablescan.xyz/api',
     },
     helpCenterUrl: undefined,
     infoLink: 'https://www.stable.xyz',
@@ -1815,9 +1815,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
-      default: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
-      appOnly: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
+      [RPCType.Public]: { http: ['https://rpc.stable.xyz'] },
+      default: { http: ['https://rpc.stable.xyz'] },
+      appOnly: { http: ['https://rpc.stable.xyz'] },
     },
     urlParam: 'stable',
     statusPage: undefined,

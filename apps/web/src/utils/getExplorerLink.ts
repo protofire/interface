@@ -30,7 +30,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [UniverseChainId.Mode]: 'https://explorer.mode.network/',
   [UniverseChainId.Anime]: 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz/',
   [UniverseChainId.StableTestnet]: 'https://testnet.stablescan.xyz',
-  [UniverseChainId.Stable]: '', // TBD
+  [UniverseChainId.Stable]: 'https://stablescan.xyz',
 }
 
 export enum ExplorerDataType {

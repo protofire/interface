@@ -14,12 +14,12 @@ export const stable = /*#__PURE__*/ defineChain({
     symbol: 'gUSDT',
   },
   rpcUrls: {
-    default: { http: ['https://stable-mainnet.g.alchemy.com/v2/JG1TeE8ymmB-H7cdZVJTa'] },
+    default: { http: ['https://rpc.stable.xyz'] },
   },
   blockExplorers: {
     default: {
       name: 'STABLE Explorer',
-      url: ''
+      url: 'https://stablescan.xyz',
     },
   },
   testnet: true,
@@ -29,4 +29,3 @@ export const stable = /*#__PURE__*/ defineChain({
     },
   },
 })
-
