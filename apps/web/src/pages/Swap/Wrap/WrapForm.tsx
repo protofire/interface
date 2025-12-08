@@ -1,3 +1,4 @@
+import { InterfaceSectionName } from '@uniswap/analytics-events'
 import { Currency, Token } from '@uniswap/sdk-core'
 import { ButtonPrimary } from 'components/Button'
 import { AutoColumn } from 'components/Column'
@@ -5,31 +6,30 @@ import SwapCurrencyInputPanel from 'components/CurrencyInputPanel/SwapCurrencyIn
 import { Field } from 'components/swap/constants'
 import { ArrowContainer, ArrowWrapper, Dots, OutputSwapSection, SwapSection } from 'components/swap/styled'
 import { useSupportedChainId } from 'constants/chains'
+import { isEitherStableChain } from 'constants/tokens'
 import { useAccount } from 'hooks/useAccount'
 import useSelectChain from 'hooks/useSelectChain'
 import useStableWrapCallback, { StableWrapErrorText } from 'hooks/useStableWrapCallback'
 import { ApprovalState, useApproval } from 'lib/hooks/useApproval'
+import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import { useTheme } from 'lib/styled-components'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowDown } from 'react-feather'
+import { useCurrencyBalance } from 'state/connection/hooks'
 import { useSwapActionHandlers } from 'state/swap/hooks'
 import { CurrencyState } from 'state/swap/types'
 import { useSwapAndLimitContext, useSwapContext } from 'state/swap/useSwapContext'
+import { useHasPendingApproval } from 'state/transactions/hooks'
 import { ThemedText } from 'theme/components'
 import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
-import { InterfaceSectionName } from '@uniswap/analytics-events'
+import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
 import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { CurrencyField } from 'uniswap/src/types/currency'
-import useNativeCurrency from 'lib/hooks/useNativeCurrency'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
-import { useCurrencyBalance } from 'state/connection/hooks'
-import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 import { logger } from 'utilities/src/logger/logger'
-import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
-import { useHasPendingApproval } from 'state/transactions/hooks'
-import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
-import { isEitherStableChain } from 'constants/tokens'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
+import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 
 interface WrapFormProps {
   disableTokenInputs?: boolean
@@ -45,14 +45,14 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const theme = useTheme()
   const account = useAccount()
   const native = useNativeCurrency(chainId)
-  const chainIdWithDefault = chainId ?? UniverseChainId.Stable;
+  const chainIdWithDefault = chainId ?? UniverseChainId.Stable
   const usdt0: { [k: number]: Token } = {
     [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
-    [UniverseChainId.Stable]: USDT0_STABLE
+    [UniverseChainId.Stable]: USDT0_STABLE,
   }
   const WRAP_CONTRACT_ADDRESS: { [k: number]: string } = {
     [UniverseChainId.StableTestnet]: '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90',
-    [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda'
+    [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda',
   }
 
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
@@ -74,14 +74,17 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const maxInputAmount = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0))
 
-  const { wrapType, execute: onWrap, inputError: wrapInputError, needsApproval, approve } = useStableWrapCallback(
-    inputCurrency,
-    outputCurrency,
-    typedValue,
-  )
+  const {
+    wrapType,
+    execute: onWrap,
+    inputError: wrapInputError,
+    needsApproval,
+    approve,
+  } = useStableWrapCallback(inputCurrency, outputCurrency, typedValue)
   const showWrap: boolean = wrapType !== WrapType.NotApplicable
 
-  const tokenForApproval: Token | undefined = inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
+  const tokenForApproval: Token | undefined =
+    inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
   const inputAmount = useMemo(
     () => tryParseCurrencyAmount(typedValue, inputCurrency ?? undefined),
     [inputCurrency, typedValue],
@@ -128,7 +131,6 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
     [onUserInput],
   )
 
-
   const handleSwitchTokens = useCallback(() => {
     if (!inputCurrency || !outputCurrency) {
       return
@@ -150,7 +152,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   }, [inputCurrency, outputCurrency, onSwitchTokens, onCurrencyChange, onCurrencySelection])
 
   const handleMaxInput = useCallback(() => {
-    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
+    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toFixed(6))
   }, [maxInputAmount, onUserInput])
 
   const selectChain = useSelectChain()
@@ -207,7 +209,6 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
     [dependentField, independentField, typedValue],
   )
 
-
   const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
 
   if (chainId && !isEitherStableChain(chainId)) {
@@ -236,6 +237,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
             otherCurrency={outputCurrency}
             id={InterfaceSectionName.CURRENCY_INPUT_PANEL}
             ref={inputCurrencyNumericalInputRef}
+            isWrapping={true}
           />
         </SwapSection>
         <ArrowWrapper clickable={!!supportedChainId}>

@@ -241,6 +241,7 @@ interface SwapCurrencyInputPanelProps {
     disabledTooltipBody?: ReactNode
   }
   initialCurrencyLoading?: boolean
+  isWrapping?: boolean
 }
 
 const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPanelProps>(
@@ -268,6 +269,7 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
       currencyField,
       numericalInputSettings,
       label,
+      isWrapping,
       ...rest
     },
     ref,
@@ -299,6 +301,8 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
     const showCurrencyLoadingSpinner =
       initialCurrencyLoading && !otherCurrency && !isUserSelectedToken && currencyField === CurrencyField.INPUT
 
+    const limitDecimals = currency?.isNative && isWrapping ? 6 : currency?.decimals
+
     return (
       <InputPanel id={id} hideInput={hideInput} {...rest}>
         {locked && (
@@ -327,7 +331,7 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                   $loading={loading}
                   id={id}
                   ref={ref}
-                  maxDecimals={currency?.decimals}
+                  maxDecimals={limitDecimals}
                 />
               </div>
             )}
