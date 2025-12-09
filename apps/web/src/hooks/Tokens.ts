@@ -12,7 +12,7 @@ import { useMemo } from 'react'
 import { useCombinedInactiveLists, useCombinedTokenMapFromUrls } from 'state/lists/hooks'
 import { TokenFromList } from 'state/lists/tokenFromList'
 import { useUserAddedTokens } from 'state/user/userAddedTokens'
-import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
+import { USDT0_STABLE } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
 import { useCurrencyInfo as useUniswapCurrencyInfo } from 'uniswap/src/features/tokens/useCurrencyInfo'
@@ -80,11 +80,9 @@ export function useCurrencyInfo(
   const { chainId: connectedChainId } = useAccount()
   const chainIdWithFallback =
     (typeof addressOrCurrency === 'string' ? chainId : addressOrCurrency?.chainId) ?? connectedChainId
-  const nativeAddressWithFallback =
-    UNIVERSE_CHAIN_INFO[chainIdWithFallback as UniverseChainId]?.nativeCurrency.address ??
-    UNIVERSE_CHAIN_INFO[UniverseChainId.Stable]?.nativeCurrency.address
+  const nativeAddressWithFallback = USDT0_STABLE.address
+  const isNative = false
 
-  const isNative = useMemo(() => checkIsNative(addressOrCurrency), [addressOrCurrency])
   const address = useMemo(
     () => getAddress(isNative, nativeAddressWithFallback, addressOrCurrency),
     [isNative, nativeAddressWithFallback, addressOrCurrency],
@@ -96,7 +94,7 @@ export function useCurrencyInfo(
 
   const addressWithFallback = isNative || !address ? nativeAddressWithFallback : address
 
-  const currencyId = buildCurrencyId(supportedChainId ?? UniverseChainId.Mainnet, addressWithFallback)
+  const currencyId = buildCurrencyId(supportedChainId ?? UniverseChainId.Stable, addressWithFallback)
   const currencyInfo = useUniswapCurrencyInfo(currencyId, { skip: !forkConfig.uniSpecificFeaturesEnabled && skip })
 
   return useMemo(() => {
