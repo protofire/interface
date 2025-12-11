@@ -5,6 +5,8 @@ import { ExternalLink as ExternalLinkIcon } from 'react-feather'
 import { ExternalLink } from 'theme/components'
 import { isProdEnv } from 'utilities/src/environment'
 
+const SHOW_MIGRATION_NOTICE = false
+
 const chainLinkStyle = {
   textDecoration: 'none',
   display: 'flex',
@@ -237,38 +239,40 @@ export default function MigrationPage() {
           />
         </div>
 
-        <YellowCard
-          padding="20px 24px"
-          $borderRadius="16px"
-          style={{
-            marginBottom: '2rem',
-            marginTop: '1rem',
-            maxWidth: '1000px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <p
+        {SHOW_MIGRATION_NOTICE && 
+          <YellowCard
+            padding="20px 24px"
+            $borderRadius="16px"
             style={{
-              fontSize: '1rem',
-              lineHeight: '1.6',
-              color: theme.neutral1,
-              margin: 0,
-              textAlign: 'center',
+              marginBottom: '2rem',
+              marginTop: '1rem',
+              maxWidth: '1000px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}
           >
-            <strong style={{ color: theme.accent1 }}>Note:</strong> If you previously used chains that were not
-            migrated, you can access and remove your liquidity through{' '}
-            <ExternalLink
-              href="https://ink.reservoir.tools/#/pool?chain=ink"
-              style={{ color: theme.accent1, textDecoration: 'underline', fontWeight: 'bold' }}
+            <p
+              style={{
+                fontSize: '1rem',
+                lineHeight: '1.6',
+                color: theme.neutral1,
+                margin: 0,
+                textAlign: 'center',
+              }}
             >
-              this website
-            </ExternalLink>.
-            <br></br>
-            It is going to be available until the end of November 2025.
-          </p>
-        </YellowCard>
+              <strong style={{ color: theme.accent1 }}>Note:</strong> If you previously used chains that were not
+              migrated, you can access and remove your liquidity through{' '}
+              <ExternalLink
+                href="https://ink.reservoir.tools/#/pool?chain=ink"
+                style={{ color: theme.accent1, textDecoration: 'underline', fontWeight: 'bold' }}
+              >
+                this website
+              </ExternalLink>.
+              <br></br>
+              It is going to be available until the end of November 2025.
+            </p>
+          </YellowCard>
+        }
 
         <div style={{ marginBottom: '2rem', paddingTop: '2rem', borderTop: `1px solid ${theme.surface2}` }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1, marginBottom: '0.5rem' }}>
