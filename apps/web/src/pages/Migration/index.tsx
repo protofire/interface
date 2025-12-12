@@ -5,7 +5,7 @@ import { ExternalLink as ExternalLinkIcon } from 'react-feather'
 import { ExternalLink } from 'theme/components'
 import { isProdEnv } from 'utilities/src/environment'
 
-const SHOW_MIGRATION_NOTICE = false
+const SHOW_MIGRATION_NOTICE = true
 
 const chainLinkStyle = {
   textDecoration: 'none',
@@ -260,16 +260,17 @@ export default function MigrationPage() {
                 textAlign: 'center',
               }}
             >
-              <strong style={{ color: theme.accent1 }}>Note:</strong> If you previously used chains that were not
-              migrated, you can access and remove your liquidity through{' '}
+              <strong style={{ color: theme.accent1 }}>Note:</strong> Step-by-step guide to withdraw liquidity from Uniswap V3 smart contracts without interacting with the UI {' '}
               <ExternalLink
-                href="https://ink.reservoir.tools/#/pool?chain=ink"
+                href="https://medium.com/@msvstj/swap-ui-down-remove-v3-liquidity-with-the-block-explorer-f730061fa790"
                 style={{ color: theme.accent1, textDecoration: 'underline', fontWeight: 'bold' }}
               >
-                this website
+                (link)
               </ExternalLink>.
               <br></br>
-              It is going to be available until the end of November 2025.
+              <br></br>
+              Our technical team has taken their time to create this guide with the goal of assisting users that are unable to access Uniswap V3 smart contracts through the UI. Please read and follow all the steps carefully.
+              We reserve the right to provide technical assistance only for the chains supported by us and listed above. {' '}
             </p>
           </YellowCard>
         }
