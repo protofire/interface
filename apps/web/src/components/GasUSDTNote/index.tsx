@@ -1,13 +1,12 @@
 import { AutoColumn } from 'components/Column'
 import { useAccount } from 'hooks/useAccount'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
+import styled from 'lib/styled-components'
 import { useCurrencyBalance } from 'state/connection/hooks'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { ThemedText } from 'theme/components'
 import { Trans } from 'uniswap/src/i18n'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
-import { useNavigate } from 'react-router-dom'
-import styled from 'lib/styled-components'
 
 const NoteWrapper = styled(AutoColumn)`
   margin-top: 12px;
@@ -17,7 +16,7 @@ const NoteWrapper = styled(AutoColumn)`
   border: 1px solid ${({ theme }) => theme.surface3};
 `
 
-const WrapLink = styled.span`
+const WrapLink = styled.a`
   color: ${({ theme }) => theme.accent1};
   cursor: pointer;
   text-decoration: underline;
@@ -34,15 +33,10 @@ export function GasUSDTNote() {
   const nativeCurrency = useNativeCurrency(chainId)
   const nativeBalance = useCurrencyBalance(account.address, nativeCurrency)
   const { formatCurrencyAmount } = useFormatter()
-  const navigate = useNavigate()
 
   // Only show if user is connected and has native currency balance
   if (!account.isConnected || !nativeBalance || nativeBalance.equalTo(0)) {
     return null
-  }
-
-  const handleWrapClick = () => {
-    navigate('/wrap')
   }
 
   const formattedBalance = formatCurrencyAmount({
@@ -60,11 +54,14 @@ export function GasUSDTNote() {
             symbol: nativeCurrency.symbol,
           }}
           components={{
-            wrapLink: <WrapLink onClick={handleWrapClick}>Wrap</WrapLink>,
+            wrapLink: (
+              <WrapLink href="https://hub.stable.xyz/convert" target="_blank">
+                Wrap
+              </WrapLink>
+            ),
           }}
         />
       </ThemedText.BodySmall>
     </NoteWrapper>
   )
 }
-

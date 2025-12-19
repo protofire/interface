@@ -29,6 +29,11 @@ const HeaderButtonContainer = styled(RowFixed)<{ compact: boolean }>`
   }
 `
 
+const StyledLink = styled.a`
+  color: ${({ theme }) => theme.neutral2};
+  text-decoration: none;
+`
+
 const PathnameToTab: { [key: string]: SwapTab } = {
   '/swap': SwapTab.Swap,
   '/send': SwapTab.Send,
@@ -111,10 +116,12 @@ export default function SwapHeader({ compact, syncTabToUrl }: { compact: boolean
         <SwapHeaderTabButton
           $isActive={currentTab === SwapTab.Wrap}
           onClick={() => {
-            onTabClick(SwapTab.Wrap)
+            // onTabClick(SwapTab.Wrap)
           }}
         >
-          <Trans i18nKey="common.wrap.button" />
+          <StyledLink href="https://hub.stable.xyz/convert" target="_blank">
+            <Trans i18nKey="common.wrap.button" />
+          </StyledLink>
         </SwapHeaderTabButton>
         {forkConfig.uniSpecificFeaturesEnabled &&
           (forAggregatorEnabled ? (
