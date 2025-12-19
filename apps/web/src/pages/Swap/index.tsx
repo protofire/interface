@@ -8,6 +8,7 @@ import { PageWrapper, SwapWrapper } from 'components/swap/styled'
 import { useSupportedChainId } from 'constants/chains'
 import { useScreenSize } from 'hooks/screenSize'
 import { useAccount } from 'hooks/useAccount'
+import { RiseIn } from 'pages/Landing/components/animations'
 import { BuyForm } from 'pages/Swap/Buy/BuyForm'
 import { LimitFormWrapper } from 'pages/Swap/Limit/LimitForm'
 import { SendForm } from 'pages/Swap/Send/SendForm'
@@ -21,10 +22,11 @@ import { SwapAndLimitContextProvider, SwapContextProvider } from 'state/swap/Swa
 import { useInitialCurrencyState } from 'state/swap/hooks'
 import { CurrencyState, SwapAndLimitContext } from 'state/swap/types'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
-import { Flex } from 'ui/src'
+import { Flex, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import Trace from 'uniswap/src/features/telemetry/Trace'
+import { Trans } from 'uniswap/src/i18n'
 import { InterfaceChainId } from 'uniswap/src/types/chains'
 import { SwapTab } from 'uniswap/src/types/screens/interface'
 
@@ -76,6 +78,18 @@ export default function SwapPage({ className }: { className?: string }) {
           initialCurrencyLoading={initialCurrencyLoading}
           syncTabToUrl={true}
         />
+        <RiseIn delay={0.3}>
+          <Text
+            variant="body1"
+            textAlign="center"
+            maxWidth={430}
+            color="$neutral2"
+            $short={{ variant: 'body2' }}
+            style={{ marginTop: '12px' }}
+          >
+            <Trans i18nKey="hero.subtitle" />
+          </Text>
+        </RiseIn>
       </PageWrapper>
       {location.pathname === '/swap' && <SwitchLocaleLink />}
     </Trace>
