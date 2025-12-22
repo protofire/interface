@@ -281,6 +281,14 @@ export const USDF_FLOW_MAINNET = new Token(
   'USDF',
 )
 
+export const PYUSD0_FLOW_MAINNET = new Token(
+  UniverseChainId.FlowMainnet,
+  '0x99aF3EeA856556646C98c8B9b2548Fe815240750',
+  6,
+  'PYUSD0',
+  'PYUSD0',
+)
+
 export const USDC_FLOW_MAINNET = new Token(
   UniverseChainId.FlowMainnet,
   '0xF1815bd50389c46847f0Bda824eC8da914045D14',
