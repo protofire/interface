@@ -118,7 +118,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       ],
     },
     {
-      title: 'Earn',
+      title: 'Vaults',
       href: `https://liquidity.flow.com/`,
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
