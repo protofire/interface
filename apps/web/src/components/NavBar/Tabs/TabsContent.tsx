@@ -117,6 +117,18 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
         },
       ],
     },
+    {
+      title: 'Earn',
+      href: `https://liquidity.flow.com/`,
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
+    },
+    {
+      title: 'Bridge',
+      href: `https://bridge.flow.com`,
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
+    },
     ...(!areTabsVisible && props?.includeNftsLink
       ? [
           {
