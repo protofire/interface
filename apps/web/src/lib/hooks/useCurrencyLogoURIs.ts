@@ -72,6 +72,10 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
     if (isSameAddress(address, '0x717dae2baf7656be9a9b01dee31d571a9d4c9579')) {
       return 'https://assets.swap.w3us.site/assets/WBTC.png'
     }
+    // PYUSD0
+    if (isSameAddress(address, '0x99aF3EeA856556646C98c8B9b2548Fe815240750')) {
+      return 'https://assets.swap.w3us.site/assets/PYUSD0.svg'
+    }
   }
 
   if (networkName) {
