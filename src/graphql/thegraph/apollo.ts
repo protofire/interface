@@ -13,7 +13,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.CELO]: 'https://api.thegraph.com/subgraphs/name/jesse-sawa/uniswap-celo',
   [ChainId.BNB]: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-bsc',
 
-  [ChainId.HARMONY]: `https://gateway-arbitrum.network.thegraph.com/api/${API_KEY}/subgraphs/id/GVkp9F6TzzC5hY4g18Ukzb6gGcYDfQrpMpcj867jsenJ`,
+  [ChainId.HARMONY]: `https://graph.swap.country/subgraphs/name/harmony-uniswap-v3`,
   [ChainId.AVALANCHE]: 'https://api.thegraph.com/subgraphs/name/lynnshaoyu/uniswap-v3-avax',
 }
 
