@@ -83,6 +83,20 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       ],
     },
     {
+      title: t('common.pool'),
+      href: '/pool',
+      isActive: pathname.startsWith('/pool'),
+      items: [
+        { label: t('nav.tabs.viewPosition'), quickKey: 'V', href: '/pool', internal: true },
+        {
+          label: t('nav.tabs.createPosition'),
+          quickKey: 'V',
+          href: '/add',
+          internal: true,
+        },
+      ],
+    },
+    {
       title: t('common.explore'),
       href: `https://info.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
@@ -100,20 +114,6 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
           quickKey: 'P',
           href: `https://v2-info.flowswap.io`,
           internal: false,
-        },
-      ],
-    },
-    {
-      title: t('common.pool'),
-      href: '/pool',
-      isActive: pathname.startsWith('/pool'),
-      items: [
-        { label: t('nav.tabs.viewPosition'), quickKey: 'V', href: '/pool', internal: true },
-        {
-          label: t('nav.tabs.createPosition'),
-          quickKey: 'V',
-          href: '/add',
-          internal: true,
         },
       ],
     },
