@@ -47,6 +47,7 @@ import {
 } from 'constants/tokens'
 import { getNativeLogoURI, getTokenLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
+  PYUSD0_FLOW_MAINNET,
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
   USDC_ANIME,
@@ -282,6 +283,7 @@ export const COMMON_BASES: ChainCurrencyList = {
     USDC_FLOW_MAINNET,
     USDF_FLOW_MAINNET,
     WBTC_FLOW_MAINNET,
+    PYUSD0_FLOW_MAINNET
   ].map(buildCurrencyInfo),
   [UniverseChainId.FlowTestnet]: [
     nativeOnChain(UniverseChainId.FlowTestnet),
