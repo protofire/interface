@@ -83,6 +83,20 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       ],
     },
     {
+      title: t('common.pool'),
+      href: '/pool',
+      isActive: pathname.startsWith('/pool'),
+      items: [
+        { label: t('nav.tabs.viewPosition'), quickKey: 'V', href: '/pool', internal: true },
+        {
+          label: t('nav.tabs.createPosition'),
+          quickKey: 'V',
+          href: '/add',
+          internal: true,
+        },
+      ],
+    },
+    {
       title: t('common.explore'),
       href: `https://info.flowswap.io/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
@@ -104,18 +118,16 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       ],
     },
     {
-      title: t('common.pool'),
-      href: '/pool',
-      isActive: pathname.startsWith('/pool'),
-      items: [
-        { label: t('nav.tabs.viewPosition'), quickKey: 'V', href: '/pool', internal: true },
-        {
-          label: t('nav.tabs.createPosition'),
-          quickKey: 'V',
-          href: '/add',
-          internal: true,
-        },
-      ],
+      title: 'Vaults',
+      href: `https://liquidity.flow.com/`,
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
+    },
+    {
+      title: 'Bridge',
+      href: `https://bridge.flow.com`,
+      icon: <ExternalLink size="$icon.16" color="$neutral2" />,
+      internal: false,
     },
     ...(!areTabsVisible && props?.includeNftsLink
       ? [
