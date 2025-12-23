@@ -106,11 +106,11 @@ export function SwapForm({
     () =>
       prefilledInputCurrencyInfo || prefilledOutputCurrencyInfo
         ? [prefilledInputCurrencyInfo, prefilledOutputCurrencyInfo]
-            .filter(
-              (token): token is CurrencyInfo =>
-                (token?.currency.isToken && token.safetyLevel !== SafetyLevel.Verified) ?? false,
-            )
-            .map((token: CurrencyInfo) => token.currency as Token)
+          .filter(
+            (token): token is CurrencyInfo =>
+              (token?.currency.isToken && token.safetyLevel !== SafetyLevel.Verified) ?? false,
+          )
+          .map((token: CurrencyInfo) => token.currency as Token)
         : [],
     [prefilledInputCurrencyInfo, prefilledOutputCurrencyInfo],
   )
@@ -159,13 +159,13 @@ export function SwapForm({
     () =>
       showWrap
         ? {
-            [Field.INPUT]: parsedAmount,
-            [Field.OUTPUT]: parsedAmount,
-          }
+          [Field.INPUT]: parsedAmount,
+          [Field.OUTPUT]: parsedAmount,
+        }
         : {
-            [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
-            [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
-          },
+          [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
+          [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
+        },
     [independentField, parsedAmount, showWrap, trade],
   )
 
@@ -204,9 +204,9 @@ export function SwapForm({
       routeIsSyncing || !isClassicTrade(trade) || showWrap
         ? [undefined, undefined]
         : [
-            computeFiatValuePriceImpact(fiatValueTradeInput.data, fiatValueTradeOutput.data),
-            computeFiatValuePriceImpact(fiatValueTradeInput.data, preTaxFiatValueTradeOutput.data),
-          ],
+          computeFiatValuePriceImpact(fiatValueTradeInput.data, fiatValueTradeOutput.data),
+          computeFiatValuePriceImpact(fiatValueTradeInput.data, preTaxFiatValueTradeOutput.data),
+        ],
     [fiatValueTradeInput, fiatValueTradeOutput, preTaxFiatValueTradeOutput, routeIsSyncing, trade, showWrap],
   )
 
@@ -307,10 +307,10 @@ export function SwapForm({
       [dependentField]: showWrap
         ? parsedAmounts[independentField]?.toExact() ?? ''
         : formatCurrencyAmount({
-            amount: parsedAmounts[dependentField],
-            type: NumberType.SwapTradeAmount,
-            placeholder: '',
-          }),
+          amount: parsedAmounts[dependentField],
+          type: NumberType.SwapTradeAmount,
+          placeholder: '',
+        }),
     }),
     [dependentField, formatCurrencyAmount, independentField, parsedAmounts, showWrap, typedValue],
   )
@@ -324,9 +324,9 @@ export function SwapForm({
   const maximumAmountIn = useMaxAmountIn(trade, allowedSlippage)
   const allowance = usePermit2Allowance(
     maximumAmountIn ??
-      (parsedAmounts[Field.INPUT]?.currency.isToken
-        ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
-        : undefined),
+    (parsedAmounts[Field.INPUT]?.currency.isToken
+      ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
+      : undefined),
     supportedChainId ? UNIVERSAL_ROUTER_ADDRESS(UniversalRouterVersion.V1_2, supportedChainId) : undefined,
     trade?.fillType,
   )
@@ -762,8 +762,7 @@ function SwapNotice() {
             i18nKey="swap.form.pocketUniverseExtension.warning"
             components={{
               termsLink: (
-                // FIXME: update with real URL
-                <ExternalLink href="/terms">
+                <ExternalLink href="https://dubiw3zgo51jg.cloudfront.net/tos.pdf">
                   <Trans i18nKey="common.termsOfService" />
                 </ExternalLink>
               ),

@@ -1,19 +1,20 @@
-import { SettingsToggle } from 'components/AccountDrawer/SettingsToggle'
-import { useAtom } from 'jotai'
-import { atomWithStorage } from 'jotai/utils'
-import { t } from 'uniswap/src/i18n'
+// import { SettingsToggle } from 'components/AccountDrawer/SettingsToggle'
+// import { useAtom } from 'jotai'
+// import { atomWithStorage } from 'jotai/utils'
+// import { t } from 'uniswap/src/i18n'
 
-export const showTestnetsAtom = atomWithStorage<boolean>('showTestnets', true)
+// export const showTestnetsAtom = atomWithStorage<boolean>('showTestnets', true)
 
 export function TestnetsToggle() {
-  const [showTestnets, updateShowTestnets] = useAtom(showTestnetsAtom)
+  // const [showTestnets, updateShowTestnets] = useAtom(showTestnetsAtom)
 
   return (
-    <SettingsToggle
-      title={t('settings.showTestNets')}
-      dataid="testnets-toggle"
-      isActive={showTestnets}
-      toggle={() => void updateShowTestnets((value) => !value)}
-    />
+    <></>
+    // <SettingsToggle
+    //   title={t('settings.showTestNets')}
+    //   dataid="testnets-toggle"
+    //   isActive={showTestnets}
+    //   toggle={() => void updateShowTestnets((value) => !value)}
+    // />
   )
 }

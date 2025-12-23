@@ -40,6 +40,7 @@ export const ANIME_TESTNET_LOGO = require('./logos/png/anime-logo.png')
 export const MODE_LOGO = require('./logos/png/mode-logo.png')
 export const FLOW_LOGO = require('./logos/png/flow-logo.png')
 export const FLOW_TESTNET_LOGO = require('./logos/png/flow-testnet-logo.png')
+export const ZIRCUIT_LOGO = require('./logos/png/zircuit-logo.png')
 
 export const DAI_LOGO = require('./logos/png/dai-logo.png')
 export const USDC_LOGO = require('./logos/png/usdc-logo.png')

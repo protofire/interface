@@ -57,9 +57,8 @@ export const uniswapUrls = {
     walletHelp: `${helpUrl}/categories/11301970439565-Uniswap-Wallet`,
     wethExplainer: `${helpUrl}/articles/16015852009997-Why-do-ETH-swaps-involve-converting-to-WETH`,
   },
-  // FIXME: update with real URL
-  termsOfServiceUrl: '/terms',
-  privacyPolicyUrl: '/privacy',
+  termsOfServiceUrl: 'https://dubiw3zgo51jg.cloudfront.net/tos.pdf',
+  privacyPolicyUrl: 'https://dubiw3zgo51jg.cloudfront.net/pp.pdf',
   chromeExtension: 'http://uniswap.org/ext',
 
   // Core API Urls

@@ -1,4 +1,4 @@
-import { showTestnetsAtom } from 'components/AccountDrawer/TestnetsToggle'
+// import { showTestnetsAtom } from 'components/AccountDrawer/TestnetsToggle'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import ChainSelectorRow from 'components/NavBar/ChainSelector/ChainSelectorRow'
 import { NavDropdown } from 'components/NavBar/NavDropdown/NavDropdown'
@@ -13,7 +13,6 @@ import {
 } from 'constants/chains'
 import { useAccount } from 'hooks/useAccount'
 import useSelectChain from 'hooks/useSelectChain'
-import { useAtomValue } from 'jotai/utils'
 import { useTheme } from 'lib/styled-components'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { AlertTriangle } from 'react-feather'
@@ -61,14 +60,14 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
   const popoverRef = useRef<Popover>(null)
   const walletSupportsChain = useWalletSupportedChains()
   const isSupportedChain = useIsSupportedChainIdCallback()
-  const showTestnets = useAtomValue(showTestnetsAtom)
+  // const showTestnets = useAtomValue(showTestnetsAtom)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const selectChain = useSelectChain()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [supportedChains, unsupportedChains] = useMemo(() => {
     const { supported, unsupported } = ALL_CHAIN_IDS.filter((chain: number) => {
-      return isSupportedChain(chain) && (showTestnets || !TESTNET_CHAIN_IDS.includes(chain))
+      return isSupportedChain(chain) && !TESTNET_CHAIN_IDS.includes(chain)
     })
       .sort((a, b) => getChainPriority(a) - getChainPriority(b))
       .reduce(
@@ -83,7 +82,7 @@ export const ChainSelector = ({ isNavSelector, hideArrow }: ChainSelectorProps) 
         { supported: [], unsupported: [] } as Record<string, InterfaceChainId[]>,
       )
     return [supported, unsupported]
-  }, [isSupportedChain, showTestnets, walletSupportsChain])
+  }, [isSupportedChain, walletSupportsChain])
 
   const [pendingChainId, setPendingChainId] = useState<InterfaceChainId | undefined>(undefined)
 

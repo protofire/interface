@@ -25,19 +25,19 @@ const SocialIcon = deprecatedStyled(Wiggle)`
 export function Socials({ iconSize }: { iconSize?: string }) {
   return (
     <Flex row gap="$spacing24" maxHeight={iconSize} alignItems="flex-start">
-      <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://x.com/flow_blockchain" target="_blank">
+      <SocialIcon $hoverColor="#0cb259">
+        <Anchor href="https://twitter.com/ZircuitL2" target="_blank">
           <Twitter size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
-      <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://github.com/onflow" target="_blank">
+      <SocialIcon $hoverColor="#0cb259">
+        <Anchor href="https://github.com/zircuit-labs" target="_blank">
           <Github size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
 
-      <SocialIcon $hoverColor="#DE6579">
-        <Anchor href="https://discord.com/invite/J6fFnh2xx6" target="_blank">
+      <SocialIcon $hoverColor="#0cb259">
+        <Anchor href="https://discord.gg/zircuit" target="_blank">
           <Discord size={iconSize} fill="inherit" />
         </Anchor>
       </SocialIcon>
@@ -113,7 +113,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <Text variant="body3">2025 FlowSwap</Text>
+        <Text variant="body3">2025 Zircuit Swap</Text>
         <Anchor style={{ textDecoration: 'none' }} href="https://protofire.io" target="_blank">
           <Text variant="body3" style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />

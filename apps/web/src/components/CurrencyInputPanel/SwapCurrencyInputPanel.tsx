@@ -69,7 +69,7 @@ interface CurrencySelectProps {
 
 export const CurrencySelect = styled(ButtonGray)<CurrencySelectProps>`
   align-items: center;
-  background-color: ${({ selected, theme }) => (selected ? theme.surface1 : theme.accent1)};
+  background-color: ${({ selected, theme }) => (selected ? theme.surface1 : theme.accent2)};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
   color: ${({ selected, theme }) => (selected ? theme.neutral1 : theme.neutralContrast)};
   cursor: pointer;
@@ -77,7 +77,7 @@ export const CurrencySelect = styled(ButtonGray)<CurrencySelectProps>`
   border-radius: 18px;
   outline: none;
   user-select: none;
-  border: 1px solid ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent1)};
+  border: 1px solid ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent2)};
   font-size: 24px;
   font-weight: 485;
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
@@ -89,7 +89,7 @@ export const CurrencySelect = styled(ButtonGray)<CurrencySelectProps>`
 
   &:hover,
   &:active {
-    background-color: ${({ theme, selected }) => (selected ? theme.surface2 : theme.accent1)};
+    background-color: ${({ theme, selected }) => (selected ? theme.surface2 : darken(0.05, theme.accent2))};
   }
 
   &:before {

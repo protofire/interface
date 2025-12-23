@@ -39,6 +39,7 @@ export enum UniverseChainId {
   Anime = UniswapSDKChainId.ANIME,
   FlowMainnet = UniswapSDKChainId.FLOW_MAINNET,
   FlowTestnet = UniswapSDKChainId.FLOW_TESTNET,
+  Zircuit = UniswapSDKChainId.ZIRCUIT,
 }
 
 export type WalletChainId =
@@ -69,6 +70,7 @@ export type WalletChainId =
   | UniverseChainId.Anime
   | UniverseChainId.FlowMainnet
   | UniverseChainId.FlowTestnet
+  | UniverseChainId.Zircuit
 
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
@@ -119,8 +121,9 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] =
   // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
   // UniverseChainId.Anime,
-  UniverseChainId.FlowTestnet,
-  UniverseChainId.FlowMainnet,
+  // UniverseChainId.FlowMainnet,
+  // UniverseChainId.FlowTestnet,
+  UniverseChainId.Zircuit,
 ]
 
 export enum RPCType {

@@ -4,7 +4,7 @@ import { AutoColumn } from 'components/Column'
 import styled from 'lib/styled-components'
 
 export const DataCard = styled(AutoColumn)<{ disabled?: boolean }>`
-  background: radial-gradient(76.02% 75.41% at 1.84% 0%, #ff007a 0%, #2172e5 100%);
+  background: radial-gradient(76.02% 75.41% at 1.84% 0%, #0cb259 0%, #2172e5 100%);
   border-radius: 12px;
   width: 100%;
   position: relative;

@@ -28,7 +28,7 @@ const LinkStyles = css<{ $hoverColor?: string }>`
   transition: color ${({ theme }) => theme.transition.duration.fast};
   padding: 4px 0;
   &:hover {
-    color: ${({ theme, $hoverColor }) => $hoverColor || theme.accent1};
+    color: ${({ theme, $hoverColor }) => $hoverColor || theme.accent2};
     opacity: 1;
   }
 `

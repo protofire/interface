@@ -80,6 +80,7 @@ const chainIdNames: { [chainId in SupportedInterfaceChainId]: string } = {
   [UniverseChainId.Mode]: 'mode',
   [UniverseChainId.FlowMainnet]: 'flow',
   [UniverseChainId.FlowTestnet]: 'flow-testnet',
+  [UniverseChainId.Zircuit]: 'zircuit-mainnet',
 } as const
 
 test.each(Object.keys(chainIdNames).map((key) => parseInt(key) as SupportedInterfaceChainId))(

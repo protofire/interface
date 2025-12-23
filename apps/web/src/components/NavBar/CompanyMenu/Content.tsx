@@ -25,13 +25,13 @@ export const useMenuContent = (): MenuSection[] => {
     },
     {
       title: 'Company',
-      items: [{ label: 'Flow', href: 'https://flow.com/' }],
+      items: [{ label: 'Zircuit', href: 'https://www.zircuit.com/' }],
     },
     {
       title: 'Terms',
       items: [
-        { label: 'Terms and Conditions', href: '/terms' },
-        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms and Conditions', href: 'https://dubiw3zgo51jg.cloudfront.net/tos.pdf' },
+        { label: 'Privacy Policy', href: 'https://dubiw3zgo51jg.cloudfront.net/pp.pdf' },
       ],
     },
     // {

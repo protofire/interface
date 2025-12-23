@@ -44,7 +44,8 @@ export function toGraphQLChain(chainId: ChainId | number): Chain | undefined {
       return Chain.Zksync
     case ChainId.FLOW_TESTNET:
     case ChainId.FLOW_MAINNET:
-      return undefined // No GraphQL chain available for Flow testnet
+    case ChainId.ZIRCUIT:
+      return undefined // No GraphQL chain available for these chains
   }
   return undefined
 }

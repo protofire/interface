@@ -61,6 +61,7 @@ import {
   USDC_REDSTONE_GARNET,
   USDC_SHAPE,
   USDC_ZERO,
+  USDC_ZIRCUIT,
   USDC_ZKSYNC,
   USDC_ZORA,
 } from 'uniswap/src/constants/tokens'
@@ -283,6 +284,11 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.FlowTestnet),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowTestnet] as Token,
     USDC_FLOW_TESTNET,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.Zircuit]: [
+    nativeOnChain(UniverseChainId.Zircuit),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.Zircuit] as Token,
+    USDC_ZIRCUIT,
   ].map(buildCurrencyInfo),
 }
 

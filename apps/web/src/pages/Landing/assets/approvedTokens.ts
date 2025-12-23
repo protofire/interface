@@ -119,7 +119,7 @@ export const approvedERC20: InteractiveToken[] = [
   {
     name: 'Uniswap',
     symbol: 'UNI',
-    color: '#FF007A',
+    color: '#0cb259',
     logoUrl:
       'https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984/logo.png',
     address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',

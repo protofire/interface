@@ -27,6 +27,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
       justifyContent="center"
       minWidth="100%"
       height="min-content"
+      minHeight="calc(100vh - 290px)"
       pt={NAV_HEIGHT + 10}
       pointerEvents="none"
     >

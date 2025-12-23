@@ -289,6 +289,14 @@ export const USDC_FLOW_TESTNET = new Token(
   'USDC Flow',
 )
 
+export const USDC_ZIRCUIT = new Token(
+  UniverseChainId.Zircuit,
+  '0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF',
+  6,
+  'USDC',
+  'USD Coin',
+)
+
 export const WBTC = new Token(
   UniverseChainId.Mainnet,
   '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

@@ -25,6 +25,7 @@ import {
   USDC_REDSTONE_GARNET,
   USDC_SHAPE,
   USDC_ZERO,
+  USDC_ZIRCUIT,
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT_BNB,
@@ -63,6 +64,7 @@ export const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> }
   [UniverseChainId.Mode]: CurrencyAmount.fromRawAmount(USDC_MODE, 10_000e6),
   [UniverseChainId.FlowTestnet]: CurrencyAmount.fromRawAmount(USDC_FLOW_TESTNET, 10_000e6),
   [UniverseChainId.FlowMainnet]: CurrencyAmount.fromRawAmount(USDC_FLOW_MAINNET, 10_000e6),
+  [UniverseChainId.Zircuit]: CurrencyAmount.fromRawAmount(USDC_ZIRCUIT, 10_000e6),
 }
 
 /**

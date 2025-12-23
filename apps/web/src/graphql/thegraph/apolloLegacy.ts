@@ -21,6 +21,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [UniverseChainId.Mode]: 'https://graph-node.replace.domain/subgraphs/name/mode/v3-subgraph',
   [UniverseChainId.FlowMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow/uniswap-v3',
   [UniverseChainId.FlowTestnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow-testnet/uniswap-v3',
+  [UniverseChainId.Zircuit]: 'https://graph.swap.w3us.site/subgraphs/name/zircuit/uniswap-v3',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })

@@ -72,8 +72,8 @@ const Web3StatusConnectWrapper = styled.div`
 const Web3StatusConnected = styled(Web3StatusGeneric)<{
   pending?: boolean
 }>`
-  background-color: ${({ pending, theme }) => (pending ? theme.accent1 : theme.surface1)};
-  border: 1px solid ${({ pending, theme }) => (pending ? theme.accent1 : theme.surface1)};
+  background-color: ${({ pending, theme }) => (pending ? theme.accent2 : theme.surface1)};
+  border: 1px solid ${({ pending, theme }) => (pending ? theme.accent2 : theme.surface1)};
   color: ${({ pending, theme }) => (pending ? theme.white : theme.neutral1)};
   :hover,
   :focus {
@@ -81,7 +81,7 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{
     background-color: ${({ pending, theme }) => (pending ? theme.accent2 : theme.surface2)};
 
     :focus {
-      border: 1px solid ${({ pending, theme }) => (pending ? darken(0.1, theme.accent1) : darken(0.1, theme.surface3))};
+      border: 1px solid ${({ pending, theme }) => (pending ? darken(0.1, theme.accent2) : darken(0.1, theme.surface3))};
     }
   }
 

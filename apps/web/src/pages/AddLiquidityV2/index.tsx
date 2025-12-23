@@ -534,7 +534,7 @@ export default function AddLiquidity() {
                   disabled={!isValid || approvalA !== ApprovalState.APPROVED || approvalB !== ApprovalState.APPROVED}
                   error={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
                 >
-                  <Text fontSize={20} fontWeight="$medium">
+                  <Text fontSize={20} fontWeight="$medium" color="$accent2">
                     {error ?? <Trans i18nKey="pool.supply" />}
                   </Text>
                 </ButtonError>

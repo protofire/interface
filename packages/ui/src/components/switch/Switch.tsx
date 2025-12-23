@@ -56,37 +56,37 @@ export function Switch({
     if (isBranded) {
       return checked ? '$accent1' : '$neutral3'
     }
-    return checked ? '$accent3' : '$neutral3'
+    return checked ? '$accent1' : '$neutral3'
   })()
 
   const thumbBackgroundColor = ((): ColorTokens => {
     if (disabled) {
       if (isBranded) {
-        return checked ? '$neutral2' : '$neutral3'
+        return checked ? '$surface3' : '$neutral3'
       }
-      return checked ? '$neutral2' : '$neutral3'
+      return checked ? '$surface3' : '$neutral3'
     }
     if (isBranded) {
-      return checked ? '$white' : '$neutral1'
+      return checked ? '$surface1' : '$surface1'
     }
-    return checked ? '$surface1' : '$neutral1'
+    return checked ? '$surface1' : '$surface1'
   })()
 
   const iconColor = ((): string => {
     if (disabled) {
       return colors.white.val
     }
-    return isBranded ? colors.accent1.val : colors.neutral1.val
+    return isBranded ? colors.neutral2.val : colors.neutral3.val
   })()
 
   // Switch is a bit performance sensitive on native, memo to help here
   const frameActiveStyle = {
-    x: checked ? -2 : 0,
+    // x: checked ? -2 : 0,
   }
 
   const outerActiveStyle = {
-    width: 28,
-    x: checked ? -4 : 0,
+    // width: 28,
+    // x: checked ? -4 : 0,
   }
 
   return (
@@ -101,13 +101,6 @@ export function Switch({
       defaultChecked={checked}
       group="item"
       hoverStyle={{
-        backgroundColor: isBranded
-          ? checked
-            ? '$accent1Hovered'
-            : '$neutral3Hovered'
-          : checked
-            ? '$accent3Hovered'
-            : '$neutral3Hovered',
         cursor: 'pointer',
       }}
       justifyContent="center"

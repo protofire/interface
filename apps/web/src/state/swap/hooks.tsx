@@ -233,6 +233,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.Mode,
       UniverseChainId.FlowTestnet,
       UniverseChainId.FlowMainnet,
+      UniverseChainId.Zircuit,
     ].includes(chainId)
       ? false
       : isClassicTrade(trade.trade) &&

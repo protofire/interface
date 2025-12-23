@@ -182,6 +182,10 @@ export const networkColors = {
     light: '#21C95E',
     dark: '#21C95E',
   },
+  zircuit: {
+    light: '#0cb259',
+    dark: '#0cb259',
+  }
 }
 
 const sporeLight = {
@@ -205,10 +209,10 @@ const sporeLight = {
   surface4: 'rgba(255,255,255,0.64)',
   surface5: 'rgba(0,0,0,0.04)',
 
-  accent1: '#00EF8B',
-  accent1Hovered: '#02D87E',
+  accent1: '#F5F5F5',
+  accent1Hovered: '#F5F5F5',
   accent2: '#EEFBF1',
-  accent2Hovered: '#C2E7D0',
+  accent2Hovered: '#EEFBF1',
   accent3: '#222222',
   accent3Hovered: colors.black,
 
@@ -250,10 +254,10 @@ const sporeDark = {
   surface4: 'rgba(255,255,255,0.20)',
   surface5: 'rgba(0,0,0,0.04)',
 
-  accent1: '#00EF8B',
-  accent1Hovered: '#02D87E',
-  accent2: '#0F2C1A',
-  accent2Hovered: '#093A16',
+  accent1: '#F5F5F5',
+  accent1Hovered: '#F5F5F5',
+  accent2: '#EEFBF1',
+  accent2Hovered: '#EEFBF1',
   accent3: colors.white,
   accent3Hovered: '#F5F5F5',
 
@@ -355,6 +359,7 @@ export const colorsLight = {
   chain_34443: networkColors.mode.light,
   chain_545: networkColors.flow.light,
   chain_747: networkColors.flow.light,
+  chain_48900: networkColors.zircuit.light,
 
   // Testnets
   chain_3: colors.yellowVibrant,
@@ -448,6 +453,7 @@ export const colorsDark = {
   chain_34443: networkColors.mode.dark,
   chain_545: networkColors.flow.dark,
   chain_747: networkColors.flow.dark,
+  chain_48900: networkColors.zircuit.dark,
 
   // Testnets
   chain_3: colors.yellowVibrant,

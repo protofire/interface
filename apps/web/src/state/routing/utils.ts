@@ -43,6 +43,7 @@ import {
   V3PoolInRoute,
   isClassicQuoteResponse,
 } from 'state/routing/types'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { logger } from 'utilities/src/logger/logger'
 import { toSlippagePercent } from 'utils/slippage'
 
@@ -416,6 +417,9 @@ export function currencyAddressForSwapQuote(currency: Currency): string {
     }
     if (isFlowMainnet(currency.chainId)) {
       return SwapRouterNativeAssets.FLOW
+    }
+    if (currency.chainId === UniverseChainId.Zircuit) {
+      return SwapRouterNativeAssets.ETH
     }
     return SwapRouterNativeAssets.ETH
   }

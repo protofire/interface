@@ -32,8 +32,6 @@ const PoolFinder = lazy(() => import('pages/PoolFinder'))
 const RemoveLiquidity = lazy(() => import('pages/RemoveLiquidity'))
 const RemoveLiquidityV3 = lazy(() => import('pages/RemoveLiquidity/V3'))
 const TokenDetails = lazy(() => import('pages/TokenDetails'))
-const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
-const Terms = lazy(() => import('pages/Terms'))
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -364,16 +362,6 @@ export const routes: RouteDefinition[] = [
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
     getTitle: () => StaticTitlesAndDescriptions.NFTTitle,
-  }),
-  createRouteDefinition({
-    path: '/privacy',
-    getElement: () => <PrivacyPolicy />,
-    getDescription: () => StaticTitlesAndDescriptions.PrivacyPolicyDescription,
-  }),
-  createRouteDefinition({
-    path: '/terms',
-    getElement: () => <Terms />,
-    getDescription: () => StaticTitlesAndDescriptions.TermsDescription,
   }),
   createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
   createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),

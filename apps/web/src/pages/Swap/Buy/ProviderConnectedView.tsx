@@ -51,12 +51,12 @@ export function ProviderConnectedView({ closeModal, selectedServiceProvider }: P
             }}
             components={{
               tosLink: (
-                <StyledLink color={theme.neutral3} href="/terms">
+                <StyledLink color={theme.neutral3} href="https://dubiw3zgo51jg.cloudfront.net/tos.pdf">
                   {t('common.termsOfService')}
                 </StyledLink>
               ),
               privacyLink: (
-                <StyledLink color={theme.neutral3} href="/privacy">
+                <StyledLink color={theme.neutral3} href="https://dubiw3zgo51jg.cloudfront.net/pp.pdf">
                   {t('common.privacyPolicy')}
                 </StyledLink>
               ),

@@ -133,6 +133,7 @@ export const ElementName = {
   ChainMode: 'chain-mode',
   ChainFlow: 'chain-flow',
   ChainFlowTestnet: 'chain-flow-testnet',
+  ChainZircuit: 'chain-zircuit',
   ChooseInputToken: 'choose-input-token',
   ChooseOutputToken: 'choose-output-token',
   Confirm: 'confirm',

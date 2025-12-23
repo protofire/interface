@@ -24,6 +24,7 @@ import {
   REDSTONE_LOGO,
   SHAPE_LOGO,
   ZERO_LOGO,
+  ZIRCUIT_LOGO,
   ZKSYNC_LOGO,
   ZORA_LOGO,
 } from 'ui/src/assets'
@@ -262,6 +263,12 @@ export function getChainUI(chainId: InterfaceChainId, darkMode: boolean): ChainU
         symbol: FLOW_TESTNET_LOGO,
         bgColor: '#00EF8B33',
         textColor: '#00EF8B',
+      }
+    case UniverseChainId.Zircuit:
+      return {
+        symbol: ZIRCUIT_LOGO,
+        bgColor: '#00EF8B33',
+        textColor: '#12ff80',
       }
     default:
       return undefined

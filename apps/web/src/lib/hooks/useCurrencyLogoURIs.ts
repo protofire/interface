@@ -26,7 +26,8 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
       return AnimeLogo
     case UniverseChainId.FlowTestnet:
     case UniverseChainId.FlowMainnet:
-      return FlowLogo
+    case UniverseChainId.Zircuit:
+      return EthereumLogo
     default:
       return EthereumLogo
   }
@@ -63,6 +64,18 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
     // USDC
     if (isSameAddress(address, '0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED')) {
       return 'https://raw.githubusercontent.com/onflow/assets/main/tokens/registry/0x2aaBea2058b5aC2D339b163C6Ab6f2b6d53aabED/logo.png'
+    }
+  }
+
+  // Zircuit specific tokens
+  if (chainId === UniverseChainId.Zircuit) {
+    // WETH
+    if (isSameAddress(address, '0x4200000000000000000000000000000000000006')) {
+      return EthereumLogo
+    }
+    // USDC
+    if (isSameAddress(address, '0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF')) {
+      return 'https://raw.githubusercontent.com/protofire/token-list/main/assets/USDC.png'
     }
   }
 
