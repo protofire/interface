@@ -1,4 +1,4 @@
-import { PERMIT2_ADDRESS } from '@uniswap/permit2-sdk'
+// import { PERMIT2_ADDRESS } from '@uniswap/permit2-sdk'
 import { CosignedV2DutchOrder, getCancelSingleParams } from '@uniswap/uniswapx-sdk'
 import { Contract, providers } from 'ethers'
 import { call, select } from 'typed-redux-saga'
@@ -13,7 +13,7 @@ import { attemptReplaceTransaction } from 'wallet/src/features/transactions/repl
 import { signAndSendTransaction } from 'wallet/src/features/transactions/sendTransactionSaga'
 import { getProvider, getSignerManager } from 'wallet/src/features/wallet/context'
 import { selectAccounts } from 'wallet/src/features/wallet/selectors'
-
+const PERMIT2_ADDRESS = "0x000000000022d473030f116ddee9f6b43ac78ba3"
 // Note, transaction cancellation on Ethereum is inherently flaky
 // The best we can do is replace the transaction and hope the original isn't mined first
 // Inspiration: https://github.com/MetaMask/metamask-extension/blob/develop/app/scripts/controllers/transactions/index.js#L744

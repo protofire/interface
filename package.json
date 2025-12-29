@@ -107,7 +107,11 @@
     "@uniswap/universal-router-sdk@4.19.5": "patch:@uniswap/universal-router-sdk@npm%3A4.19.5#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.19.5-1332e24df7.patch",
     "@uniswap/universal-router-sdk@^1.5.4": "patch:@uniswap/universal-router-sdk@npm%3A4.5.2#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.5.2-7ca68f7b87.patch",
     "@uniswap/universal-router-sdk@^1.5.8": "patch:@uniswap/universal-router-sdk@npm%3A4.5.2#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.5.2-7ca68f7b87.patch",
-    "@uniswap/universal-router-sdk@4.5.2": "patch:@uniswap/universal-router-sdk@npm%3A4.5.2#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.5.2-7ca68f7b87.patch"
+    "@uniswap/universal-router-sdk@4.5.2": "patch:@uniswap/universal-router-sdk@npm%3A4.5.2#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.5.2-7ca68f7b87.patch",
+    "@uniswap/sdk-core@5.9.0": "patch:@uniswap/sdk-core@npm%3A7.9.0#./.yarn/patches/@uniswap-sdk-core-npm-7.9.0-6a41ab4dd0.patch",
+    "@uniswap/sdk-core@^5.8.1": "patch:@uniswap/sdk-core@npm%3A7.9.0#./.yarn/patches/@uniswap-sdk-core-npm-7.9.0-6a41ab4dd0.patch",
+    "@uniswap/sdk-core@^5.3.1": "patch:@uniswap/sdk-core@npm%3A7.9.0#./.yarn/patches/@uniswap-sdk-core-npm-7.9.0-6a41ab4dd0.patch",
+    "@uniswap/sdk-core@^5.8.2": "patch:@uniswap/sdk-core@npm%3A7.9.0#./.yarn/patches/@uniswap-sdk-core-npm-7.9.0-6a41ab4dd0.patch"
   },
   "scripts": {
     "extension": "yarn workspace @uniswap/extension",

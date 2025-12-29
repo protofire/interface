@@ -17,7 +17,7 @@ import { USDC_MAINNET } from 'uniswap/src/constants/tokens'
 import { TransactionStatus } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { UniverseChainId } from 'uniswap/src/features/chains/types'
 
-const PERMIT2_ADDRESS_MAINNET = permit2Address(UniverseChainId.Mainnet)
+const PERMIT2_ADDRESS = "0x000000000022d473030f116ddee9f6b43ac78ba3"
 
 const pendingTransactionResponse = {
   hash: '0x123',
