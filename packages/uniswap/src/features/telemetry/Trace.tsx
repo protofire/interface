@@ -21,7 +21,7 @@ interface UniverseTraceContext {
 }
 
 type BaseTraceProps = UniverseTraceContext & Omit<TraceProps, 'eventOnTrigger' | 'properties'>
-
+const ANALYTICS_SUPPORTED = false
 function _Trace<EventName extends keyof UniverseEventProperties | undefined>({
   children,
   eventOnTrigger,
@@ -44,6 +44,7 @@ function _Trace<EventName extends keyof UniverseEventProperties | undefined>({
     : undefined
 
   return (
+    ANALYTICS_SUPPORTED ? 
     <UntypedTrace
       eventOnTrigger={eventOnTrigger}
       logFocus={logFocus}
@@ -55,6 +56,8 @@ function _Trace<EventName extends keyof UniverseEventProperties | undefined>({
     >
       {children}
     </UntypedTrace>
+    : 
+    <>{children}</>
   )
 }
 

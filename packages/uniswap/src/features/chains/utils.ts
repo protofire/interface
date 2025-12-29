@@ -154,6 +154,8 @@ export function fromUniswapWebAppLink(network: string | null): UniverseChainId |
       return UniverseChainId.Zksync
     case Chain.Zora.toLowerCase():
       return UniverseChainId.Zora
+    case 'cyber_testnet':
+      return UniverseChainId.CyberTestnet
     default:
       throw new Error(`Network "${network}" can not be mapped`)
   }
@@ -193,6 +195,8 @@ export function toUniswapWebAppLink(chainId: UniverseChainId): string | null {
       return Chain.Zksync.toLowerCase()
     case UniverseChainId.Zora:
       return Chain.Zora.toLowerCase()
+    case UniverseChainId.CyberTestnet:
+      return 'cyber_testnet'
     default:
       throw new Error(`ChainID "${chainId}" can not be mapped`)
   }

@@ -17,6 +17,7 @@ import {
   USDC_WORLD_CHAIN,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDC_CYBER_TESTNET,
   USDT_MONAD_TESTNET,
 } from 'uniswap/src/constants/tokens'
 import { UniverseChainId, isUniverseChainId } from 'uniswap/src/features/chains/types'
@@ -43,6 +44,7 @@ export const STABLECOIN_AMOUNT_OUT: Record<UniverseChainId, CurrencyAmount<Token
   [UniverseChainId.WorldChain]: CurrencyAmount.fromRawAmount(USDC_WORLD_CHAIN, 10_000e6),
   [UniverseChainId.Zksync]: CurrencyAmount.fromRawAmount(USDC_ZKSYNC, 10_000e6),
   [UniverseChainId.Zora]: CurrencyAmount.fromRawAmount(USDC_ZORA, 10_000e6),
+  [UniverseChainId.CyberTestnet]: CurrencyAmount.fromRawAmount(USDC_CYBER_TESTNET, 10_000e6),
 }
 
 /**

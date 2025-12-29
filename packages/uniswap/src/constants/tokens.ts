@@ -35,6 +35,14 @@ export const USDC_UNICHAIN_SEPOLIA = new Token(
   'USD//C',
 )
 
+export const USDC_CYBER_TESTNET = new Token(
+  UniverseChainId.CyberTestnet,
+  '0xfbd9e7432d2bd28ac8aab499bda05c9ea45872b6',
+  6,
+  'mUSDC',
+  'Mock USDC',
+)
+
 export const DAI = new Token(
   UniverseChainId.Mainnet,
   '0x6B175474E89094C44Da98b954EedeAC495271d0F',

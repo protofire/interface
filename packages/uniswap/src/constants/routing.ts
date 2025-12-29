@@ -28,6 +28,7 @@ import {
   USDC_WORLD_CHAIN,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDC_CYBER_TESTNET,
   USDT,
   USDT_ARBITRUM_ONE,
   USDT_AVALANCHE,
@@ -167,6 +168,12 @@ export const COMMON_BASES: ChainCurrencyList = {
     nativeOnChain(UniverseChainId.Zora),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Zora] as Token,
     USDC_ZORA,
+  ].map(buildPartialCurrencyInfo),
+
+  [UniverseChainId.CyberTestnet]: [
+    nativeOnChain(UniverseChainId.CyberTestnet),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.CyberTestnet] as Token,
+    USDC_CYBER_TESTNET,
   ].map(buildPartialCurrencyInfo),
 }
 
