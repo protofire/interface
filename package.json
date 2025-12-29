@@ -16,6 +16,7 @@
     "i18next-parser": "8.6.0",
     "js-yaml": "4.1.0",
     "moti": "0.29.0",
+    "patch-package": "8.0.1",
     "prettier": "3.3.2",
     "prettier-plugin-organize-imports": "3.2.4",
     "syncpack": "8.5.14",
@@ -91,7 +92,17 @@
     "typescript": "5.3.3",
     "viem": "2.21.51",
     "xml2js": "0.5.0",
-    "yaml": "2.2.2"
+    "yaml": "2.2.2",
+    "@uniswap/sdk-core@7.5.0": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@^5.0.0": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@^7.5.0": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@>= 3": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@^4.2.0": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@^4.0.7": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/sdk-core@^7.10.0": "patch:@uniswap/sdk-core@npm%3A7.5.0#./.yarn/patches/@uniswap-sdk-core-npm-7.5.0-b68e7137d2.patch",
+    "@uniswap/universal-router-sdk@4.14.0": "patch:@uniswap/universal-router-sdk@npm%3A4.14.0#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.14.0-2d905cc9f1.patch",
+    "@uniswap/universal-router-sdk@^1.5.4": "patch:@uniswap/universal-router-sdk@npm%3A4.14.0#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.14.0-2d905cc9f1.patch",
+    "@uniswap/universal-router-sdk@^1.5.8": "patch:@uniswap/universal-router-sdk@npm%3A4.14.0#./.yarn/patches/@uniswap-universal-router-sdk-npm-4.14.0-2d905cc9f1.patch"
   },
   "scripts": {
     "extension": "yarn workspace @uniswap/extension",
@@ -145,7 +156,8 @@
     "wallet": "yarn workspace wallet",
     "web": "yarn workspace @uniswap/interface",
     "uniswap": "yarn workspace uniswap",
-    "utilities": "yarn workspace utilities"
+    "utilities": "yarn workspace utilities",
+    "patchess": "patch-package @uniswap/sdk-core"
   },
   "workspaces": [
     "apps/*",
