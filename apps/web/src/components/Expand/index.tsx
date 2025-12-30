@@ -25,6 +25,10 @@ const Wrapper = styled(Column)<{ $padding?: string }>`
   padding: ${({ $padding }) => $padding};
 `
 
+const RowBetweenStyled = styled(RowBetween)`
+  cursor: pointer;
+`
+
 export default function Expand({
   header,
   button,
@@ -43,13 +47,13 @@ export default function Expand({
 }>) {
   return (
     <Wrapper $padding={padding}>
-      <RowBetween>
+      <RowBetweenStyled onClick={onToggle}>
         {header}
-        <ButtonContainer data-testid={testId} onClick={onToggle} aria-expanded={isOpen}>
+        <ButtonContainer data-testid={testId} aria-expanded={isOpen}>
           {button}
           <ExpandIcon $isOpen={isOpen} />
         </ButtonContainer>
-      </RowBetween>
+      </RowBetweenStyled>
       <AnimatedDropdown open={isOpen}>
         <Content gap="md">{children}</Content>
       </AnimatedDropdown>
