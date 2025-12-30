@@ -1879,7 +1879,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     stablecoins: [USDC_ZIRCUIT],
     statusPage: undefined,
     supportsClientSideRouting: false,
-    supportsGasEstimates: true,
+    supportsGasEstimates: false,
     urlParam: 'zircuit-mainnet',
     wrappedNativeCurrency: {
       name: 'Wrapped Ether',
