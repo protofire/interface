@@ -75,6 +75,7 @@
     "https://evm.flowscan.io",
     "https://raw.githubusercontent.com/onflow/assets/main/tokens/*",
     "https://mainnet.zircuit.com",
+    "https://proxyd-ingress-eu.mainnet.zircuit.com",
     "https://explorer.zircuit.com",
     "https://graph.swap.w3us.site",
     "https://apiv1.staging.zircuit-swap.w3us.site",
