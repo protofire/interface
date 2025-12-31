@@ -280,9 +280,7 @@ function L2Content({
           </ThemedText.BodySecondary>
           {chainId && hash ? (
             <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
-              <ThemedText.SubHeaderSmall color={theme.accent1}>
-                <Trans i18nKey="common.viewOnExplorer" />
-              </ThemedText.SubHeaderSmall>
+              <Trans i18nKey="common.viewOnExplorer" color={theme.accent1} />
             </ExternalLink>
           ) : (
             <div style={{ height: '17px' }} />
