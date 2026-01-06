@@ -56,6 +56,7 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { unwrappedToken } from 'utils/unwrappedToken'
 import { MigrateHeader } from '.'
+import { colors } from 'theme/colors'
 
 const StyledBodyWrapper = styled(BodyWrapper)`
   padding: 24px;
@@ -410,13 +411,14 @@ function V2PairMigration({
         >
           <ExternalLink
             key="migration-contract"
+            style={{ color: colors.accent2_dark}}
             href={getExplorerLink(
               account.chainId ?? UniverseChainId.Mainnet,
               migrator?.address ?? '',
               ExplorerDataType.ADDRESS,
             )}
           >
-            <Text color="$neutral2" display="inline">
+            <Text color="$accent1" display="inline">
               <Trans i18nKey="migrate.contract" /> ↗
             </Text>
           </ExternalLink>
