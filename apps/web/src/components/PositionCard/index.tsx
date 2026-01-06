@@ -293,7 +293,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
               <ButtonSecondary padding="8px" $borderRadius="8px">
                 <StyledInternalLink
                   style={{ width: '100%', textAlign: 'center' }}
-                  to="https://v2-info.staging.flowswap.io/"
+                  to="https://v2-info.zircuit-swap.w3us.site/"
                   target="_blank"
                 >
                   <Trans i18nKey="pool.accruedFees" />
@@ -306,7 +306,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
               <ButtonSecondaryLight padding="8px" $borderRadius="8px">
                 <StyledInternalLinkLight
                   style={{ width: '100%', textAlign: 'center' }}
-                  to="https://v2-info.staging.flowswap.io/"
+                  to="https://v2-info.zircuit-swap.w3us.site/"
                   target="_blank"
                 >
                   <Trans i18nKey="pool.accruedFees" />

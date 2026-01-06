@@ -238,7 +238,7 @@ export const ButtonOutlined = styled(BaseButton)`
 
 export const ButtonEmpty = styled(BaseButton)`
   background-color: transparent;
-  color: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.neutral2};
   display: flex;
   justify-content: center;
   align-items: center;
