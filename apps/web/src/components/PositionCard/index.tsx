@@ -293,7 +293,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             <ButtonSecondary padding="8px" $borderRadius="8px">
               <StyledInternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                to={`/explore/pools/${chainIdToBackendChain({ chainId: pair.chainId, withFallback: true }).toLowerCase()}/${Pair.getAddress(pair.token0, pair.token1)}`}
+                to={`https://v2-info.shapeswap.xyz/pair/${Pair.getAddress(pair.token0, pair.token1)}`}
               >
                 <Trans i18nKey="pool.accruedFees" />
                 <span style={{ fontSize: '11px' }}>↗</span>
