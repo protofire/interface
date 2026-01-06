@@ -416,7 +416,7 @@ function V2PairMigration({
               ExplorerDataType.ADDRESS,
             )}
           >
-            <Text color="$accent1" display="inline">
+            <Text color="$neutral2" display="inline">
               <Trans i18nKey="migrate.contract" /> ↗
             </Text>
           </ExternalLink>
