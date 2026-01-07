@@ -293,7 +293,7 @@ export const USDC_ZIRCUIT = new Token(
   UniverseChainId.Zircuit,
   '0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF',
   6,
-  'USDC',
+  'USDC.e',
   'USD Coin',
 )
 
