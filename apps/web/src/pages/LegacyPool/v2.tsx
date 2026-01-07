@@ -64,6 +64,12 @@ const ResponsiveButtonPrimary = styled(ButtonPrimary)`
 const ResponsiveButtonSecondary = styled(ButtonSecondary)`
   height: 40px;
   width: fit-content;
+  color: ${({ theme }) => theme.accent2};
+  border: 1px solid ${({ theme }) => theme.accent2};
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.accent2};
+    opacity: 0.8;
+  }
   ${({ theme }) => theme.deprecated_mediaWidth.deprecated_upToSmall`
     width: 48%;
   `};

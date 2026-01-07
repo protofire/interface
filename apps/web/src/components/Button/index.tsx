@@ -85,9 +85,9 @@ export const ButtonPrimary = styled(BaseButton)`
   }
   &:disabled {
     background-color: ${({ theme, altDisabledStyle, disabled }) =>
-      altDisabledStyle ? (disabled ? theme.accent2 : theme.surface3) : theme.surface3};
+      altDisabledStyle ? (disabled ? theme.accent2 : theme.surface3) : theme.accent2};
     color: ${({ altDisabledStyle, disabled, theme }) =>
-      altDisabledStyle ? (disabled ? theme.neutralContrast : theme.neutral2) : theme.neutral2};
+      altDisabledStyle ? (disabled ? theme.accent1 : theme.neutral2) : theme.accent1};
     cursor: auto;
     box-shadow: none;
     border: 1px solid transparent;
@@ -238,7 +238,7 @@ export const ButtonOutlined = styled(BaseButton)`
 
 export const ButtonEmpty = styled(BaseButton)`
   background-color: transparent;
-  color: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.neutral2};
   display: flex;
   justify-content: center;
   align-items: center;
