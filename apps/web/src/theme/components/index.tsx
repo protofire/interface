@@ -103,8 +103,8 @@ export const CloseIcon = styled(X)<{ onClick: () => void; $color?: string }>`
 `
 
 const LinkStyle = css`
-  color: ${({ theme }) => theme.accent1};
-  stroke: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.accent2};
+  stroke: ${({ theme }) => theme.accent2};
   font-weight: 500;
 `
 

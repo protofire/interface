@@ -162,7 +162,7 @@ export const ButtonGray = styled(BaseButton)`
 
 export const ButtonSecondary = styled(BaseButton)`
   border: 1px solid ${({ theme }) => theme.accent2};
-  color: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.accent2};
   background-color: transparent;
   font-size: 16px;
   border-radius: 12px;
@@ -170,14 +170,14 @@ export const ButtonSecondary = styled(BaseButton)`
 
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent2};
-    border: 1px solid ${({ theme }) => theme.accent1};
+    border: 1px solid ${({ theme }) => theme.accent2};
   }
   &:hover {
-    border: 1px solid ${({ theme }) => theme.accent1};
+    border: 1px solid ${({ theme }) => theme.accent2};
   }
   &:active {
     box-shadow: 0 0 0 1pt ${({ theme }) => theme.accent2};
-    border: 1px solid ${({ theme }) => theme.accent1};
+    border: 1px solid ${({ theme }) => theme.accent2};
   }
   &:disabled {
     opacity: 50%;
