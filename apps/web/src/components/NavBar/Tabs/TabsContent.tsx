@@ -84,7 +84,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
     },
     {
       title: t('common.explore'),
-      href: `https://info.staging.zircuit-swap.w3us.site/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: `https://info.staging.swap.zircuit.com/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
@@ -92,13 +92,13 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
         {
           label: 'V3 Analytics',
           quickKey: 'T',
-          href: `https://info.staging.zircuit-swap.w3us.site/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+          href: `https://info.staging.swap.zircuit.com/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
           internal: false,
         },
         {
           label: 'V2 Analytics',
           quickKey: 'P',
-          href: 'https://v2-info.staging.zircuit-swap.w3us.site',
+          href: 'https://v2-info.staging.swap.zircuit.com',
           internal: false,
         },
       ],
