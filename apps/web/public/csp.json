@@ -78,14 +78,10 @@
     "https://proxyd-ingress-eu.mainnet.zircuit.com",
     "https://explorer.zircuit.com",
     "https://graph.swap.w3us.site",
-    "https://apiv1.staging.zircuit-swap.w3us.site",
-    "https://apiv2.staging.zircuit-swap.w3us.site",
-    "https://info.staging.zircuit-swap.w3us.site",
-    "https://v2-info.staging.zircuit-swap.w3us.site/",
-    "https://apiv1.zircuit-swap.w3us.site",
-    "https://apiv2.zircuit-swap.w3us.site",
-    "https://info.zircuit-swap.w3us.site",
-    "https://v2-info.zircuit-swap.w3us.site/",
+    "https://apiv1.swap.zircuit.com",
+    "https://apiv2.swap.zircuit.com",
+    "https://info.swap.zircuit.com",
+    "https://v2-info.swap.zircuit.com/",
     "https://raw.githubusercontent.com/protofire/token-list/refs/heads/main/networks/zircuit.json"
   ],
   "workerSrc": [

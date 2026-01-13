@@ -1857,7 +1857,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://explorer.zircuit.com/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://v2-info.zircuit-swap.w3us.site/',
+    infoLink: 'https://v2-info.swap.zircuit.com/',
     infuraPrefix: undefined,
     interfaceName: 'zircuit-mainnet',
     label: 'Zircuit',
