@@ -23,7 +23,8 @@ export const ARBITRUM_LIST = 'https://bridge.arbitrum.io/token-list-42161.json'
 export const CELO_LIST = 'https://celo-org.github.io/celo-token-list/celo.tokenlist.json'
 export const PLASMA_BNB_LIST = 'https://raw.githubusercontent.com/plasmadlt/plasma-finance-token-list/master/bnb.json'
 
-export const HARMONY_MAINNET_LIST = 'https://raw.githubusercontent.com/harmony-one/swap-token-list/main/tokenlist.json'
+// export const HARMONY_MAINNET_LIST = 'https://raw.githubusercontent.com/harmony-one/swap-token-list/main/tokenlist.json'
+export const HARMONY_MAINNET_LIST = 'https://raw.githubusercontent.com/ArtemKolodko/swap-token-list/53fba67166493288ec4e52681cd17158dd8c788b/tokenlist.json'
 export const AVALANCHE_LIST =
   'https://raw.githubusercontent.com/ava-labs/avalanche-bridge-resources/main/token_list.json'
 export const BASE_LIST =
