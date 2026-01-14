@@ -762,7 +762,7 @@ function SwapNotice() {
             i18nKey="swap.form.pocketUniverseExtension.warning"
             components={{
               termsLink: (
-                <ExternalLink href="https://dubiw3zgo51jg.cloudfront.net/tos.pdf">
+                <ExternalLink href="/toc.pdf">
                   <Trans i18nKey="common.termsOfService" />
                 </ExternalLink>
               ),
