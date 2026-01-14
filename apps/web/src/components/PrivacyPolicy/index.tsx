@@ -119,7 +119,7 @@ function PrivacyPolicy() {
       <AutoColumn gap="16px">
         <AutoColumn gap="sm" style={{ width: '100%' }}>
           <StyledExternalCard>
-            <ExternalLink href="/toc.pdf">
+            <ExternalLink href="/docs/terms.pdf">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />
@@ -132,7 +132,7 @@ function PrivacyPolicy() {
             </ExternalLink>
           </StyledExternalCard>
           <StyledExternalCard>
-            <ExternalLink href="/pp.pdf">
+            <ExternalLink href="/docs/privacy.pdf">
               <RowBetween>
                 <AutoRow gap="4px">
                   <Info size={20} />

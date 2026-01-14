@@ -30,8 +30,8 @@ export const useMenuContent = (): MenuSection[] => {
     {
       title: 'Terms',
       items: [
-        { label: 'Terms and Conditions', href: '/toc.pdf' },
-        { label: 'Privacy Policy', href: '/pp.pdf' },
+        { label: 'Terms and Conditions', href: '/docs/terms.pdf' },
+        { label: 'Privacy Policy', href: '/docs/privacy.pdf' },
       ],
     },
     // {
