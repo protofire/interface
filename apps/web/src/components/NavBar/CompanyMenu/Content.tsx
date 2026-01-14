@@ -30,8 +30,8 @@ export const useMenuContent = (): MenuSection[] => {
     {
       title: 'Terms',
       items: [
-        { label: 'Terms and Conditions', href: 'https://dubiw3zgo51jg.cloudfront.net/tos.pdf' },
-        { label: 'Privacy Policy', href: 'https://dubiw3zgo51jg.cloudfront.net/pp.pdf' },
+        { label: 'Terms and Conditions', href: '/docs/terms.pdf' },
+        { label: 'Privacy Policy', href: '/docs/privacy.pdf' },
       ],
     },
     // {

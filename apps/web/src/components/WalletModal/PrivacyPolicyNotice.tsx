@@ -13,8 +13,8 @@ export default function PrivacyPolicyNotice() {
       <Trans
         i18nKey="wallet.connectingAgreement"
         components={{
-          termsLink: <StyledLink href="https://dubiw3zgo51jg.cloudfront.net/tos.pdf" />,
-          privacyLink: <StyledLink href="https://dubiw3zgo51jg.cloudfront.net/pp.pdf" />,
+          termsLink: <StyledLink href="/docs/terms.pdf" />,
+          privacyLink: <StyledLink href="/docs/privacy.pdf" />,
         }}
       />
     </ThemedText.BodySmall>

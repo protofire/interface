@@ -56,7 +56,7 @@ export function ProviderConnectedView({ closeModal, selectedServiceProvider }: P
                 </StyledLink>
               ),
               privacyLink: (
-                <StyledLink color={theme.neutral3} href="https://dubiw3zgo51jg.cloudfront.net/pp.pdf">
+                <StyledLink color={theme.neutral3} href="https://dubiw3zgo51jg.cloudfront.net/docs/privacy.pdf">
                   {t('common.privacyPolicy')}
                 </StyledLink>
               ),
