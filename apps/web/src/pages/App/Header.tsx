@@ -2,11 +2,15 @@ import Navbar from 'components/NavBar/index'
 import { InDevelopmentBanner } from 'components/TopLevelBanners/InDevelopmentBanner'
 import { MobileAppPromoBanner, useMobileAppPromoBannerEligible } from 'components/TopLevelBanners/MobileAppPromoBanner'
 import { UkBanner, useRenderUkBanner } from 'components/TopLevelBanners/UkBanner'
+import { ScrollDirection, useScroll } from 'hooks/useScroll'
 import styled from 'lib/styled-components'
+import { useBag } from 'nft/hooks'
 import { GRID_AREAS } from 'pages/App/utils/shared'
 import { memo } from 'react'
+import { useLocation } from 'react-router-dom'
 import { NAV_HEIGHT } from 'theme'
 import { Z_INDEX } from 'theme/zIndex'
+import { useIsTouchDevice } from 'ui/src'
 import { isAppUniswapStagingOrg, isLocalhost } from 'utils/env'
 
 const AppHeader = styled.div`
@@ -30,8 +34,15 @@ const NavOnScroll = styled.div<{ $hide: boolean; $transparent?: boolean }>`
 `
 
 export const Header = memo(function Header() {
+  const { isScrolledDown, direction: scrollDirection } = useScroll()
+  const { pathname } = useLocation()
+  const isExplorePage = pathname.startsWith('/explore')
+  const isBagExpanded = useBag((state) => state.bagExpanded)
+  const isHeaderTransparent = !isScrolledDown && !isBagExpanded
   const renderUkBanner = useRenderUkBanner()
   const extensionEligible = useMobileAppPromoBannerEligible()
+  const isTouchDevice = useIsTouchDevice()
+
 
   return (
     <AppHeader id="AppHeader">
@@ -40,7 +51,10 @@ export const Header = memo(function Header() {
         {renderUkBanner && <UkBanner />}
         {(isAppUniswapStagingOrg(window.location) || isLocalhost(window.location)) && <InDevelopmentBanner />}
       </Banners>
-      <NavOnScroll $hide={false} $transparent={false}>
+      <NavOnScroll
+        $hide={isTouchDevice && !isExplorePage && scrollDirection === ScrollDirection.DOWN}
+        $transparent={isHeaderTransparent}
+      >
         <Navbar />
       </NavOnScroll>
     </AppHeader>
