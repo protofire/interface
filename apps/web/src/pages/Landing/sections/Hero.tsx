@@ -1,15 +1,17 @@
 import { ColumnCenter } from 'components/Column'
 import forkConfig from 'forkConfig'
 import { useCurrency } from 'hooks/Tokens'
+import { useScroll } from 'hooks/useScroll'
 import { TokenCloud } from 'pages/Landing/components/TokenCloud'
-import { Hover, RiseIn } from 'pages/Landing/components/animations'
+import { Hover, RiseIn, RiseInText } from 'pages/Landing/components/animations'
 import { Swap } from 'pages/Swap'
+import { Fragment } from 'react'
 import { ChevronDown } from 'react-feather'
 import { NAV_HEIGHT } from 'theme'
 import { Flex, Text } from 'ui/src'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
-import { Trans } from 'uniswap/src/i18n'
+import { Trans, useTranslation } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 
 interface HeroProps {
@@ -19,16 +21,24 @@ interface HeroProps {
 
 export function Hero({ scrollToRef, transition }: HeroProps) {
   const multichainUXEnabled = useFeatureFlag(FeatureFlags.MultichainUX)
+
+  const { height: scrollPosition } = useScroll()
   const initialInputCurrency = useCurrency('ETH')
+  const { t } = useTranslation()
+
+  const translateY = -scrollPosition / 7
+  const opacityY = 1 - scrollPosition / 1000
 
   return (
     <Flex
       position="relative"
       justifyContent="center"
+      y={translateY}
+      opacity={opacityY}
       minWidth="100%"
+      minHeight="100vh"
       height="min-content"
-      minHeight="calc(100vh - 290px)"
-      pt={NAV_HEIGHT + 10}
+      pt={NAV_HEIGHT}
       pointerEvents="none"
     >
       {forkConfig.approvedTokens && <TokenCloud transition={transition} />}
@@ -39,6 +49,8 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
         pointerEvents="none"
         pt={48}
         gap="$gap20"
+        transform={`translate(0px, ${translateY}px)`}
+        opacity={opacityY}
         $lg={{ pt: 24 }}
         $sm={{ pt: 8 }}
         $platform-web={{
@@ -56,30 +68,46 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             $sm={{ variant: 'heading2', fontSize: 36 }}
             $short={{ variant: 'heading2', fontSize: 36 }}
           >
-            <Trans i18nKey="hero.swap.title" />
+            {t('hero.swap.title')
+              .split(' ')
+              .map((word, index) => {
+                if (word === '<br/>') {
+                  return <br key={word} />
+                } else {
+                  return (
+                    <Fragment key={word}>
+                      <RiseInText delay={index * 0.1}>{word}</RiseInText>{' '}
+                    </Fragment>
+                  )
+                }
+              })}
           </Text>
         </Flex>
 
-        <Flex
-          pointerEvents="auto"
-          width={480}
-          p="$padding8"
-          borderRadius="$rounded24"
-          backgroundColor="$surface1"
-          maxWidth="100%"
-        >
-          <Swap
-            syncTabToUrl={false}
-            hideHeader
-            chainId={initialInputCurrency?.chainId ?? UniverseChainId.Mainnet}
-            initialInputCurrency={initialInputCurrency}
-            multichainUXEnabled={multichainUXEnabled}
-          />
-        </Flex>
+        <RiseIn delay={0.4}>
+          <Flex
+            pointerEvents="auto"
+            width={480}
+            p="$padding8"
+            borderRadius="$rounded24"
+            backgroundColor="$surface1"
+            maxWidth="100%"
+          >
+            <Swap
+              syncTabToUrl={false}
+              hideHeader
+              chainId={initialInputCurrency?.chainId ?? UniverseChainId.Mainnet}
+              initialInputCurrency={initialInputCurrency}
+              multichainUXEnabled={multichainUXEnabled}
+            />
+          </Flex>
+        </RiseIn>
 
-        <Text variant="body1" textAlign="center" maxWidth={430} color="$neutral2" mb={30}>
-          <Trans i18nKey="hero.subtitle" />
-        </Text>
+        <RiseIn delay={0.3}>
+          <Text variant="body1" textAlign="center" maxWidth={430} color="$neutral2" $short={{ variant: 'body2' }}>
+            <Trans i18nKey="hero.subtitle" />
+          </Text>
+        </RiseIn>
       </Flex>
 
       <Flex flex={1} />
@@ -91,7 +119,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
           centered
           pointerEvents="none"
           bottom={48}
-          // style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
+          style={{ transform: `translate(0px, ${translateY}px)`, opacity: opacityY }}
           $midHeight={{ display: 'none' }}
         >
           <RiseIn delay={0.3}>
