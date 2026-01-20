@@ -35,9 +35,9 @@ function getGoogleFontsUrl(fontName: string): string {
 
 function useFontsFromTheme() {
   const theme = useTheme()
-  const fonts = (theme as any).fonts || {}
 
   return useMemo(() => {
+    const fonts = (theme as any).fonts || {}
     const fontSet = new Set<string>()
     const fontMap = new Map<string, string>()
 
@@ -73,14 +73,14 @@ function useFontsFromTheme() {
 
 const LOGOS = [
   {
-    title: 'Logo (No Text)',
-    component: <Logo width={100} height={100} />,
-    svgPath: '/assets/svg/logo.svg',
-  },
-  {
-    title: 'Logo with Text',
+    title: 'With Text',
     component: <NavIcon width={180} height={44} clickable={false} />,
     svgPath: undefined,
+  },
+  {
+    title: 'No Text',
+    component: <Logo width={100} height={100} />,
+    svgPath: '/assets/svg/logo.svg',
   },
 ] as const
 
@@ -94,7 +94,12 @@ const PageWrapper = styled.div`
 
   @media (max-width: ${BREAKPOINTS.md}px) {
     gap: 24px;
-    padding: 24px 16px;
+    padding: 16px 12px;
+  }
+
+  @media (max-width: ${BREAKPOINTS.sm}px) {
+    gap: 20px;
+    padding: 12px 8px;
   }
 `
 
@@ -443,7 +448,7 @@ function FontsSectionComponent() {
           <FontCard key={font.name}>
             <FontName>{font.name}</FontName>
             <FontSample fontFamily={font.family}>{font.sample}</FontSample>
-            <ExternalLink href={font.googleFontsUrl}>View on Google Fonts</ExternalLink>
+            <ExternalLink href={font.googleFontsUrl}>Check on Google Fonts</ExternalLink>
           </FontCard>
         ))}
       </FontsGrid>
@@ -451,7 +456,7 @@ function FontsSectionComponent() {
   )
 }
 
-export default function Assets() {
+export default function BrandKit() {
   return (
     <PageWrapper>
       <ColorsSection />
