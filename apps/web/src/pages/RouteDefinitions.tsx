@@ -36,6 +36,7 @@ const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const Terms = lazy(() => import('pages/Terms'))
 const Migration = lazy(() => import('pages/Migration'))
 const Deployments = lazy(() => import('pages/Deployments'))
+const Assets = lazy(() => import('pages/Assets'))
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -392,6 +393,16 @@ export const routes: RouteDefinition[] = [
     getElement: () => <Deployments />,
     getTitle: () => StaticTitlesAndDescriptions.DeploymentsTitle,
     getDescription: () => StaticTitlesAndDescriptions.DeploymentsDescription,
+  }),
+  createRouteDefinition({
+    path: '/assets',
+    getElement: () => (
+      <Suspense fallback={null}>
+        <Assets />
+      </Suspense>
+    ),
+    getTitle: () => 'Assets',
+    getDescription: () => 'Website colors and logos',
   }),
   createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
   createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),
