@@ -328,15 +328,22 @@ function LogoWithCopy({ title, logoComponent, svgPath }: { title: string; logoCo
     if (svgPath) {
       fetch(svgPath)
         .then((res) => res.text())
-        .then((text) => setSvgContent(text))
+        .then((text) => {
+          if (text.trim().startsWith('<svg') || text.trim().startsWith('<?xml') || text.trim().startsWith('<!DOCTYPE svg')) {
+            setSvgContent(text)
+          } else {
+            setSvgContent(null)
+          }
+        })
         .catch(() => {
           setSvgContent(null)
         })
     }
   }, [svgPath])
 
-  const handleCopy = useCallback(() => {
-    if (svgContent) {
+
+   const handleCopy = useCallback(() => {
+    if (svgContent && (svgContent.trim().startsWith('<svg') || svgContent.trim().startsWith('<?xml'))) {
       copy(svgContent)
     } else if (logoRef.current) {
       const svgElement = logoRef.current.querySelector('svg')
@@ -362,7 +369,6 @@ function LogoWithCopy({ title, logoComponent, svgPath }: { title: string; logoCo
     </LogoContainer>
   )
 }
-
 function ColorCardContent({ color }: { color: { name: string; hex: string } }) {
   return (
     <>
