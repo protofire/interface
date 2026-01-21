@@ -23,8 +23,8 @@ export const useMenuContent = (): MenuSection[] => {
       title: 'Help',
       items: [
         { label: 'Deployed Contracts', href: '/deployments' },
-        { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
         { label: 'Brand Kit', href: '/brand-kit' },
+        { label: 'Contact Support', href: 'https://swap-support.protofire.io/' },
       ],
     },
     {
