@@ -42,4 +42,5 @@ export const paths = [
   '/nfts/profile',
   '/nfts/collection/:contractAddress',
   '/nfts/collection/:contractAddress/activity',
+  '/brand-kit',
 ]
