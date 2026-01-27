@@ -141,7 +141,7 @@ const ContractAddressWrapper = styled.div`
 `
 
 const ContractAddress = styled(ThemedText.BodySmall)`
-  color: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.accent2};
   font-family: 'Courier New', monospace;
   font-size: 13px;
   word-break: break-all;
