@@ -66,6 +66,7 @@ import {
   USDC_ZKSYNC,
   USDC_ZORA,
   PYUSD0_FLOW_MAINNET,
+  PYUSD0_FLOW_TESTNET,
 } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
@@ -288,6 +289,7 @@ export const COMMON_BASES: ChainCurrencyList = {
   [UniverseChainId.FlowTestnet]: [
     nativeOnChain(UniverseChainId.FlowTestnet),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowTestnet] as Token,
+    PYUSD0_FLOW_TESTNET,
     USDC_FLOW_TESTNET,
   ].map(buildCurrencyInfo),
 }

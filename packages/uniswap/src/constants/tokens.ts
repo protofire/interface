@@ -305,12 +305,20 @@ export const WBTC_FLOW_MAINNET = new Token(
   'Wrapped BTC',
 )
 
+export const PYUSD0_FLOW_TESTNET = new Token(
+  UniverseChainId.FlowTestnet,
+  '0xd7d43ab7b365f0d0789aE83F4385fA710FfdC98F',
+  6,
+  'PYUSD0',
+  'PYUSD0',
+)
+
 export const USDC_FLOW_TESTNET = new Token(
   UniverseChainId.FlowTestnet,
-  '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73',
+  '0xd431955D55a99EF69BEb96BA34718d0f9fBc91b1',
   6,
-  'USDCf',
-  'USDC Flow',
+  'USDC',
+  'USDC',
 )
 
 export const WBTC = new Token(
