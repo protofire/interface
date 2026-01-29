@@ -12,7 +12,7 @@ export function useUnitagsAddressQuery({
 
   return useQuery<UnitagAddressResponse>({
     queryKey,
-    queryFn: params ? async (): ReturnType<typeof fetchAddress> => await fetchAddress(params) : skipToken,
+    queryFn: skipToken,
     staleTime: ONE_MINUTE_MS,
     gcTime: MAX_REACT_QUERY_CACHE_TIME_MS,
     ...rest,
