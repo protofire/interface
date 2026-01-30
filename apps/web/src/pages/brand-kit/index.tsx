@@ -1,11 +1,11 @@
 import { ReactComponent as Logo } from 'assets/svg/logo.svg'
-import { colors } from 'theme/colors'
-import styled, { useTheme } from 'lib/styled-components'
-import { ExternalLink, ThemedText } from 'theme/components'
-import { BREAKPOINTS } from 'theme'
-import { Copy, Check } from 'react-feather'
-import { useCallback, useEffect, useState, useRef, useMemo } from 'react'
 import useCopyClipboard from 'hooks/useCopyClipboard'
+import styled, { useTheme } from 'lib/styled-components'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Check, Copy } from 'react-feather'
+import { BREAKPOINTS } from 'theme'
+import { colors } from 'theme/colors'
+import { ExternalLink, ThemedText } from 'theme/components'
 
 type Mode = 'light' | 'dark'
 
@@ -45,10 +45,11 @@ function useFontsFromTheme() {
         const fontName = extractFontName(fontFamily)
         if (fontName) {
           const displayName = fontName.toLowerCase() === 'inherit' ? 'Inter' : fontName
-          const actualFamily = fontName.toLowerCase() === 'inherit' 
-            ? "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
-            : fontFamily
-          
+          const actualFamily =
+            fontName.toLowerCase() === 'inherit'
+              ? "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
+              : fontFamily
+
           if (!fontSet.has(displayName)) {
             fontSet.add(displayName)
             fontMap.set(displayName, actualFamily)
@@ -63,10 +64,11 @@ function useFontsFromTheme() {
         const headingFont = extractFontName(headingFontFamily)
         if (headingFont) {
           const displayName = headingFont.toLowerCase() === 'inherit' ? 'Inter' : headingFont
-          const actualFamily = headingFont.toLowerCase() === 'inherit' 
-            ? "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
-            : headingFontFamily
-          
+          const actualFamily =
+            headingFont.toLowerCase() === 'inherit'
+              ? "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
+              : headingFontFamily
+
           if (!fontSet.has(displayName)) {
             fontSet.add(displayName)
             fontMap.set(displayName, actualFamily)
@@ -132,7 +134,9 @@ const ColorsGrid = styled.div<{ $isVisible: boolean }>`
   gap: 16px;
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transform: ${({ $isVisible }) => ($isVisible ? 'translateY(0)' : 'translateY(8px)')};
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
   position: ${({ $isVisible }) => ($isVisible ? 'relative' : 'absolute')};
   top: 0;
   left: 0;
@@ -156,7 +160,9 @@ const Card = styled.div`
   border-radius: 12px;
   background: ${({ theme }) => theme.surface1};
   border: 1px solid ${({ theme }) => theme.surface3};
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
@@ -266,7 +272,6 @@ const LogoDisplay = styled.div`
   min-height: 100px;
 `
 
-
 const LogoActions = styled.div`
   display: flex;
   gap: 8px;
@@ -327,7 +332,15 @@ function ColorHexWithCopy({ hex }: { hex: string }) {
   )
 }
 
-function LogoWithCopy({ title, logoComponent, svgPath }: { title: string; logoComponent: React.ReactNode; svgPath?: string }) {
+function LogoWithCopy({
+  title,
+  logoComponent,
+  svgPath,
+}: {
+  title: string
+  logoComponent: React.ReactNode
+  svgPath?: string
+}) {
   const [isCopied, copy] = useCopyClipboard()
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const logoRef = useRef<HTMLDivElement>(null)
@@ -337,7 +350,11 @@ function LogoWithCopy({ title, logoComponent, svgPath }: { title: string; logoCo
       fetch(svgPath)
         .then((res) => res.text())
         .then((text) => {
-          if (text.trim().startsWith('<svg') || text.trim().startsWith('<?xml') || text.trim().startsWith('<!DOCTYPE svg')) {
+          if (
+            text.trim().startsWith('<svg') ||
+            text.trim().startsWith('<?xml') ||
+            text.trim().startsWith('<!DOCTYPE svg')
+          ) {
             setSvgContent(text)
           } else {
             setSvgContent(null)
@@ -348,7 +365,6 @@ function LogoWithCopy({ title, logoComponent, svgPath }: { title: string; logoCo
         })
     }
   }, [svgPath])
-
 
   const handleCopy = useCallback(() => {
     if (svgContent && (svgContent.trim().startsWith('<svg') || svgContent.trim().startsWith('<?xml'))) {
@@ -436,12 +452,7 @@ function LogosSectionComponent() {
       <SectionTitle>Logos</SectionTitle>
       <LogosGrid $itemCount={LOGOS.length}>
         {LOGOS.map((logo) => (
-          <LogoWithCopy
-            key={logo.title}
-            title={logo.title}
-            logoComponent={logo.component}
-            svgPath={logo.svgPath}
-          />
+          <LogoWithCopy key={logo.title} title={logo.title} logoComponent={logo.component} svgPath={logo.svgPath} />
         ))}
       </LogosGrid>
     </Section>

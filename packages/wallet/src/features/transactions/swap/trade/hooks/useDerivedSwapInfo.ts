@@ -1,8 +1,6 @@
 import { TradeType } from '@uniswap/sdk-core'
 import { useMemo } from 'react'
 import { useAccountMeta } from 'uniswap/src/contexts/UniswapContext'
-import { FeatureFlags } from 'uniswap/src/features/gating/flags'
-import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useOnChainCurrencyBalance } from 'uniswap/src/features/portfolio/api'
 import { ValueType, getCurrencyAmount } from 'uniswap/src/features/tokens/getCurrencyAmount'
 import { useCurrencyInfo } from 'uniswap/src/features/tokens/useCurrencyInfo'
