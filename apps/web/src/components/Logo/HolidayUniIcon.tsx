@@ -9,6 +9,7 @@ const MONTH_TO_HOLIDAY_UNI: { [date: string]: (props: SVGProps) => ReactElement 
   '-2': (props) => <WinterUni {...props} />,
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export default function HolidayUniIcon(props: SVGProps): ReactElement | null {
   // months in javascript are 0 indexed...
   const currentMonth = `${new Date().getMonth() + 1}`

@@ -10,6 +10,8 @@ import {
   V3_MIGRATOR_ADDRESSES,
 } from '@uniswap/sdk-core'
 import { UNIVERSAL_ROUTER_ADDRESS, UniversalRouterVersion } from '@uniswap/universal-router-sdk'
+import daoDarkMode from 'assets/png/DAO-dark-mode.png'
+import daoLightMode from 'assets/png/DAO-light-mode.png'
 import { LightCard } from 'components/Card'
 import Column from 'components/Column'
 import Expand from 'components/Expand'
@@ -18,14 +20,12 @@ import Row from 'components/Row'
 import { SearchInput as SearchInputStyled } from 'components/SearchModal/styled'
 import { getChain } from 'constants/chains'
 import styled from 'lib/styled-components'
+import { DAO_LINKS } from 'pages/Deployments/constants'
 import { useMemo, useState } from 'react'
 import { CopyLinkIcon, ExternalLink, ThemedText } from 'theme/components'
 import { useIsDarkMode } from 'theme/components/ThemeToggle'
 import { InterfaceChainId, WEB_SUPPORTED_CHAIN_IDS } from 'uniswap/src/types/chains'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { DAO_LINKS } from 'pages/Deployments/constants'
-import daoLightMode from 'assets/png/DAO-light-mode.png'
-import daoDarkMode from 'assets/png/DAO-dark-mode.png'
 
 const PageWrapper = styled.div`
   display: flex;

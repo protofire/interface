@@ -5,6 +5,7 @@ import { t } from 'uniswap/src/i18n'
 
 export const showTestnetsAtom = atomWithStorage<boolean>('showTestnets', true)
 
+// eslint-disable-next-line import/no-unused-modules
 export function TestnetsToggle() {
   const [showTestnets, updateShowTestnets] = useAtom(showTestnetsAtom)
 

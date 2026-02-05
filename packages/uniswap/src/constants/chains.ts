@@ -1753,8 +1753,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     label: 'STABLE Testnet',
     logo: STABLE_LOGO,
     nativeCurrency: {
-      name: 'gUSDT',
-      symbol: 'gUSDT',
+      name: 'USD₮0',
+      symbol: 'USD₮0',
       decimals: 18,
       address: DEFAULT_NATIVE_ADDRESS,
     },
@@ -1772,8 +1772,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     supportsClientSideRouting: false,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {
-      name: 'Wrapped gUSDT',
-      symbol: 'WgUSDT',
+      name: 'Wrapped USD₮0',
+      symbol: 'WUSD₮0',
       decimals: 18,
       address: '0x5574c55b7002A900CE7c0f197F5dcc8126bA8501',
     },
@@ -1807,8 +1807,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     label: 'STABLE',
     logo: STABLE_LOGO,
     nativeCurrency: {
-      name: 'gUSDT',
-      symbol: 'gUSDT',
+      name: 'USD₮0',
+      symbol: 'USD₮0',
       decimals: 18,
       address: DEFAULT_NATIVE_ADDRESS,
     },
@@ -1826,8 +1826,8 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     supportsClientSideRouting: false,
     supportsGasEstimates: false,
     wrappedNativeCurrency: {
-      name: 'Wrapped gUSDT',
-      symbol: 'WgUSDT',
+      name: 'Wrapped USD₮0',
+      symbol: 'WUSD₮0',
       decimals: 18,
       address: '0x5d442b349590a6048Eb2dC0eC346cAA5F47A9ab5',
     },

@@ -499,7 +499,16 @@ export function SwapForm({
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
+    [
+      onCurrencyChange,
+      onCurrencySelection,
+      currencyState,
+      trace,
+      swapState.typedValue,
+      swapState.independentField,
+      navigate,
+      supportedChainId,
+    ],
   )
   const inputCurrencyNumericalInputRef = useRef<HTMLInputElement>(null)
 
@@ -531,7 +540,16 @@ export function SwapForm({
       })
       navigate('/swap' + serializedSwapState, { replace: true })
     },
-    [onCurrencyChange, onCurrencySelection, currencyState, trace, swapState.typedValue, swapState.independentField, navigate, supportedChainId],
+    [
+      onCurrencyChange,
+      onCurrencySelection,
+      currencyState,
+      trace,
+      swapState.typedValue,
+      swapState.independentField,
+      navigate,
+      supportedChainId,
+    ],
   )
 
   const showPriceImpactWarning = isClassicTrade(trade) && largerPriceImpact && priceImpactSeverity > 3

@@ -46,10 +46,14 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const account = useAccount()
   const native = useNativeCurrency(chainId)
   const chainIdWithDefault = chainId ?? UniverseChainId.Stable
-  const usdt0: { [k: number]: Token } = {
-    [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
-    [UniverseChainId.Stable]: USDT0_STABLE,
-  }
+  const usdt0: Record<UniverseChainId.StableTestnet | UniverseChainId.Stable, Token> = useMemo(
+    () => ({
+      [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
+      [UniverseChainId.Stable]: USDT0_STABLE,
+    }),
+    [],
+  )
+  const stableChainId = isEitherStableChain(chainIdWithDefault) ? chainIdWithDefault : UniverseChainId.Stable
   const WRAP_CONTRACT_ADDRESS: { [k: number]: string } = {
     [UniverseChainId.StableTestnet]: '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90',
     [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda',
@@ -58,7 +62,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
 
   const [inputCurrency, setInputCurrency] = useState<Currency | undefined>(native)
-  const [outputCurrency, setOutputCurrency] = useState<Currency | undefined>(usdt0[chainIdWithDefault])
+  const [outputCurrency, setOutputCurrency] = useState<Currency | undefined>(usdt0[stableChainId])
 
   useEffect(() => {
     if (chainId && isEitherStableChain(chainId)) {
@@ -66,9 +70,9 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
     }
     if (!inputCurrency || !outputCurrency) {
       setInputCurrency(native)
-      setOutputCurrency(usdt0[chainIdWithDefault])
+      setOutputCurrency(usdt0[stableChainId])
     }
-  }, [chainId, native, usdt0, inputCurrency, outputCurrency])
+  }, [chainId, chainIdWithDefault, native, usdt0, inputCurrency, outputCurrency, stableChainId])
 
   const inputBalance = useCurrencyBalance(account.address, inputCurrency ?? undefined)
   const maxInputAmount = useMemo(() => maxAmountSpend(inputBalance), [inputBalance])
@@ -84,7 +88,7 @@ export function WrapForm({ disableTokenInputs = false, onCurrencyChange }: WrapF
   const showWrap: boolean = wrapType !== WrapType.NotApplicable
 
   const tokenForApproval: Token | undefined =
-    inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
+    inputCurrency && usdt0[stableChainId].equals(inputCurrency) ? usdt0[stableChainId] : undefined
   const inputAmount = useMemo(
     () => tryParseCurrencyAmount(typedValue, inputCurrency ?? undefined),
     [inputCurrency, typedValue],

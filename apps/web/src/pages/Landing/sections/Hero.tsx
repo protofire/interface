@@ -100,7 +100,6 @@ export function Hero({ transition }: HeroProps) {
               multichainUXEnabled={multichainUXEnabled}
             />
           </Flex>
-
         </RiseIn>
 
         <RiseIn delay={0.3}>

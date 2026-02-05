@@ -10,8 +10,8 @@ export const stableTestnet = /*#__PURE__*/ defineChain({
   network: 'stable-testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'gUSDT',
-    symbol: 'gUSDT',
+    name: 'USD₮0',
+    symbol: 'USD₮0',
   },
   rpcUrls: {
     default: { http: ['https://rpc.testnet.stable.xyz'] },
@@ -19,7 +19,7 @@ export const stableTestnet = /*#__PURE__*/ defineChain({
   blockExplorers: {
     default: {
       name: 'STABLE Testnet Explorer',
-      url: 'https://testnet.stablescan.xyz/'
+      url: 'https://testnet.stablescan.xyz/',
     },
   },
   testnet: true,
@@ -29,4 +29,3 @@ export const stableTestnet = /*#__PURE__*/ defineChain({
     },
   },
 })
-

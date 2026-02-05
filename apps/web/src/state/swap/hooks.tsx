@@ -242,7 +242,7 @@ export function useDerivedSwapInfo(state: SwapState): SwapInfo {
       UniverseChainId.Anime,
       UniverseChainId.Mode,
       UniverseChainId.StableTestnet,
-      UniverseChainId.Stable
+      UniverseChainId.Stable,
     ].includes(chainId)
       ? false
       : isClassicTrade(trade.trade) &&
@@ -440,9 +440,9 @@ export function useInitialCurrencyState(): {
 
   const { initialInputCurrencyAddress, initialChainId } = useMemo(() => {
     // Default to USDT0 for StableTestnet, ETH otherwise
-    const defaultInputCurrency: { [k:number]: string } = {
+    const defaultInputCurrency: { [k: number]: string } = {
       [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET.address,
-      [UniverseChainId.Stable]: USDT0_STABLE.address
+      [UniverseChainId.Stable]: USDT0_STABLE.address,
     }
 
     // Default to ETH if multichain
@@ -461,7 +461,9 @@ export function useInitialCurrencyState(): {
     }
     // return default currency or parsedCurrencyState
     return {
-      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId ? undefined : defaultInputCurrency[supportedChainId] ?? 'ETH',
+      initialInputCurrencyAddress: parsedCurrencyState.outputCurrencyId
+        ? undefined
+        : defaultInputCurrency[supportedChainId] ?? 'ETH',
       initialChainId: supportedChainId,
     }
   }, [

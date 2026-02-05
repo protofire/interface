@@ -10,8 +10,8 @@ export const stable = /*#__PURE__*/ defineChain({
   network: 'stable',
   nativeCurrency: {
     decimals: 18,
-    name: 'gUSDT',
-    symbol: 'gUSDT',
+    name: 'USD₮0',
+    symbol: 'USD₮0',
   },
   rpcUrls: {
     default: { http: ['https://rpc.stable.xyz'] },
