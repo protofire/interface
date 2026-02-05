@@ -92,7 +92,7 @@ export function GasBreakdownTooltip({
         </ThemedText.Caption>
       ) : (
         <ThemedText.Caption color="textSecondary">
-          <Trans>Network Fees are paid to the Ethereum network to secure transactions.</Trans>{' '}
+          <Trans>Network Fees are paid to the Harmony network to secure transactions.</Trans>{' '}
           <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/8370337377805-What-is-a-network-fee-">
             <InlineLink>
               <Trans>Learn more</Trans>
