@@ -83,7 +83,9 @@ export function useUSDPrice(
   const isWindowVisible = useIsWindowVisible()
 
   // Use ETH-based pricing if available.
-  const { data: tokenEthPrice, isLoading: isTokenEthPriceLoading } = useETHPrice(currency)
+  const { data: tokenEthPrice, isLoading: isTokenEthPriceLoading } = useETHPrice(
+    forkConfig.uniSpecificFeaturesEnabled ? currency : undefined,
+  )
   // Since GQL is not supported - skipping ETH-priced option
   const isTokenEthPriced = Boolean(forkConfig.uniSpecificFeaturesEnabled && (tokenEthPrice || isTokenEthPriceLoading))
   const { data, networkStatus } = useTokenSpotPriceQuery({
