@@ -38,7 +38,11 @@ const PageWrapper = styled(AutoColumn)`
 `
 
 const LPFeeExplainer = styled(DataCard)`
-  background: radial-gradient(76.02% 75.41% at 1.84% 0%, ${({ theme }) => theme.accent1} 0%, ${({ theme }) => theme.success} 100%);
+  background: radial-gradient(
+    76.02% 75.41% at 1.84% 0%,
+    ${({ theme }) => theme.accent1} 0%,
+    ${({ theme }) => theme.success} 100%
+  );
   margin: 0 0 16px 0;
   overflow: hidden;
 `

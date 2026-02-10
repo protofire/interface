@@ -4,12 +4,12 @@ import AvaxLogo from 'assets/svg/avax_logo.svg'
 import BnbLogo from 'assets/svg/bnb-logo.svg'
 import CeloLogo from 'assets/svg/celo_logo.svg'
 import MaticLogo from 'assets/svg/matic-token-icon.svg'
-import StableLogo from 'assets/png/gusdt-logo.png'
 import { getChain, isSupportedChainId } from 'constants/chains'
 import { PORTAL_ETH_CELO, isCelo, nativeOnChain } from 'constants/tokens'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { InterfaceChainId, UniverseChainId } from 'uniswap/src/types/chains'
 import { isSameAddress } from 'utilities/src/addresses'
-import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
+const StableLogo = 'https://assets.swap.w3us.site/assets/USDT0.png'
 
 export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mainnet): string {
   switch (chainId) {
@@ -35,8 +35,6 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
 
 export function getTokenLogoURI(address: string, chainId: InterfaceChainId = UniverseChainId.Mainnet): string | void {
   const networkName = isSupportedChainId(chainId) ? getChain({ chainId }).assetRepoNetworkName : undefined
-
-  if (chainId === 988) console.log('tokenURI', address, chainId, networkName)
 
   if (isCelo(chainId) && isSameAddress(address, nativeOnChain(chainId).wrapped.address)) {
     return CeloLogo

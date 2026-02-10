@@ -9,17 +9,15 @@ import { fetchTokenList } from 'state/lists/actions'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { logger } from 'utilities/src/logger/logger'
 
-export function useFetchListCallback(): (listUrl: string, skipValidation?: boolean) => Promise<TokenList> {
+export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> {
   const dispatch = useAppDispatch()
 
   return useCallback(
-    async (listUrl: string, skipValidation?: boolean) => {
+    async (listUrl: string) => {
       const requestId = nanoid()
       dispatch(fetchTokenList.pending({ requestId, url: listUrl }))
-      return getTokenList(
-        listUrl,
-        (ensName: string) => resolveENSContentHash(ensName, RPC_PROVIDERS[UniverseChainId.Mainnet]),
-        skipValidation,
+      return getTokenList(listUrl, (ensName: string) =>
+        resolveENSContentHash(ensName, RPC_PROVIDERS[UniverseChainId.Mainnet]),
       )
         .then((tokenList) => {
           dispatch(fetchTokenList.fulfilled({ url: listUrl, tokenList, requestId }))

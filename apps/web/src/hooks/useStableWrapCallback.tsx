@@ -1,27 +1,27 @@
 import type { TransactionResponse } from '@ethersproject/providers'
-import { Currency, CurrencyAmount, MaxUint256, Token } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Token } from '@uniswap/sdk-core'
+import { isEitherStableChain } from 'constants/tokens'
 import { useAccount } from 'hooks/useAccount'
 import { useContract } from 'hooks/useContract'
-import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import { useTokenAllowance, useUpdateTokenAllowance } from 'hooks/useTokenAllowance'
+import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useCurrencyBalance } from 'state/connection/hooks'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { TransactionType } from 'state/transactions/types'
+import WETH_ABI from 'uniswap/src/abis/weth.json'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
 import { Trans } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
-import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
-import WETH_ABI from 'uniswap/src/abis/weth.json'
 import { logger } from 'utilities/src/logger/logger'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
-import { isEitherStableChain } from 'constants/tokens'
 
 const WRAP_CONTRACT_ADDRESS: { [k: number]: string } = {
   [UniverseChainId.StableTestnet]: '0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90',
-  [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda'
+  [UniverseChainId.Stable]: '0xDEd1660192d4d82e7c0B628ba556861EdBB5CAda',
 }
 
 const NOT_APPLICABLE = { wrapType: WrapType.NotApplicable }
@@ -68,11 +68,16 @@ export default function useStableWrapCallback(
   const account = useAccount()
   const { chainId } = useSwapAndLimitContext()
   const native = useNativeCurrency(chainId)
-  const chainIdWithDefault = chainId ?? UniverseChainId.Stable;
-  const usdt0: { [k: number]: Token } = {
-    [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
-    [UniverseChainId.Stable]: USDT0_STABLE
-  }
+  const chainIdWithDefault = chainId ?? UniverseChainId.Stable
+  const usdt0: Record<UniverseChainId.StableTestnet | UniverseChainId.Stable, Token> = useMemo(
+    () => ({
+      [UniverseChainId.StableTestnet]: USDT0_STABLE_TESTNET,
+      [UniverseChainId.Stable]: USDT0_STABLE,
+    }),
+    [],
+  )
+
+  const stableChainId = isEitherStableChain(chainIdWithDefault) ? chainIdWithDefault : UniverseChainId.Stable
 
   const wrapContract = useContract(WRAP_CONTRACT_ADDRESS[chainIdWithDefault], WETH_ABI, true, chainId)
   const wrapContractRef = useRef(wrapContract)
@@ -84,7 +89,8 @@ export default function useStableWrapCallback(
     [inputCurrency, typedValue],
   )
 
-  const tokenForAllowance: Token | undefined = inputCurrency && usdt0[chainIdWithDefault].equals(inputCurrency) ? usdt0[chainIdWithDefault] : undefined
+  const tokenForAllowance: Token | undefined =
+    inputCurrency && usdt0[stableChainId].equals(inputCurrency) ? usdt0[stableChainId] : undefined
   const { tokenAllowance } = useTokenAllowance(
     tokenForAllowance,
     account.address,
@@ -116,7 +122,7 @@ export default function useStableWrapCallback(
     addTransaction(approveTx, info)
   }, [tokenAmountForAllowance, updateTokenAllowance, addTransaction])
 
-  const [error, setError] = useState<Error>()
+  const [error] = useState<Error>()
   if (error) {
     throw error
   }
@@ -133,7 +139,7 @@ export default function useStableWrapCallback(
     const hasInputAmount = Boolean(inputAmount?.greaterThan('0'))
     const sufficientBalance = inputAmount && balance && !balance.lessThan(inputAmount)
 
-    if (inputCurrency.isNative && usdt0[chainIdWithDefault].equals(outputCurrency)) {
+    if (inputCurrency.isNative && usdt0[stableChainId].equals(outputCurrency)) {
       return {
         wrapType: WrapType.Wrap,
         execute:
@@ -143,7 +149,9 @@ export default function useStableWrapCallback(
                 if (!contract) {
                   throw new Error('wrapContract is null')
                 }
-                const txReceipt = (await contract.deposit({ value: `0x${inputAmount.quotient.toString(16)}` })) as TransactionResponse
+                const txReceipt = (await contract.deposit({
+                  value: `0x${inputAmount.quotient.toString(16)}`,
+                })) as TransactionResponse
                 addTransaction(txReceipt, {
                   type: TransactionType.WRAP,
                   unwrapped: false,
@@ -159,7 +167,7 @@ export default function useStableWrapCallback(
             ? WrapInputError.INSUFFICIENT_NATIVE_BALANCE
             : WrapInputError.ENTER_NATIVE_AMOUNT,
       }
-    } else if (usdt0[chainIdWithDefault].equals(inputCurrency) && outputCurrency.isNative) {
+    } else if (usdt0[stableChainId].equals(inputCurrency) && outputCurrency.isNative) {
       const needsApproval = inputAmount && tokenAllowance ? tokenAllowance.lessThan(inputAmount) : false
 
       return {
@@ -174,7 +182,9 @@ export default function useStableWrapCallback(
                   if (!contract) {
                     throw new Error('wrapContract is null')
                   }
-                  const txReceipt = (await contract.withdraw(`0x${inputAmount.quotient.toString(16)}`)) as TransactionResponse
+                  const txReceipt = (await contract.withdraw(
+                    `0x${inputAmount.quotient.toString(16)}`,
+                  )) as TransactionResponse
                   addTransaction(txReceipt, {
                     type: TransactionType.WRAP,
                     unwrapped: true,
@@ -201,6 +211,7 @@ export default function useStableWrapCallback(
     }
   }, [
     chainId,
+    stableChainId,
     inputCurrency,
     outputCurrency,
     inputAmount,

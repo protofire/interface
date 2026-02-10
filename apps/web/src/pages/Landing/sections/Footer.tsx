@@ -6,7 +6,7 @@ import deprecatedStyled, { useTheme } from 'lib/styled-components'
 import { Discord, Twitter } from 'pages/Landing/components/Icons'
 import { Wiggle } from 'pages/Landing/components/animations'
 import { useMemo } from 'react'
-import { Anchor, Flex, Separator, Text, useIsDarkMode } from 'ui/src'
+import { Anchor, Flex, Separator, Text } from 'ui/src'
 import { iconSizes } from 'ui/src/theme'
 import { useTranslation } from 'uniswap/src/i18n'
 
@@ -20,16 +20,6 @@ const SocialIcon = deprecatedStyled(Wiggle)`
   transition-duration: 0.2s;
   &:hover {
     fill: ${(props) => props.$hoverColor};
-  }
-`
-
-const DAOLogo = deprecatedStyled.img`
-  height: 48px;
-  width: auto;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  &:hover {
-    opacity: 0.8;
   }
 `
 
@@ -71,7 +61,7 @@ function FooterSection({ title, items }: { title: string; items: MenuItem[] }) {
 
 export function Footer() {
   const { t } = useTranslation()
-  const isDarkMode = useIsDarkMode()
+
   //UPDATE: currently not usign NFTs link
   const tabsContent = useTabsContent({ includeNftsLink: false })
   const appSectionItems: MenuItem[] = useMemo(() => {

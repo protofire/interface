@@ -2,7 +2,7 @@ import { Currency, Token } from '@uniswap/sdk-core'
 import { SupportedInterfaceChainId, useSupportedChainId } from 'constants/chains'
 import { DEFAULT_ACTIVE_LIST_URLS } from 'constants/lists'
 import { COMMON_BASES } from 'constants/routing'
-import { NATIVE_CHAIN_ID, nativeOnChain } from 'constants/tokens'
+import { nativeOnChain } from 'constants/tokens'
 import forkConfig from 'forkConfig'
 import { useTokenListCurrency, useTokenListToken } from 'hooks/TokensLegacy'
 import { useAccount } from 'hooks/useAccount'
@@ -145,12 +145,6 @@ export function useCurrencyInfo(
     currencyId,
     supportedChainId,
   ])
-}
-
-const checkIsNative = (addressOrCurrency?: string | Currency): boolean => {
-  return typeof addressOrCurrency === 'string'
-    ? [NATIVE_CHAIN_ID, 'native', 'eth'].includes(addressOrCurrency.toLowerCase())
-    : addressOrCurrency?.isNative ?? false
 }
 
 const getCommonBase = (chainId?: number, isNative?: boolean, address?: string): CurrencyInfo | undefined => {

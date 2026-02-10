@@ -80,6 +80,7 @@ export function ArrowRight(props: IconProps) {
   )
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export function Github(props: IconProps) {
   return (
     <svg width={props.size ?? '41'} height={props.size ?? '41'} viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg">

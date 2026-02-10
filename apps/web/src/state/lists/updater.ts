@@ -28,9 +28,7 @@ export default function Updater(): null {
       return
     }
     DEFAULT_LIST_OF_LISTS.forEach((url) => {
-      fetchList(url, false).catch((error) =>
-        logger.debug('lists/updater', 'Updater', 'interval list fetching error', error),
-      )
+      fetchList(url).catch((error) => logger.debug('lists/updater', 'Updater', 'interval list fetching error', error))
     })
   }, [fetchList, isWindowVisible])
 
@@ -54,7 +52,7 @@ export default function Updater(): null {
     DEFAULT_LIST_OF_LISTS.forEach((listUrl) => {
       const list = lists[listUrl]
       if (!list || (!list.current && !list.loadingRequestId && !list.error)) {
-        fetchList(listUrl, /* isUnsupportedList= */ true).catch((error) =>
+        fetchList(listUrl).catch((error) =>
           logger.debug('lists/updater', 'Updater', 'list added fetching error', error),
         )
       }

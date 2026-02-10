@@ -41,6 +41,7 @@ export const RiseIn = styled.span<{ delay?: number }>`
   ${RiseInStyles}
 `
 
+// eslint-disable-next-line import/no-unused-modules
 export const Hover = (props: RiseInProps) => {
   return (
     <motion.div

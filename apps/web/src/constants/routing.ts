@@ -58,11 +58,11 @@ import {
   USDC_REDSTONE,
   USDC_REDSTONE_GARNET,
   USDC_SHAPE,
-  USDT0_STABLE_TESTNET,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
   USDT0_STABLE,
+  USDT0_STABLE_TESTNET,
 } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
@@ -274,12 +274,8 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Mode] as Token,
     USDC_MODE,
   ].map(buildCurrencyInfo),
-  [UniverseChainId.StableTestnet]: [
-    USDT0_STABLE_TESTNET,
-  ].map(buildCurrencyInfo),
-  [UniverseChainId.Stable]: [
-    USDT0_STABLE,
-  ].map(buildCurrencyInfo),
+  [UniverseChainId.StableTestnet]: [USDT0_STABLE_TESTNET].map(buildCurrencyInfo),
+  [UniverseChainId.Stable]: [USDT0_STABLE].map(buildCurrencyInfo),
 }
 
 // used to construct the list of all pairs we consider by default in the frontend

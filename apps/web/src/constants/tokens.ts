@@ -671,11 +671,11 @@ class AnimeNativeCurrency extends NativeCurrency {
   }
 }
 
-export function isStableTestnet(chainId: number): chainId is UniverseChainId.StableTestnet {
+function isStableTestnet(chainId: number): chainId is UniverseChainId.StableTestnet {
   return chainId === UniverseChainId.StableTestnet
 }
 
-export function isStable(chainId: number): chainId is UniverseChainId.Stable {
+function isStable(chainId: number): chainId is UniverseChainId.Stable {
   return chainId === UniverseChainId.Stable
 }
 
@@ -701,7 +701,7 @@ class StableNativeCurrency extends NativeCurrency {
     if (!isEitherStableChain(chainId)) {
       throw new Error('Not Stable Testnet')
     }
-    super(chainId, 18, 'gUSDT', 'gUSDT')
+    super(chainId, 18, 'USD₮0', 'USD₮0')
   }
 }
 

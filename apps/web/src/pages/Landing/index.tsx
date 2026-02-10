@@ -10,6 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { TRANSITION_DURATIONS } from 'theme/styles'
 import Trace from 'uniswap/src/features/telemetry/Trace'
 
+// eslint-disable-next-line import/no-unused-modules
 export default function Landing() {
   const account = useAccount()
   const { connector } = useWeb3React()

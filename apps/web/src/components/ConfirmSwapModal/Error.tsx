@@ -80,7 +80,7 @@ function getErrorContent({ errorType, trade }: { errorType: PendingModalError; t
 }
 
 export default function Error({ errorType, trade, showTrade, swapResult, onRetry }: ErrorModalContentProps) {
-  const { title, message, supportArticleURL } = getErrorContent({ errorType, trade })
+  const { title, message } = getErrorContent({ errorType, trade })
 
   return (
     <DialogContent
