@@ -14,7 +14,7 @@ import AddressClaimModal from 'components/claim/AddressClaimModal'
 import DevFlagsBox from 'dev/DevFlagsBox'
 import forkConfig from 'forkConfig'
 import { useAccount } from 'hooks/useAccount'
-import useAccountRiskCheck from 'hooks/useAccountRiskCheck'
+// import useAccountRiskCheck from 'hooks/useAccountRiskCheck'
 import Bag from 'nft/components/bag/Bag'
 import TransactionCompleteModal from 'nft/components/collection/TransactionCompleteModal'
 import { useModalIsOpen, useToggleModal } from 'state/application/hooks'
@@ -26,7 +26,7 @@ export default function TopLevelModals() {
   const addressClaimToggle = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
   const blockedAccountModalOpen = useModalIsOpen(ApplicationModal.BLOCKED_ACCOUNT)
   const account = useAccount()
-  useAccountRiskCheck(account.address)
+  // useAccountRiskCheck(account.address)
   const accountBlocked = Boolean(blockedAccountModalOpen && account.isConnected)
   const shouldShowDevFlags = isDevEnv() || isBetaEnv()
 

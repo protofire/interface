@@ -16,15 +16,18 @@ const UnitagsApiClient = createApiClient({
 })
 
 export async function fetchUsername(params: UnitagUsernameRequest): Promise<UnitagUsernameResponse> {
-  return await UnitagsApiClient.get<UnitagUsernameResponse>('/username', { params })
+  // return await UnitagsApiClient.get<UnitagUsernameResponse>('/username', { params })
+  throw new Error('Unitags disabled')
 }
 
 export async function fetchAddress(params: UnitagAddressRequest): Promise<UnitagAddressResponse> {
-  return await UnitagsApiClient.get<UnitagAddressResponse>('/address', { params })
+  // return await UnitagsApiClient.get<UnitagAddressResponse>('/address', { params })
+  throw new Error('Unitags disabled')
 }
 
 export async function fetchClaimEligibility(
   params: UnitagClaimEligibilityRequest,
 ): Promise<UnitagClaimEligibilityResponse> {
-  return await UnitagsApiClient.get<UnitagClaimEligibilityResponse>('/claim/eligibility', { params })
+  // return await UnitagsApiClient.get<UnitagClaimEligibilityResponse>('/claim/eligibility', { params })
+  throw new Error('Unitags disabled')
 }

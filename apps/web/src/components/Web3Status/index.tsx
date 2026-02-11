@@ -175,10 +175,10 @@ function Web3StatusInner() {
   const { hasPendingActivity, pendingActivityCount } = usePendingActivity()
   const { accountIdentifier, hasUnitag, hasRecent } = useAccountIdentifier()
 
-  const { isLoading: isExperimentGroupNameLoading } = useExperimentGroupNameWithLoading(Experiments.AccountCTAs)
+
 
   // TODO(WEB-4173): Remove isIFrame check when we can update wagmi to version >= 2.9.4
-  if (((account.isConnecting || account.isReconnecting) && hasRecent && !isIFramed()) || isExperimentGroupNameLoading) {
+  if ((account.isConnecting || account.isReconnecting) && hasRecent && !isIFramed()) {
     return (
       <Web3StatusConnecting disabled={true} onClick={handleWalletDropdownClick} ref={ref}>
         <IconWrapper size={24}>

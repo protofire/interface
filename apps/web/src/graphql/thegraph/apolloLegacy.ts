@@ -1,35 +1,40 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, concat } from '@apollo/client'
+import { ApolloClient, ApolloLink, InMemoryCache, Observable } from '@apollo/client'
 import { AllV3TicksQuery } from 'graphql/thegraph/queriesLegacy'
-import store from 'state/index'
-import { UniverseChainId } from 'uniswap/src/types/chains'
 
 export type Ticks = AllV3TicksQuery['ticks']
 export type TickData = Ticks[number]
 
-const CHAIN_SUBGRAPH_URL: Record<number, string> = {
-  [UniverseChainId.AbstractMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/abstract/uniswap-v3',
-  [UniverseChainId.Zero]: 'https://graph.swap.w3us.site/subgraphs/name/zero/uniswap-v3',
-  [UniverseChainId.Anime]: 'https://graph.swap.w3us.site/subgraphs/name/anime/uniswap-v3',
-}
+// const CHAIN_SUBGRAPH_URL: Record<number, string> = {
+//   [UniverseChainId.AbstractMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/abstract/uniswap-v3',
+//   [UniverseChainId.Zero]: 'https://graph.swap.w3us.site/subgraphs/name/zero/uniswap-v3',
+//   [UniverseChainId.Anime]: 'https://graph.swap.w3us.site/subgraphs/name/anime/uniswap-v3',
+// }
 
-const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })
+// const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })
 
 // This middleware will allow us to dynamically update the uri for the requests based off chainId
 // For more information: https://www.apollographql.com/docs/react/networking/advanced-http-networking/
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  const chainId = store.getState().application.chainId
+// const authMiddleware = new ApolloLink((operation, forward) => {
+//   // add the authorization to the headers
+//   const chainId = store.getState().application.chainId
+//
+//   operation.setContext(() => ({
+//     uri: chainId && (CHAIN_SUBGRAPH_URL[chainId] ?? CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet]),
+//   }))
+// 
+//   return forward(operation)
+// })
 
-  operation.setContext(() => ({
-    uri: chainId && (CHAIN_SUBGRAPH_URL[chainId] ?? CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet]),
-  }))
-
-  return forward(operation)
+const mockLink = new ApolloLink(() => {
+  return new Observable((observer) => {
+    observer.next({ data: {} })
+    observer.complete()
+  })
 })
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
+  link: mockLink,
 })
 
 // export const chainToApolloClient: Record<number, ApolloClient<NormalizedCacheObject>> = {

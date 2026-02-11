@@ -42,7 +42,7 @@ export const interfacePersistedStateList: Array<keyof typeof interfaceReducers> 
   'user',
   'localWebTransactions',
   'signatures',
-  'lists',
+  // 'lists', // Disabled: token lists are fetched fresh on every page load
   'fiatOnRampTransactions',
 ]
 

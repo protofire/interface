@@ -1,6 +1,5 @@
 import { SubscriptionResult } from '@apollo/client'
 import { createAdaptiveRefetchContext } from 'graphql/data/apollo/AdaptiveRefetch'
-import { GQL_MAINNET_CHAINS_MUTABLE } from 'graphql/data/util'
 import { useAccount } from 'hooks/useAccount'
 import usePrevious from 'hooks/usePrevious'
 import ms from 'ms'
@@ -11,7 +10,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useReducer,
   useState,
 } from 'react'
 import { useFiatOnRampTransactions } from 'state/fiatOnRampTransactions/hooks'
@@ -20,14 +18,8 @@ import {
   AssetActivityPartsFragment,
   Exact,
   OnAssetActivitySubscription,
-  useActivityWebLazyQuery,
-  useOnAssetActivitySubscription,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
-import { FeatureFlags } from 'uniswap/src/features/gating/flags'
-import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
-import { logger } from 'utilities/src/logger/logger'
 import { useInterval } from 'utilities/src/time/timing'
-import { v4 as uuidV4 } from 'uuid'
 
 const { Provider: AdaptiveAssetActivityProvider, useQuery: useAssetActivityQuery } =
   createAdaptiveRefetchContext<ActivityWebQueryResult>()
@@ -40,40 +32,53 @@ export function AssetActivityProvider({ children }: PropsWithChildren) {
   const account = useAccount()
   const previousAccount = usePrevious(account.address)
 
-  const isRealtimeEnabled = useFeatureFlag(FeatureFlags.Realtime)
-  const [attempt, incrementAttempt] = useReducer((attempt) => attempt + 1, 1)
-  const subscriptionId = useMemo(uuidV4, [account, attempt])
-  const result = useOnAssetActivitySubscription({
-    variables: { account: account.address ?? '', subscriptionId },
-    skip: !account || !isRealtimeEnabled,
-    onError: (error) => {
-      logger.error(error, {
-        tags: {
-          file: 'AssetActivityProvider',
-          function: 'useOnAssetActivitySubscription#onError',
-        },
-      })
-      incrementAttempt()
-    },
-  })
+  // const isRealtimeEnabled = useFeatureFlag(FeatureFlags.Realtime)
+  // const [attempt, incrementAttempt] = useReducer((attempt) => attempt + 1, 1)
+  // const subscriptionId = useMemo(uuidV4, [account, attempt])
+  // const result = useOnAssetActivitySubscription({
+  //   variables: { account: account.address ?? '', subscriptionId },
+  //   skip: !account || !isRealtimeEnabled,
+  //   onError: (error) => {
+  //     logger.error(error, {
+  //       tags: {
+  //         file: 'AssetActivityProvider',
+  //         function: 'useOnAssetActivitySubscription#onError',
+  //       },
+  //     })
+  //     incrementAttempt()
+  //   },
+  // })
+  const result: any = useMemo(() => ({
+    loading: false,
+    data: undefined,
+    error: undefined,
+  }), [])
 
   const fiatOnRampTransactions = useFiatOnRampTransactions()
 
-  const [lazyFetch, query] = useActivityWebLazyQuery()
+  // const [lazyFetch, query] = useActivityWebLazyQuery()
+  // const lazyFetch = useCallback(() => Promise.resolve(), [])
+  const query: any = useMemo(() => ({
+    loading: false,
+    data: undefined,
+    error: undefined,
+    refetch: () => Promise.resolve({} as any),
+  }), [])
+
   const fetch = useCallback(
-    () =>
-      lazyFetch({
-        variables: {
-          account: account.address ?? '',
-          chains: GQL_MAINNET_CHAINS_MUTABLE,
-          // Include the externalsessionIDs of all fiat on-ramp transactions in the local store,
-          // so that the backend can find the transactions without signature authentication.
-          onRampTransactionIDs: Object.values(fiatOnRampTransactions).map(
-            (transaction) => transaction.externalSessionId,
-          ),
-        },
-      }),
-    [account.address, fiatOnRampTransactions, lazyFetch],
+    () => Promise.resolve(),
+    //   lazyFetch({
+    //     variables: {
+    //       account: account.address ?? '',
+    //       chains: GQL_MAINNET_CHAINS_MUTABLE,
+    //       // Include the externalsessionIDs of all fiat on-ramp transactions in the local store,
+    //       // so that the backend can find the transactions without signature authentication.
+    //       onRampTransactionIDs: Object.values(fiatOnRampTransactions).map(
+    //         (transaction) => transaction.externalSessionId,
+    //       ),
+    //     },
+    //   }),
+    [],
   )
 
   useInterval(async () => {
@@ -98,7 +103,8 @@ export function AssetActivityProvider({ children }: PropsWithChildren) {
 export function useAssetActivitySubscription() {
   const value = useContext(SubscriptionContext)
   if (!value) {
-    throw new Error('useAssetActivitySubscription must be used within an AssetActivityProvider')
+    // throw new Error('useAssetActivitySubscription must be used within an AssetActivityProvider')
+    return { data: undefined };
   }
   return value
 }

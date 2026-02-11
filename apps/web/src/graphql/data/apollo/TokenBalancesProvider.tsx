@@ -1,15 +1,12 @@
 import { usePendingActivity } from 'components/AccountDrawer/MiniPortfolio/Activity/hooks'
 import { createAdaptiveRefetchContext } from 'graphql/data/apollo/AdaptiveRefetch'
 import { useAssetActivitySubscription } from 'graphql/data/apollo/AssetActivityProvider'
-import { GQL_MAINNET_CHAINS_MUTABLE } from 'graphql/data/util'
 import { useAccount } from 'hooks/useAccount'
 import { PropsWithChildren, useCallback, useEffect, useMemo } from 'react'
 import {
   OnAssetActivitySubscription,
   PortfolioBalancesWebQueryResult,
   SwapOrderStatus,
-  // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-  usePortfolioBalancesWebLazyQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
@@ -85,7 +82,17 @@ function usePortfolioValueModifiers(): {
 }
 
 export function TokenBalancesProvider({ children }: PropsWithChildren) {
-  const [lazyFetch, query] = usePortfolioBalancesWebLazyQuery({ errorPolicy: 'all' })
+  // const [lazyFetch, query] = usePortfolioBalancesWebLazyQuery({ errorPolicy: 'all' })
+  const lazyFetch = useCallback(() => Promise.resolve(), [])
+  const query = useMemo(
+    () => ({
+      loading: false,
+      data: undefined,
+      error: undefined,
+      refetch: () => Promise.resolve({} as any),
+    }),
+    [],
+  ) as any
   const account = useAccount()
   const hasAccountUpdate = useHasAccountUpdate()
   const valueModifiers = usePortfolioValueModifiers()
@@ -95,15 +102,16 @@ export function TokenBalancesProvider({ children }: PropsWithChildren) {
     if (!account.address) {
       return
     }
-    lazyFetch({
-      variables: {
-        ownerAddress: account.address,
-        chains: GQL_MAINNET_CHAINS_MUTABLE,
-        includeSpamTokens: valueModifiers.includeSpamTokens,
-        includeSmallBalances: valueModifiers.includeSmallBalances,
-      },
-    })
-  }, [account.address, lazyFetch, valueModifiers])
+    lazyFetch()
+    // lazyFetch({
+    //   variables: {
+    //     ownerAddress: account.address,
+    //     chains: GQL_MAINNET_CHAINS_MUTABLE,
+    //     includeSpamTokens: valueModifiers.includeSpamTokens,
+    //     includeSmallBalances: valueModifiers.includeSmallBalances,
+    //   },
+    // })
+  }, [account.address, lazyFetch])
 
   return (
     <AdaptiveTokenBalancesProvider

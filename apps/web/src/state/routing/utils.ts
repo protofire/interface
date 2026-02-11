@@ -261,6 +261,9 @@ export async function transformQuoteToTrade(
   data: URAQuoteResponse,
   quoteMethod: QuoteMethod,
 ): Promise<TradeResult> {
+  if (!data) {
+    return { state: QuoteState.NOT_FOUND }
+  }
   const { tradeType, needsWrapIfUniswapX, isXv2, routerPreference, account, amount } = args
 
   const showUniswapXTrade =

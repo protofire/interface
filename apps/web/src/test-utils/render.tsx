@@ -4,8 +4,8 @@ import { queries } from '@testing-library/dom'
 import { RenderOptions, render } from '@testing-library/react'
 import { RenderHookOptions, WrapperComponent, renderHook } from '@testing-library/react-hooks'
 import Web3Provider from 'components/Web3Provider'
-import { AssetActivityProvider } from 'graphql/data/apollo/AssetActivityProvider'
-import { TokenBalancesProvider } from 'graphql/data/apollo/TokenBalancesProvider'
+// import { AssetActivityProvider } from 'graphql/data/apollo/AssetActivityProvider'
+// import { TokenBalancesProvider } from 'graphql/data/apollo/TokenBalancesProvider'
 import { BlockNumberContext } from 'lib/hooks/useBlockNumber'
 import { PropsWithChildren, ReactElement, ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async/lib/index'
@@ -31,8 +31,8 @@ const WithProviders = ({ children }: { children?: ReactNode }) => {
           <BrowserRouter>
             <Web3Provider>
               <MockedProvider showWarnings={false}>
-                <AssetActivityProvider>
-                  <TokenBalancesProvider>
+                {/* <AssetActivityProvider>
+                  <TokenBalancesProvider> */}
                     <MockedBlockNumberProvider>
                       <UnitagUpdaterContextProvider>
                         <ThemeProvider>
@@ -40,8 +40,8 @@ const WithProviders = ({ children }: { children?: ReactNode }) => {
                         </ThemeProvider>
                       </UnitagUpdaterContextProvider>
                     </MockedBlockNumberProvider>
-                  </TokenBalancesProvider>
-                </AssetActivityProvider>
+                  {/* </TokenBalancesProvider>
+                </AssetActivityProvider> */}
               </MockedProvider>
             </Web3Provider>
           </BrowserRouter>

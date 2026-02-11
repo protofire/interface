@@ -6,6 +6,7 @@
     "'self'",
     "data:",
     "'wasm-unsafe-eval'",
+    "'unsafe-eval'",
     "https://translate.googleapis.com/"
   ],
   "styleSrc": [
