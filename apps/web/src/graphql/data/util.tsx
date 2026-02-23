@@ -173,24 +173,34 @@ export function getTokenDetailsURL({
   address,
   chain,
   inputAddress,
+  chainId,
 }: {
   address?: string | null
   chain: Chain
   inputAddress?: string | null
+  chainId?: number | undefined
 }) {
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
   const inputAddressSuffix = inputAddress ? `?inputCurrency=${inputAddress}` : ''
+  const chainIfo =
+    chainId === UNIVERSE_CHAIN_INFO[UniverseChainId.FlowMainnet].id
+      ? UNIVERSE_CHAIN_INFO[UniverseChainId.FlowMainnet]
+      : UNIVERSE_CHAIN_INFO[UniverseChainId.FlowTestnet]
   return forkConfig.uniSpecificFeaturesEnabled
     ? `/explore/tokens/${chainName}/${tokenAddress}${inputAddressSuffix}`
-    : `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractMainnet].infoLink}/tokens/${tokenAddress.toLowerCase()}`
+    : `${chainIfo.infoLink}/tokens/${tokenAddress.toLowerCase()}`
 }
 
-export function getPoolDetailsURL(address: string, chain: Chain) {
+export function getPoolDetailsURL(address: string, chain: Chain, chainId?: number) {
   const chainName = chain.toLowerCase()
+  const chainIfo =
+    chainId === UNIVERSE_CHAIN_INFO[UniverseChainId.FlowMainnet].id
+      ? UNIVERSE_CHAIN_INFO[UniverseChainId.FlowMainnet]
+      : UNIVERSE_CHAIN_INFO[UniverseChainId.FlowTestnet]
   return forkConfig.uniSpecificFeaturesEnabled
     ? `/explore/pools/${chainName}/${address}`
-    : `${UNIVERSE_CHAIN_INFO[UniverseChainId.AbstractMainnet].infoLink}/pools/${address.toLowerCase()}`
+    : `${chainIfo.infoLink}/pools/${address.toLowerCase()}`
 }
 
 export function unwrapToken<
