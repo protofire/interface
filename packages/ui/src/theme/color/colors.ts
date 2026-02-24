@@ -154,6 +154,10 @@ export const networkColors = {
     light: '#222222',
     dark: '#FFFFFF',
   },
+  flow: {
+    light: '#00EF8B',
+    dark: '#00EF8B',
+  },
   unichain: {
     light: '#fc0fa4',
     dark: '#fc0fa4',
@@ -343,10 +347,13 @@ export const colorsLight = {
   chain_501000101: networkColors.solana.light,
   chain_143: networkColors.monad.light,
 
+  chain_747: networkColors.flow.light,
+
   // Testnets
   chain_11155111: networkColors.ethereum.light,
   chain_1301: networkColors.unichain.light,
   chain_10143: networkColors.monad.light,
+  chain_545: networkColors.flow.light,
 
   pinkThemed: colors.pinkLight,
 }
@@ -433,10 +440,13 @@ export const colorsDark = {
   chain_501000101: networkColors.solana.dark,
   chain_143: networkColors.monad.dark,
 
+  chain_747: networkColors.flow.dark,
+
   // Testnets
   chain_11155111: networkColors.ethereum.dark,
   chain_1301: networkColors.unichain.dark,
   chain_10143: networkColors.monad.dark,
+  chain_545: networkColors.flow.dark,
 
   pinkThemed: colors.pinkDark,
 }

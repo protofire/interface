@@ -69,19 +69,21 @@ function useTokenSectionsForSwap({
 
   const recentlySearchedTokenOptions = useRecentlySearchedTokens(chainFilter)
 
-  const error =
-    (!portfolioTokenOptions && portfolioTokenOptionsError) ||
-    (!trendingTokenOptions && trendingTokenOptionsError) ||
-    (!favoriteTokenOptions && favoriteTokenOptionsError) ||
-    (!commonTokenOptions && commonTokenOptionsError) ||
-    (!bridgingTokenOptions && bridgingTokenOptionsError)
+  const error = isTestnetModeEnabled
+    ? (!portfolioTokenOptions && portfolioTokenOptionsError) || (!commonTokenOptions && commonTokenOptionsError)
+    : (!portfolioTokenOptions && portfolioTokenOptionsError) ||
+      (!trendingTokenOptions && trendingTokenOptionsError) ||
+      (!favoriteTokenOptions && favoriteTokenOptionsError) ||
+      (!commonTokenOptions && commonTokenOptionsError) ||
+      (!bridgingTokenOptions && bridgingTokenOptionsError)
 
-  const loading =
-    (!portfolioTokenOptions && portfolioTokenOptionsLoading) ||
-    (!trendingTokenOptions && trendingTokenOptionsLoading) ||
-    (!favoriteTokenOptions && favoriteTokenOptionsLoading) ||
-    (!commonTokenOptions && commonTokenOptionsLoading) ||
-    (!bridgingTokenOptions && bridgingTokenOptionsLoading)
+  const loading = isTestnetModeEnabled
+    ? (!portfolioTokenOptions && portfolioTokenOptionsLoading) || (!commonTokenOptions && commonTokenOptionsLoading)
+    : (!portfolioTokenOptions && portfolioTokenOptionsLoading) ||
+      (!trendingTokenOptions && trendingTokenOptionsLoading) ||
+      (!favoriteTokenOptions && favoriteTokenOptionsLoading) ||
+      (!commonTokenOptions && commonTokenOptionsLoading) ||
+      (!bridgingTokenOptions && bridgingTokenOptionsLoading)
 
   const refetchAllRef = useRef<() => void>(() => {})
 

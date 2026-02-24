@@ -69,6 +69,12 @@ export function selectRpcUrl(chainId: UniverseChainId, rpcType: RPCType = RPCTyp
       if (altPublicRPCUrl) {
         return { rpcUrl: altPublicRPCUrl }
       }
+      // Last resort: fall back to the Default RPC (always defined per UniverseChainInfo)
+      const defaultRPCUrl = getChainInfo(chainId).rpcUrls[RPCType.Default]?.http[0]
+      if (defaultRPCUrl) {
+        logger.warn('rpcUrlSelector', 'selectRpcUrl', 'Falling back to Default RPC', { chainId, rpcType })
+        return { rpcUrl: defaultRPCUrl }
+      }
       throw error
     }
   } catch (error) {

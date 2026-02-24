@@ -103,6 +103,8 @@ export function fromGraphQLChain(chain: GraphQLApi.Chain | string | undefined): 
       return UniverseChainId.Zksync
     case GraphQLApi.Chain.Zora:
       return UniverseChainId.Zora
+    case GraphQLApi.Chain.Flow:
+      return UniverseChainId.FlowTestnet
   }
 
   return null
@@ -148,6 +150,8 @@ export function fromUniswapWebAppLink(network: string | null): UniverseChainId {
       return UniverseChainId.Zksync
     case GraphQLApi.Chain.Zora.toLowerCase():
       return UniverseChainId.Zora
+    case GraphQLApi.Chain.Flow.toLowerCase():
+      return UniverseChainId.FlowTestnet
     default:
       throw new Error(`Network "${network}" can not be mapped`)
   }
@@ -189,6 +193,8 @@ export function toUniswapWebAppLink(chainId: UniverseChainId): string | null {
       return GraphQLApi.Chain.Zksync.toLowerCase()
     case UniverseChainId.Zora:
       return GraphQLApi.Chain.Zora.toLowerCase()
+    case UniverseChainId.FlowTestnet:
+      return GraphQLApi.Chain.Flow.toLowerCase()
     default:
       throw new Error(`ChainID "${chainId}" can not be mapped`)
   }

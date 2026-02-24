@@ -47,6 +47,8 @@ export function getQuicknodeChainId(chainId: UniverseChainId): string {
       return 'zksync-mainnet'
     case UniverseChainId.Zora:
       return 'zora-mainnet'
+    case UniverseChainId.FlowTestnet:
+      return 'flow-testnet'
     default:
       throw new Error(`Chain ${chainId} does not have a corresponding QuickNode chain ID`)
   }

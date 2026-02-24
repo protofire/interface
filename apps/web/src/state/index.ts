@@ -63,7 +63,7 @@ export function createDefaultStore() {
               warnAfter: 128,
               // meta.arg and meta.baseQueryMeta are defaults. payload.trade is a nonserializable return value, but that's ok
               // because we are not adding it into any persisted store that requires serialization (e.g. localStorage)
-              ignoredActionPaths: ['meta.arg', 'meta.baseQueryMeta', 'payload.trade'],
+              ignoredActionPaths: ['meta.arg', 'meta.baseQueryMeta', 'payload.trade', 'payload.inputCurrencyAmount'],
               ignoredPaths: [routingApi.reducerPath],
               ignoredActions: [
                 // ignore the redux-persist actions

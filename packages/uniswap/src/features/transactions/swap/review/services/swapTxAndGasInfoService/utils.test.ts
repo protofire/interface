@@ -90,7 +90,7 @@ describe('processWrapResponse (smart contract unwrap fallback)', () => {
         value: '1000000',
       } as providers.TransactionRequest
 
-      const expectedGasLimit = WRAP_FALLBACK_GAS_LIMIT_IN_GWEI * 10e9
+      const expectedGasLimit = WRAP_FALLBACK_GAS_LIMIT_IN_GWEI * 1e9
 
       const fallbackGasParams = { gasLimit: expectedGasLimit }
 

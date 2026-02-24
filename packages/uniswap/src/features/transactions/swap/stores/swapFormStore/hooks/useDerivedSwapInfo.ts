@@ -14,6 +14,7 @@ import { useTrade } from 'uniswap/src/features/transactions/swap/hooks/useTrade'
 import type { DerivedSwapInfo } from 'uniswap/src/features/transactions/swap/types/derivedSwapInfo'
 import { getWrapType } from 'uniswap/src/features/transactions/swap/utils/wrap'
 import type { TransactionState } from 'uniswap/src/features/transactions/types/transactionState'
+import { WrapType } from 'uniswap/src/features/transactions/types/wrap'
 import { useWallet } from 'uniswap/src/features/wallet/hooks/useWallet'
 import { CurrencyField } from 'uniswap/src/types/currency'
 import { buildCurrencyId } from 'uniswap/src/utils/currencyId'
@@ -73,6 +74,7 @@ export function useDerivedSwapInfo({
 
   const isExactIn = exactCurrencyField === CurrencyField.INPUT
   const wrapType = getWrapType(currencyIn, currencyOut)
+  const isWrap = wrapType !== WrapType.NotApplicable
 
   const otherCurrency = isExactIn ? currencyOut : currencyIn
   const exactCurrency = isExactIn ? currencyIn : currencyOut
@@ -85,6 +87,18 @@ export function useDerivedSwapInfo({
       currency: exactCurrency,
     })
   }, [exactAmountToken, exactCurrency])
+
+  // For wraps/unwraps, compute the counterpart amount (1:1 ratio, same decimals)
+  const wrapCounterpartAmount = useMemo(() => {
+    if (!isWrap || !exactAmountToken) {
+      return undefined
+    }
+    return getCurrencyAmount({
+      value: exactAmountToken,
+      valueType: ValueType.Exact,
+      currency: otherCurrency,
+    })
+  }, [isWrap, exactAmountToken, otherCurrency])
 
   const sendPortionEnabled = useFeatureFlag(FeatureFlags.PortionFields)
 
@@ -115,15 +129,29 @@ export function useDerivedSwapInfo({
     ? displayableTrade?.quoteOutputAmount
     : displayableTrade?.outputAmount
 
-  const currencyAmounts = useMemo(
-    () => ({
+  const currencyAmounts = useMemo(() => {
+    // For wraps/unwraps, output equals input (1:1 ratio)
+    if (isWrap) {
+      return {
+        [CurrencyField.INPUT]: isExactIn ? amountSpecified : wrapCounterpartAmount,
+        [CurrencyField.OUTPUT]: isExactIn ? wrapCounterpartAmount : amountSpecified,
+      }
+    }
+    return {
       [CurrencyField.INPUT]:
         exactCurrencyField === CurrencyField.INPUT ? amountSpecified : displayableTrade?.inputAmount,
       [CurrencyField.OUTPUT]:
         exactCurrencyField === CurrencyField.OUTPUT ? amountSpecified : displayableTradeOutputAmount,
-    }),
-    [exactCurrencyField, amountSpecified, displayableTrade?.inputAmount, displayableTradeOutputAmount],
-  )
+    }
+  }, [
+    exactCurrencyField,
+    amountSpecified,
+    displayableTrade?.inputAmount,
+    displayableTradeOutputAmount,
+    isWrap,
+    isExactIn,
+    wrapCounterpartAmount,
+  ])
 
   const inputCurrencyUSDValue = useUSDCValue(currencyAmounts[CurrencyField.INPUT])
   const outputCurrencyUSDValue = useUSDCValue(currencyAmounts[CurrencyField.OUTPUT])
@@ -157,7 +185,9 @@ export function useDerivedSwapInfo({
       wrapType,
       selectingCurrencyField,
       txId,
-      outputAmountUserWillReceive: displayableTrade?.quoteOutputAmountUserWillReceive,
+      outputAmountUserWillReceive: isWrap
+        ? currencyAmounts[CurrencyField.OUTPUT]
+        : displayableTrade?.quoteOutputAmountUserWillReceive,
     }
   }, [
     chainId,
@@ -173,6 +203,7 @@ export function useDerivedSwapInfo({
     trade,
     txId,
     wrapType,
+    isWrap,
     displayableTrade,
   ])
 }

@@ -296,7 +296,7 @@ export default defineConfig(({ mode }) => {
           }
         },
       },
-      DEPLOY_TARGET === 'cloudflare' || mode === 'development'
+      DEPLOY_TARGET === 'cloudflare' && mode !== 'development'
         ? cloudflare({
             configPath: './wrangler-vite-worker.jsonc',
             // Workaround for cloudflare plugin bug: explicitly set environment name based on CLOUDFLARE_ENV
@@ -347,6 +347,9 @@ export default defineConfig(({ mode }) => {
 
     server: {
       port: DEFAULT_PORT,
+      watch: {
+        ignored: ['**/node_modules/**', '**/dist/**', '**/.nx/**', '**/build/**'],
+      },
       proxy: {
         ...(ENABLE_PROXY ? {
           '/entry-gateway': createEntryGatewayProxy({ getLogger })

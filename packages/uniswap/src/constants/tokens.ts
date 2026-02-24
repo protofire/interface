@@ -14,6 +14,7 @@ import { SONEIUM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/soneium
 import { UNICHAIN_CHAIN_INFO, UNICHAIN_SEPOLIA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/unichain'
 import { WORLD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/worldchain'
 import { ZKSYNC_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/zksync'
+import { FLOW_TESTNET_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/flow-testnet'
 import { ZORA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/zora'
 import { WRAPPED_SOL_ADDRESS_SOLANA } from 'uniswap/src/features/chains/svm/defaults'
 import { SOLANA_CHAIN_INFO } from 'uniswap/src/features/chains/svm/info/solana'
@@ -31,6 +32,8 @@ export const { USDC: USDC_UNICHAIN } = UNICHAIN_CHAIN_INFO.tokens
 export const { USDC: USDC_UNICHAIN_SEPOLIA } = UNICHAIN_SEPOLIA_CHAIN_INFO.tokens
 
 export const { USDC: USDC_SONEIUM } = SONEIUM_CHAIN_INFO.tokens
+
+export const { PYUSD0: PYUSD0_FLOW_TESTNET } = FLOW_TESTNET_CHAIN_INFO.tokens
 
 export const { DAI } = MAINNET_CHAIN_INFO.tokens
 
@@ -340,6 +343,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     18,
     'WETH',
     'Wrapped Ether',
+  ),
+  [UniverseChainId.FlowTestnet]: new Token(
+    UniverseChainId.FlowTestnet,
+    '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e',
+    18,
+    'WFLOW',
+    'Wrapped Flow',
   ),
   [UniverseChainId.Solana]: new SolanaToken(
     UniverseChainId.Solana,

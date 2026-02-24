@@ -71,7 +71,7 @@ export function createFetchGasFee({
       if (!provider) {
         throw new Error('No provider for clientside gas estimation')
       }
-      const gasUseEstimate = (await provider.estimateGas(tx)).toNumber() * 10e9
+      const gasUseEstimate = (await provider.estimateGas(tx)).toNumber() * 1e9
 
       return {
         value: gasUseEstimate.toString(),

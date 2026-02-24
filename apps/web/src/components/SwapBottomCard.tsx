@@ -130,6 +130,7 @@ const CHAIN_THEME_LIGHT: Record<UniverseChainId, ChainTheme> = {
   [UniverseChainId.WorldChain]: { bgColor: 'rgba(0, 0, 0, 0.12)', textColor: '#000000' },
   [UniverseChainId.Zksync]: { bgColor: 'rgba(54, 103, 246, 0.12)', textColor: '#3667F6' },
   [UniverseChainId.Zora]: { bgColor: 'rgba(0, 0, 0, 0.12)', textColor: '#000000' },
+  [UniverseChainId.FlowTestnet]: { bgColor: '#00EF8B33', textColor: '#00EF8B' },
 }
 
 const CHAIN_THEME_DARK: Record<UniverseChainId, ChainTheme> = {

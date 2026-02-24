@@ -32,15 +32,18 @@ export function useCommonTokensOptionsWithFallback({
     portfolioBalancesById: {},
   })
 
-  const shouldFallback = data?.length === 0 && commonBases?.length
+  const shouldFallback = (!data || data.length === 0) && commonBases?.length
+  // Use backend-resolved tokens if available, otherwise fall back to the static COMMON_BASES directly.
+  // This handles chains where the backend doesn't support token resolution (e.g. Flow Testnet).
+  const fallbackData = commonBasesTokenOptions?.length ? commonBasesTokenOptions : commonBases
 
   return useMemo(
     () => ({
-      data: shouldFallback ? commonBasesTokenOptions : data,
+      data: shouldFallback ? fallbackData : data,
       error: shouldFallback ? undefined : error,
       refetch,
       loading,
     }),
-    [commonBasesTokenOptions, data, error, loading, refetch, shouldFallback],
+    [fallbackData, data, error, loading, refetch, shouldFallback],
   )
 }

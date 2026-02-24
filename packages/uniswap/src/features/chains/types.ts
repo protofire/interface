@@ -29,6 +29,7 @@ export enum UniverseChainId {
   Zksync = UniswapSDKChainId.ZKSYNC,
   Zora = UniswapSDKChainId.ZORA,
   Solana = 501000101,
+  FlowTestnet = 545,
 }
 
 export type UniverseChainIdByPlatform<T extends Platform> = ((typeof UNIVERSE_CHAIN_INFO)[UniverseChainId] & {

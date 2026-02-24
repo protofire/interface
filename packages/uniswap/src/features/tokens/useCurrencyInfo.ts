@@ -2,6 +2,7 @@ import { GraphQLApi } from '@universe/api'
 import { useMemo } from 'react'
 import { getCommonBase } from 'uniswap/src/constants/routing'
 import { UniverseChainId } from 'uniswap/src/features/chains/types'
+import { isBackendSupportedChainId } from 'uniswap/src/features/chains/utils'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
 import { currencyIdToContractInput } from 'uniswap/src/features/dataApi/utils/currencyIdToContractInput'
 import { gqlTokenToCurrencyInfo } from 'uniswap/src/features/dataApi/utils/gqlTokenToCurrencyInfo'
@@ -16,9 +17,12 @@ function useCurrencyInfoQuery(
   _currencyId?: string,
   options?: { refetch?: boolean; skip?: boolean },
 ): { currencyInfo: Maybe<CurrencyInfo>; loading: boolean; error?: Error } {
+  const chainId = _currencyId ? currencyIdToChain(_currencyId) : null
+  const skipBackendQuery = !_currencyId || options?.skip || (chainId != null && !isBackendSupportedChainId(chainId))
+
   const queryResult = GraphQLApi.useTokenQuery({
     variables: currencyIdToContractInput(_currencyId ?? ''),
-    skip: !_currencyId || options?.skip,
+    skip: skipBackendQuery,
     fetchPolicy: options?.refetch ? 'cache-and-network' : 'cache-first',
   })
 
