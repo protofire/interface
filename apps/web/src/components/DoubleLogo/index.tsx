@@ -32,15 +32,14 @@ export const DoubleCurrencyLogo = memo(function DoubleCurrencyLogo({
   const currencyInfos = [useCurrencyInfo(currencies?.[0]), useCurrencyInfo(currencies?.[1])]
   const currency0FromList = currencies?.[0] as TokenFromList
   const currency1FromList = currencies?.[1] as TokenFromList
+  const [error0, setError0] = useState(false)
+  const [error1, setError1] = useState(false)
 
   if (currency0FromList && currency1FromList) {
     const logo0url = currency0FromList.isNative ? currencyInfos[0]?.logoUrl : currency0FromList.logoURI
     const logo1url = currency1FromList.isNative ? currencyInfos[1]?.logoUrl : currency1FromList.logoURI
     return <DoubleLogo logo1={logo0url as string} logo2={logo1url as string} size={size} />
   }
-
-  const [error0, setError0] = useState(false)
-  const [error1, setError1] = useState(false)
   const invalidCurrencyLogo0 = error0 || !currencyInfos[0]?.logoUrl
   const invalidCurrencyLogo1 = error1 || !currencyInfos[1]?.logoUrl
 

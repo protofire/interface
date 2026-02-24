@@ -178,7 +178,7 @@ export function getTokenDetailsURL({
   address?: string | null
   chain: Chain
   inputAddress?: string | null
-  chainId?: number | undefined
+  chainId?: number
 }) {
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
