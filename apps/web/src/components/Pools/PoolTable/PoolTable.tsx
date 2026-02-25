@@ -7,12 +7,12 @@ import { createColumnHelper, Row } from '@tanstack/react-table'
 import { TokenStats } from '@uniswap/client-explore/dist/uniswap/explore/v1/service_pb'
 import { Percent, Token } from '@uniswap/sdk-core'
 import { GraphQLApi } from '@universe/api'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { PortfolioLogo } from 'components/AccountDrawer/MiniPortfolio/PortfolioLogo'
 import { FeeData } from 'components/Liquidity/Create/types'
 import LPIncentiveFeeStatTooltip from 'components/Liquidity/LPIncentives/LPIncentiveFeeStatTooltip'
 import { isDynamicFeeTier } from 'components/Liquidity/utils/feeTiers'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { Table } from 'components/Table'
 import { Cell } from 'components/Table/Cell'
 import {
@@ -248,7 +248,7 @@ export function PoolsTable({
   const filterString = useAtomValue(exploreSearchStringAtom)
   const { defaultChainId } = useEnabledChains()
   const { t } = useTranslation()
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
 
   const poolTableValues: PoolTableValues[] | undefined = useMemo(
     () =>

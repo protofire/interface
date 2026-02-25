@@ -2,10 +2,10 @@ import { PoolData, usePoolData } from 'appGraphql/data/pools/usePoolData'
 import { calculateApr } from 'appGraphql/data/pools/useTopPools'
 import { gqlToCurrency, unwrapToken } from 'appGraphql/data/util'
 import { GraphQLApi } from '@universe/api'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import Column from 'components/deprecated/Column'
 import Row from 'components/deprecated/Row'
 import { LpIncentivesPoolDetailsRewardsDistribution } from 'components/LpIncentives/LpIncentivesPoolDetailsRewardsDistribution'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import ChartSection from 'components/Pools/PoolDetails/ChartSection'
 import { PoolDetailsApr } from 'components/Pools/PoolDetails/PoolDetailsApr'
 import { PoolDetailsBreadcrumb, PoolDetailsHeader } from 'components/Pools/PoolDetails/PoolDetailsHeader'
@@ -130,7 +130,7 @@ export default function PoolDetailsPage() {
     protocolVersion: poolData?.protocolVersion,
   })
   const [token0, token1] = isReversed ? [unwrappedTokens[1], unwrappedTokens[0]] : unwrappedTokens
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
 
   const poolApr = useMemo(
     () =>

@@ -70,7 +70,7 @@ function useTokenSectionsForSwap({
   const recentlySearchedTokenOptions = useRecentlySearchedTokens(chainFilter)
 
   const error = isTestnetModeEnabled
-    ? (!portfolioTokenOptions && portfolioTokenOptionsError) || (!commonTokenOptions && commonTokenOptionsError)
+    ? !portfolioTokenOptions && portfolioTokenOptionsError && !commonTokenOptions && commonTokenOptionsError
     : (!portfolioTokenOptions && portfolioTokenOptionsError) ||
       (!trendingTokenOptions && trendingTokenOptionsError) ||
       (!favoriteTokenOptions && favoriteTokenOptionsError) ||
@@ -78,7 +78,7 @@ function useTokenSectionsForSwap({
       (!bridgingTokenOptions && bridgingTokenOptionsError)
 
   const loading = isTestnetModeEnabled
-    ? (!portfolioTokenOptions && portfolioTokenOptionsLoading) || (!commonTokenOptions && commonTokenOptionsLoading)
+    ? !portfolioTokenOptions && portfolioTokenOptionsLoading && !commonTokenOptions && commonTokenOptionsLoading
     : (!portfolioTokenOptions && portfolioTokenOptionsLoading) ||
       (!trendingTokenOptions && trendingTokenOptionsLoading) ||
       (!favoriteTokenOptions && favoriteTokenOptionsLoading) ||

@@ -2,13 +2,7 @@
 import { PrefetchBalancesWrapper } from 'appGraphql/data/apollo/AdaptiveTokenBalancesProvider'
 import { ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
 import type { Currency, Percent } from '@uniswap/sdk-core'
-import {
-  AllowedV4WethHookAddressesConfigKey,
-  DynamicConfigs,
-  FeatureFlags,
-  useDynamicConfigValue,
-  useFeatureFlag,
-} from '@universe/gating'
+import { AllowedV4WethHookAddressesConfigKey, DynamicConfigs, useDynamicConfigValue } from '@universe/gating'
 import CreatingPoolInfo from 'components/CreatingPoolInfo/CreatingPoolInfo'
 import { ErrorCallout } from 'components/ErrorCallout'
 import { AddHook } from 'components/Liquidity/Create/AddHook'
@@ -22,6 +16,7 @@ import { getDefaultFeeTiersWithData, getFeeTierKey, isDynamicFeeTier } from 'com
 import { hasLPFoTTransferError } from 'components/Liquidity/utils/hasLPFoTTransferError'
 import { DoubleCurrencyLogo } from 'components/Logo/DoubleLogo'
 import { LpIncentivesAprDisplay } from 'components/LpIncentives/LpIncentivesAprDisplay'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { SwitchNetworkAction } from 'components/Popups/types'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -219,7 +214,7 @@ export function SelectTokensStep({
   const trace = useTrace()
   const [hookModalOpen, setHookModalOpen] = useState(false)
   const [showWrappedNativeWarning, setShowWrappedNativeWarning] = useState(false)
-  const isLpIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLpIncentivesEnabled = useIsLpIncentivesEnabled()
   const allowedV4WethHookAddresses: string[] = useDynamicConfigValue({
     config: DynamicConfigs.AllowedV4WethHookAddresses,
     key: AllowedV4WethHookAddressesConfigKey.HookAddresses,

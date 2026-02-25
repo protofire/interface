@@ -1,10 +1,7 @@
+import { Token } from '@uniswap/sdk-core'
 import { GraphQLApi } from '@universe/api'
-import { SwapConfigKey } from '@universe/gating'
 import { FLOW_LOGO } from 'ui/src/assets'
-import {
-  DEFAULT_NATIVE_ADDRESS_LEGACY,
-  DEFAULT_RETRY_OPTIONS,
-} from 'uniswap/src/features/chains/evm/rpc'
+import { DEFAULT_NATIVE_ADDRESS_LEGACY, DEFAULT_RETRY_OPTIONS } from 'uniswap/src/features/chains/evm/rpc'
 import { buildChainTokens } from 'uniswap/src/features/chains/evm/tokens'
 import { GENERIC_L2_GAS_CONFIG } from 'uniswap/src/features/chains/gasDefaults'
 import {
@@ -16,17 +13,10 @@ import {
 } from 'uniswap/src/features/chains/types'
 import { Platform } from 'uniswap/src/features/platforms/types/Platform'
 import { ElementName } from 'uniswap/src/features/telemetry/constants'
-import { Token } from '@uniswap/sdk-core'
 
 const tokens = buildChainTokens({
   stables: {
-    PYUSD0: new Token(
-      UniverseChainId.FlowTestnet,
-      '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73',
-      6,
-      'PYUSD0',
-      'PYUSD0',
-    ),
+    PYUSD0: new Token(UniverseChainId.FlowTestnet, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73', 6, 'PYUSD0', 'PYUSD0'),
   },
 })
 
@@ -38,7 +28,7 @@ export const FLOW_TESTNET_CHAIN_INFO = {
   assetRepoNetworkName: undefined,
   backendChain: {
     chain: GraphQLApi.Chain.Flow as GqlChainId,
-    backendSupported: false,
+    backendSupported: true,
     nativeTokenBackendAddress: undefined,
   },
   blockPerMainnetEpochForChainId: 1,

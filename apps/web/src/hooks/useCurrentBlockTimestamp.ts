@@ -1,4 +1,4 @@
-import { MULTICALL_ADDRESSES } from '@uniswap/sdk-core'
+import { MULTICALL_ADDRESSES } from 'constants/flowAddresses'
 import { useAccount } from 'hooks/useAccount'
 import ms from 'ms'
 import { UniverseChainId } from 'uniswap/src/features/chains/types'

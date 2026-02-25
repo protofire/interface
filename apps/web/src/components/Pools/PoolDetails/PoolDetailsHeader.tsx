@@ -2,7 +2,6 @@ import { getTokenDetailsURL, gqlToCurrency } from 'appGraphql/data/util'
 import { ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
 import { Percent } from '@uniswap/sdk-core'
 import { GraphQLApi, parseRestProtocolVersion } from '@universe/api'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { BreadcrumbNavContainer, BreadcrumbNavLink, CurrentPageBreadcrumb } from 'components/BreadcrumbNav'
 import { Dropdown } from 'components/Dropdowns/Dropdown'
 import Row from 'components/deprecated/Row'
@@ -13,6 +12,7 @@ import { LiquidityPositionInfoBadges } from 'components/Liquidity/LiquidityPosit
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
 import { DoubleCurrencyLogo } from 'components/Logo/DoubleLogo'
 import { LpIncentivesAprDisplay } from 'components/LpIncentives/LpIncentivesAprDisplay'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { DetailBubble } from 'components/Pools/PoolDetails/shared'
 import { POPUP_MEDIUM_DISMISS_MS } from 'components/Popups/constants'
 import { popupRegistry } from 'components/Popups/registry'
@@ -355,7 +355,7 @@ export function PoolDetailsHeader({
     () => (token0 && token1 ? [gqlToCurrency(token0), gqlToCurrency(token1)] : []),
     [token0, token1],
   )
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
   const showRewards = isLPIncentivesEnabled && rewardsApr && rewardsApr > 0
 
   if (loading) {

@@ -9,7 +9,7 @@ export const createConnectTransportWithDefaults = (options: Partial<ConnectTrans
   getTransport({
     getBaseUrl: () => uniswapUrls.apiBaseUrlV2,
     getHeaders: () => (isMobileApp ? BASE_UNISWAP_HEADERS : {}),
-    options,
+    options: { useBinaryFormat: false, ...options },
   })
 
 /**

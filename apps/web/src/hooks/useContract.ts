@@ -1,14 +1,10 @@
 import { Contract } from '@ethersproject/contracts'
-import {
-  CHAIN_TO_ADDRESSES_MAP,
-  MULTICALL_ADDRESSES,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
-  V3_MIGRATOR_ADDRESSES,
-} from '@uniswap/sdk-core'
+import { CHAIN_TO_ADDRESSES_MAP, V3_MIGRATOR_ADDRESSES } from '@uniswap/sdk-core'
 import IUniswapV2PairJson from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import UniswapInterfaceMulticallJson from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 import NonfungiblePositionManagerJson from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
 import V3MigratorJson from '@uniswap/v3-periphery/artifacts/contracts/V3Migrator.sol/V3Migrator.json'
+import { MULTICALL_ADDRESSES, NONFUNGIBLE_POSITION_MANAGER_ADDRESSES } from 'constants/flowAddresses'
 import { useAccount } from 'hooks/useAccount'
 import { useEthersProvider } from 'hooks/useEthersProvider'
 import { useEffect, useMemo } from 'react'
@@ -156,7 +152,11 @@ export function useV4NFTPositionManagerContract(
   const chainIdToUse = chainId ?? account.chainId
 
   const contract = useContract<Erc721>({
-    address: chainIdToUse ? CHAIN_TO_ADDRESSES_MAP[chainIdToUse].v4PositionManagerAddress : undefined,
+    address:
+      chainIdToUse && chainIdToUse in CHAIN_TO_ADDRESSES_MAP
+        ? (CHAIN_TO_ADDRESSES_MAP as Record<number, { v4PositionManagerAddress?: string }>)[chainIdToUse]
+            ?.v4PositionManagerAddress
+        : undefined,
     ABI: NFTPositionManagerABI,
     withSignerIfPossible,
     chainId: chainIdToUse,

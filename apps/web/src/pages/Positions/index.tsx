@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { PositionStatus, ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import PROVIDE_LIQUIDITY from 'assets/images/provideLiquidity.png'
 import tokenLogo from 'assets/images/token-logo.png'
 import V4_HOOK from 'assets/images/v4Hooks.png'
@@ -15,6 +14,7 @@ import { PositionsHeader } from 'components/Liquidity/PositionsHeader'
 import { PositionInfo } from 'components/Liquidity/types'
 import { getPositionUrl } from 'components/Liquidity/utils/getPositionUrl'
 import { parseRestPosition } from 'components/Liquidity/utils/parseFromRest'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { useAccount } from 'hooks/useAccount'
 import { useLpIncentives } from 'hooks/useLpIncentives'
 import { atom, useAtom } from 'jotai'
@@ -291,7 +291,7 @@ export default function Pool() {
   const { t } = useTranslation()
   const { address, isConnected } = account
 
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives) && isConnected
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled() && isConnected
 
   const [chainFilter, setChainFilter] = useAtom(chainFilterAtom)
   const { chains: currentModeChains } = useEnabledChains()

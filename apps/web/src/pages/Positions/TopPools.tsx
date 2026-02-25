@@ -2,8 +2,8 @@ import { PoolSortFields } from 'appGraphql/data/pools/useTopPools'
 import { OrderDirection } from 'appGraphql/data/util'
 import { ExploreStatsResponse } from '@uniswap/client-explore/dist/uniswap/explore/v1/service_pb'
 import { ALL_NETWORKS_ARG } from '@universe/api'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { ExternalArrowLink } from 'components/Liquidity/ExternalArrowLink'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { useAccount } from 'hooks/useAccount'
 import { TopPoolsSection } from 'pages/Positions/TopPoolsSection'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +17,7 @@ const MAX_BOOSTED_POOLS = 3
 export function TopPools({ chainId }: { chainId: UniverseChainId | null }) {
   const account = useAccount()
   const { t } = useTranslation()
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
   const media = useMedia()
   const isBelowXlScreen = !media.xl
 

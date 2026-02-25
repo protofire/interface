@@ -1,8 +1,8 @@
 import { ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
 import { type Currency, CurrencyAmount } from '@uniswap/sdk-core'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { PositionInfo } from 'components/Liquidity/types'
 import { LP_INCENTIVES_REWARD_TOKEN } from 'components/LpIncentives/constants'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import JSBI from 'jsbi'
 import { useMemo } from 'react'
 import { useLocalizationContext } from 'uniswap/src/features/language/LocalizationContext'
@@ -33,7 +33,7 @@ export function useLpIncentivesFormattedEarnings({
   fiatFeeValue1,
 }: UseLpIncentivesFormattedEarningsProps): LpIncentivesEarningsResult {
   const { convertFiatAmountFormatted } = useLocalizationContext()
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
   const { price: uniPrice } = useUSDCPrice(LP_INCENTIVES_REWARD_TOKEN)
 
   return useMemo(() => {

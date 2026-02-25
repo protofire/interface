@@ -1,4 +1,3 @@
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { useAllFeeTierPoolData } from 'components/Liquidity/hooks/useAllFeeTierPoolData'
 import {
   calculateTickSpacingFromFeeAmount,
@@ -8,6 +7,7 @@ import {
   validateFeeTier,
 } from 'components/Liquidity/utils/feeTiers'
 import { LpIncentivesAprDisplay } from 'components/LpIncentives/LpIncentivesAprDisplay'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { StyledPercentInput } from 'components/PercentInput'
 import ms from 'ms'
 import { useCreateLiquidityContext } from 'pages/CreatePosition/CreateLiquidityContextProvider'
@@ -76,7 +76,7 @@ export function FeeTierSearchModal() {
   const hiddenObserver = useResizeObserver<HTMLElement>()
 
   const withDynamicFeeTier = Boolean(hook)
-  const isLpIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLpIncentivesEnabled = useIsLpIncentivesEnabled()
   const { feeTierData } = useAllFeeTierPoolData({
     chainId,
     protocolVersion,

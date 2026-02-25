@@ -3,7 +3,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Position, PositionStatus, ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
 import { Currency, CurrencyAmount, Percent, Price } from '@uniswap/sdk-core'
 import { GraphQLApi } from '@universe/api'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { BreadcrumbNavContainer, BreadcrumbNavLink } from 'components/BreadcrumbNav'
 import { WrappedLiquidityPositionRangeChart } from 'components/Charts/LiquidityPositionRangeChart/LiquidityPositionRangeChart'
 import { Dropdown } from 'components/Dropdowns/Dropdown'
@@ -21,6 +20,7 @@ import { getBaseAndQuoteCurrencies } from 'components/Liquidity/utils/currency'
 import { parseRestPosition } from 'components/Liquidity/utils/parseFromRest'
 import { LoadingFullscreen, LoadingRows } from 'components/Loader/styled'
 import { LP_INCENTIVES_REWARD_TOKEN } from 'components/LpIncentives/constants'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { useCurrencyInfo } from 'hooks/Tokens'
 import { useAccount } from 'hooks/useAccount'
@@ -141,7 +141,7 @@ function PositionPage({ chainId }: { chainId: EVMUniverseChainId | undefined }) 
   const metadata = usePositionTokenURI({ tokenId, chainId, version: positionInfo?.version })
   usePendingLPTransactionsChangeListener(refetch)
 
-  const isLpIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLpIncentivesEnabled = useIsLpIncentivesEnabled()
 
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -823,7 +823,7 @@ const EarningsSection = ({
   const { convertFiatAmountFormatted } = useLocalizationContext()
   const { t } = useTranslation()
   const colors = useSporeColors()
-  const isLpIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLpIncentivesEnabled = useIsLpIncentivesEnabled()
 
   const { uniLpRewardsCurrencyAmount, uniLpRewardsFiatValue, totalEarningsFiatValue, hasRewards, hasFees } =
     useLpIncentivesFormattedEarnings({

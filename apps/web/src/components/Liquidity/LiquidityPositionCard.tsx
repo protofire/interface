@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { PositionStatus, ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
-import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import {
   CHART_HEIGHT,
   CHART_WIDTH,
@@ -18,6 +17,7 @@ import {
 import { LiquidityPositionInfo, LiquidityPositionInfoLoader } from 'components/Liquidity/LiquidityPositionInfo'
 import { PositionInfo, PriceOrdering } from 'components/Liquidity/types'
 import { getBaseAndQuoteCurrencies } from 'components/Liquidity/utils/currency'
+import { useIsLpIncentivesEnabled } from 'components/LpIncentives/useIsLpIncentivesEnabled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { useAccount } from 'hooks/useAccount'
 import useHoverProps from 'hooks/useHoverProps'
@@ -249,7 +249,7 @@ export function LiquidityPositionCard({
   const { convertFiatAmountFormatted } = useLocalizationContext()
   const isTouchDevice = useIsTouchDevice()
   const [priceInverted, setPriceInverted] = useState(false)
-  const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives)
+  const isLPIncentivesEnabled = useIsLpIncentivesEnabled()
 
   const [hover, hoverProps] = useHoverProps()
   const media = useMedia()

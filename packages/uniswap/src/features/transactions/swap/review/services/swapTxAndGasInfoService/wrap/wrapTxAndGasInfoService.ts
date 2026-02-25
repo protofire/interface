@@ -1,14 +1,14 @@
 import type { GasStrategy } from '@universe/api'
+import { convertGasFeeToDisplayValue } from 'uniswap/src/features/gas/hooks'
 import type { TransactionSettings } from 'uniswap/src/features/transactions/components/settings/types'
+import { WRAP_FALLBACK_GAS_LIMIT_IN_GWEI } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/constants'
 import type { EVMSwapInstructionsService } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/evm/evmSwapInstructionsService'
 import { createGetEVMSwapTransactionRequestInfo } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/evm/utils'
 import type { SwapTxAndGasInfoService } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/swapTxAndGasInfoService'
-import { WRAP_FALLBACK_GAS_LIMIT_IN_GWEI } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/constants'
 import {
   getWrapTxAndGasInfo,
   processWrapResponse,
 } from 'uniswap/src/features/transactions/swap/review/services/swapTxAndGasInfoService/utils'
-import { convertGasFeeToDisplayValue } from 'uniswap/src/features/gas/hooks'
 import type { UnwrapTrade, WrapTrade } from 'uniswap/src/features/transactions/swap/types/trade'
 
 export function createWrapTxAndGasInfoService(ctx: {
@@ -23,9 +23,7 @@ export function createWrapTxAndGasInfoService(ctx: {
     async getSwapTxAndGasInfo(params) {
       const { trade } = params
       const quote = trade.quote.quote as Record<string, unknown>
-      const methodParams = quote.methodParameters as
-        | { calldata: string; value: string; to: string }
-        | undefined
+      const methodParams = quote.methodParameters as { calldata: string; value: string; to: string } | undefined
 
       // If the wrap quote includes methodParameters, build txRequest directly
       // without round-tripping through /v1/swap
