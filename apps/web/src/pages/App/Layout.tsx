@@ -25,6 +25,7 @@ const AppBody = styled.div`
   flex: 1;
   position: relative;
   margin: auto;
+  padding-bottom: 1rem;
 
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     padding-left: 10px;
