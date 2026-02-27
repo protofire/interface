@@ -16,7 +16,7 @@ import { ElementName } from 'uniswap/src/features/telemetry/constants'
 
 const tokens = buildChainTokens({
   stables: {
-    PYUSD0: new Token(UniverseChainId.FlowTestnet, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73', 6, 'PYUSD0', 'PYUSD0'),
+    PYUSD0: new Token(UniverseChainId.FlowTestnet, '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73', 6, 'USDCf', 'USDCf'),
   },
 })
 
@@ -70,5 +70,5 @@ export const FLOW_TESTNET_CHAIN_INFO = {
     address: '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e',
   },
   gasConfig: GENERIC_L2_GAS_CONFIG,
-  tradingApiPollingIntervalMs: 500,
+  tradingApiPollingIntervalMs: 1500,
 } as const satisfies UniverseChainInfo

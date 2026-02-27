@@ -9,6 +9,9 @@ function isAppUniswapStagingOrg({ hostname }: { hostname: string }): boolean {
 }
 
 export function isBrowserRouterEnabled(): boolean {
+  if (process.env.REACT_APP_BROWSER_ROUTER === 'true') {
+    return true
+  }
   if (isProdEnv()) {
     if (
       isAppUniswapOrg(window.location) ||
