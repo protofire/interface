@@ -113,6 +113,8 @@
     "https://cloudflare-dns.com",
     "https://beyondwickedmapping.org",
     "http://localhost:3001",
+    "https://v4-gateway.sandbox.swap.w3us.site",
+    "https://sandbox.swap.w3us.site",
     "https://testnet.evm.nodes.onflow.org/",
     "wss://relay.walletconnect.com",
     "wss://relay.walletconnect.org",
