@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 import { gqlToCurrency } from 'appGraphql/data/util'
-import { Percent, Token, V2_FACTORY_ADDRESSES } from '@uniswap/sdk-core'
+import { Percent, Token } from '@uniswap/sdk-core'
 import { computePairAddress, Pair } from '@uniswap/v2-sdk'
 import { GraphQLApi } from '@universe/api'
+import { V2_FACTORY_ADDRESSES } from 'constants/flowAddresses'
 import { L2_DEADLINE_FROM_NOW } from 'constants/misc'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'constants/routing'
 import { useAccount } from 'hooks/useAccount'

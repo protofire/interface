@@ -286,7 +286,7 @@ function getDefaultChainId({
     return UniverseChainId.Solana
   }
 
-  return isTestnetModeEnabled ? UniverseChainId.Sepolia : UniverseChainId.Mainnet
+  return isTestnetModeEnabled ? UniverseChainId.FlowTestnet : UniverseChainId.Mainnet
 }
 
 /** Returns all stablecoins for a given chainId. */

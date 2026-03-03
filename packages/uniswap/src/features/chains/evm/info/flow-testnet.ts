@@ -60,7 +60,7 @@ export const FLOW_TESTNET_CHAIN_INFO = {
   },
   tokens,
   statusPage: undefined,
-  supportsV4: false,
+  supportsV4: true,
   supportsNFTs: false,
   urlParam: 'flow_testnet',
   wrappedNativeCurrency: {
