@@ -50,6 +50,9 @@ export function getServicePrefix(flow?: TrafficFlows): string {
 }
 
 export function getCloudflareApiBaseUrl(flow?: TrafficFlows): string {
+  if (isPlaywrightEnv() || isWebApp) {
+    return 'https://v4-gateway.sandbox.swap.w3us.site'
+  }
   return `https://${getServicePrefix(flow)}${getCloudflarePrefix(flow)}.gateway.uniswap.org`
 }
 
