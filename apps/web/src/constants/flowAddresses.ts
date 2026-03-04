@@ -39,5 +39,5 @@ export const MULTICALL_ADDRESSES: Record<number, string> = {
 
 /** V4 address overrides for Flow Testnet */
 export const V4_POSITION_MANAGER_ADDRESSES: Record<number, string> = {
-  [UniverseChainId.FlowTestnet]: '0xaa618Ba21AD873Ecab1Eb3B42096B6A9a97b30f9',
+  [UniverseChainId.FlowTestnet]: '0x53B19cBEFe6F2537B203655A013A43ce769a06D2',
 }
