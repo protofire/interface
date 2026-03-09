@@ -368,7 +368,13 @@ export function parseRestPosition(position?: RestPosition): PositionInfo | undef
             tickUpper: Number(v4Position.tickUpper),
           })
         : undefined
-      const poolId = V4Pool.getPoolId(token0, token1, Number(v4Position.feeTier), Number(v4Position.tickSpacing), hook)
+      const poolId = V4Pool.getPoolId(
+        token0,
+        token1,
+        Number(v4Position.feeTier),
+        Number(v4Position.tickSpacing),
+        hook || ZERO_ADDRESS,
+      )
       const fee0Amount = CurrencyAmount.fromRawAmount(token0, v4Position.token0UncollectedFees)
       const fee1Amount = CurrencyAmount.fromRawAmount(token1, v4Position.token1UncollectedFees)
       return {
