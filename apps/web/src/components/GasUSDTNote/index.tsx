@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 import { AutoColumn } from 'components/Column'
 import { useAccount } from 'hooks/useAccount'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
