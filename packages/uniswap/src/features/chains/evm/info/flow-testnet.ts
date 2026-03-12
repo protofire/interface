@@ -37,8 +37,8 @@ export const FLOW_TESTNET_CHAIN_INFO = {
   docs: 'https://docs.onflow.org/',
   elementName: ElementName.ChainFlowTestnet,
   explorer: {
-    name: 'Flowdiver',
-    url: 'https://testnet.flowdiver.io/',
+    name: 'Flowscan',
+    url: 'https://evm-testnet.flowscan.io/',
   },
   interfaceName: 'flow-testnet',
   label: 'Flow Testnet',

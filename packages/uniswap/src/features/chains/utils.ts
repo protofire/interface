@@ -252,6 +252,11 @@ export function getEnabledChains({
       return false
     }
 
+    // Only allow Flow Testnet as the supported testnet chain
+    if (isTestnetChain(chainInfo.id) && chainInfo.id !== UniverseChainId.FlowTestnet) {
+      return false
+    }
+
     // Filter by feature flags
     if (!featureFlaggedChainIds.includes(chainInfo.id)) {
       return false
