@@ -1,7 +1,8 @@
-import { Currency } from '@uniswap/sdk-core'
+import { Currency, Token } from '@uniswap/sdk-core'
 import { CurrencyListRow, CurrencyListSectionTitle } from 'components/SearchModal/CurrencyList'
 import { CurrencySearchFilters } from 'components/SearchModal/DeprecatedCurrencySearch'
 import { chainIdToBackendChain, useSupportedChainId } from 'constants/chains'
+import { WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
 import { gqlTokenToCurrencyInfo } from 'graphql/data/types'
 import { useFallbackListTokens, useToken } from 'hooks/Tokens'
 import { useTokenBalances } from 'hooks/useTokenBalances'
@@ -18,9 +19,17 @@ import {
   useSearchTokensWebQuery,
   useTopTokensQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
+import { SHAPE_TOKEN, USDC_SHAPE } from 'uniswap/src/constants/tokens'
 import { t } from 'uniswap/src/i18n'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { isSameAddress } from 'utilities/src/addresses'
 import { currencyKey } from 'utils/currencyKey'
+
+const SHAPE_POPULAR_TOKENS: Currency[] = [
+  SHAPE_TOKEN,
+  WRAPPED_NATIVE_CURRENCY[UniverseChainId.SHAPE] as Token,
+  USDC_SHAPE,
+]
 
 interface CurrencySearchParams {
   searchQuery?: string
@@ -107,6 +116,10 @@ export function useCurrencySearchResults({
    */
   const { sortedCombinedTokens, portfolioTokens, sortedTokensWithoutPortfolio } = useMemo(() => {
     const fullBaseList = (() => {
+      // Hardcoded popular tokens for Shape chain
+      if (isEmpty(searchQuery) && chainId === UniverseChainId.SHAPE) {
+        return SHAPE_POPULAR_TOKENS
+      }
       if ((!isEmpty(searchQuery) && gqlSearchResultsEmpty) || (isEmpty(searchQuery) && gqlPopularTokensEmpty)) {
         return Object.values(defaultAndUserAddedTokens)
       } else if (!isEmpty(searchQuery)) {
