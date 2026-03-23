@@ -217,6 +217,14 @@ export const USDC_SHAPE = new Token(
   'USDC',
 )
 
+export const SHAPE_TOKEN = new Token(
+  UniverseChainId.SHAPE,
+  '0x360aAC543A23dbcefA8049d4C4d8B18dA1CCa360',
+  18,
+  'SHAPE',
+  'SHAPE',
+)
+
 export const USDC_INK = new Token(
   UniverseChainId.INK,
   '0xF1815bd50389c46847f0Bda824eC8da914045D14',

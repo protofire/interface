@@ -21,7 +21,9 @@ type PreloadedSharedStateOptions = {
   account: Account | undefined
 }
 
-export const preloadedWalletPackageState = createFixture<
+export const preloadedWalletPackageState: (
+  overrides?: Partial<PreloadedState<WalletPackageState> & PreloadedSharedStateOptions>,
+) => PreloadedState<WalletPackageState> = createFixture<
   PreloadedState<WalletPackageState>,
   PreloadedSharedStateOptions
 >({

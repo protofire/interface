@@ -34,7 +34,7 @@ export function FeeOption({ feeAmount, selected, poolState, distributions, onCli
 
   return (
     <Flex
-      alignItems="center"
+      alignItems="flex-start"
       py="$padding12"
       px="$padding8"
       {...(media.md && { minWidth: '46%' })}
