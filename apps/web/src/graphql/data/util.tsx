@@ -190,7 +190,7 @@ export function getPoolDetailsURL(address: string, chain: Chain) {
   const chainName = chain.toLowerCase()
   return forkConfig.uniSpecificFeaturesEnabled
     ? `/explore/pools/${chainName}/${address}`
-    : `${UNIVERSE_CHAIN_INFO[UniverseChainId.Stable].infoLink}/pools/${address.toLowerCase()}`
+    : `https://info.swap.stable.xyz/#/pools/${address.toLowerCase()}`
 }
 
 export function unwrapToken<
