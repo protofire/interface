@@ -7,7 +7,7 @@ const DEFAULT_METATAGS: MetaTagInjectorInput = {
   title: t('interface.metatags.title'),
   description: t`interface.metatags.description`,
   image: `https://flowswap.io/images/1200x630.png`,
-  url: 'https://flowswap.io/images/1200x630.png',
+  url: 'https://flowswap.io',
 }
 
 type MetatagAttributes = { property?: string; name?: string; content: string }
