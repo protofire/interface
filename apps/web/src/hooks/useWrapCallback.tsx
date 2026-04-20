@@ -1,5 +1,6 @@
 import { InterfaceEventName } from '@uniswap/analytics-events'
 import { Currency } from '@uniswap/sdk-core'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
 import { useAccount } from 'hooks/useAccount'
 import { useWETHContract } from 'hooks/useContract'
@@ -18,6 +19,9 @@ import { Trans } from 'uniswap/src/i18n'
 import { logger } from 'utilities/src/logger/logger'
 
 const NOT_APPLICABLE = { wrapType: WrapType.NotApplicable }
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract.
+const SAFE_WRAP_GAS_LIMIT = 100_000
 
 enum WrapInputError {
   NO_ERROR, // must be equal to 0 so all other errors are truthy
@@ -80,6 +84,8 @@ export default function useWrapCallback(
     throw error
   }
 
+  const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+
   return useMemo(() => {
     if (!wethContractRef.current || !chainId || !inputCurrency || !outputCurrency) {
       return NOT_APPLICABLE
@@ -130,7 +136,10 @@ Please file a bug detailing how this happened - https://github.com/Uniswap/inter
                     throw error
                   }
                   const txReceipt = await trace.child({ name: 'Deposit', op: 'wallet.send_transaction' }, () =>
-                    wethContract.deposit({ value: `0x${inputAmount.quotient.toString(16)}` }),
+                    wethContract.deposit({
+                      value: `0x${inputAmount.quotient.toString(16)}`,
+                      ...(isSafeConnector ? { gasLimit: SAFE_WRAP_GAS_LIMIT } : {}),
+                    }),
                   )
                   addTransaction(txReceipt, {
                     type: TransactionType.WRAP,
@@ -164,7 +173,10 @@ Please file a bug detailing how this happened - https://github.com/Uniswap/inter
                       throw new Error('wethContract is null')
                     }
                     const txReceipt = await trace.child({ name: 'Withdraw', op: 'wallet.send_transaction' }, () =>
-                      wethContract.withdraw(`0x${inputAmount.quotient.toString(16)}`),
+                      wethContract.withdraw(
+                        `0x${inputAmount.quotient.toString(16)}`,
+                        isSafeConnector ? { gasLimit: SAFE_WRAP_GAS_LIMIT } : {},
+                      ),
                     )
                     addTransaction(txReceipt, {
                       type: TransactionType.WRAP,
@@ -192,5 +204,5 @@ Please file a bug detailing how this happened - https://github.com/Uniswap/inter
     } else {
       return NOT_APPLICABLE
     }
-  }, [chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction])
+  }, [chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction, isSafeConnector])
 }

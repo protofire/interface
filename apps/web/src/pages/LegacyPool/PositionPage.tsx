@@ -17,6 +17,7 @@ import RateToggle from 'components/RateToggle'
 import { RowBetween, RowFixed } from 'components/Row'
 import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
 import TransactionConfirmationModal, { ConfirmationModalContent } from 'components/TransactionConfirmationModal'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { Dots } from 'components/swap/styled'
 import {
   SupportedInterfaceChainId,
@@ -58,6 +59,11 @@ import { WrongChainError } from 'utils/errors'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { unwrappedToken } from 'utils/unwrappedToken'
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_COLLECT_FEES_GAS_LIMIT = BigNumber.from(600_000)
 
 const PositionPageButtonPrimary = styled(ButtonPrimary)`
   width: 228px;
@@ -570,12 +576,16 @@ function PositionPageContent() {
       throw new WrongChainError()
     }
 
-    signer
-      .estimateGas(txn)
-      .then((estimate) => {
+    const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+    const gasLimitPromise: Promise<BigNumber> = isSafeConnector
+      ? Promise.resolve(SAFE_COLLECT_FEES_GAS_LIMIT)
+      : signer.estimateGas(txn).then(calculateGasMargin)
+
+    gasLimitPromise
+      .then((gasLimit) => {
         const newTxn = {
           ...txn,
-          gasLimit: calculateGasMargin(estimate),
+          gasLimit,
         }
 
         return signer.sendTransaction(newTxn).then((response: TransactionResponse) => {
@@ -617,6 +627,7 @@ function PositionPageContent() {
     account.status,
     account.address,
     account.chainId,
+    account.connector?.id,
     positionManager,
     tokenId,
     signer,
