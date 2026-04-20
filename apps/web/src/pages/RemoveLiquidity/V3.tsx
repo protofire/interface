@@ -14,6 +14,7 @@ import { AddRemoveTabs } from 'components/NavigationTabs'
 import { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import Slider from 'components/Slider'
 import TransactionConfirmationModal, { ConfirmationModalContent } from 'components/TransactionConfirmationModal'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { Break } from 'components/earn/styled'
 import { useIsSupportedChainId } from 'constants/chains'
 import { WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
@@ -46,6 +47,11 @@ import { WrongChainError } from 'utils/errors'
 import { useFormatter } from 'utils/formatNumbers'
 
 const DEFAULT_REMOVE_V3_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_REMOVE_LIQUIDITY_V3_GAS_LIMIT = BigNumber.from(1_000_000)
 
 // redirect invalid tokenIds
 export default function RemoveLiquidityV3() {
@@ -154,12 +160,16 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
       throw new WrongChainError()
     }
 
-    signer
-      .estimateGas(txn)
-      .then((estimate) => {
+    const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+    const gasLimitPromise: Promise<BigNumber> = isSafeConnector
+      ? Promise.resolve(SAFE_REMOVE_LIQUIDITY_V3_GAS_LIMIT)
+      : signer.estimateGas(txn).then(calculateGasMargin)
+
+    gasLimitPromise
+      .then((gasLimit) => {
         const newTxn = {
           ...txn,
-          gasLimit: calculateGasMargin(estimate),
+          gasLimit,
         }
 
         return signer.sendTransaction(newTxn).then((response: TransactionResponse) => {
@@ -208,6 +218,7 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
     account.status,
     account.address,
     account.chainId,
+    account.connector?.id,
     positionSDK,
     liquidityPercentage,
     signer,

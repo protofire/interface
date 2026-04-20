@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import type { TransactionResponse } from '@ethersproject/providers'
 import { LiquidityEventName, LiquiditySource } from '@uniswap/analytics-events'
@@ -16,6 +17,7 @@ import RateToggle from 'components/RateToggle'
 import Row, { AutoRow, RowBetween, RowFixed } from 'components/Row'
 import SettingsTab from 'components/Settings'
 import { V2Unsupported } from 'components/V2Unsupported'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { Dots } from 'components/swap/styled'
 import { WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
 import { useToken } from 'hooks/Tokens'
@@ -65,6 +67,11 @@ const StyledBodyWrapper = styled(BodyWrapper)`
 const ZERO = JSBI.BigInt(0)
 
 const DEFAULT_MIGRATE_SLIPPAGE_TOLERANCE = new Percent(75, 10_000)
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_MIGRATE_GAS_LIMIT = BigNumber.from(2_500_000)
 
 function EmptyState({ message }: { message: ReactNode }) {
   return (
@@ -344,11 +351,15 @@ function V2PairMigration({
 
     setConfirmingMigration(true)
 
-    migrator.estimateGas
-      .multicall(data)
-      .then((gasEstimate) => {
+    const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+    const gasLimitPromise: Promise<BigNumber> = isSafeConnector
+      ? Promise.resolve(SAFE_MIGRATE_GAS_LIMIT)
+      : migrator.estimateGas.multicall(data).then(calculateGasMargin)
+
+    gasLimitPromise
+      .then((gasLimit) => {
         return migrator
-          .multicall(data, { gasLimit: calculateGasMargin(gasEstimate) })
+          .multicall(data, { gasLimit })
           .then((response: TransactionResponse) => {
             sendAnalyticsEvent(LiquidityEventName.MIGRATE_LIQUIDITY_SUBMITTED, {
               action: `${isNotUniswap ? LiquiditySource.SUSHISWAP : LiquiditySource.V2}->${LiquiditySource.V3}`,
@@ -376,6 +387,7 @@ function V2PairMigration({
     v3Amount1Min,
     account.address,
     account.chainId,
+    account.connector?.id,
     networkSupportsV2,
     signatureData,
     getDeadline,

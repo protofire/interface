@@ -3,6 +3,7 @@ import { Currency, Percent } from '@uniswap/sdk-core'
 import { ConfirmModalState } from 'components/ConfirmSwapModal'
 import { PendingModalError } from 'components/ConfirmSwapModal/Error'
 import { Field, RESET_APPROVAL_TOKENS } from 'components/swap/constants'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { useAccount } from 'hooks/useAccount'
 import { useMaxAmountIn } from 'hooks/useMaxAmountIn'
 import { Allowance, AllowanceState } from 'hooks/usePermit2Allowance'
@@ -55,6 +56,11 @@ export function useConfirmModalState({
 
   const account = useAccount()
   const { chainId } = useSwapAndLimitContext()
+  // Safe requires a fresh user action in its own UI for every transaction. Auto-chaining
+  // approve -> permit -> swap appears to silently skip later steps because the next Safe
+  // modal cannot open while the previous one is still being handled. For Safe, reset to
+  // REVIEWING after each approval phase so the user re-confirms to trigger the next step.
+  const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
 
   // This is a function instead of a memoized value because we do _not_ want it to update as the allowance changes.
   // For example, if the user needs to complete 3 steps initially, we should always show 3 step indicators
@@ -206,9 +212,13 @@ export function useConfirmModalState({
       !allowance.needsSetupApproval &&
       previousSetupApprovalNeeded
     ) {
+      if (isSafeConnector) {
+        setConfirmModalState(ConfirmModalState.REVIEWING)
+        return
+      }
       performStep(ConfirmModalState.PERMITTING)
     }
-  }, [allowance, performStep, previousSetupApprovalNeeded])
+  }, [allowance, performStep, previousSetupApprovalNeeded, isSafeConnector])
 
   const previousRevocationPending = usePrevious(
     allowance.state === AllowanceState.REQUIRED && allowance.isRevocationPending,
@@ -237,9 +247,13 @@ export function useConfirmModalState({
         setConfirmModalState(ConfirmModalState.REVIEWING)
         return
       }
+      if (isSafeConnector) {
+        setConfirmModalState(ConfirmModalState.REVIEWING)
+        return
+      }
       performStep(ConfirmModalState.PENDING_CONFIRMATION)
     }
-  }, [allowance, confirmModalState, doesTradeDiffer, performStep])
+  }, [allowance, confirmModalState, doesTradeDiffer, performStep, isSafeConnector])
 
   const resetToReviewScreen = () => {
     setConfirmModalState(ConfirmModalState.REVIEWING)

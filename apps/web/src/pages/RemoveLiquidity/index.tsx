@@ -22,6 +22,7 @@ import Row, { RowBetween, RowFixed } from 'components/Row'
 import Slider from 'components/Slider'
 import TransactionConfirmationModal, { ConfirmationModalContent } from 'components/TransactionConfirmationModal'
 import { V2Unsupported } from 'components/V2Unsupported'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { Dots } from 'components/swap/styled'
 import { useIsSupportedChainId } from 'constants/chains'
 import { WRAPPED_NATIVE_CURRENCY } from 'constants/tokens'
@@ -59,6 +60,11 @@ import { calculateSlippageAmount } from 'utils/calculateSlippageAmount'
 import { currencyId } from 'utils/currencyId'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_REMOVE_LIQUIDITY_V2_GAS_LIMIT = BigNumber.from(1_000_000)
 
 export default function RemoveLiquidityWrapper() {
   const { chainId } = useAccount()
@@ -281,35 +287,46 @@ function RemoveLiquidity() {
       throw new Error('Attempting to confirm without approval or a signature. Please contact support.')
     }
 
-    const safeGasEstimates: (BigNumber | undefined)[] = await Promise.all(
-      methodNames.map((methodName) =>
-        router.estimateGas[methodName](...args)
-          .then((estimateGas) => calculateGasMargin(estimateGas))
-          .catch((error) => {
-            logger.info('RemoveLiquidity', 'onRemove', 'estimateGas failed', {
-              message: error.message,
-              methodName,
-              args,
-            })
-            return undefined
-          }),
-      ),
-    )
+    const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
 
-    const indexOfSuccessfulEstimation = safeGasEstimates.findIndex((safeGasEstimate) =>
-      BigNumber.isBigNumber(safeGasEstimate),
-    )
+    let chosenMethodName: string | undefined
+    let chosenGasLimit: BigNumber | undefined
+    if (isSafeConnector) {
+      // Safe connector: skip per-methodName estimateGas probing (some chains reject
+      // eth_estimateGas when `from` is a contract). Use the first method name with a
+      // conservative gas limit; Safe Wallet re-estimates safeTxGas before submission.
+      chosenMethodName = methodNames[0]
+      chosenGasLimit = SAFE_REMOVE_LIQUIDITY_V2_GAS_LIMIT
+    } else {
+      const safeGasEstimates: (BigNumber | undefined)[] = await Promise.all(
+        methodNames.map((methodName) =>
+          router.estimateGas[methodName](...args)
+            .then((estimateGas) => calculateGasMargin(estimateGas))
+            .catch((error) => {
+              logger.info('RemoveLiquidity', 'onRemove', 'estimateGas failed', {
+                message: error.message,
+                methodName,
+                args,
+              })
+              return undefined
+            }),
+        ),
+      )
+      const indexOfSuccessfulEstimation = safeGasEstimates.findIndex((safeGasEstimate) =>
+        BigNumber.isBigNumber(safeGasEstimate),
+      )
+      if (indexOfSuccessfulEstimation !== -1) {
+        chosenMethodName = methodNames[indexOfSuccessfulEstimation]
+        chosenGasLimit = safeGasEstimates[indexOfSuccessfulEstimation]
+      }
+    }
 
-    // all estimations failed...
-    if (indexOfSuccessfulEstimation === -1) {
+    if (!chosenMethodName) {
       logger.warn('RemoveLiquidity', 'onRemove', 'This transaction would fail. Please contact support.')
     } else {
-      const methodName = methodNames[indexOfSuccessfulEstimation]
-      const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation]
-
       setAttemptingTxn(true)
-      await router[methodName](...args, {
-        gasLimit: safeGasEstimate,
+      await router[chosenMethodName](...args, {
+        gasLimit: chosenGasLimit,
       })
         .then((response: TransactionResponse) => {
           setAttemptingTxn(false)
