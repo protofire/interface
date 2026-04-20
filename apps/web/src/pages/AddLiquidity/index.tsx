@@ -30,6 +30,7 @@ import RateToggle from 'components/RateToggle'
 import Row, { RowBetween, RowFixed } from 'components/Row'
 import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
 import TransactionConfirmationModal, { ConfirmationModalContent } from 'components/TransactionConfirmationModal'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { OutOfSyncWarning } from 'components/addLiquidity/OutOfSyncWarning'
 import OwnershipWarning from 'components/addLiquidity/OwnershipWarning'
 import { TokenTaxV3Warning } from 'components/addLiquidity/TokenTaxV3Warning'
@@ -100,6 +101,11 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 const DEFAULT_ADD_IN_RANGE_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 const blastRebasingAlertAtom = atomWithStorage<boolean>('shouldShowBlastRebasingAlert', true)
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_ADD_LIQUIDITY_V3_GAS_LIMIT = BigNumber.from(1_500_000)
 
 const StyledBodyWrapper = styled(BodyWrapper)<{ $hasExistingPosition: boolean }>`
   padding: ${({ $hasExistingPosition }) => ($hasExistingPosition ? '10px' : 0)};
@@ -333,12 +339,16 @@ function AddLiquidity() {
 
       setAttemptingTxn(true)
 
-      signer
-        .estimateGas(txn)
-        .then((estimate) => {
+      const isSafeConnector = account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+      const gasLimitPromise: Promise<BigNumber> = isSafeConnector
+        ? Promise.resolve(SAFE_ADD_LIQUIDITY_V3_GAS_LIMIT)
+        : signer.estimateGas(txn).then(calculateGasMargin)
+
+      gasLimitPromise
+        .then((gasLimit) => {
           const newTxn = {
             ...txn,
-            gasLimit: calculateGasMargin(estimate),
+            gasLimit,
           }
 
           return signer.sendTransaction(newTxn).then((response: TransactionResponse) => {

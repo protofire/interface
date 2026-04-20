@@ -2,6 +2,7 @@ import { MaxUint256 } from '@ethersproject/constants'
 import type { TransactionResponse } from '@ethersproject/providers'
 import { InterfaceEventName } from '@uniswap/analytics-events'
 import { Currency, CurrencyAmount, Token } from '@uniswap/sdk-core'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { useAccount } from 'hooks/useAccount'
 import { useTokenContract } from 'hooks/useContract'
 import { useTokenAllowance } from 'hooks/useTokenAllowance'
@@ -10,6 +11,11 @@ import { useCallback, useMemo } from 'react'
 import { sendAnalyticsEvent } from 'uniswap/src/features/telemetry/send'
 import { logger } from 'utilities/src/logger/logger'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission, so an overestimate here is harmless.
+const SAFE_APPROVE_GAS_LIMIT = 150_000
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -61,7 +67,8 @@ export function useApproval(
     | undefined
   >,
 ] {
-  const { chainId } = useAccount()
+  const { chainId, connector } = useAccount()
+  const isSafeConnector = connector?.id === CONNECTION.SAFE_CONNECTOR_ID
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
 
   // check the current approval status
@@ -102,16 +109,22 @@ export function useApproval(
     }
 
     let useExact = false
-    const estimatedGas = await tokenContract.estimateGas.approve(spender, MaxUint256).catch(() => {
-      // general fallback for tokens which restrict approval amounts
-      useExact = true
-      return tokenContract.estimateGas.approve(spender, amountToApprove.quotient.toString())
-    })
+    let gasLimitOverride: { gasLimit: ReturnType<typeof calculateGasMargin> | number }
+    if (isSafeConnector) {
+      // Safe connector: skip frontend eth_estimateGas (rejected on some chains when `from` is
+      // a contract, e.g. Abstract/ZKsync). Safe Wallet re-estimates safeTxGas server-side.
+      gasLimitOverride = { gasLimit: SAFE_APPROVE_GAS_LIMIT }
+    } else {
+      const estimatedGas = await tokenContract.estimateGas.approve(spender, MaxUint256).catch(() => {
+        // general fallback for tokens which restrict approval amounts
+        useExact = true
+        return tokenContract.estimateGas.approve(spender, amountToApprove.quotient.toString())
+      })
+      gasLimitOverride = { gasLimit: calculateGasMargin(estimatedGas) }
+    }
 
     return tokenContract
-      .approve(spender, useExact ? amountToApprove.quotient.toString() : MaxUint256, {
-        gasLimit: calculateGasMargin(estimatedGas),
-      })
+      .approve(spender, useExact ? amountToApprove.quotient.toString() : MaxUint256, gasLimitOverride)
       .then((response) => {
         const eventProperties = {
           chain_id: chainId,
@@ -130,7 +143,7 @@ export function useApproval(
         logFailure(error)
         throw error
       })
-  }, [approvalState, token, tokenContract, amountToApprove, spender, chainId])
+  }, [approvalState, token, tokenContract, amountToApprove, spender, chainId, isSafeConnector])
 
   return [approvalState, approve]
 }
