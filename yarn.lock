@@ -15410,7 +15410,7 @@ __metadata:
     ui: "workspace:^"
     uniswap: "workspace:^"
     utilities: "workspace:^"
-    uuid: 9.0.0
+    uuid: 14.0.0
     wallet: "workspace:^"
     webpack: 5.90.0
     webpack-cli: ^5.0.1
@@ -15620,7 +15620,7 @@ __metadata:
     uniswap: "workspace:^"
     use-resize-observer: 9.1.0
     utilities: "workspace:^"
-    uuid: 9.0.0
+    uuid: 14.0.0
     video-extensions: 1.2.0
     viem: ^2.21.47
     wagmi: 2.14.6
@@ -44847,7 +44847,7 @@ __metadata:
     typescript: 5.3.3
     uppercamelcase: ^3.0.0
     utilities: "workspace:^"
-    uuid: 9.0.0
+    uuid: 14.0.0
     wcag-contrast: 3.0.0
   languageName: unknown
   linkType: soft
@@ -45237,7 +45237,7 @@ __metadata:
     typescript: 5.3.3
     ui: "workspace:^"
     utilities: "workspace:^"
-    uuid: 9.0.0
+    uuid: 14.0.0
     wagmi: 2.14.6
     wcag-contrast: 3.0.0
   languageName: unknown
@@ -45745,7 +45745,7 @@ __metadata:
     redux: 4.2.1
     subscriptions-transport-ws: 0.11.0
     typescript: 5.3.3
-    uuid: 9.0.0
+    uuid: 14.0.0
     zen-observable-ts: 1.2.5
   languageName: unknown
   linkType: soft
@@ -45757,12 +45757,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:9.0.0":
-  version: 9.0.0
-  resolution: "uuid@npm:9.0.0"
+"uuid@npm:14.0.0":
+  version: 14.0.0
+  resolution: "uuid@npm:14.0.0"
   bin:
-    uuid: dist/bin/uuid
-  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
+    uuid: dist-node/bin/uuid
+  checksum: 08608584a79e987cdae000fa8eb724fa51dd8aafc136cd9fa9a8c87d07b246c56eec5fd9027fdb3e49a863eedf758bc19e325909ce281955c7a027fed67dc89e
   languageName: node
   linkType: hard
 
@@ -46304,7 +46304,7 @@ __metadata:
     ui: "workspace:^"
     uniswap: "workspace:^"
     utilities: "workspace:^"
-    uuid: 9.0.0
+    uuid: 14.0.0
     zod: 3.22.4
     zxcvbn: 4.4.2
   languageName: unknown

@@ -63,7 +63,7 @@
     "typed-redux-saga": "1.5.0",
     "ui": "workspace:^",
     "utilities": "workspace:^",
-    "uuid": "9.0.0",
+    "uuid": "14.0.0",
     "wagmi": "2.14.6",
     "wcag-contrast": "3.0.0"
   },
