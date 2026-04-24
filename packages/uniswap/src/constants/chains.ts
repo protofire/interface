@@ -1167,9 +1167,9 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
     rpcUrls: {
-      [RPCType.Public]: { http: ['https://zero.drpc.org'] },
-      default: { http: ['https://zero.drpc.org'] },
-      appOnly: { http: ['https://zero.drpc.org'] },
+      [RPCType.Public]: { http: ['https://rpc.zero.network', 'https://zero.drpc.org'] },
+      default: { http: ['https://rpc.zero.network', 'https://zero.drpc.org'] },
+      appOnly: { http: ['https://rpc.zero.network', 'https://zero.drpc.org'] },
     },
     urlParam: 'zero',
     statusPage: undefined,

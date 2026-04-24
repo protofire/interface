@@ -14,7 +14,7 @@ export const zero = /*#__PURE__*/ defineChain({
     symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: ['https://zero.drpc.org'] },
+    default: { http: ['https://rpc.zero.network/', 'https://zero.drpc.org'] },
   },
   blockExplorers: {
     default: {
