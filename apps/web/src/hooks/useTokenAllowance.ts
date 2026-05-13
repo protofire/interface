@@ -1,6 +1,8 @@
 import { ContractTransaction } from '@ethersproject/contracts'
 import { InterfaceEventName } from '@uniswap/analytics-events'
 import { CurrencyAmount, MaxUint256, Token } from '@uniswap/sdk-core'
+import { CONNECTION } from 'components/Web3Provider/constants'
+import { useAccount } from 'hooks/useAccount'
 import { useTokenContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'lib/hooks/multicall'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -13,6 +15,10 @@ import { UserRejectedRequestError } from 'utils/errors'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 
 const MAX_ALLOWANCE = MaxUint256.toString()
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission, so an overestimate here is harmless.
+const SAFE_APPROVE_GAS_LIMIT = 150_000
 
 export function useTokenAllowance(
   token?: Token,
@@ -54,6 +60,9 @@ export function useUpdateTokenAllowance(
   const contractRef = useRef(contract)
   contractRef.current = contract
 
+  const { connector } = useAccount()
+  const isSafeConnector = connector?.id === CONNECTION.SAFE_CONNECTOR_ID
+
   return useCallback(
     () =>
       trace({ name: 'Allowance', op: 'permit.allowance' }, async (trace) => {
@@ -76,7 +85,11 @@ export function useUpdateTokenAllowance(
               if (!contract) {
                 throw new Error('missing contract')
               }
-              return await contract.approve(spender, allowance)
+              return await contract.approve(
+                spender,
+                allowance,
+                isSafeConnector ? { gasLimit: SAFE_APPROVE_GAS_LIMIT } : {},
+              )
             } catch (error) {
               if (didUserReject(error)) {
                 walletTrace.setStatus('cancelled')
@@ -112,7 +125,7 @@ export function useUpdateTokenAllowance(
           }
         }
       }),
-    [amount, spender, analyticsTrace],
+    [amount, spender, analyticsTrace, isSafeConnector],
   )
 }
 

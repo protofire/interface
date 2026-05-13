@@ -9,6 +9,7 @@ import {
   UniversalRouterVersion,
 } from '@uniswap/universal-router-sdk'
 import { FeeOptions, toHex } from '@uniswap/v3-sdk'
+import { CONNECTION } from 'components/Web3Provider/constants'
 import { useTotalBalancesUsdForAnalytics } from 'graphql/data/apollo/TokenBalancesProvider'
 import { useAccount } from 'hooks/useAccount'
 import { useEthersWeb3Provider } from 'hooks/useEthersProvider'
@@ -30,6 +31,11 @@ import { UserRejectedRequestError, WrongChainError } from 'utils/errors'
 import isZero from 'utils/isZero'
 import { didUserReject, swapErrorToUserReadableMessage } from 'utils/swapErrorToUserReadableMessage'
 import { getWalletMeta } from 'utils/walletMeta'
+
+// Fallback used for Safe connector to bypass frontend eth_estimateGas, which some chains
+// (e.g. Abstract / ZKsync-based) reject when `from` is a contract. Safe Wallet re-estimates
+// safeTxGas in its backend before submission.
+const SAFE_SWAP_GAS_LIMIT = BigNumber.from(1_500_000)
 
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
@@ -114,21 +120,31 @@ export function useUniversalRouterSwapCallback(
           }
 
           let gasLimit: BigNumber
-          try {
-            const gasEstimate = await provider.estimateGas(tx)
-            gasLimit = calculateGasMargin(gasEstimate)
+          if (account.connector?.id === CONNECTION.SAFE_CONNECTOR_ID) {
+            gasLimit = SAFE_SWAP_GAS_LIMIT
             trace.setData('gasLimit', gasLimit.toNumber())
-          } catch (gasError) {
-            sendAnalyticsEvent(SwapEventName.SWAP_ESTIMATE_GAS_CALL_FAILED, {
-              ...formatCommonPropertiesForTrade(trade, options.slippageTolerance),
-              ...analyticsContext,
-              client_block_number: blockNumber,
-              txRequest: tx,
-              isAutoSlippage,
-            })
-            const wrappedError = new Error('gas error', { cause: gasError })
-            logger.warn('useUniversalRouter', 'useUniversalRouterSwapCallback', 'Failed to estimate gas', wrappedError)
-            throw new GasEstimationError()
+          } else {
+            try {
+              const gasEstimate = await provider.estimateGas(tx)
+              gasLimit = calculateGasMargin(gasEstimate)
+              trace.setData('gasLimit', gasLimit.toNumber())
+            } catch (gasError) {
+              sendAnalyticsEvent(SwapEventName.SWAP_ESTIMATE_GAS_CALL_FAILED, {
+                ...formatCommonPropertiesForTrade(trade, options.slippageTolerance),
+                ...analyticsContext,
+                client_block_number: blockNumber,
+                txRequest: tx,
+                isAutoSlippage,
+              })
+              const wrappedError = new Error('gas error', { cause: gasError })
+              logger.warn(
+                'useUniversalRouter',
+                'useUniversalRouterSwapCallback',
+                'Failed to estimate gas',
+                wrappedError,
+              )
+              throw new GasEstimationError()
+            }
           }
 
           const response = await trace.child(

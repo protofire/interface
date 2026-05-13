@@ -47,6 +47,7 @@ import {
 } from 'constants/tokens'
 import { getNativeLogoURI, getTokenLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
+  SHAPE_TOKEN,
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
   USDC_ANIME,
@@ -58,7 +59,6 @@ import {
   USDC_REDSTONE,
   USDC_REDSTONE_GARNET,
   USDC_SHAPE,
-  SHAPE_TOKEN,
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
@@ -233,11 +233,9 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.CYBER] as Token,
     USDC_CYBER,
   ].map(buildCurrencyInfo),
-  [UniverseChainId.SHAPE]: [
-    SHAPE_TOKEN,
-    USDC_SHAPE,
-    WRAPPED_NATIVE_CURRENCY[UniverseChainId.SHAPE] as Token,
-  ].map(buildCurrencyInfo),
+  [UniverseChainId.SHAPE]: [SHAPE_TOKEN, USDC_SHAPE, WRAPPED_NATIVE_CURRENCY[UniverseChainId.SHAPE] as Token].map(
+    buildCurrencyInfo,
+  ),
   [UniverseChainId.INK]: [
     nativeOnChain(UniverseChainId.INK),
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.INK] as Token,
