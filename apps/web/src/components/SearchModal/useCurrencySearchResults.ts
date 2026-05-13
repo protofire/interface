@@ -12,6 +12,7 @@ import { useMemo } from 'react'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { useUserAddedTokens } from 'state/user/userAddedTokens'
 import { UserAddedToken } from 'types/tokens'
+import { SHAPE_TOKEN, USDC_SHAPE } from 'uniswap/src/constants/tokens'
 import {
   Chain,
   Token as GqlToken,
@@ -19,7 +20,6 @@ import {
   useSearchTokensWebQuery,
   useTopTokensQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
-import { SHAPE_TOKEN, USDC_SHAPE } from 'uniswap/src/constants/tokens'
 import { t } from 'uniswap/src/i18n'
 import { UniverseChainId } from 'uniswap/src/types/chains'
 import { isSameAddress } from 'utilities/src/addresses'
