@@ -10,6 +10,7 @@ import { useIsMobile, useScreenSize } from 'hooks/screenSize'
 import { useAccount } from 'hooks/useAccount'
 import { useTheme } from 'lib/styled-components'
 import { BuyForm } from 'pages/Swap/Buy/BuyForm'
+import { DeprecationWarningBanner } from 'pages/Swap/DeprecationWarningBanner'
 import { LimitFormWrapper } from 'pages/Swap/Limit/LimitForm'
 import { SendForm } from 'pages/Swap/Send/SendForm'
 import { SwapForm } from 'pages/Swap/SwapForm'
@@ -136,6 +137,7 @@ export function Swap({
   const isDark = useIsDarkMode()
   const screenSize = useScreenSize()
   const forAggregatorEnabled = useFeatureFlag(FeatureFlags.ForAggregator)
+  const zeroChainId = '543210'
 
   return (
     <SwapAndLimitContextProvider
@@ -155,6 +157,7 @@ export function Swap({
             <Flex width="100%">
               <SwapWrapper isDark={isDark} className={className} id="swap-page">
                 {!hideHeader && <SwapHeader compact={compact || !screenSize.sm} syncTabToUrl={syncTabToUrl} />}
+                {zeroChainId === chainId?.toString() && <DeprecationWarningBanner />}
                 {currentTab === SwapTab.Swap && (
                   <SwapForm
                     onCurrencyChange={onCurrencyChange}
