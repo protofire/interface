@@ -26,8 +26,20 @@ import { useTokenBalance } from 'state/connection/hooks'
 import { usePairAdder } from 'state/user/hooks'
 import { StyledInternalLink, ThemedText } from 'theme/components'
 import Trace from 'uniswap/src/features/telemetry/Trace'
+import { USDT0_STABLE, USDT0_STABLE_TESTNET } from 'uniswap/src/constants/tokens'
 import { Trans } from 'uniswap/src/i18n'
+import { UniverseChainId } from 'uniswap/src/types/chains'
 import { currencyId } from 'utils/currencyId'
+
+function getDefaultCurrency0(chainId: number): Currency {
+  if (chainId === UniverseChainId.StableTestnet) {
+    return USDT0_STABLE_TESTNET
+  }
+  if (chainId === UniverseChainId.Stable) {
+    return USDT0_STABLE
+  }
+  return nativeOnChain(chainId)
+}
 
 enum Fields {
   TOKEN0 = 0,
@@ -51,7 +63,7 @@ export default function PoolFinder() {
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1)
 
   const [currency0, setCurrency0] = useState<Currency | null>(() =>
-    account.chainId ? nativeOnChain(account.chainId) : null,
+    account.chainId ? getDefaultCurrency0(account.chainId) : null,
   )
   const [currency1, setCurrency1] = useState<Currency | null>(null)
 
