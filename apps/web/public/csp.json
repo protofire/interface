@@ -7,7 +7,8 @@
     "data:",
     "'wasm-unsafe-eval'",
     "'unsafe-eval'",
-    "https://translate.googleapis.com/"
+    "https://translate.googleapis.com/",
+    "https://www.googletagmanager.com"
   ],
   "styleSrc": [
     "'self'",
@@ -66,7 +67,11 @@
     "https://auth.privy.io",
     "https://api.mainnet.abs.xyz",
     "https://*.sakuraswap.com",
-    "https://sakuraswap.com"
+    "https://sakuraswap.com",
+    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
+    "https://*.analytics.google.com",
+    "https://www.googletagmanager.com"
   ],
   "workerSrc": [
     "'self'",

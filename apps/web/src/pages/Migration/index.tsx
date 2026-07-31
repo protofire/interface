@@ -45,7 +45,6 @@ const domain = isProd ? 'https://sakuraswap.com/' : 'https://staging.sakuraswap.
 const SakuraSwapChains = [
   { name: 'Abstract', icon: '/images/logos/Abstract_Logo.png', url: `${domain}swap?chain=abstract` },
   { name: 'Anime', icon: '/images/logos/Anime_Logo.png', url: `${domain}swap?chain=anime` },
-  { name: 'Zero', icon: '/images/logos/Zero_Logo.png', url: `${domain}swap?chain=zero` },
 ]
 
 const StandaloneChains = [
@@ -63,8 +62,27 @@ const ExternalMigrationChains = [
   {
     name: 'Zora',
     icon: '/images/logos/Zora_Logo.png',
-    oldUrl: 'https://swap.zora.energy',
-    newUrl: 'https://app.uniswap.org/swap?chain=zora',
+    description: (
+      <>
+        Interface for Zora network <span style={{ fontWeight: 'bold' }}>https://swap.zora.energy</span> is no longer
+        available. <br />
+        You can swap in Zora network using the official Uniswap interface.
+      </>
+    ),
+    ctaLabel: 'Swap Zora Here',
+    ctaUrl: 'https://app.uniswap.org/swap?chain=zora',
+  },
+  {
+    name: 'Zero',
+    icon: '/images/logos/Zero_Logo.png',
+    description: (
+      <>
+        Zero Mainnet has been sunset as of July 31st, 2026 and is no longer supported by Sakura Swap. <br />
+        Read the official announcement for details, and use a block explorer to withdraw any remaining liquidity.
+      </>
+    ),
+    ctaLabel: 'Read the Announcement',
+    ctaUrl: 'https://x.com/zerodotnetwork/status/2057529610628128917',
   },
 ]
 
@@ -305,18 +323,19 @@ export default function MigrationPage() {
                   marginBottom: '16px',
                 }}
               >
-                <img src={chain.icon} alt="Zora" style={{ width: '56px', height: '56px', borderRadius: '12px' }} />
+                <img
+                  src={chain.icon}
+                  alt={chain.name}
+                  style={{ width: '56px', height: '56px', borderRadius: '12px' }}
+                />
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1 }}>{chain.name}</h3>
               </div>
               <p style={{ fontSize: '1.1rem', color: theme.neutral1, marginBottom: '24px', lineHeight: '1.6' }}>
-                Interface for Zora network{' '}
-                <span style={{ color: theme.neutral2, fontWeight: 'bold' }}>{chain.oldUrl}</span> is no longer
-                available. <br />
-                You can swap in Zora network using the official Uniswap interface.
+                {chain.description}
               </p>
-              <ExternalLink href={chain.newUrl}>
+              <ExternalLink href={chain.ctaUrl}>
                 <SmallButtonPrimary as="span" width="auto" style={{ gap: '8px', display: 'inline-flex' }}>
-                  Swap Zora Here
+                  {chain.ctaLabel}
                   <ExternalLinkIcon size={18} />
                 </SmallButtonPrimary>
               </ExternalLink>
