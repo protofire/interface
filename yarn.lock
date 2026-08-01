@@ -31923,6 +31923,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-yaml@npm:4.2.0":
+  version: 4.2.0
+  resolution: "js-yaml@npm:4.2.0"
+  dependencies:
+    argparse: ^2.0.1
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 86bd35548a0c19cd1f5861147c09aa1f52eb0fc9464f34023524d22bbe079c62c30fd00750e63f632e8d12c12ad36ea0dd1e6bec5171c492ecad433d8db295eb
+  languageName: node
+  linkType: hard
+
 "js-yaml@npm:^3.13.1, js-yaml@npm:^3.14.1, js-yaml@npm:^3.6.1":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
@@ -45294,7 +45305,7 @@ __metadata:
     husky: ^8.0.3
     i18next: 23.10.0
     i18next-parser: 8.6.0
-    js-yaml: 4.1.0
+    js-yaml: 4.2.0
     moti: 0.29.0
     patch-package: 8.0.0
     prettier: 3.3.2
