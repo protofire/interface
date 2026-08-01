@@ -136,7 +136,7 @@
     "uniswap": "workspace:^",
     "use-resize-observer": "9.1.0",
     "utilities": "workspace:^",
-    "uuid": "9.0.0",
+    "uuid": "14.0.0",
     "video-extensions": "1.2.0",
     "viem": "^2.21.47",
     "wagmi": "2.14.6",
