@@ -31,6 +31,8 @@
     "https://*.coingecko.com/",
     "https://*.coinmarketcap.com/",
     "https://*.walletconnect.com",
+    "https://*.walletconnect.org",
+    "https://api.web3modal.org",
     "https://gateway.ipfs.io/",
     "https://ipfs.io/",
     "https://vercel.com",
