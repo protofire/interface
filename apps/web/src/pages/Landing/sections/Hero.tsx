@@ -113,7 +113,7 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             <Swap
               syncTabToUrl={false}
               hideHeader
-              chainId={initialInputCurrency?.chainId ?? UniverseChainId.AbstractMainnet}
+              chainId={initialInputCurrency?.chainId ?? UniverseChainId.Anime}
               initialInputCurrency={initialInputCurrency}
               multichainUXEnabled={multichainUXEnabled}
             />
