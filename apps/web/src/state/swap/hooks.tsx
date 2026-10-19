@@ -417,7 +417,7 @@ export function useInitialCurrencyState(): {
   }, [parsedQs])
 
   const supportedChainId =
-    useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.AbstractMainnet
+    useSupportedChainId(parsedCurrencyState.chainId ?? chainId) ?? UniverseChainId.Anime
   const hasCurrencyQueryParams =
     parsedCurrencyState.inputCurrencyId || parsedCurrencyState.outputCurrencyId || parsedCurrencyState.chainId
 

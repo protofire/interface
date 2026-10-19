@@ -161,7 +161,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
 export default function FullPositionCard({ pair, border, stakedBalance }: PositionCardProps) {
   const account = useAccount()
   const { chainId: universeChainId } = useSwapAndLimitContext()
-  const chainId = universeChainId ? universeChainId : UniverseChainId.AbstractMainnet
+  const chainId = universeChainId ? universeChainId : UniverseChainId.Anime
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)

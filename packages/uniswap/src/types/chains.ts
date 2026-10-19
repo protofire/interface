@@ -88,9 +88,11 @@ export type InterfaceChainId = UniverseChainId
 
 
 export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = isProdEnv() ? [
+  UniverseChainId.Anime,
   UniverseChainId.AbstractMainnet,
   UniverseChainId.Anime,
 ] : [
+  UniverseChainId.Anime,
   UniverseChainId.AbstractMainnet,
   UniverseChainId.Anime,
 ]
