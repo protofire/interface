@@ -131,7 +131,7 @@
     "lfg": "yarn g:prepare && yarn mobile env:local:download && yarn extension env:local:download && yarn g:build && yarn mobile pod && yarn mobile ios",
     "local:check": "./scripts/local-version-check.sh",
     "mobile": "yarn workspace @uniswap/mobile",
-    "postinstall": "husky install && yarn g:prepare && yarn patch-package",
+    "postinstall": "husky install && yarn g:prepare && (yarn patch-package || bash scripts/debug-patch-package.sh)",
     "tradingapi": "yarn workspace uniswap tradingapi:schema && yarn workspace uniswap tradingapi:generate",
     "ui": "yarn workspace ui",
     "uniswap": "yarn workspace uniswap",
