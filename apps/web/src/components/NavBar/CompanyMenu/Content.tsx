@@ -29,7 +29,7 @@ export const useMenuContent = (): MenuSection[] => {
     },
     {
       title: 'Company',
-      items: [{ label: 'Protofire', href: 'https://protofire.io/' }],
+      items: [{ label: 'Protofire', href: 'https://swap.protofire.io/' }],
     },
     {
       title: 'Terms',

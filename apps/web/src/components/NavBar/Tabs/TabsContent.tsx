@@ -4,13 +4,12 @@ import { Send } from 'components/Icons/Send'
 import { SwapV2 } from 'components/Icons/SwapV2'
 import { MenuItem } from 'components/NavBar/CompanyMenu/Content'
 import { useTabsVisible } from 'components/NavBar/ScreenSizes'
-import { getInfoV2Link, getInfoV3Domain } from 'constants/links'
+import { getInfoV2Link, getInfoV3Link } from 'constants/links'
 import forkConfig from 'forkConfig'
 import { useTheme } from 'lib/styled-components'
 import { useLocation } from 'react-router-dom'
 import { useSwapAndLimitContext } from 'state/swap/useSwapContext'
 import { ExternalLink } from 'ui/src/components/icons'
-import { UNIVERSE_CHAIN_INFO } from 'uniswap/src/constants/chains'
 import { FeatureFlags } from 'uniswap/src/features/gating/flags'
 import { useFeatureFlag } from 'uniswap/src/features/gating/hooks'
 import { useTranslation } from 'uniswap/src/i18n'
@@ -88,7 +87,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
       title: t('common.explore'),
       icon: <ExternalLink size="$icon.16" color="$neutral2" />,
       internal: false,
-      href: `${getInfoV3Domain()}/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+      href: getInfoV3Link(chainId as UniverseChainId),
       isActive: pathname.startsWith('/explore') || pathname.startsWith('/nfts'),
       items: forkConfig.uniSpecificFeaturesEnabled
         ? [
@@ -120,7 +119,7 @@ export const useTabsContent = (props?: { includeNftsLink?: boolean }): TabsSecti
             {
               label: 'V3 Analytics',
               quickKey: 'T',
-              href: `${getInfoV3Domain()}/#/${UNIVERSE_CHAIN_INFO[chainId as UniverseChainId].urlParam}`,
+              href: getInfoV3Link(chainId as UniverseChainId),
               internal: false,
             },
             ...(![+UniverseChainId.BOB, UniverseChainId.REDSTONE, UniverseChainId.REDSTONE_GARNET].includes(+chainId!)

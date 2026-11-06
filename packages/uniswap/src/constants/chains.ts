@@ -1204,7 +1204,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: 'https://app.gobob.xyz',
-    chainPriority: 0,
+    chainPriority: 6,
     docs: 'https://docs.gobob.xyz',
     elementName: ElementName.ChainBob,
     explorer: {
@@ -1312,7 +1312,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: 'https://relay.link/bridge/shape',
-    chainPriority: 0,
+    chainPriority: 2,
     docs: 'https://docs.shape.network',
     elementName: ElementName.ChainShape,
     explorer: {
@@ -1366,7 +1366,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: 'https://inkonchain.com/bridge',
-    chainPriority: 0,
+    chainPriority: 7,
     docs: 'https://docs.inkonchain.com',
     elementName: ElementName.ChainShape,
     explorer: {
@@ -1636,7 +1636,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: '',
-    chainPriority: 0,
+    chainPriority: 1,
     docs: '',
     elementName: ElementName.ChainAnime,
     explorer: {
@@ -1739,7 +1739,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: '',
-    chainPriority: 0,
+    chainPriority: 5,
     docs: 'https://developers.flow.com/',
     elementName: ElementName.ChainFlow,
     explorer: {
@@ -1793,7 +1793,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: '',
-    chainPriority: 0,
+    chainPriority: 100,
     docs: 'https://developers.flow.com/',
     elementName: ElementName.ChainFlowTestnet,
     explorer: {
