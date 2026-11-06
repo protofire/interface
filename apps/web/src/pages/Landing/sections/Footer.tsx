@@ -119,7 +119,7 @@ export function Footer() {
         width="100%"
         justifyContent="space-between"
       >
-        <span style={{ color: theme.socials }}>2025 Sakura Swap</span>
+        <span style={{ color: theme.socials }}>{new Date().getFullYear()} Sakura Swap</span>
 
         <Anchor href={ADD_NEW_CHAIN_URL} target="_blank" style={{ textDecoration: 'none' }}>
           <AddChainButton
@@ -131,7 +131,7 @@ export function Footer() {
           />
         </Anchor>
 
-        <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://protofire.io" target="_blank">
+        <Anchor style={{ textDecoration: 'none', color: theme.socials }} href="https://swap.protofire.io" target="_blank">
           <span style={{ display: 'flex', alignItems: 'center' }}>
             Supported by <CompanyIcon style={{ marginLeft: 4, marginRight: 4 }} />
           </span>
