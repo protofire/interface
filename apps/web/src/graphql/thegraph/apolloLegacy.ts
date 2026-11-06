@@ -8,6 +8,8 @@ export type TickData = Ticks[number]
 //   [UniverseChainId.AbstractMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/abstract/uniswap-v3',
 //   [UniverseChainId.Zero]: 'https://graph.swap.w3us.site/subgraphs/name/zero/uniswap-v3',
 //   [UniverseChainId.Anime]: 'https://graph.swap.w3us.site/subgraphs/name/anime/uniswap-v3',
+//   [UniverseChainId.FlowMainnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow/uniswap-v3',
+//   [UniverseChainId.FlowTestnet]: 'https://graph.swap.w3us.site/subgraphs/name/flow-testnet/uniswap-v3',
 // }
 
 // const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[UniverseChainId.AbstractMainnet] })

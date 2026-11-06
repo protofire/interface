@@ -38,6 +38,8 @@ export enum UniverseChainId {
   AnimeTestnet = UniswapSDKChainId.ANIME_TESTNET,
   Mode = UniswapSDKChainId.MODE,
   Anime = UniswapSDKChainId.ANIME,
+  FlowMainnet = UniswapSDKChainId.FLOW_MAINNET,
+  FlowTestnet = UniswapSDKChainId.FLOW_TESTNET,
 }
 
 export type WalletChainId =
@@ -66,6 +68,8 @@ export type WalletChainId =
   | UniverseChainId.AnimeTestnet
   | UniverseChainId.Mode
   | UniverseChainId.Anime
+  | UniverseChainId.FlowMainnet
+  | UniverseChainId.FlowTestnet
 
 // DON'T CHANGE - order here determines ordering of networks in app
 // TODO: [MOB-250] Add back in testnets once our endpoints support them
@@ -93,12 +97,15 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = isProdEnv() ? [
   UniverseChainId.SHAPE,
   UniverseChainId.BOB,
   UniverseChainId.INK,
+  UniverseChainId.FlowMainnet,
 ] : [
   UniverseChainId.Anime,
   UniverseChainId.AbstractMainnet,
   UniverseChainId.SHAPE,
   UniverseChainId.BOB,
   UniverseChainId.INK,
+  UniverseChainId.FlowMainnet,
+  UniverseChainId.FlowTestnet,
 ]
 // [
   // UniverseChainId.Mainnet,
@@ -130,6 +137,8 @@ export const WEB_SUPPORTED_CHAIN_IDS: InterfaceChainId[] = isProdEnv() ? [
   // UniverseChainId.AnimeTestnet,
   // UniverseChainId.Mode,
   // UniverseChainId.Anime,
+  // UniverseChainId.FlowMainnet,
+  // UniverseChainId.FlowTestnet,
 // ]
 
 export enum RPCType {

@@ -11,7 +11,7 @@ import {
 import { Pair, Route as V2Route } from '@uniswap/v2-sdk'
 import { FeeAmount, Pool, Route as V3Route } from '@uniswap/v3-sdk'
 import { BIPS_BASE } from 'constants/misc'
-import { isAnime, isAvalanche, isBsc, isPolygon, nativeOnChain } from 'constants/tokens'
+import { isAnime, isAvalanche, isBsc, isFlow, isPolygon, nativeOnChain } from 'constants/tokens'
 import { getApproveInfo, getWrapInfo } from 'state/routing/gas'
 import {
   ClassicQuoteData,
@@ -413,6 +413,9 @@ export function currencyAddressForSwapQuote(currency: Currency): string {
     }
     if (isAnime(currency.chainId)) {
       return SwapRouterNativeAssets.ANIME
+    }
+    if (isFlow(currency.chainId)) {
+      return SwapRouterNativeAssets.FLOW
     }
     return SwapRouterNativeAssets.ETH
   }

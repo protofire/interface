@@ -801,6 +801,7 @@ export enum SwapRouterNativeAssets {
   AVAX = 'AVAX',
   ETH = 'ETH',
   ANIME = 'ANIME',
+  FLOW = 'FLOW',
 }
 
 export enum URAQuoteType {

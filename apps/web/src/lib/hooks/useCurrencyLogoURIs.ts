@@ -1,11 +1,12 @@
 import EthereumLogo from 'assets/images/ethereum-logo.png'
 import AnimeLogo from 'assets/png/anime-logo.png'
+import FlowLogo from 'assets/png/flow-logo.png'
 import AvaxLogo from 'assets/svg/avax_logo.svg'
 import BnbLogo from 'assets/svg/bnb-logo.svg'
 import CeloLogo from 'assets/svg/celo_logo.svg'
 import MaticLogo from 'assets/svg/matic-token-icon.svg'
 import { getChain, isSupportedChainId } from 'constants/chains'
-import { PORTAL_ETH_CELO, isCelo, nativeOnChain } from 'constants/tokens'
+import { PORTAL_ETH_CELO, isCelo, isFlow, nativeOnChain } from 'constants/tokens'
 import { InterfaceChainId, UniverseChainId } from 'uniswap/src/types/chains'
 import { isSameAddress } from 'utilities/src/addresses'
 
@@ -23,6 +24,9 @@ export function getNativeLogoURI(chainId: InterfaceChainId = UniverseChainId.Mai
       return AvaxLogo
     case UniverseChainId.Anime:
       return AnimeLogo
+    case UniverseChainId.FlowMainnet:
+    case UniverseChainId.FlowTestnet:
+      return FlowLogo
     default:
       return EthereumLogo
   }
@@ -36,6 +40,9 @@ export function getTokenLogoURI(address: string, chainId: InterfaceChainId = Uni
   }
   if (isCelo(chainId) && isSameAddress(address, PORTAL_ETH_CELO.address)) {
     return EthereumLogo
+  }
+  if (isFlow(chainId) && isSameAddress(address, nativeOnChain(chainId).wrapped.address)) {
+    return FlowLogo
   }
 
   if (networkName) {
