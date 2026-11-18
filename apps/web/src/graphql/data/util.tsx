@@ -15,6 +15,7 @@ import {
   isSupportedChainId,
 } from 'constants/chains'
 import { NATIVE_CHAIN_ID, WRAPPED_NATIVE_CURRENCY, nativeOnChain } from 'constants/tokens'
+import { getInfoV3Link } from 'constants/links'
 import forkConfig from 'forkConfig'
 import { DefaultTheme } from 'lib/styled-components'
 import ms from 'ms'
@@ -169,28 +170,37 @@ export function getTokenExploreURL({ tab, chain }: { tab: ExploreTab; chain: Cha
   return `/explore/${tab}/${chainName}`
 }
 
+// Base URL of the external info site for a chain (fork mode). Falls back to the default chain's infoLink.
+function getInfoBaseURL(chainId?: UniverseChainId): string {
+  return chainId && UNIVERSE_CHAIN_INFO[chainId]
+    ? getInfoV3Link(chainId)
+    : UNIVERSE_CHAIN_INFO[UniverseChainId.Anime].infoLink
+}
+
 export function getTokenDetailsURL({
   address,
   chain,
   inputAddress,
+  chainId,
 }: {
   address?: string | null
   chain: Chain
   inputAddress?: string | null
+  chainId?: UniverseChainId
 }) {
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
   const inputAddressSuffix = inputAddress ? `?inputCurrency=${inputAddress}` : ''
   return forkConfig.uniSpecificFeaturesEnabled
     ? `/explore/tokens/${chainName}/${tokenAddress}${inputAddressSuffix}`
-    : `${UNIVERSE_CHAIN_INFO[UniverseChainId.Anime].infoLink}/tokens/${tokenAddress.toLowerCase()}`
+    : `${getInfoBaseURL(chainId)}/tokens/${tokenAddress.toLowerCase()}`
 }
 
-export function getPoolDetailsURL(address: string, chain: Chain) {
+export function getPoolDetailsURL(address: string, chain: Chain, chainId?: UniverseChainId) {
   const chainName = chain.toLowerCase()
   return forkConfig.uniSpecificFeaturesEnabled
     ? `/explore/pools/${chainName}/${address}`
-    : `${UNIVERSE_CHAIN_INFO[UniverseChainId.Anime].infoLink}/pools/${address.toLowerCase()}`
+    : `${getInfoBaseURL(chainId)}/pools/${address.toLowerCase()}`
 }
 
 export function unwrapToken<

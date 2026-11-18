@@ -305,12 +305,13 @@ export const WBTC_FLOW_MAINNET = new Token(
   'Wrapped BTC',
 )
 
+// USDCf: the testnet stablecoin with liquidity, also used by the routing backend (SOR)
 export const USDC_FLOW_TESTNET = new Token(
   UniverseChainId.FlowTestnet,
-  '0xd431955D55a99EF69BEb96BA34718d0f9fBc91b1',
+  '0x5e65b6B04fbA51D95409712978Cb91E99d93aE73',
   6,
-  'USDC',
-  'USDC',
+  'USDCf',
+  'USDCf',
 )
 
 export const PYUSD0_FLOW_TESTNET = new Token(

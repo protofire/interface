@@ -1739,7 +1739,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     blockPerMainnetEpochForChainId: 12,
     blockWaitMsBeforeWarning: 600000,
     bridge: '',
-    chainPriority: 5,
+    chainPriority: 99, // keep Flow next to Flow Testnet (100), at the bottom of the chain selector
     docs: 'https://developers.flow.com/',
     elementName: ElementName.ChainFlow,
     explorer: {
@@ -1748,7 +1748,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://evm.flowscan.io/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://flow.com/',
+    infoLink: 'https://info.flowswap.io',
     infuraPrefix: undefined,
     interfaceName: 'flow',
     label: 'Flow',
@@ -1802,7 +1802,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       apiURL: 'https://evm-testnet.flowscan.io/api',
     },
     helpCenterUrl: undefined,
-    infoLink: 'https://flow.com/',
+    infoLink: 'https://info.flowswap.io',
     infuraPrefix: undefined,
     interfaceName: 'flow-testnet',
     label: 'Flow Testnet',
