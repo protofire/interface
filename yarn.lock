@@ -45302,6 +45302,9 @@ __metadata:
     syncpack: ^8.5.14
     turbo: 1.10.16
     turbo-ignore: ^1.11.3
+  dependenciesMeta:
+    postinstall-postinstall:
+      built: false
   languageName: unknown
   linkType: soft
 
