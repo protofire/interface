@@ -47,12 +47,16 @@ import {
 } from 'constants/tokens'
 import { getNativeLogoURI, getTokenLogoURI } from 'lib/hooks/useCurrencyLogoURIs'
 import {
+  PYUSD0_FLOW_MAINNET,
+  PYUSD0_FLOW_TESTNET,
   USDC_ABSTRACT_MAINNET,
   USDC_ABSTRACT_TESTNET,
   USDC_ANIME,
   USDC_ANIME_TESTNET,
   USDC_BOB,
   USDC_CYBER,
+  USDC_FLOW_MAINNET,
+  USDC_FLOW_TESTNET,
   USDC_INK,
   USDC_MODE,
   USDC_REDSTONE,
@@ -61,6 +65,8 @@ import {
   USDC_ZERO,
   USDC_ZKSYNC,
   USDC_ZORA,
+  USDF_FLOW_MAINNET,
+  WBTC_FLOW_MAINNET,
 } from 'uniswap/src/constants/tokens'
 import { SafetyLevel } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { CurrencyInfo } from 'uniswap/src/features/dataApi/types'
@@ -272,6 +278,20 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Mode] as Token,
     USDC_MODE,
   ].map(buildCurrencyInfo),
+  [UniverseChainId.FlowMainnet]: [
+    nativeOnChain(UniverseChainId.FlowMainnet),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowMainnet] as Token,
+    USDC_FLOW_MAINNET,
+    USDF_FLOW_MAINNET,
+    PYUSD0_FLOW_MAINNET,
+    WBTC_FLOW_MAINNET,
+  ].map(buildCurrencyInfo),
+  [UniverseChainId.FlowTestnet]: [
+    nativeOnChain(UniverseChainId.FlowTestnet),
+    WRAPPED_NATIVE_CURRENCY[UniverseChainId.FlowTestnet] as Token,
+    USDC_FLOW_TESTNET,
+    PYUSD0_FLOW_TESTNET,
+  ].map(buildCurrencyInfo),
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -300,6 +320,13 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
+  [UniverseChainId.FlowMainnet]: [
+    ...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowMainnet],
+    USDC_FLOW_MAINNET,
+    USDF_FLOW_MAINNET,
+    WBTC_FLOW_MAINNET,
+  ],
+  [UniverseChainId.FlowTestnet]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[UniverseChainId.FlowTestnet], USDC_FLOW_TESTNET],
 }
 
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {

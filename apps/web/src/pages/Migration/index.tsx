@@ -45,17 +45,18 @@ const domain = isProd ? 'https://sakuraswap.com/' : 'https://staging.sakuraswap.
 const SakuraSwapChains = [
   { name: 'Abstract', icon: '/images/logos/Abstract_Logo.png', url: `${domain}swap?chain=abstract` },
   { name: 'Anime', icon: '/images/logos/Anime_Logo.png', url: `${domain}swap?chain=anime` },
+  { name: 'More coming soon', icon: '/images/logos/New_Chain.svg', url: '', disabled: true },
 ]
 
 const StandaloneChains = [
   { name: 'Shape', icon: '/images/logos/Shape_Logo.png', url: 'https://shapeswap.xyz' },
-  { name: 'Harmony', icon: '/images/logos/Harmony_Logo.png', url: 'https://swap.harmony.one' },
+  { name: 'Stable', icon: '/images/logos/Stable_Logo.png', url: 'https://swap.stable.xyz/' },
   { name: 'More coming soon', icon: '/images/logos/New_Chain.svg', url: '', disabled: true },
 ]
 
 const SupportChains = [
   { name: 'Add a new chain', icon: '/images/256x256_App_Icon_Pink.svg', url: 'https://integration-form.protofire.io/' },
-  { name: 'About Protofire', icon: '/images/logos/Protofire_Logo.png', url: 'https://protofire.io' },
+  { name: 'About Protofire', icon: '/images/logos/Protofire_Logo.png', url: 'https://swap.protofire.io' },
 ]
 
 const ExternalMigrationChains = [
@@ -295,44 +296,55 @@ export default function MigrationPage() {
 
         <div style={{ marginBottom: '2rem', paddingTop: '2rem', borderTop: `1px solid ${theme.surface2}` }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1, marginBottom: '0.5rem' }}>
-            Previous Standalone Deployments
+            Previous Deployments
           </h2>
           <p style={{ fontSize: '1rem', color: theme.neutral1, marginBottom: '1.5rem' }}>
-            Chains that have been migrated to external interfaces
+            Chains that have been migrated to external interfaces or decommissioned
           </p>
         </div>
         <div
           style={{
-            backgroundColor: `${theme.neutral3}15`,
-            borderRadius: '16px',
-            padding: '16px 24px 24px 24px',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: '24px',
+            justifyContent: 'center',
             width: '100%',
             maxWidth: '1200px',
             margin: '0 auto 3rem',
-            textAlign: 'center',
           }}
         >
           {ExternalMigrationChains.map((chain) => (
-            <div key={chain.name}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '16px',
-                  marginBottom: '16px',
-                }}
-              >
+            <div
+              key={chain.name}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '20px',
+                flex: '1 1 380px',
+                maxWidth: '560px',
+                padding: '32px 28px',
+                borderRadius: '16px',
+                backgroundColor: `${theme.neutral3}15`,
+                border: `1px solid ${theme.surface3}`,
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                 <img
                   src={chain.icon}
                   alt={chain.name}
-                  style={{ width: '56px', height: '56px', borderRadius: '12px' }}
+                  style={{ width: '64px', height: '64px', borderRadius: '16px' }}
                 />
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1 }}>{chain.name}</h3>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: theme.neutral1, margin: 0 }}>
+                  {chain.name}
+                </h3>
+                <p style={{ fontSize: '1rem', color: theme.neutral2, margin: 0, lineHeight: '1.6' }}>
+                  {chain.description}
+                </p>
               </div>
-              <p style={{ fontSize: '1.1rem', color: theme.neutral1, marginBottom: '24px', lineHeight: '1.6' }}>
-                {chain.description}
-              </p>
               <ExternalLink href={chain.ctaUrl}>
                 <SmallButtonPrimary as="span" width="auto" style={{ gap: '8px', display: 'inline-flex' }}>
                   {chain.ctaLabel}

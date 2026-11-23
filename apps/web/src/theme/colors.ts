@@ -106,6 +106,7 @@ export const colors = {
   networkInk: '#7132f6',
   networkAnimeTestnet: '#222',
   networkAnime: '#222',
+  networkFlow: '#00EF8B',
   //NEW COLORS FOR SPORE - need to define light/dark here cause they are root colors now (different system)
   neutral1_dark: '#FFFFFF',
   neutral2_dark: '#9B9B9B',
@@ -166,6 +167,8 @@ const commonTheme = {
   chain_57073: colors.networkInk,
   chain_6900: colors.networkAnimeTestnet,
   chain_69000: colors.networkAnime,
+  chain_545: colors.networkFlow,
+  chain_747: colors.networkFlow,
   chain_42161: colors.networkArbitrum,
   chain_421613: colors.networkArbitrum,
   chain_421614: colors.networkArbitrum,

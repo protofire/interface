@@ -232,7 +232,7 @@ const TokenLink = ({
   chainId,
   address,
 }: PropsWithChildren<{ chainId: SupportedInterfaceChainId; address: string }>) => {
-  const tokenLink = getTokenDetailsURL({ address, chain: chainIdToBackendChain({ chainId }) })
+  const tokenLink = getTokenDetailsURL({ address, chain: chainIdToBackendChain({ chainId }), chainId })
   return <StyledRouterLink to={tokenLink}>{children}</StyledRouterLink>
 }
 
@@ -757,6 +757,7 @@ function PositionPageContent() {
                         ? getPoolDetailsURL(
                             poolAddress,
                             chainIdToBackendChain({ chainId: supportedChain, withFallback: true }),
+                            supportedChain,
                           )
                         : ''
                     }

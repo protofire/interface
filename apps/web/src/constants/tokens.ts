@@ -536,6 +536,20 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WETH',
     'Wrapped Ether',
   ),
+  [UniverseChainId.FlowMainnet]: new Token(
+    UniverseChainId.FlowMainnet,
+    '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e',
+    18,
+    'WFLOW',
+    'Wrapped Flow',
+  ),
+  [UniverseChainId.FlowTestnet]: new Token(
+    UniverseChainId.FlowTestnet,
+    '0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e',
+    18,
+    'WFLOW',
+    'Wrapped Flow',
+  ),
 }
 
 export function isCelo(chainId: number): chainId is UniverseChainId.Celo | UniverseChainId.CeloAlfajores {
@@ -657,6 +671,32 @@ class AnimeNativeCurrency extends NativeCurrency {
   }
 }
 
+export function isFlow(chainId: number): chainId is UniverseChainId.FlowMainnet | UniverseChainId.FlowTestnet {
+  return chainId === UniverseChainId.FlowMainnet || chainId === UniverseChainId.FlowTestnet
+}
+
+class FlowNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    if (!isFlow(this.chainId)) {
+      throw new Error('Not flow')
+    }
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
+  }
+
+  public constructor(chainId: number) {
+    if (!isFlow(chainId)) {
+      throw new Error('Not flow')
+    }
+    super(chainId, 18, 'FLOW', 'FLOW')
+  }
+}
+
 class ExtendedEther extends NativeCurrency {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -697,6 +737,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
     nativeCurrency = new AvaxNativeCurrency(chainId)
   } else if (isAnime(chainId)) {
     nativeCurrency = new AnimeNativeCurrency(chainId)
+  } else if (isFlow(chainId)) {
+    nativeCurrency = new FlowNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
   }
